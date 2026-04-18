@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Legaldirectory.ai India's Property Legal Intelligence Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:       #07080e;
+  --bg2:      #0d0f18;
+  --bg3:      #12141f;
+  --bg4:      #181b28;
+  --border:   #1e2235;
+  --border2:  #252a3d;
+  --navy:     #0f1829;
+  --blue:     #3b82f6;
+  --blue2:    #1d4ed8;
+  --blue-glow:#3b82f620;
+  --gold:     #d4a843;
+  --gold2:    #b8902e;
+  --gold-pale:#f5e4b0;
+  --green:    #22c55e;
+  --green2:   #16a34a;
+  --red:      #ef4444;
+  --amber:    #f59e0b;
+  --text:     #c4cde0;
+  --text2:    #6b7694;
+  --text3:    #8892a8;
+  --white:    #f0f4ff;
+  --serif:    'Playfair Display', Georgia, serif;
+  --sans:     'Plus Jakarta Sans', sans-serif;
+  --mono:     'JetBrains Mono', monospace;
+  --radius:   6px;
+  --shadow:   0 4px 32px rgba(0,0,0,.45);
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { background:var(--bg); color:var(--text); font-family:var(--sans); font-size:15px; line-height:1.65; overflow-x:hidden; }
+
+/* ── MESH BG ── */
+body::before {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+  background:
+    radial-gradient(ellipse 80% 50% at 10% 0%, rgba(59,130,246,.06) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 90% 20%, rgba(212,168,67,.04) 0%, transparent 60%);
+}
+
+/* ── TOP ANNOUNCEMENT ── */
+.ann-bar {
+  background:linear-gradient(90deg, #07111f, #0a1628, #07111f);
+  border-bottom:1px solid rgba(59,130,246,.18);
+  padding:9px 24px; text-align:center;
+  font-family:var(--mono); font-size:11px;
+  color:rgba(180,200,230,.7); letter-spacing:.5px;
+  position:relative; z-index:10;
+}
+.ann-bar b { color:var(--gold); font-weight:500; }
+
+/* ── NAV ── */
+nav {
+  background:rgba(7,8,14,.93);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  position:sticky; top:0; z-index:200;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 52px; height:64px;
+}
+.logo-wrap { display:flex; align-items:center; gap:10px; }
+.logo { font-family:var(--serif); font-size:21px; color:var(--white); letter-spacing:-.2px; }
+.logo em { color:var(--blue); font-style:italic; }
+.logo-badge {
+  font-family:var(--mono); font-size:9px; color:var(--text2);
+  background:var(--bg3); border:1px solid var(--border2);
+  padding:2px 7px; border-radius:3px; letter-spacing:.5px;
+}
+.nav-links { display:flex; gap:2px; }
+.nav-links a {
+  font-size:13px; font-weight:500; color:var(--text2);
+  padding:8px 16px; border-radius:var(--radius);
+  text-decoration:none; transition:color .18s, background .18s; letter-spacing:.1px;
+}
+.nav-links a:hover { color:var(--white); background:rgba(255,255,255,.05); }
+.nav-right { display:flex; align-items:center; gap:10px; }
+.status-dot {
+  font-family:var(--mono); font-size:10px; color:var(--green);
+  background:rgba(34,197,94,.08); border:1px solid rgba(34,197,94,.22);
+  padding:5px 12px; border-radius:20px; display:flex; align-items:center; gap:5px;
+}
+.status-dot::before { content:''; width:5px; height:5px; border-radius:50%;
+  background:var(--green); animation:pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.3;} }
+
+/* ── BUTTONS ── */
+.btn {
+  font-family:var(--sans); font-size:13px; font-weight:600;
+  padding:11px 22px; border-radius:var(--radius); cursor:pointer;
+  text-decoration:none; display:inline-flex; align-items:center;
+  gap:8px; transition:all .18s; border:none; letter-spacing:.1px;
+}
+.btn-primary { background:var(--blue); color:#fff; }
+.btn-primary:hover { background:#2563eb; box-shadow:0 4px 20px rgba(59,130,246,.35); }
+.btn-gold { background:var(--gold); color:#0a0b10; }
+.btn-gold:hover { background:#c49a35; }
+.btn-wa { background:#25d366; color:#000; font-weight:700; }
+.btn-wa:hover { background:#1ebe5d; }
+.btn-ghost { background:transparent; color:var(--text3); border:1px solid var(--border2); }
+.btn-ghost:hover { border-color:var(--blue); color:var(--blue); }
+.btn-sm { font-size:12px; padding:9px 17px; }
+
+/* ── HERO ── */
+.hero-wrap {
+  position:relative; z-index:1;
+  border-bottom:1px solid var(--border);
+}
+.hero {
+  max-width:1240px; margin:0 auto; padding:88px 52px 80px;
+  display:grid; grid-template-columns:1fr 400px; gap:72px; align-items:start;
+}
+.hero-eyebrow {
+  font-family:var(--mono); font-size:10px; letter-spacing:2.5px;
+  color:var(--blue); text-transform:uppercase; margin-bottom:20px;
+  display:flex; align-items:center; gap:8px;
+}
+.hero-eyebrow::before { content:''; width:20px; height:1px; background:var(--blue); }
+.hero h1 {
+  font-family:var(--serif); font-size:56px; line-height:1.1;
+  color:var(--white); margin-bottom:22px; letter-spacing:-.5px;
+}
+.hero h1 em { color:var(--gold); font-style:italic; }
+.hero-lead { font-size:16px; color:var(--text2); line-height:1.8; max-width:480px; margin-bottom:36px; }
+.hero-actions { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:44px; }
+.hero-trust {
+  display:flex; gap:28px; padding-top:28px;
+  border-top:1px solid var(--border);
+}
+.trust-item { text-align:left; }
+.trust-num { font-family:var(--mono); font-size:20px; color:var(--white); font-weight:500; }
+.trust-lbl { font-size:11px; color:var(--text2); margin-top:2px; letter-spacing:.2px; }
+
+/* ── STATS PANEL ── */
+.panel {
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+.panel-head {
+  background:var(--bg3); padding:14px 20px;
+  border-bottom:1px solid var(--border);
+  font-family:var(--mono); font-size:10px;
+  letter-spacing:1.5px; color:var(--text2);
+  display:flex; align-items:center; justify-content:space-between;
+}
+.panel-head-dot { width:6px; height:6px; border-radius:50%; background:var(--green); }
+.stat-row {
+  padding:15px 20px; border-bottom:1px solid var(--border);
+  display:flex; justify-content:space-between; align-items:center;
+}
+.stat-row:last-child { border-bottom:none; }
+.stat-l { font-size:13px; color:var(--text2); }
+.stat-sub { font-family:var(--mono); font-size:9px; color:var(--text2); margin-top:2px; }
+.stat-v { font-family:var(--mono); font-size:21px; color:var(--blue); font-weight:500; }
+.visitor-box {
+  background:linear-gradient(135deg, var(--bg3), var(--navy));
+  border-top:1px solid var(--border); padding:22px 20px; text-align:center;
+}
+.visitor-n { font-family:var(--mono); font-size:38px; color:var(--gold); letter-spacing:1px; }
+.visitor-l { font-family:var(--mono); font-size:9px; color:var(--text2); letter-spacing:2.5px; margin-top:4px; }
+
+/* ── BOOKING PANEL (RZP) ── */
+.booking-panel {
+  background:var(--bg2); border:1px solid rgba(59,130,246,.25);
+  border-radius:var(--radius); padding:24px; margin-top:18px;
+  box-shadow:0 0 24px rgba(59,130,246,.08);
+}
+.booking-panel-head {
+  font-family:var(--mono); font-size:10px; letter-spacing:1.5px;
+  color:var(--blue); margin-bottom:16px;
+}
+.booking-form-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px; }
+.booking-form-row.full { grid-template-columns:1fr; }
+.booking-input {
+  background:var(--bg3); border:1px solid var(--border2);
+  color:var(--white); font-family:var(--sans); font-size:13px;
+  padding:10px 13px; border-radius:4px; width:100%;
+  transition:border-color .18s; outline:none;
+}
+.booking-input:focus { border-color:var(--blue); }
+.booking-input::placeholder { color:var(--text2); }
+.booking-select {
+  background:var(--bg3); border:1px solid var(--border2);
+  color:var(--text3); font-family:var(--sans); font-size:13px;
+  padding:10px 13px; border-radius:4px; width:100%;
+  outline:none; cursor:pointer; transition:border-color .18s;
+}
+.booking-select:focus { border-color:var(--blue); }
+.rzp-btn-wrap { margin-top:14px; }
+/* Razorpay button placeholder styling */
+.rzp-payment-btn {
+  width:100%; background:linear-gradient(135deg, #072654, #0a3276);
+  border:1px solid rgba(59,130,246,.4); border-radius:5px;
+  color:#fff; font-family:var(--sans); font-size:13px; font-weight:700;
+  padding:13px 20px; cursor:pointer; display:flex; align-items:center;
+  justify-content:center; gap:10px; transition:all .2s; letter-spacing:.2px;
+}
+.rzp-payment-btn:hover { background:linear-gradient(135deg,#0a3276,#0e42a0); box-shadow:0 4px 20px rgba(59,130,246,.3); }
+.rzp-logo { font-family:var(--mono); font-size:9px; color:rgba(120,180,255,.7); margin-top:8px; text-align:center; letter-spacing:.5px; }
+.booking-note { font-size:11px; color:var(--text2); text-align:center; margin-top:8px; line-height:1.6; }
+
+/* ── DISCLAIMER ── */
+.disclaimer {
+  position:relative; z-index:1;
+  background:rgba(212,168,67,.03);
+  border-top:1px solid rgba(212,168,67,.12);
+  border-bottom:1px solid rgba(212,168,67,.12);
+  padding:16px 52px;
+}
+.disclaimer-inner { max-width:1240px; margin:0 auto; display:flex; align-items:flex-start; gap:12px; }
+.disclaimer p { font-size:12px; color:var(--text2); line-height:1.65; }
+.disclaimer strong { color:var(--gold); font-weight:600; }
+
+/* ── TRUST BAR ── */
+.trust-bar {
+  position:relative; z-index:1;
+  background:var(--bg2); border-bottom:1px solid var(--border);
+  padding:18px 52px;
+}
+.trust-bar-inner {
+  max-width:1240px; margin:0 auto;
+  display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap;
+}
+.trust-bar-item { display:flex; align-items:center; gap:10px; }
+.trust-bar-icon { font-size:18px; }
+.trust-bar-text { font-size:12.5px; color:var(--text2); }
+.trust-bar-text b { color:var(--white); font-weight:600; }
+.trust-bar-divider { width:1px; height:28px; background:var(--border); flex-shrink:0; }
+
+/* ── SECTION COMMON ── */
+.section { max-width:1240px; margin:0 auto; padding:80px 52px; position:relative; z-index:1; }
+.section-eyebrow { font-family:var(--mono); font-size:10px; letter-spacing:2.5px; color:var(--blue); text-transform:uppercase; margin-bottom:10px; }
+.section-title { font-family:var(--serif); font-size:40px; color:var(--white); margin-bottom:12px; line-height:1.15; }
+.section-sub { font-size:15px; color:var(--text2); max-width:560px; line-height:1.75; }
+hr.sep { border:none; border-top:1px solid var(--border); margin:0 52px; position:relative; z-index:1; }
+
+/* ── HOW IT WORKS ── */
+.hiw-grid {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:1px; background:var(--border);
+  border:1px solid var(--border); border-radius:var(--radius);
+  overflow:hidden; margin-top:48px;
+}
+.hiw-step {
+  background:var(--bg2); padding:30px 26px;
+  transition:background .2s;
+}
+.hiw-step:hover { background:var(--bg3); }
+.hiw-step-num { font-family:var(--mono); font-size:9px; color:var(--text2); letter-spacing:1.5px; margin-bottom:18px; }
+.hiw-icon { font-size:26px; margin-bottom:14px; }
+.hiw-title { font-family:var(--serif); font-size:17px; color:var(--white); margin-bottom:8px; }
+.hiw-desc { font-size:12.5px; color:var(--text2); line-height:1.72; }
+.hiw-badge {
+  display:inline-block; margin-top:16px;
+  font-family:var(--mono); font-size:9px; color:var(--gold);
+  border:1px solid rgba(212,168,67,.25); padding:3px 9px; border-radius:3px; letter-spacing:.5px;
+}
+
+/* ── SERVICE CARDS ── */
+.services-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:48px; }
+.card {
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:var(--radius); overflow:hidden;
+  transition:border-color .2s, transform .2s, box-shadow .2s;
+  cursor:pointer; display:flex; flex-direction:column;
+}
+.card:hover {
+  border-color:rgba(59,130,246,.4); transform:translateY(-4px);
+  box-shadow:0 12px 40px rgba(0,0,0,.4);
+}
+.card-top { padding:22px 22px 18px; border-bottom:1px solid var(--border); }
+.card-tag { font-family:var(--mono); font-size:9px; letter-spacing:1.5px; color:var(--text2); margin-bottom:10px; }
+.card-title { font-family:var(--serif); font-size:18px; color:var(--white); margin-bottom:10px; line-height:1.3; }
+.badge-row { display:flex; gap:6px; flex-wrap:wrap; }
+.badge { font-family:var(--mono); font-size:9px; padding:3px 9px; border-radius:3px; letter-spacing:.3px; }
+.b-blue   { background:rgba(59,130,246,.08); color:#93c5fd; border:1px solid rgba(59,130,246,.2); }
+.b-gold   { background:rgba(212,168,67,.08); color:var(--gold); border:1px solid rgba(212,168,67,.2); }
+.b-green  { background:rgba(34,197,94,.08); color:#86efac; border:1px solid rgba(34,197,94,.2); }
+.b-purple { background:rgba(167,139,250,.08); color:#c4b5fd; border:1px solid rgba(167,139,250,.2); }
+.card-body { padding:18px 22px; flex:1; }
+.card-desc { font-size:13px; color:var(--text2); line-height:1.72; margin-bottom:14px; }
+.card-features { list-style:none; }
+.card-features li { font-size:12px; color:var(--text2); padding:3.5px 0;
+  display:flex; gap:8px; align-items:flex-start; line-height:1.6; }
+.card-features li::before { content:'›'; color:var(--blue); flex-shrink:0; font-weight:700; margin-top:1px; }
+.card-foot {
+  padding:16px 22px; border-top:1px solid var(--border);
+  display:flex; align-items:center; justify-content:space-between;
+}
+.card-price { font-family:var(--mono); font-size:20px; color:var(--gold); font-weight:500; }
+.card-price-note { font-family:var(--mono); font-size:9px; color:var(--text2); margin-top:2px; }
+.card-rating { font-family:var(--mono); font-size:9px; color:var(--gold); margin-top:5px; }
+.card-rating span { color:var(--text2); margin-left:3px; }
+.card-cta {
+  font-family:var(--mono); font-size:10px; color:var(--blue);
+  border:1px solid rgba(59,130,246,.3); padding:7px 14px; border-radius:4px;
+  transition:all .18s; white-space:nowrap;
+}
+.card-cta:hover { background:var(--blue); color:#fff; }
+.featured-card { border-color:rgba(59,130,246,.3); }
+.featured-card .card-top { background:linear-gradient(135deg, rgba(59,130,246,.05), transparent); }
+
+/* ── FAQ ── */
+.faq-wrap { background:var(--bg2); border-top:1px solid var(--border); border-bottom:1px solid var(--border); position:relative; z-index:1; }
+.faq-inner { max-width:1240px; margin:0 auto; padding:80px 52px; }
+.faq-cols { display:grid; grid-template-columns:1fr 1fr; gap:36px; margin-top:44px; }
+.faq-col-label { font-family:var(--mono); font-size:9px; letter-spacing:2.5px; color:var(--blue); margin-bottom:16px; text-transform:uppercase; }
+.faq-item { border:1px solid var(--border); border-radius:5px; margin-bottom:8px; overflow:hidden; }
+.faq-q {
+  padding:15px 18px; font-size:13.5px; font-weight:500; color:var(--white);
+  cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:12px;
+}
+.faq-q:hover { background:rgba(255,255,255,.03); }
+.faq-toggle { font-family:var(--mono); font-size:18px; color:var(--blue); flex-shrink:0; transition:transform .2s; }
+.faq-item.open .faq-toggle { transform:rotate(45deg); }
+.faq-a { display:none; padding:0 18px 15px; font-size:13px; color:var(--text2);
+  line-height:1.8; border-top:1px solid var(--border); }
+.faq-item.open .faq-a { display:block; padding-top:13px; }
+
+/* ── PROCEDURE TABLE ── */
+.proc-table { width:100%; border-collapse:collapse; margin-top:24px; }
+.proc-table th { background:var(--bg3); color:var(--blue); font-family:var(--mono); font-size:10px;
+  letter-spacing:1px; padding:12px 16px; border:1px solid var(--border); text-align:left; font-weight:500; }
+.proc-table td { padding:11px 16px; border:1px solid var(--border); font-size:13px;
+  color:var(--text2); vertical-align:top; line-height:1.65; }
+.proc-table tr:nth-child(even) td { background:rgba(255,255,255,.015); }
+.proc-table td:first-child { font-family:var(--mono); font-size:11px; color:var(--blue); font-weight:500; width:42px; }
+
+/* ── CONTACT ── */
+.contact-bg { background:var(--bg2); border-top:1px solid var(--border); position:relative; z-index:1; }
+.contact-inner { max-width:1240px; margin:0 auto; padding:80px 52px;
+  display:grid; grid-template-columns:1fr 1fr 1fr; gap:28px; }
+.contact-card { background:var(--bg3); border:1px solid var(--border); border-radius:var(--radius); padding:28px; text-align:center; }
+.contact-icon { font-size:30px; margin-bottom:14px; }
+.contact-type { font-family:var(--mono); font-size:9px; letter-spacing:2px; color:var(--text2); margin-bottom:10px; text-transform:uppercase; }
+.contact-val { font-family:var(--mono); font-size:14px; color:var(--blue); font-weight:500; }
+.contact-note { font-size:12px; color:var(--text2); margin-top:8px; line-height:1.65; }
+.wa-btn { display:inline-flex; align-items:center; gap:8px; background:#25d366; color:#050810;
+  font-family:var(--mono); font-size:10px; font-weight:700; padding:10px 20px;
+  border-radius:4px; margin-top:14px; text-decoration:none; transition:all .18s; }
+.wa-btn:hover { background:#1ebe5d; }
+
+/* ── IMPORTANT NOTICE (BCI) ── */
+.notice-section { position:relative; z-index:1; background:var(--bg); border-top:2px solid rgba(212,168,67,.2); }
+.notice-inner { max-width:1240px; margin:0 auto; padding:44px 52px; }
+.notice-box {
+  background:rgba(212,168,67,.04);
+  border:1px solid rgba(212,168,67,.2);
+  border-radius:var(--radius); padding:28px 32px;
+  display:flex; gap:18px; align-items:flex-start;
+}
+.notice-icon { font-size:22px; flex-shrink:0; margin-top:2px; }
+.notice-content {}
+.notice-title { font-family:var(--mono); font-size:10px; letter-spacing:2px; color:var(--gold); margin-bottom:10px; text-transform:uppercase; }
+.notice-text { font-size:13px; color:var(--text2); line-height:1.8; }
+.notice-text strong { color:var(--gold-pale); font-weight:600; }
+
+/* ── FOOTER ── */
+footer {
+  background:var(--bg2); border-top:1px solid var(--border);
+  position:relative; z-index:1;
+}
+.footer-top {
+  max-width:1240px; margin:0 auto; padding:36px 52px 28px;
+  display:flex; justify-content:space-between; align-items:flex-start; gap:32px; flex-wrap:wrap;
+}
+.footer-logo { font-family:var(--serif); font-size:18px; color:var(--white); }
+.footer-logo em { color:var(--blue); font-style:italic; }
+.footer-disc { font-size:11.5px; color:var(--text2); max-width:520px; line-height:1.7; }
+.footer-bottom {
+  max-width:1240px; margin:0 auto; padding:16px 52px;
+  border-top:1px solid var(--border);
+  display:flex; justify-content:space-between; align-items:center;
+}
+.footer-tagline {
+  font-family:var(--mono); font-size:10px; color:var(--text2); letter-spacing:.5px;
+}
+.footer-copy { font-family:var(--mono); font-size:10px; color:var(--text2); }
+
+/* ── MODAL ── */
+.modal-overlay {
+  display:none; position:fixed; inset:0;
+  background:rgba(0,0,0,.8); backdrop-filter:blur(4px);
+  z-index:1000; align-items:center; justify-content:center; padding:20px;
+}
+.modal-overlay.open { display:flex; }
+.modal {
+  background:var(--bg2); border:1px solid var(--border2); border-radius:8px;
+  max-width:700px; width:100%; max-height:90vh; overflow-y:auto;
+  padding:38px; position:relative; box-shadow:0 24px 80px rgba(0,0,0,.6);
+}
+.modal-close {
+  position:absolute; top:16px; right:16px;
+  background:transparent; border:1px solid var(--border2);
+  color:var(--text2); cursor:pointer; width:30px; height:30px;
+  border-radius:4px; font-size:13px; transition:all .15s;
+}
+.modal-close:hover { border-color:var(--red); color:var(--red); }
+.modal-tag { font-family:var(--mono); font-size:10px; color:var(--blue); letter-spacing:1.5px; margin-bottom:8px; }
+.modal h2 { font-family:var(--serif); font-size:27px; color:var(--white); margin-bottom:4px; }
+.modal-price { font-family:var(--mono); font-size:24px; color:var(--gold); margin-bottom:24px; }
+.modal-section { font-family:var(--mono); font-size:10px; letter-spacing:2px; color:var(--blue); margin:22px 0 10px; }
+.modal p { font-size:13px; color:var(--text2); line-height:1.78; margin-bottom:8px; }
+.modal ul, .modal ol { padding-left:18px; }
+.modal li { font-size:13px; color:var(--text2); line-height:1.78; margin-bottom:5px; }
+.modal-divider { border:none; border-top:1px solid var(--border); margin:18px 0; }
+
+/* RZP in modal */
+.modal-booking {
+  background:var(--bg3); border:1px solid rgba(59,130,246,.2);
+  border-radius:var(--radius); padding:22px; margin-top:22px;
+}
+.modal-booking-head { font-family:var(--mono); font-size:10px; letter-spacing:1.5px; color:var(--blue); margin-bottom:16px; }
+.modal-rzp-btn {
+  width:100%; background:linear-gradient(135deg, #072654, #0a3276);
+  border:1px solid rgba(59,130,246,.4); border-radius:5px;
+  color:#fff; font-family:var(--sans); font-size:13px; font-weight:700;
+  padding:14px 20px; cursor:pointer; display:flex; align-items:center;
+  justify-content:center; gap:10px; transition:all .2s; letter-spacing:.2px; margin-top:14px;
+}
+.modal-rzp-btn:hover { background:linear-gradient(135deg,#0a3276,#0e42a0); box-shadow:0 4px 20px rgba(59,130,246,.3); }
+.modal-wa-alt {
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  background:#25d366; color:#050810; font-family:var(--mono); font-size:12px; font-weight:700;
+  padding:13px 20px; border-radius:5px; margin-top:10px; text-decoration:none;
+  transition:all .18s; width:100%;
+}
+.modal-wa-alt:hover { background:#1ebe5d; }
+.rzp-secure-note { font-family:var(--mono); font-size:9px; color:var(--text2); text-align:center; margin-top:10px; letter-spacing:.5px; }
+
+/* ── RESPONSIVE ── */
+@media(max-width:1050px){
+  nav { padding:0 28px; }
+  .hero { grid-template-columns:1fr; padding:60px 28px; gap:48px; }
+  .services-grid { grid-template-columns:1fr 1fr; }
+  .hiw-grid { grid-template-columns:1fr 1fr; }
+  .faq-cols { grid-template-columns:1fr; }
+  .contact-inner { grid-template-columns:1fr; }
+  .section, .faq-inner, .notice-inner { padding:56px 28px; }
+  hr.sep { margin:0 28px; }
+  .trust-bar { padding:18px 28px; }
+  .disclaimer { padding:14px 28px; }
+  .footer-top, .footer-bottom { padding-left:28px; padding-right:28px; }
+}
+@media(max-width:640px){
+  .hero h1 { font-size:38px; }
+  .section-title { font-size:30px; }
+  .services-grid { grid-template-columns:1fr; }
+  .hiw-grid { grid-template-columns:1fr; }
+  .nav-links { display:none; }
+  .trust-bar-divider { display:none; }
+  .trust-bar-inner { gap:16px; }
+  .booking-form-row { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo-wrap">
+    <span class="logo">Legaldirectory<em>.ai</em></span>
+    <span class="logo-badge">v3.3</span>
+  </div>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#how-it-works">How It Works</a>
+    <a href="#registration">Property FAQ</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="nav-right">
+    <div class="status-dot">Platform Active</div>
+    <a href="https://wa.me/919008999968" target="_blank" class="btn btn-wa btn-sm">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero-wrap">
+  <div class="hero">
+    <div>
+      <div class="hero-eyebrow">Property Legal Intelligence</div>
+      <h1>Your Property.<br/><em>Legally Secured.</em><br/>At Your Doorstep.</h1>
+      <p class="hero-lead">Senior lawyers review your property documents, visit your home, and deliver a complete legal opinion clearly, transparently, and within 2 working days.</p>
+      <div class="hero-actions">
+        <a href="#services" class="btn btn-primary">Explore Services</a>
+        <a href="https://wa.me/919008999968" target="_blank" class="btn btn-wa">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Chat with Us
+        </a>
+        <a href="mailto:weightage.lab@gmail.com" class="btn btn-ghost">Send Email</a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-item">
+          <div class="trust-num">3,240+</div>
+          <div class="trust-lbl">Documents Verified</div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-num">2 Days</div>
+          <div class="trust-lbl">Avg. Delivery Time</div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-num">4.8 / 5</div>
+          <div class="trust-lbl">Client Satisfaction</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL: STATS + QUICK BOOKING -->
+    <div>
+      <div class="panel">
+        <div class="panel-head">
+          PLATFORM OVERVIEW
+          <div class="panel-head-dot"></div>
+        </div>
+        <div class="stat-row">
+          <div><div class="stat-l">Documents Verified</div><div class="stat-sub">▲ Active Month</div></div>
+          <div class="stat-v">3,240+</div>
+        </div>
+        <div class="stat-row">
+          <div><div class="stat-l">Avg. Delivery Time</div><div class="stat-sub">Industry avg. 7 days</div></div>
+          <div class="stat-v">2 Days</div>
+        </div>
+        <div class="stat-row">
+          <div><div class="stat-l">Client Satisfaction</div><div class="stat-sub">Verified reviews</div></div>
+          <div class="stat-v">4.8 / 5</div>
+        </div>
+        <div class="visitor-box">
+          <div class="visitor-n" id="visitorCount"></div>
+          <div class="visitor-l">SITE VISITORS</div>
+        </div>
+      </div>
+
+      <!-- QUICK BOOKING + RZP -->
+      <div class="booking-panel">
+        <div class="booking-panel-head">⚡ QUICK BOOKING</div>
+        <div class="booking-form-row">
+          <input class="booking-input" type="text" placeholder="Your Name" id="bk-name"/>
+          <input class="booking-input" type="tel" placeholder="Mobile Number" id="bk-phone"/>
+        </div>
+        <div class="booking-form-row full">
+          <select class="booking-select" id="bk-service">
+            <option value="" disabled selected>Select a Service</option>
+            <option value="registration">Registration (Sale Deed + EC) ₹9,999</option>
+            <option value="reg">Sale Deed Registration ₹9,999</option>
+            <option value="report">Property Search Report ₹4,999</option>
+            <option value="oral">Property Paper Review ₹4,999</option>
+            <option value="review">Agreement to Sale Review ₹4,999</option>
+            <option value="drafting">Agreement to Sale Drafting ₹4,999</option>
+            <option value="will">WILL Drafting &amp; Registration ₹4,999</option>
+            <option value="trademark">Trademark Registration Custom</option>
+          </select>
+        </div>
+        <div class="rzp-btn-wrap">
+          <!-- RAZORPAY PAYMENT BUTTON Replace 'rzp-link' with your actual Razorpay Payment Button embed script from https://dashboard.razorpay.com/app/paymentbuttons/ -->
+          <div id="rzp-payment-container">
+            <button class="rzp-payment-btn" onclick="window.open('https://rzp.io/rzp/1hbD0y94','_blank')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+              Pay &amp; Confirm Booking
+            </button>
+          </div>
+          <div class="rzp-logo">🔒 SECURED BY RAZORPAY · UPI · CARDS · NET BANKING</div>
+        </div>
+        <div class="booking-note">Or book via WhatsApp a team member will call you back within 2 hours.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-bar-inner">
+    <div class="trust-bar-item">
+      <div class="trust-bar-icon">🏠</div>
+      <div class="trust-bar-text"><b>Doorstep Service</b><br/>Lawyer visits your home in Bengaluru</div>
+    </div>
+    <div class="trust-bar-divider"></div>
+    <div class="trust-bar-item">
+      <div class="trust-bar-icon">⚡</div>
+      <div class="trust-bar-text"><b>2-Day Delivery</b><br/>Fastest in the industry</div>
+    </div>
+    <div class="trust-bar-divider"></div>
+    <div class="trust-bar-item">
+      <div class="trust-bar-icon">🔒</div>
+      <div class="trust-bar-text"><b>Secure Payments</b><br/>Razorpay encrypted checkout</div>
+    </div>
+    <div class="trust-bar-divider"></div>
+    <div class="trust-bar-item">
+      <div class="trust-bar-icon">💬</div>
+      <div class="trust-bar-text"><b>24/7 Support</b><br/>WhatsApp & Email always available</div>
+    </div>
+  </div>
+</div>
+
+<hr class="sep"/>
+
+<!-- SERVICES -->
+<div class="section" id="services">
+  <div class="section-eyebrow">Property & Documentation</div>
+  <div class="section-title">Legal Services</div>
+  <div class="section-sub">End-to-end property legal services handled by verified senior lawyers from registration to succession planning.</div>
+
+
+  <div class="services-grid">
+
+    <!-- 1 Registration NEW CARD -->
+    <div class="card featured-card" onclick="openModal('m-registration')">
+      <div class="card-top">
+        <div class="card-tag">PROPERTY & DOCUMENTATION</div>
+        <div class="card-title">Registration</div>
+        <div class="card-rating">★★★★★ 4.9 <span>· Most Booked</span></div>
+        <div class="badge-row" style="margin-top:8px;">
+          <span class="badge b-blue">Lawyer Visit</span>
+          <span class="badge b-gold">Most Popular</span>
+          <span class="badge b-green">End-to-End</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">Complete end-to-end registration service from sale deed preparation and stamp duty to Sub-Registrar coordination and obtaining your Encumbrance Certificate.</div>
+        <ul class="card-features">
+          <li>Supervision & coordination with Sub-Registrar office</li>
+          <li>Complete sale deed preparation & stamp duty guidance</li>
+          <li>Getting the registered document from Sub-Registrar</li>
+          <li>Encumbrance Certificate (EC) obtained on your behalf</li>
+          <li>Identity verification (Aadhaar / PAN) for all parties</li>
+          <li>Witness arrangement support</li>
+        </ul>
+      </div>
+      <div class="card-foot">
+        <div><div class="card-price">₹9,999</div><div class="card-price-note">All inclusive · EC included</div></div>
+        <a class="card-cta" href="https://rzp.io/rzp/1hbD0y94" target="_blank">Book Now →</a>
+      </div>
+    </div>
+
+    <!-- 2 Property Registration (Sale Deed) -->
+    <div class="card" onclick="openModal('m-reg')">
+      <div class="card-top">
+        <div class="card-tag">PROPERTY & DOCUMENTATION</div>
+        <div class="card-title">Property Registration<br/>(Sale Deed Registration)</div>
+        <div class="badge-row">
+          <span class="badge b-blue">Lawyer Visit</span>
+          <span class="badge b-gold">Popular</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">Full-service sale deed registration by an expert property lawyer stamp duty calculation through Sub-Registrar office filing.</div>
+        <ul class="card-features">
+          <li>Property value estimation & stamp duty guidance</li>
+          <li>Complete sale deed preparation</li>
+          <li>Sub-Registrar coordination & attendance</li>
+          <li>Witness arrangement support</li>
+          <li>Identity verification (Aadhaar / PAN)</li>
+        </ul>
+      </div>
+      <div class="card-foot">
+        <div><div class="card-price">₹9,999</div><div class="card-price-note">All inclusive</div></div>
+        <a class="card-cta" href="https://rzp.io/rzp/1hbD0y94" target="_blank">Book Now →</a>
+      </div>
+    </div>
+
+    <!-- 2 Property Report -->
+    <div class="card featured-card" onclick="openModal('m-report')">
+      <div class="card-top">
+        <div class="card-tag">PROPERTY & DOCUMENTATION</div>
+        <div class="card-title">Property Search Report</div>
+        <div class="card-rating">★★★★★ 4.8 <span>· 3,000+ clients</span></div>
+        <div class="badge-row" style="margin-top:8px;">
+          <span class="badge b-blue">Lawyer Visit</span>
+          <span class="badge b-green">Top Rated</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">A detailed written report on your property ownership chain, financial liabilities, title clarity, missing documents prepared by a senior lawyer.</div>
+        <ul class="card-features">
+          <li>200–300 page in-depth document review</li>
+          <li>Government records cross-verification</li>
+          <li>Property paper trail continuity check</li>
+          <li>Missing documents identification</li>
+          <li>Dedicated consultation post-delivery</li>
+          <li>Vernacular language documents accepted</li>
+        </ul>
+      </div>
+      <div class="card-foot">
+        <div><div class="card-price">₹4,999</div><div class="card-price-note">Delivery in 3 days</div></div>
+        <a class="card-cta" href="https://rzp.io/rzp/1hbD0y94" target="_blank">Book Now →</a>
+      </div>
+    </div>
+
+    <!-- 3 Oral Discussion -->
+    <div class="card" onclick="openModal('m-oral')">
+      <div class="card-top">
+        <div class="card-tag">DOCUMENT REVIEW</div>
+        <div class="card-title">Property Paper Review<br/>(Oral Discussion)</div>
+        <div class="badge-row">
+          <span class="badge b-blue">Lawyer Visit</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">Expert legal review of your property papers followed by a one-on-one consultation ideal for quick decisions without a formal written report.</div>
+        <ul class="card-features">
+          <li>Review of Sale Deed, Title Deed, Mutation Records</li>
+          <li>Dedicated one-on-one legal call</li>
+          <li>Verbal opinion on ownership & encumbrances</li>
+          <li>Compliance check with local laws</li>
+          <li>Consult in your preferred language</li>
+        </ul>
+      </div>
+      <div class="card-foot">
+        <div><div class="card-price">₹4,999</div><div class="card-price-note">Delivery in 5 days</div></div>
+        <a class="card-cta" href="https://rzp.io/rzp/1hbD0y94" target="_blank">Book Now →</a>
+      </div>
+    </div>
+
+    <!-- 4 Sale Agreement Review -->
+    <div class="card" onclick="openModal('m-review')">
+      <div class="card-top">
+        <div class="card-tag">DOCUMENT REVIEW</div>
+        <div class="card-title">Sale Agreement /<br/>Agreement to Sale Review</div>
+        <div class="card-rating">★★★★★ 4.8 <span>· 675 reviews</span></div>
+        <div class="badge-row" style="margin-top:8px;">
+          <span class="badge b-gold">45 Min Consult</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">Senior lawyers break down complex Sale Agreement legal language into plain terms, flag risks, and recommend protective changes.</div>
+        <ul class="card-features">
+          <li>Upload Sale Deed / Agreement to Sale</li>
+          <li>45-minute dedicated consultation</li>
+          <li>Schedule at your convenience</li>
+          <li>Critical legal clause explanation</li>
+          <li>Consult in your language</li>
+        </ul>
+      </div>
+      <div class="card-foot">
+        <div><div class="card-price">₹4,999</div><div class="card-price-note">Delivery in 5 days</div></div>
+        <a class="card-cta" href="https://rzp.io/rzp/1hbD0y94" target="_blank">Book Now →</a>
+      </div>
+    </div>
+
+    <!-- 5 ATS Drafting -->
+    <div class="card" onclick="openModal('m-drafting')">
+      <div class="card-top">
+        <div class="card-tag">PROPERTY & DOCUMENTATION</div>
+        <div class="card-title">Agreement to Sale Drafting</div>
+        <div class="badge-row">
+          <span class="badge b-blue">Home Visit</span>
+          <span class="badge b-green">Drafting</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">A professionally drafted Agreement to Sale that sets clear ground rules for your property transaction. Lawyer visits post-consultation.</div>
+        <ul class="card-features">
+          <li>Property document collection at your home</li>
+          <li>Senior lawyer drafts legally sound ATS</li>
+          <li>Price, payment terms, possession date covered</li>
+          <li>Default & dispute resolution clauses included</li>
+          <li>Online consultation + home visit available</li>
+        </ul>
+      </div>
+      <div class="card-foot">
+        <div><div class="card-price">₹4,999</div><div class="card-price-note">2 working days</div></div>
+        <a class="card-cta" href="https://rzp.io/rzp/1hbD0y94" target="_blank">Book Now →</a>
+      </div>
+    </div>
+
+    <!-- 6 WILL -->
+    <div class="card" onclick="openModal('m-will')">
+      <div class="card-top">
+        <div class="card-tag">SUCCESSION PLANNING</div>
+        <div class="card-title">WILL Drafting &amp; Registration</div>
+        <div class="card-rating" style="color:var(--green);">✓ <span style="color:var(--text2);">10,987 people have secured their legacy</span></div>
+        <div class="badge-row" style="margin-top:8px;">
+          <span class="badge b-purple">Succession Law</span>
+          <span class="badge b-gold">2 Free Iterations</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">Protect your family's future with a properly drafted Will by senior lawyers skilled in Indian Succession Laws.</div>
+        <ul class="card-features">
+          <li>Dedicated lawyer consultation for drafting</li>
+          <li>First draft within 2 working days</li>
+          <li>2 free iterations to incorporate changes</li>
+          <li>Optional registration for legal enforceability</li>
+          <li>Video recording of signing available</li>
+        </ul>
+      </div>
+      <div class="card-foot">
+        <div><div class="card-price">₹4,999</div><div class="card-price-note">4.5 ★ Customer Score</div></div>
+        <a class="card-cta" href="https://rzp.io/rzp/1hbD0y94" target="_blank">Book Now →</a>
+      </div>
+    </div>
+
+    <!-- 7 Trademark -->
+    <div class="card" onclick="openModal('m-trademark')">
+      <div class="card-top">
+        <div class="card-tag">STARTUP SERVICES</div>
+        <div class="card-title">Trademark Registration</div>
+        <div class="card-rating" style="color:var(--green);">✓ <span style="color:var(--text2);">2,970 trademarks filed</span></div>
+        <div class="badge-row" style="margin-top:8px;">
+          <span class="badge b-gold">MSME 50% Rebate</span>
+          <span class="badge b-green">IP Protection</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">Protect your brand identity with full trademark registration preliminary search, filing, examination response, and hearing support.</div>
+        <ul class="card-features">
+          <li>Conflict search on official TM database</li>
+          <li>Application preparation & filing with affidavit</li>
+          <li>Examination report review & response</li>
+          <li>Hearing support before Examiner/Registrar</li>
+          <li>MSME/Startup 50% government fee rebate</li>
+        </ul>
+      </div>
+      <div class="card-foot">
+        <div><div class="card-price">Custom</div><div class="card-price-note">Contact for pricing</div></div>
+        <a class="card-cta" href="https://rzp.io/rzp/1hbD0y94" target="_blank">Get Quote →</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<hr class="sep"/>
+
+<!-- HOW IT WORKS -->
+<div class="section" id="how-it-works">
+  <div class="section-eyebrow">Process</div>
+  <div class="section-title">How It Works</div>
+  <div class="section-sub">A seamless four-step process from document collection at your doorstep to delivery of your legal opinion.</div>
+  <div class="hiw-grid">
+    <div class="hiw-step">
+      <div class="hiw-step-num">01 COLLECT</div>
+      <div class="hiw-icon">📋</div>
+      <div class="hiw-title">Document Collection</div>
+      <div class="hiw-desc">Upload property papers securely via our portal, or have a lawyer collect hard copies directly from your address.</div>
+      <div class="hiw-badge">HOME VISIT AVAILABLE</div>
+    </div>
+    <div class="hiw-step">
+      <div class="hiw-step-num">02 REVIEW</div>
+      <div class="hiw-icon">⚖️</div>
+      <div class="hiw-title">Expert Review & Analysis</div>
+      <div class="hiw-desc">A senior property lawyer conducts an in-depth review covering title chain, encumbrances, legal red flags, and court records.</div>
+      <div class="hiw-badge">200–300 PAGE REVIEW</div>
+    </div>
+    <div class="hiw-step">
+      <div class="hiw-step-num">03 CONSULT</div>
+      <div class="hiw-icon">📞</div>
+      <div class="hiw-title">Consultation + Home Visit</div>
+      <div class="hiw-desc">Post-review, your lawyer schedules a dedicated consultation by call, video, or in-person visit to explain findings in your language.</div>
+      <div class="hiw-badge">FLEXIBLE SCHEDULING</div>
+    </div>
+    <div class="hiw-step">
+      <div class="hiw-step-num">04 DELIVER</div>
+      <div class="hiw-icon">✅</div>
+      <div class="hiw-title">Legal Solution Delivered</div>
+      <div class="hiw-desc">Your detailed legal opinion, drafted document, or verified report is delivered within 2 working days clear, actionable, and complete.</div>
+      <div class="hiw-badge">2 WORKING DAYS</div>
+    </div>
+  </div>
+</div>
+
+<hr class="sep"/>
+<div class="faq-wrap" id="registration">
+  <div class="faq-inner">
+    <div class="section-eyebrow">Property Registration</div>
+    <div class="section-title">Documents & Procedure</div>
+    <div class="section-sub">Everything you need to know about registering property in India documents, process, and common questions answered.</div>
+
+    <div style="margin-top:36px;">
+      <div class="section-eyebrow" style="font-size:10px;">Documents Required (Tentative List)</div>
+      <table class="proc-table">
+        <thead><tr><th>#</th><th>Document / Step</th><th>Details</th></tr></thead>
+        <tbody>
+          <tr><td>01</td><td>Property Value Estimation</td><td>Accurate estimate required for stamp duty calculation per the applicable ready reckoner.</td></tr>
+          <tr><td>02</td><td>Sale Deed</td><td>Primary document transferring ownership. Must be executed and signed by all parties.</td></tr>
+          <tr><td>03</td><td>Stamp Duty & Registration Charges</td><td>Varies by state. Deficit stamp duty results in registration refusal. Women buyers may receive rebates.</td></tr>
+          <tr><td>04</td><td>Sub-Registrar Approach</td><td>Approach the Sub-Registrar of Assurances in whose jurisdiction the property is situated.</td></tr>
+          <tr><td>05</td><td>Document Submission</td><td>Submit originals with property card and proof of stamp duty payment before the registrar.</td></tr>
+          <tr><td>06</td><td>Identity Documents</td><td>Aadhaar, PAN, or government-issued ID for all parties and two witnesses. Biometrics will be scanned.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="faq-cols">
+      <div>
+        <div class="faq-col-label">Registration FAQ</div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">Who must be present during registration? <span class="faq-toggle">+</span></div>
+          <div class="faq-a">Authorised signatories for both seller and purchaser must be present with two witnesses. All must carry valid photo ID. If a Power of Attorney is used, it must be presented. Biometric identity of all parties including witnesses will be scanned at the registrar's office.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">What if a company is party to the agreement? <span class="faq-toggle">+</span></div>
+          <div class="faq-a">The representative must carry a Power of Attorney or Letter of Authority along with a Board Resolution copy authorising them to complete the registration on the company's behalf.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">What is stamp duty and how is it calculated? <span class="faq-toggle">+</span></div>
+          <div class="faq-a">Stamp duty is the tax paid to the government for legal ownership of an asset. It varies by state and is calculated based on the property's market value or ready reckoner rate (whichever is higher). Women buyers often receive rebates in most states.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">What happens if stamp duty paid is insufficient? <span class="faq-toggle">+</span></div>
+          <div class="faq-a">The sub-registrar verifies stamp duty against the ready reckoner before registration. If there is any deficit, registration will be refused. Our lawyers ensure the correct amount is calculated before you appear at the office.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">What is the role of witnesses? <span class="faq-toggle">+</span></div>
+          <div class="faq-a">Two witnesses are mandatory for registration. They must present valid ID proofs and address proofs before the sub-registrar, and their biometric identity will also be scanned. Without proper witnesses, registration cannot be completed.</div>
+        </div>
+      </div>
+      <div>
+        <div class="faq-col-label">Report & Will FAQ</div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">Is it mandatory to register a Will? <span class="faq-toggle">+</span></div>
+          <div class="faq-a">No. Registration of a Will is not mandatory under Indian law. However, registering it with the Sub-Registrar under the Indian Registration Act, 1908 significantly reduces the chance of it being challenged after the maker's death and is strongly advisable.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">Can a Will be video recorded? <span class="faq-toggle">+</span></div>
+          <div class="faq-a">Yes. Video recording of the Will-making process is admissible as evidence under the Indian Evidence Act, 1872. It serves as a strong safeguard against future allegations of fraud or execution under duress.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">Can a Muslim distribute property through a Will? <span class="faq-toggle">+</span></div>
+          <div class="faq-a">Under Muslim personal law applicable in India, a Muslim may dispose of only up to one-third of their property by Will (after funeral expenses and debts) without the consent of heirs. This is governed by personal law, not the Indian Succession Act, 1925.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">What does the Property Search Report include? <span class="faq-toggle">+</span></div>
+          <div class="faq-a">The report covers ownership chain continuity, pending financial liabilities or loans, missing or invalid documents, legal red flags, compliance with local regulations, and any encumbrances or disputes. It is prepared after a 200–300 page review and includes a dedicated post-delivery consultation.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">What is the difference between Agreement to Sale and Sale Deed? <span class="faq-toggle">+</span></div>
+          <div class="faq-a">An Agreement to Sale (ATS) is a commitment to transfer property at a future date upon fulfillment of conditions it does not immediately transfer ownership. A Sale Deed is the final document that actually transfers ownership and must be registered at the Sub-Registrar's office to be legally effective.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-bg" id="contact">
+  <div class="contact-inner">
+    <div class="contact-card">
+      <div class="contact-icon">💬</div>
+      <div class="contact-type">WhatsApp</div>
+      <div class="contact-val">+91 90089 99968</div>
+      <div class="contact-note">Available 24/7 on WhatsApp & Email. For bookings, queries, and document submissions.</div>
+      <a href="https://wa.me/919008999968" target="_blank" class="wa-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Chat on WhatsApp
+      </a>
+    </div>
+    <div class="contact-card">
+      <div class="contact-icon">📧</div>
+      <div class="contact-type">Email</div>
+      <div class="contact-val" style="font-size:12.5px;">weightage.lab@gmail.com</div>
+      <div class="contact-note">Send documents, detailed enquiries, and service requests. We respond within 24 hours on working days.</div>
+      <a href="mailto:weightage.lab@gmail.com" class="btn btn-ghost btn-sm" style="margin-top:14px;">Send Email →</a>
+    </div>
+    <div class="contact-card">
+      <div class="contact-icon">🏛️</div>
+      <div class="contact-type">Platform</div>
+      <div class="contact-val">Legaldirectory.ai</div>
+      <div class="contact-note">India's property legal intelligence platform connecting homebuyers, investors, and sellers with verified senior lawyers for transparent, timely legal services.</div>
+      <div style="display:flex;gap:8px;margin-top:14px;justify-content:center;flex-wrap:wrap;">
+        <span class="badge b-blue">Bengaluru</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- JOIN AS LAWYER compact -->
+<div id="join-lawyer" style="background:var(--bg2);border-top:1px solid rgba(212,168,67,.18);position:relative;z-index:1;">
+  <div style="max-width:1240px;margin:0 auto;padding:44px 52px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;">
+    <div>
+      <div style="font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:6px;">For Legal Professionals</div>
+      <div style="font-family:var(--serif);font-size:22px;color:var(--white);margin-bottom:6px;">Join as a Verified Lawyer</div>
+      <div style="font-size:13px;color:var(--text2);max-width:480px;line-height:1.7;">Empanel with Legaldirectory.ai and receive verified property legal work on your schedule, at your terms. Send your basic details to get started.</div>
+    </div>
+    <a href="mailto:weightage.lab@gmail.com?subject=Lawyer%20Empanelment%20Application&body=Name%3A%0AMobile%3A%0ABar%20Council%20Enrollment%20No%3A%0AState%20Bar%20Council%3A%0ACity%3A%0AYears%20of%20Experience%3A%0ASpecialisation%3A%0A%0APlease%20attach%20your%20Bar%20Council%20Membership%20Certificate."
+      style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#7c5c00,#c49a35);color:#fff;font-family:var(--sans);font-size:13px;font-weight:700;padding:13px 26px;border-radius:var(--radius);text-decoration:none;white-space:nowrap;transition:opacity .18s;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+      ⚖️ &nbsp;Apply weightage.lab@gmail.com
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">Legaldirectory<em>.ai</em></div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--text2);margin-top:6px;letter-spacing:.5px;">India's Trusted Property Legal Intelligence Platform</div>
+    </div>
+    <div class="footer-disc">
+      Legaldirectory.ai is not a law firm and does not engage in the practice of law or solicit lawyers. We are a technology platform that facilitates access to independent legal professionals. All legal services are rendered by empanelled lawyers in their independent capacity.
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-tagline">India's Property Legal Intelligence Platform &nbsp;·&nbsp; Verified Senior Lawyers &nbsp;·&nbsp; 24/7 Support</div>
+    <div class="footer-copy">© 2026 Legaldirectory.ai</div>
+  </div>
+</footer>
+
+<!-- ══════════════ MODALS ══════════════ -->
+
+<!-- Registration (NEW Sale Deed + Sub-Registrar + EC) -->
+<div class="modal-overlay" id="m-registration">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('m-registration')">✕</button>
+    <div class="modal-tag">PROPERTY & DOCUMENTATION · MOST POPULAR</div>
+    <h2>Registration</h2>
+    <div class="modal-price">₹9,999 End-to-End, All Inclusive</div>
+    <div class="modal-section">WHAT'S INCLUDED</div>
+    <ul>
+      <li>Supervision &amp; coordination with Sub-Registrar office your lawyer manages the entire process</li>
+      <li>Complete Sale Deed preparation and stamp duty calculation</li>
+      <li>Attendance at Sub-Registrar office on your behalf</li>
+      <li>Getting the registered document from the Sub-Registrar</li>
+      <li>Encumbrance Certificate (EC) procured on your behalf</li>
+      <li>Witness arrangement support</li>
+      <li>Identity verification for all parties (Aadhaar / PAN)</li>
+    </ul>
+    <div class="modal-section">GOVERNING LAWS</div>
+    <ul>
+      <li>Registration Act, 1908</li>
+      <li>Transfer of Property Act, 1882</li>
+      <li>Indian Stamp Act, 1899 &amp; applicable State Stamp Acts</li>
+    </ul>
+    <div class="modal-section">PROCESS OVERVIEW</div>
+    <ol>
+      <li>Document collection at your home or secure upload via portal</li>
+      <li>Property value estimation &amp; accurate stamp duty calculation</li>
+      <li>Sale Deed drafted and reviewed by senior lawyer</li>
+      <li>Coordinated appearance at the Sub-Registrar office</li>
+      <li>Registered document collected and delivered to you</li>
+      <li>Encumbrance Certificate (EC) obtained and handed over</li>
+    </ol>
+    <hr class="modal-divider"/>
+    <div class="modal-booking">
+      <div class="modal-booking-head">BOOK &amp; PAY SECURELY</div>
+      <p style="font-size:12px;color:var(--text2);margin-bottom:0;">Registration (Sale Deed + EC) &nbsp;·&nbsp; ₹9,999 · All Inclusive</p>
+      <button class="modal-rzp-btn" onclick="window.open('https://rzp.io/rzp/1hbD0y94','_blank')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        Pay ₹9,999 via Razorpay
+      </button>
+      <a href="https://wa.me/919008999968?text=I%20want%20to%20book%20Registration%20(Sale%20Deed%20%2B%20EC)%20%E2%80%94%20%E2%82%B99%2C999" target="_blank" class="modal-wa-alt">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Or Book on WhatsApp
+      </a>
+      <div class="rzp-secure-note">🔒 PAYMENTS SECURED BY RAZORPAY · UPI · CARDS · NET BANKING · WALLETS</div>
+    </div>
+  </div>
+</div>
+
+<!-- Sale Deed Registration -->
+<div class="modal-overlay" id="m-reg">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('m-reg')">✕</button>
+    <div class="modal-tag">PROPERTY PRODUCTS</div>
+    <h2>Sale Deed Registration</h2>
+    <div class="modal-price">₹9,999 All Inclusive</div>
+    <div class="modal-section">WHAT IS INCLUDED</div>
+    <p>End-to-end support for getting your Sale Deed registered through an Expert Property Lawyer from stamp duty calculation to Sub-Registrar attendance.</p>
+    <div class="modal-section">DOCUMENTS REQUIRED (Tentative)</div>
+    <ol>
+      <li>Estimation of the property value</li>
+      <li>Sale deed prepared and vetted by our lawyer</li>
+      <li>Proof of stamp duty & registration charge payment</li>
+      <li>Identity proofs Aadhaar / PAN for all parties</li>
+      <li>Two witnesses with valid ID and address proof</li>
+      <li>Power of Attorney (if applicable)</li>
+      <li>Property card and consent documents</li>
+    </ol>
+    <div class="modal-section">REGISTRATION PROCEDURE</div>
+    <ul>
+      <li>Documents submitted to the Sub-Registrar of Assurances in the jurisdiction of the property</li>
+      <li>Authorised signatories for buyer and seller must be present with two witnesses</li>
+      <li>Biometric identity of all parties will be scanned</li>
+      <li>Our lawyer ensures correct stamp duty is paid to prevent registration refusal</li>
+      <li>Women buyers may receive state-specific stamp duty rebates lawyer will advise accordingly</li>
+    </ul>
+    <hr class="modal-divider"/>
+    <div class="modal-booking">
+      <div class="modal-booking-head">BOOK & PAY SECURELY</div>
+      <p style="font-size:12px;color:var(--text2);margin-bottom:0;">Sale Deed Registration &nbsp;·&nbsp; ₹9,999 All Inclusive</p>
+      <!-- REPLACE: Paste your Razorpay Payment Button script from https://dashboard.razorpay.com/app/paymentbuttons/ here -->
+      <button class="modal-rzp-btn" onclick="window.open('https://rzp.io/rzp/1hbD0y94','_blank')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        Pay ₹9,999 via Razorpay
+      </button>
+      <a href="https://wa.me/919008999968?text=I%20want%20to%20book%20Sale%20Deed%20Registration%20%E2%80%94%20%E2%82%B99%2C999" target="_blank" class="modal-wa-alt">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Or Book on WhatsApp
+      </a>
+      <div class="rzp-secure-note">🔒 PAYMENTS SECURED BY RAZORPAY · UPI · CARDS · NET BANKING · WALLETS</div>
+    </div>
+  </div>
+</div>
+
+<!-- Property Search Report -->
+<div class="modal-overlay" id="m-report">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('m-report')">✕</button>
+    <div class="modal-tag">PROPERTY SEARCH REPORT · 4.8 ★ · 3,000+ CLIENTS</div>
+    <h2>Property Search Report</h2>
+    <div class="modal-price">₹4,999 Delivery in 3 Days</div>
+    <div class="modal-section">WHY YOU NEED THIS</div>
+    <p>When purchasing property, you must ensure it is free from defects, hidden litigation, or financial liabilities. This report provides complete legal clarity before you commit to the most significant financial decision of your life.</p>
+    <div class="modal-section">REVIEW PROCESS</div>
+    <ol>
+      <li>Upload documents via our portal or our lawyer collects them from your address</li>
+      <li>200–300 page in-depth review by a Senior Property Lawyer</li>
+      <li>Verification of property details against Government records where required</li>
+      <li>Property paper trail continuity mapping and identification of missing documents</li>
+      <li>Detailed verification report with the lawyer's observations</li>
+      <li>Dedicated consultation slot to clarify all doubts post-delivery</li>
+    </ol>
+    <div class="modal-section">SERVICE INCLUDES</div>
+    <ul>
+      <li>Detailed analysis of all property papers</li>
+      <li>Online records search where necessary</li>
+      <li>Analysis of pending financial liabilities or loans on the property</li>
+      <li>Detailed written legal report in English</li>
+      <li>Vernacular language documents accepted</li>
+    </ul>
+    <hr class="modal-divider"/>
+    <div class="modal-booking">
+      <div class="modal-booking-head">BOOK & PAY SECURELY</div>
+      <p style="font-size:12px;color:var(--text2);margin-bottom:0;">Property Search Report &nbsp;·&nbsp; ₹4,999 · Delivery in 3 Days</p>
+      <button class="modal-rzp-btn" onclick="window.open('https://rzp.io/rzp/1hbD0y94','_blank')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        Pay ₹4,999 via Razorpay
+      </button>
+      <a href="https://wa.me/919008999968?text=I%20want%20to%20book%20Property%20Search%20Report%20%E2%80%94%20%E2%82%B94%2C999" target="_blank" class="modal-wa-alt">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Or Book on WhatsApp
+      </a>
+      <div class="rzp-secure-note">🔒 PAYMENTS SECURED BY RAZORPAY · UPI · CARDS · NET BANKING · WALLETS</div>
+    </div>
+  </div>
+</div>
+
+<!-- Property Paper Review -->
+<div class="modal-overlay" id="m-oral">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('m-oral')">✕</button>
+    <div class="modal-tag">DOCUMENT REVIEW</div>
+    <h2>Property Paper Review (Oral Discussion)</h2>
+    <div class="modal-price">₹4,999 Delivery in 5 Days</div>
+    <div class="modal-section">WHO IS THIS FOR</div>
+    <ul>
+      <li>Homebuyers wanting to validate documents before purchase</li>
+      <li>Real estate investors evaluating properties</li>
+      <li>Heirs or inheritors unsure of legal ownership</li>
+      <li>Sellers ensuring paperwork is in order</li>
+      <li>Anyone seeking legal clarity before any transaction</li>
+    </ul>
+    <div class="modal-section">WHAT YOU RECEIVE</div>
+    <ul>
+      <li>Expert review of Sale Deed, Title Deed, Agreement to Sale, Mutation Records, Tax Receipts</li>
+      <li>One-on-one dedicated consultation with the lawyer</li>
+      <li>Verbal legal opinion on ownership, encumbrances, and missing documents</li>
+      <li>Legal red flags and risks explained clearly in plain language</li>
+      <li>Compliance check with applicable local laws</li>
+    </ul>
+    <div class="modal-section">HOW IT WORKS</div>
+    <ol>
+      <li>Upload or email your documents securely</li>
+      <li>A lawyer from our panel is assigned to your case</li>
+      <li>Schedule your discussion at your preferred time</li>
+      <li>Speak with the lawyer and get all queries answered</li>
+      <li>Proceed with your property decision confidently</li>
+    </ol>
+    <hr class="modal-divider"/>
+    <div class="modal-booking">
+      <div class="modal-booking-head">BOOK & PAY SECURELY</div>
+      <p style="font-size:12px;color:var(--text2);margin-bottom:0;">Property Paper Review &nbsp;·&nbsp; ₹4,999 · Delivery in 5 Days</p>
+      <button class="modal-rzp-btn" onclick="window.open('https://rzp.io/rzp/1hbD0y94','_blank')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        Pay ₹4,999 via Razorpay
+      </button>
+      <a href="https://wa.me/919008999968?text=I%20want%20to%20book%20Property%20Paper%20Review%20%E2%80%94%20%E2%82%B94%2C999" target="_blank" class="modal-wa-alt">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Or Book on WhatsApp
+      </a>
+      <div class="rzp-secure-note">🔒 PAYMENTS SECURED BY RAZORPAY · UPI · CARDS · NET BANKING · WALLETS</div>
+    </div>
+  </div>
+</div>
+
+<!-- Sale Agreement Review -->
+<div class="modal-overlay" id="m-review">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('m-review')">✕</button>
+    <div class="modal-tag">DOCUMENT REVIEW · 4.8 ★ · 675 REVIEWS</div>
+    <h2>Sale Agreement / Agreement to Sale Review</h2>
+    <div class="modal-price">₹4,999 Delivery in 5 Days</div>
+    <div class="modal-section">SERVICE DESCRIPTION</div>
+    <ul>
+      <li>Upload Sale Deed / Agreement to Sale for lawyer review</li>
+      <li>45 minutes of dedicated consultation with a Senior Property Lawyer</li>
+      <li>Schedule your consultation at your preferred date and time</li>
+      <li>All critical legal clauses explained in plain language</li>
+      <li>Consult in your preferred language</li>
+    </ul>
+    <div class="modal-section">KEY ELEMENTS REVIEWED</div>
+    <ol>
+      <li>Details of parties names, ages, addresses of buyer and seller</li>
+      <li>Description of property exact location, size, survey numbers</li>
+      <li>Sale price and payment terms schedule and method of payment</li>
+      <li>Possession date when buyer takes possession</li>
+      <li>Default clause consequences if either party defaults</li>
+      <li>Dispute resolution mediation, arbitration, or litigation</li>
+      <li>Representations, warranties, and indemnity provisions</li>
+    </ol>
+    <hr class="modal-divider"/>
+    <div class="modal-booking">
+      <div class="modal-booking-head">BOOK & PAY SECURELY</div>
+      <p style="font-size:12px;color:var(--text2);margin-bottom:0;">Agreement to Sale Review &nbsp;·&nbsp; ₹4,999 · Delivery in 5 Days</p>
+      <button class="modal-rzp-btn" onclick="window.open('https://rzp.io/rzp/1hbD0y94','_blank')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        Pay ₹4,999 via Razorpay
+      </button>
+      <a href="https://wa.me/919008999968?text=I%20want%20to%20book%20Sale%20Agreement%20Review%20%E2%80%94%20%E2%82%B94%2C999" target="_blank" class="modal-wa-alt">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Or Book on WhatsApp
+      </a>
+      <div class="rzp-secure-note">🔒 PAYMENTS SECURED BY RAZORPAY · UPI · CARDS · NET BANKING · WALLETS</div>
+    </div>
+  </div>
+</div>
+
+<!-- ATS Drafting -->
+<div class="modal-overlay" id="m-drafting">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('m-drafting')">✕</button>
+    <div class="modal-tag">PROPERTY PRODUCTS · HOME VISIT INCLUDED</div>
+    <h2>Agreement to Sale Drafting</h2>
+    <div class="modal-price">₹4,999 2 Working Days</div>
+    <div class="modal-section">WHY A PROFESSIONALLY DRAFTED ATS?</div>
+    <p>A professionally drafted Agreement to Sale establishes clear ground rules for your property transaction covering price, payment schedule, conditions, and what happens if either party defaults. Our lawyer visits your home post-consultation to finalise and execute the document.</p>
+    <div class="modal-section">KEY ELEMENTS COVERED</div>
+    <ol>
+      <li>Complete details of buyer and seller parties</li>
+      <li>Accurate property description location, size, type, survey identifiers</li>
+      <li>Sale price and payment schedule mode and timeline</li>
+      <li>Possession date when buyer takes possession</li>
+      <li>Conditions precedent and subsequent to the sale</li>
+      <li>Representations, warranties, and seller indemnity clause</li>
+      <li>Dispute resolution mechanism mediation, arbitration, or litigation</li>
+      <li>Termination clause conditions and consequences</li>
+    </ol>
+    <hr class="modal-divider"/>
+    <div class="modal-booking">
+      <div class="modal-booking-head">BOOK & PAY SECURELY</div>
+      <p style="font-size:12px;color:var(--text2);margin-bottom:0;">Agreement to Sale Drafting &nbsp;·&nbsp; ₹4,999 · 2 Working Days</p>
+      <button class="modal-rzp-btn" onclick="window.open('https://rzp.io/rzp/1hbD0y94','_blank')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        Pay ₹4,999 via Razorpay
+      </button>
+      <a href="https://wa.me/919008999968?text=I%20want%20to%20book%20Agreement%20to%20Sale%20Drafting%20%E2%80%94%20%E2%82%B94%2C999" target="_blank" class="modal-wa-alt">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Or Book on WhatsApp
+      </a>
+      <div class="rzp-secure-note">🔒 PAYMENTS SECURED BY RAZORPAY · UPI · CARDS · NET BANKING · WALLETS</div>
+    </div>
+  </div>
+</div>
+
+<!-- WILL Drafting -->
+<div class="modal-overlay" id="m-will">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('m-will')">✕</button>
+    <div class="modal-tag">SUCCESSION PLANNING · 10,987 PURCHASED</div>
+    <h2>WILL Drafting &amp; Registration</h2>
+    <div class="modal-price">₹4,999 First Draft in 2 Working Days</div>
+    <div class="modal-section">KEY DELIVERABLES</div>
+    <ul>
+      <li>Dedicated consultation time with the lawyer for drafting</li>
+      <li>First draft of the Will delivered within 2 working days</li>
+      <li>2 free iterations to incorporate your changes and suggestions</li>
+      <li>Optional registration service for legal enforceability</li>
+      <li>Video recording of the Will-signing process available</li>
+    </ul>
+    <div class="modal-section">GOVERNING LAWS IN INDIA</div>
+    <ul>
+      <li>Indian Succession Act, 1925</li>
+      <li>Hindu Succession Act, 1956</li>
+      <li>The Muslim Personal Law (Shariat) Application Act, 1937</li>
+      <li>Transfer of Property Act, 1882 · Registration Act, 1908</li>
+    </ul>
+    <div class="modal-section">CONTENTS OF A WELL-DRAFTED WILL</div>
+    <ol>
+      <li>Details of maker name, age, address for identification</li>
+      <li>Legal declaration of the maker's testamentary capacity</li>
+      <li>Clear intention for property distribution among beneficiaries</li>
+      <li>Details of all named beneficiaries</li>
+      <li>Guardian appointment for any minor beneficiaries</li>
+      <li>Executor of the Will appointed to carry out its terms</li>
+      <li>Execution after death clause</li>
+    </ol>
+    <hr class="modal-divider"/>
+    <div class="modal-booking">
+      <div class="modal-booking-head">BOOK & PAY SECURELY</div>
+      <p style="font-size:12px;color:var(--text2);margin-bottom:0;">WILL Drafting &amp; Registration &nbsp;·&nbsp; ₹4,999 · 2 Working Days</p>
+      <button class="modal-rzp-btn" onclick="window.open('https://rzp.io/rzp/1hbD0y94','_blank')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        Pay ₹4,999 via Razorpay
+      </button>
+      <a href="https://wa.me/919008999968?text=I%20want%20to%20book%20WILL%20Drafting%20%E2%80%94%20%E2%82%B94%2C999" target="_blank" class="modal-wa-alt">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Or Book on WhatsApp
+      </a>
+      <div class="rzp-secure-note">🔒 PAYMENTS SECURED BY RAZORPAY · UPI · CARDS · NET BANKING · WALLETS</div>
+    </div>
+  </div>
+</div>
+
+<!-- Trademark -->
+<div class="modal-overlay" id="m-trademark">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('m-trademark')">✕</button>
+    <div class="modal-tag">STARTUP SERVICES · 2,970 TRADEMARKS FILED</div>
+    <h2>Trademark Registration</h2>
+    <div class="modal-price">Custom Pricing Contact Us</div>
+    <div class="modal-section">WHY REGISTER YOUR TRADEMARK</div>
+    <ul>
+      <li>Adds to company valuation as a key intellectual property asset</li>
+      <li>Establishes unique identity and brand for goods or services</li>
+      <li>Builds trust, goodwill, and quality perception in customers' minds</li>
+      <li>Basis for trademark filing in other countries if required</li>
+      <li>Only registered owners can claim damages in infringement cases</li>
+    </ul>
+    <div class="modal-section">REGISTRATION PROCESS</div>
+    <ol>
+      <li>Preliminary conflict search on the official Trademark Registry database</li>
+      <li>Application preparation and filing including User Affidavit and mandatory documents</li>
+      <li>Review of Examination Report issued by the Registrar</li>
+      <li>Detailed response to Examination Report (if required)</li>
+      <li>Attending hearing before the Examiner / Registrar (if required)</li>
+    </ol>
+    <div class="modal-section">DOCUMENTS REQUIRED</div>
+    <ul>
+      <li>PAN Card and Address Proof of Applicant</li>
+      <li>Brand name and logo symbol or wordmark to be registered</li>
+      <li>User Affidavit if the trademark is already in use</li>
+      <li>MSME / Startup Recognition certificate for 50% government fee rebate</li>
+      <li>Signed Form TM-48 authorising the lawyer to file on your behalf</li>
+    </ul>
+    <a href="https://wa.me/919008999968?text=I%20want%20to%20enquire%20about%20Trademark%20Registration" target="_blank" class="modal-wa-alt" style="margin-top:22px;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Get Quote on WhatsApp
+    </a>
+  </div>
+</div>
+
+<script>
+const SUPPORT_EMAIL = 'weightage.lab@gmail.com';
+
+// ── VISITOR COUNTER ──
+(function(){
+  const el = document.getElementById('visitorCount');
+  const base = 12480 + Math.floor(Math.random()*300);
+  let cur = 0;
+  const step = Math.ceil(base/70);
+  const t = setInterval(()=>{
+    cur = Math.min(cur+step, base);
+    el.textContent = cur.toLocaleString('en-IN');
+    if(cur>=base) clearInterval(t);
+  }, 18);
+})();
+
+// ── FAQ TOGGLE ──
+function toggleFaq(el){
+  const item = el.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
+  if(!isOpen) item.classList.add('open');
+}
+
+// ── MODAL ──
+function openModal(id){ document.getElementById(id).classList.add('open'); document.body.style.overflow='hidden'; }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); document.body.style.overflow=''; }
+document.querySelectorAll('.modal-overlay').forEach(m=>{
+  m.addEventListener('click',e=>{ if(e.target===m) closeModal(m.id); });
+});
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') document.querySelectorAll('.modal-overlay.open').forEach(m=>closeModal(m.id)); });
+
+// ── SMOOTH SCROLL ──
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+
+// ── SEND EMAIL VIA WEB3FORMS (free, no backend needed) ──
+// Sign up free at https://web3forms.com and replace the access_key below
+const WEB3FORMS_KEY = '645e6ea8-caec-463c-a1bd-9ce5b68106d2';
+
+async function sendEmail(subject, bodyHtml) {
+  try {
+    await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        access_key: WEB3FORMS_KEY,
+        to: SUPPORT_EMAIL,
+        subject: subject,
+        html: bodyHtml,
+        from_name: 'Legaldirectory.ai'
+      })
+    });
+  } catch(e) { console.warn('Email notification failed:', e); }
+}
+
+// ── SEND WHATSAPP NOTIFICATION ──
+function sendWhatsApp(msg) {
+  window.open('https://wa.me/919008999968?text=' + encodeURIComponent(msg), '_blank');
+}
+
+// ── RAZORPAY PAYMENT + ORDER NOTIFICATION ──
+function handleRzpPayment(serviceName, amount) {
+  const name    = document.getElementById('bk-name') ? document.getElementById('bk-name').value : '';
+  const phone   = document.getElementById('bk-phone') ? document.getElementById('bk-phone').value : '';
+  const service = serviceName || (document.getElementById('bk-service') ? document.getElementById('bk-service').options[document.getElementById('bk-service').selectedIndex]?.text : '');
+  const amt     = amount ? '₹' + amount.toLocaleString('en-IN') : '';
+  const ts      = new Date().toLocaleString('en-IN', {timeZone:'Asia/Kolkata'});
+
+  // Email notification
+  sendEmail(
+    '🛒 New Order Placed Legaldirectory.ai',
+    `<div style="font-family:sans-serif;max-width:520px;">
+      <h2 style="color:#d4a843;">New Order Legaldirectory.ai</h2>
+      <table style="width:100%;border-collapse:collapse;font-size:14px;">
+        <tr><td style="padding:8px;color:#888;">Service</td><td style="padding:8px;font-weight:bold;">${service}</td></tr>
+        <tr style="background:#f9f9f9;"><td style="padding:8px;color:#888;">Amount</td><td style="padding:8px;font-weight:bold;">${amt}</td></tr>
+        <tr><td style="padding:8px;color:#888;">Name</td><td style="padding:8px;">${name}</td></tr>
+        <tr style="background:#f9f9f9;"><td style="padding:8px;color:#888;">Phone</td><td style="padding:8px;">${phone}</td></tr>
+        <tr><td style="padding:8px;color:#888;">Time (IST)</td><td style="padding:8px;">${ts}</td></tr>
+      </table>
+    </div>`
+  );
+
+  // WhatsApp notification
+  sendWhatsApp(
+`🛒 *New Order Legaldirectory.ai*
+
+📌 Service: ${service}
+💰 Amount: ${amt}
+👤 Name: ${name}
+📞 Phone: ${phone}
+🕐 Time: ${ts}
+
+Customer redirected to Razorpay ✅`
+  );
+
+  window.open('https://rzp.io/rzp/1hbD0y94', '_blank');
+}
+
+</script>
+</body>
+</html>
