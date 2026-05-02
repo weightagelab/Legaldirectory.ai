@@ -653,6 +653,68 @@ footer {
   .trust-bar-inner { gap:16px; }
   .booking-form-row { grid-template-columns:1fr; }
 }
+
+/* ── FOOTER LEGAL LINKS ── */
+.footer-legal-links {
+  display:flex; align-items:center; justify-content:center;
+  flex-wrap:wrap; gap:6px;
+  padding:16px 52px 20px;
+  border-top:1px solid rgba(255,255,255,.06);
+  background:var(--bg);
+}
+.footer-legal-links a {
+  font-family:var(--mono); font-size:10px; letter-spacing:.8px;
+  color:var(--text2); text-decoration:none;
+  transition:color .15s; text-transform:uppercase;
+}
+.footer-legal-links a:hover { color:var(--blue); }
+.footer-legal-sep { color:var(--border2); font-size:10px; }
+
+/* ── POLICY MODAL ── */
+.policy-modal-overlay {
+  position:fixed; inset:0; background:rgba(5,8,16,.88);
+  z-index:9999; display:flex; align-items:flex-start;
+  justify-content:center; overflow-y:auto; padding:40px 20px;
+  opacity:0; pointer-events:none; transition:opacity .2s;
+}
+.policy-modal-overlay.open { opacity:1; pointer-events:all; }
+.policy-modal {
+  background:var(--bg2); border:1px solid var(--border2);
+  border-radius:10px; max-width:760px; width:100%;
+  padding:40px 44px; position:relative;
+  transform:translateY(20px); transition:transform .2s;
+}
+.policy-modal-overlay.open .policy-modal { transform:translateY(0); }
+.policy-modal-close {
+  position:absolute; top:18px; right:20px;
+  background:var(--bg3); border:1px solid var(--border);
+  color:var(--text2); width:30px; height:30px; border-radius:50%;
+  cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center;
+  transition:background .15s;
+}
+.policy-modal-close:hover { background:var(--border2); color:var(--white); }
+.policy-modal-tag {
+  font-family:var(--mono); font-size:9px; letter-spacing:2px;
+  color:var(--blue); text-transform:uppercase; margin-bottom:12px;
+}
+.policy-modal h2 {
+  font-family:var(--serif); font-size:26px; color:var(--white);
+  margin-bottom:6px; font-weight:400;
+}
+.policy-modal .policy-updated {
+  font-family:var(--mono); font-size:9px; color:var(--text2);
+  margin-bottom:24px; padding-bottom:20px; border-bottom:1px solid var(--border);
+}
+.policy-modal h3 {
+  font-family:var(--mono); font-size:10px; letter-spacing:1.5px;
+  color:var(--gold); text-transform:uppercase; margin:22px 0 8px;
+}
+.policy-modal p, .policy-modal li {
+  font-size:13px; color:var(--text2); line-height:1.8;
+}
+.policy-modal ul { padding-left:18px; margin:0; }
+.policy-modal li { margin-bottom:4px; }
+
 </style>
 </head>
 <body>
@@ -671,7 +733,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <a href="#services">Services</a>
     <a href="#how-it-works">How It Works</a>
     <a href="#registration">Property FAQ</a>
-    <a href="#doc-vault">Document Vault</a>
     <a href="#contact">Contact</a>
   </div>
   <div class="nav-right">
@@ -1264,7 +1325,29 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="footer-tagline">India's Property Legal Intelligence Platform &nbsp;·&nbsp; Verified Senior Lawyers &nbsp;·&nbsp; 24/7 Support</div>
     <div class="footer-copy">© 2026 Legaldirectory.ai</div>
   </div>
+  <div class="footer-legal-links">
+    <a href="#" onclick="openPolicyModal('terms'); return false;" target="_self">Terms &amp; Conditions</a>
+    <span class="footer-legal-sep">·</span>
+    <a href="#" onclick="openPolicyModal('privacy'); return false;" target="_self">Privacy Policy</a>
+    <span class="footer-legal-sep">·</span>
+    <a href="#" onclick="openPolicyModal('refund'); return false;" target="_self">Refund Policy</a>
+    <span class="footer-legal-sep">·</span>
+    <a href="#" onclick="openPolicyModal('cancellation'); return false;" target="_self">Cancellation Policy</a>
+  </div>
 </footer>
+
+
+<!-- ══════════════ POLICY MODALS ══════════════ -->
+<div class="policy-modal-overlay" id="pm-overlay" onclick="closePolicyModal(event)">
+  <div class="policy-modal" id="pm-box">
+    <button class="policy-modal-close" onclick="closePolicyModalDirect()">✕</button>
+    <div class="policy-modal-tag" id="pm-tag">LEGAL</div>
+    <h2 id="pm-title">Policy</h2>
+    <div class="policy-updated" id="pm-updated">Last updated: May 2026</div>
+    <div id="pm-body"></div>
+  </div>
+</div>
+
 
 <!-- ══════════════ MODALS ══════════════ -->
 
@@ -1846,6 +1929,158 @@ Customer redirected to Razorpay ✅`
 
   window.open('https://rzp.io/rzp/1hbD0y94', '_blank');
 }
+
+
+// ── POLICY MODALS ──
+const POLICIES = {
+  terms: {
+    tag: 'LEGAL · PLATFORM',
+    title: 'Terms & Conditions',
+    updated: 'Last updated: 1 May 2026',
+    body: `
+      <h3>1. Platform Nature</h3>
+      <p>Legaldirectory.ai ("Platform") is a technology intermediary that connects users with independent, empanelled legal professionals. The Platform is not a law firm and does not practice law. All legal services are provided by empanelled lawyers acting in their independent capacity.</p>
+      <h3>2. Services</h3>
+      <p>The Platform facilitates booking of legal services including but not limited to: property search reports, sale deed registration, WILL drafting, agreement drafting, document writing, and government document procurement via liaising officers.</p>
+      <h3>3. User Responsibilities</h3>
+      <ul>
+        <li>Users must provide accurate and complete information at the time of booking.</li>
+        <li>Users must ensure that all documents uploaded or shared are authentic and lawfully obtained.</li>
+        <li>Users must not misuse the Platform for any unlawful purpose.</li>
+      </ul>
+      <h3>4. Payments</h3>
+      <p>All payments are processed securely via Razorpay. The Platform accepts UPI, credit/debit cards, net banking, and wallets. By completing a payment, the user acknowledges acceptance of the applicable service price and these terms.</p>
+      <h3>5. Intellectual Property</h3>
+      <p>All content on this Platform including text, design, and branding is owned by Legaldirectory.ai. Unauthorised reproduction or distribution is prohibited.</p>
+      <h3>6. Limitation of Liability</h3>
+      <p>The Platform acts solely as a facilitator. Legaldirectory.ai shall not be liable for the quality, accuracy, or outcome of legal services rendered by empanelled lawyers. Any disputes regarding service quality must be raised within 7 days of delivery.</p>
+      <h3>7. Governing Law</h3>
+      <p>These terms are governed by the laws of India. Any disputes shall be subject to the exclusive jurisdiction of courts in Bengaluru, Karnataka.</p>
+      <h3>8. Amendments</h3>
+      <p>Legaldirectory.ai reserves the right to update these Terms at any time. Continued use of the Platform after changes constitutes acceptance.</p>
+      <h3>9. Contact</h3>
+      <p>For any queries regarding these Terms, write to: <a href="mailto:weightage.lab@gmail.com" style="color:var(--blue);">weightage.lab@gmail.com</a></p>
+    `
+  },
+  privacy: {
+    tag: 'LEGAL · DATA',
+    title: 'Privacy Policy',
+    updated: 'Last updated: 1 May 2026',
+    body: `
+      <h3>1. Information We Collect</h3>
+      <ul>
+        <li><strong style="color:var(--white);">Personal Information:</strong> Name, phone number, email address, and property address provided during booking.</li>
+        <li><strong style="color:var(--white);">Document Data:</strong> Property documents uploaded voluntarily for legal review purposes.</li>
+        <li><strong style="color:var(--white);">Usage Data:</strong> Pages visited, time spent, and device information via Google Analytics and Google Tag Manager.</li>
+      </ul>
+      <h3>2. How We Use Your Information</h3>
+      <ul>
+        <li>To assign your service request to an empanelled lawyer.</li>
+        <li>To send booking confirmations and service updates via WhatsApp and email.</li>
+        <li>To process payments securely via Razorpay.</li>
+        <li>To improve Platform performance and user experience.</li>
+      </ul>
+      <h3>3. Data Sharing</h3>
+      <p>We do not sell your personal data. We share your information only with the assigned empanelled lawyer to the extent necessary to deliver your service, and with payment processors (Razorpay) for transaction processing.</p>
+      <h3>4. Document Security</h3>
+      <p>Property documents shared with us are used solely for the purpose of the service booked. Documents are not stored beyond the service delivery period unless you explicitly opt into our Document Locker service.</p>
+      <h3>5. Cookies</h3>
+      <p>We use cookies and similar tracking technologies via Google Tag Manager for analytics. You may disable cookies in your browser settings, though this may affect Platform functionality.</p>
+      <h3>6. Your Rights</h3>
+      <p>You have the right to request access, correction, or deletion of your personal data held by us. Write to <a href="mailto:weightage.lab@gmail.com" style="color:var(--blue);">weightage.lab@gmail.com</a> with your request.</p>
+      <h3>7. Data Retention</h3>
+      <p>We retain personal data for a period of 12 months from the date of last service interaction, after which it is securely deleted unless required by law.</p>
+      <h3>8. Contact</h3>
+      <p>For privacy concerns: <a href="mailto:weightage.lab@gmail.com" style="color:var(--blue);">weightage.lab@gmail.com</a></p>
+    `
+  },
+  refund: {
+    tag: 'LEGAL · PAYMENTS',
+    title: 'Refund Policy',
+    updated: 'Last updated: 1 May 2026',
+    body: `
+      <h3>1. General Policy</h3>
+      <p>Legaldirectory.ai aims to deliver every service to the highest standard. If you are unsatisfied with a delivered service, please contact us within 7 days of delivery at <a href="mailto:weightage.lab@gmail.com" style="color:var(--blue);">weightage.lab@gmail.com</a> or on WhatsApp at +91 90089 99968.</p>
+      <h3>2. Eligible Refund Scenarios</h3>
+      <ul>
+        <li>Service was not initiated within the committed timeframe and no prior notice was given.</li>
+        <li>Duplicate payment made by the user for the same service.</li>
+        <li>Service was cancelled by Legaldirectory.ai due to inability to assign a lawyer.</li>
+        <li>Technical error resulting in incorrect charge.</li>
+      </ul>
+      <h3>3. Non-Refundable Scenarios</h3>
+      <ul>
+        <li>Service has been delivered in full (report, deed, or document procured).</li>
+        <li>Refund request raised after 7 days of service delivery.</li>
+        <li>Cancellation after a lawyer has been assigned and work has commenced.</li>
+        <li>Delays caused by the user failing to provide required documents in time.</li>
+        <li>Dissatisfaction with the legal outcome (property title, court result, etc.) which is beyond the Platform's control.</li>
+      </ul>
+      <h3>4. Refund Process</h3>
+      <p>Approved refunds will be processed to the original payment method within 7–10 working days. Razorpay processing timelines may vary by bank.</p>
+      <h3>5. Liaising Officer (₹99 service)</h3>
+      <p>Refunds for the Liaising Officer service are available only if the document was not procured within 48 hours with no prior communication from our team.</p>
+      <h3>6. Contact for Refunds</h3>
+      <p>Email: <a href="mailto:weightage.lab@gmail.com" style="color:var(--blue);">weightage.lab@gmail.com</a> | WhatsApp: +91 90089 99968</p>
+    `
+  },
+  cancellation: {
+    tag: 'LEGAL · BOOKINGS',
+    title: 'Cancellation Policy',
+    updated: 'Last updated: 1 May 2026',
+    body: `
+      <h3>1. Cancellation by User</h3>
+      <ul>
+        <li><strong style="color:var(--white);">Before lawyer assignment:</strong> Full refund applicable. Cancellations must be requested within 2 hours of payment.</li>
+        <li><strong style="color:var(--white);">After lawyer assignment, before work commencement:</strong> 50% of service fee may be retained as assignment and coordination charges.</li>
+        <li><strong style="color:var(--white);">After work has commenced:</strong> No refund. Partial credit may be issued at the Platform's discretion depending on work completed.</li>
+      </ul>
+      <h3>2. How to Cancel</h3>
+      <p>To cancel a booking, contact us immediately via:</p>
+      <ul>
+        <li>WhatsApp: +91 90089 99968</li>
+        <li>Email: <a href="mailto:weightage.lab@gmail.com" style="color:var(--blue);">weightage.lab@gmail.com</a></li>
+      </ul>
+      <p>Please include your name, service booked, and payment reference number in your cancellation request.</p>
+      <h3>3. Cancellation by Platform</h3>
+      <p>Legaldirectory.ai reserves the right to cancel a booking in the following cases:</p>
+      <ul>
+        <li>No suitable empanelled lawyer is available in your area.</li>
+        <li>The user fails to provide required documents within 48 hours of booking.</li>
+        <li>The request involves services outside our current scope of operations.</li>
+      </ul>
+      <p>In such cases, a full refund will be issued within 7 working days.</p>
+      <h3>4. Rescheduling</h3>
+      <p>Rescheduling of lawyer visits or consultation slots is permitted up to 2 hours before the scheduled time at no charge. Late rescheduling is subject to availability.</p>
+      <h3>5. Liaising Officer (₹99 service)</h3>
+      <p>Cancellations for the Liaising Officer service must be made within 1 hour of booking. Post that, the fee is non-refundable as document procurement may have already commenced.</p>
+    `
+  }
+};
+
+function openPolicyModal(key) {
+  const p = POLICIES[key];
+  if (!p) return;
+  document.getElementById('pm-tag').textContent = p.tag;
+  document.getElementById('pm-title').textContent = p.title;
+  document.getElementById('pm-updated').textContent = p.updated;
+  document.getElementById('pm-body').innerHTML = p.body;
+  document.getElementById('pm-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePolicyModalDirect() {
+  document.getElementById('pm-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closePolicyModal(e) {
+  if (e.target === document.getElementById('pm-overlay')) closePolicyModalDirect();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closePolicyModalDirect();
+});
 
 </script>
 </body>
