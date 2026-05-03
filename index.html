@@ -298,6 +298,24 @@ nav {
 .btn-ghost { background:transparent; color:var(--text3); border:1px solid var(--border2); }
 .btn-ghost:hover { border-color:var(--blue); color:var(--blue); }
 .btn-sm { font-size:12px; padding:9px 17px; }
+.btn-ai-extension {
+  background: linear-gradient(135deg, #d4a843, #f5c518);
+  color: #07080e;
+  border: 1px solid rgba(245,197,24,.55);
+  box-shadow: 0 0 18px rgba(212,168,67,.22);
+  white-space: nowrap;
+}
+.btn-ai-extension:hover {
+  background: linear-gradient(135deg, #f5c518, #d4a843);
+  box-shadow: 0 4px 24px rgba(212,168,67,.35);
+  transform: translateY(-1px);
+}
+@media(max-width:640px){
+  .btn-ai-extension { padding: 8px 12px; font-size: 11px; }
+  .nav-right { gap: 6px; }
+  .status-dot { display:none; }
+}
+
 
 /* ── HERO ── */
 .hero-wrap {
@@ -665,7 +683,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <nav>
   <div class="logo-wrap">
     <span class="logo">Legaldirectory<em>.ai</em></span>
-    <span class="logo-badge">v3.3</span>
+    <span class="logo-badge">v3.4</span>
   </div>
   <div class="nav-links">
     <a href="#services">Services</a>
@@ -674,6 +692,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <a href="#contact">Contact</a>
   </div>
   <div class="nav-right">
+    <a href="directory-ai.html" class="btn btn-ai-extension btn-sm" title="Open AI Property Verification">
+      ⚡ AI Verify Property
+    </a>
     <div class="status-dot">Platform Active</div>
     <a href="https://wa.me/919008999968" target="_blank" class="btn btn-wa btn-sm">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
@@ -691,6 +712,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <p class="hero-lead">Senior lawyers review your property documents, visit your home, and deliver a complete legal opinion clearly, transparently, and within 2 working days.</p>
       <div class="hero-actions">
         <a href="#services" class="btn btn-primary">Explore Services</a>
+        <a href="directory-ai.html" class="btn btn-gold">🧠 Run AI Property Check</a>
         <a href="https://wa.me/919008999968" target="_blank" class="btn btn-wa">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           Chat with Us
@@ -763,7 +785,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="rzp-btn-wrap">
           <!-- RAZORPAY PAYMENT BUTTON Replace 'rzp-link' with your actual Razorpay Payment Button embed script from https://dashboard.razorpay.com/app/paymentbuttons/ -->
           <div id="rzp-payment-container">
-            <button class="rzp-payment-btn" onclick="window.open('https://rzp.io/rzp/1hbD0y94','_blank')">
+            <button class="rzp-payment-btn" onclick="window.open('https://pages.razorpay.com/stores/st_Ses2ulWyh3zwVI','_blank')">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
               Pay &amp; Confirm Booking
             </button>
@@ -1312,7 +1334,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="modal-booking">
       <div class="modal-booking-head">BOOK &amp; PAY SECURELY</div>
       <p style="font-size:12px;color:var(--text2);margin-bottom:0;">Registration (Sale Deed + EC) &nbsp;·&nbsp; ₹9,999 · All Inclusive</p>
-      <button class="modal-rzp-btn" onclick="window.open('https://rzp.io/rzp/1hbD0y94','_blank')">
+      <button class="modal-rzp-btn" onclick="window.open('https://pages.razorpay.com/stores/st_Ses2ulWyh3zwVI','_blank')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
         Pay ₹9,999 via Razorpay
       </button>
@@ -1357,7 +1379,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="modal-booking-head">BOOK & PAY SECURELY</div>
       <p style="font-size:12px;color:var(--text2);margin-bottom:0;">Sale Deed Registration &nbsp;·&nbsp; ₹9,999 All Inclusive</p>
       <!-- REPLACE: Paste your Razorpay Payment Button script from https://dashboard.razorpay.com/app/paymentbuttons/ here -->
-      <button class="modal-rzp-btn" onclick="window.open('https://rzp.io/rzp/1hbD0y94','_blank')">
+      <button class="modal-rzp-btn" onclick="window.open('https://pages.razorpay.com/stores/st_Ses2ulWyh3zwVI','_blank')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
         Pay ₹9,999 via Razorpay
       </button>
@@ -1400,7 +1422,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="modal-booking">
       <div class="modal-booking-head">BOOK & PAY SECURELY</div>
       <p style="font-size:12px;color:var(--text2);margin-bottom:0;">Property Search Report &nbsp;·&nbsp; ₹4,999 · Delivery in 3 Days</p>
-      <button class="modal-rzp-btn" onclick="window.open('https://rzp.io/rzp/1hbD0y94','_blank')">
+      <button class="modal-rzp-btn" onclick="window.open('https://pages.razorpay.com/stores/st_Ses2ulWyh3zwVI','_blank')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
         Pay ₹4,999 via Razorpay
       </button>
@@ -1448,7 +1470,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="modal-booking">
       <div class="modal-booking-head">BOOK & PAY SECURELY</div>
       <p style="font-size:12px;color:var(--text2);margin-bottom:0;">Property Paper Review &nbsp;·&nbsp; ₹4,999 · Delivery in 5 Days</p>
-      <button class="modal-rzp-btn" onclick="window.open('https://rzp.io/rzp/1hbD0y94','_blank')">
+      <button class="modal-rzp-btn" onclick="window.open('https://pages.razorpay.com/stores/st_Ses2ulWyh3zwVI','_blank')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
         Pay ₹4,999 via Razorpay
       </button>
@@ -1490,7 +1512,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="modal-booking">
       <div class="modal-booking-head">BOOK & PAY SECURELY</div>
       <p style="font-size:12px;color:var(--text2);margin-bottom:0;">Agreement to Sale Review &nbsp;·&nbsp; ₹4,999 · Delivery in 5 Days</p>
-      <button class="modal-rzp-btn" onclick="window.open('https://rzp.io/rzp/1hbD0y94','_blank')">
+      <button class="modal-rzp-btn" onclick="window.open('https://pages.razorpay.com/stores/st_Ses2ulWyh3zwVI','_blank')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
         Pay ₹4,999 via Razorpay
       </button>
@@ -1527,7 +1549,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="modal-booking">
       <div class="modal-booking-head">BOOK & PAY SECURELY</div>
       <p style="font-size:12px;color:var(--text2);margin-bottom:0;">Agreement to Sale Drafting &nbsp;·&nbsp; ₹4,999 · 2 Working Days</p>
-      <button class="modal-rzp-btn" onclick="window.open('https://rzp.io/rzp/1hbD0y94','_blank')">
+      <button class="modal-rzp-btn" onclick="window.open('https://pages.razorpay.com/stores/st_Ses2ulWyh3zwVI','_blank')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
         Pay ₹4,999 via Razorpay
       </button>
@@ -1576,7 +1598,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="modal-booking">
       <div class="modal-booking-head">BOOK & PAY SECURELY</div>
       <p style="font-size:12px;color:var(--text2);margin-bottom:0;">WILL Drafting &amp; Registration &nbsp;·&nbsp; ₹4,999 · 2 Working Days</p>
-      <button class="modal-rzp-btn" onclick="window.open('https://rzp.io/rzp/1hbD0y94','_blank')">
+      <button class="modal-rzp-btn" onclick="window.open('https://pages.razorpay.com/stores/st_Ses2ulWyh3zwVI','_blank')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
         Pay ₹4,999 via Razorpay
       </button>
@@ -1663,7 +1685,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="modal-booking">
       <div class="modal-booking-head">BOOK &amp; PAY SECURELY</div>
       <p style="font-size:12px;color:var(--text2);margin-bottom:0;">Document Writer &nbsp;·&nbsp; ₹4,999</p>
-      <button class="modal-rzp-btn" onclick="window.open('https://rzp.io/rzp/1hbD0y94','_blank')">
+      <button class="modal-rzp-btn" onclick="window.open('https://pages.razorpay.com/stores/st_Ses2ulWyh3zwVI','_blank')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
         Pay ₹4,999 via Razorpay
       </button>
@@ -1737,7 +1759,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="modal-booking">
       <div class="modal-booking-head">BOOK &amp; PAY SECURELY</div>
       <p style="font-size:12px;color:var(--text2);margin-bottom:0;">Liaising Officer &nbsp;·&nbsp; ₹99</p>
-      <button class="modal-rzp-btn" onclick="window.open('https://rzp.io/rzp/1hbD0y94','_blank')">
+      <button class="modal-rzp-btn" onclick="window.open('https://pages.razorpay.com/stores/st_Ses2ulWyh3zwVI','_blank')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
         Pay ₹99 via Razorpay
       </button>
@@ -1852,7 +1874,7 @@ function handleRzpPayment(serviceName, amount) {
 Customer redirected to Razorpay ✅`
   );
 
-  window.open('https://rzp.io/rzp/1hbD0y94', '_blank');
+  window.open('https://pages.razorpay.com/stores/st_Ses2ulWyh3zwVI', '_blank');
 }
 
 </script>
