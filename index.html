@@ -596,97 +596,6 @@ footer {
 }
 .footer-copy { font-family:var(--mono); font-size:10px; color:var(--text2); }
 
-/* ── AI LEGAL CHAT ── */
-.ai-chat-panel {
-  background: var(--bg2);
-  border: 1px solid rgba(212,168,67,.3);
-  border-radius: var(--radius);
-  overflow: hidden;
-  margin-top: 18px;
-  box-shadow: 0 0 28px rgba(212,168,67,.07);
-  display: flex; flex-direction: column;
-}
-.ai-chat-head {
-  background: linear-gradient(135deg, rgba(212,168,67,.08), rgba(59,130,246,.06));
-  border-bottom: 1px solid var(--border);
-  padding: 14px 18px;
-  display: flex; align-items: center; gap: 12px;
-}
-.ai-chat-icon { font-size: 22px; flex-shrink: 0; }
-.ai-chat-title { font-family: var(--serif); font-size: 15px; color: var(--white); font-weight: 600; }
-.ai-chat-sub { font-size: 11px; color: var(--gold); margin-top: 1px; font-family: var(--mono); letter-spacing: .3px; }
-.ai-online-dot {
-  width: 8px; height: 8px; border-radius: 50%; background: var(--green);
-  margin-left: auto; flex-shrink: 0; animation: pulse 2s ease-in-out infinite;
-  box-shadow: 0 0 6px rgba(34,197,94,.5);
-}
-.ai-chat-messages {
-  padding: 14px 14px 10px; min-height: 160px; max-height: 280px;
-  overflow-y: auto; display: flex; flex-direction: column; gap: 12px;
-  scroll-behavior: smooth;
-}
-.ai-chat-messages::-webkit-scrollbar { width: 4px; }
-.ai-chat-messages::-webkit-scrollbar-track { background: transparent; }
-.ai-chat-messages::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
-.ai-msg { display: flex; gap: 9px; align-items: flex-start; }
-.ai-msg-bot { flex-direction: row; }
-.ai-msg-user { flex-direction: row-reverse; }
-.ai-msg-avatar { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
-.ai-msg-bubble {
-  font-size: 12.5px; line-height: 1.75; border-radius: 10px;
-  padding: 10px 13px; max-width: 92%;
-}
-.ai-msg-bot .ai-msg-bubble {
-  background: var(--bg3); color: var(--text); border: 1px solid var(--border);
-  border-top-left-radius: 3px;
-}
-.ai-msg-user .ai-msg-bubble {
-  background: linear-gradient(135deg, var(--blue2), var(--blue));
-  color: #fff; border-top-right-radius: 3px;
-}
-.ai-msg-examples { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-.ai-example-chip {
-  font-size: 11px; color: var(--gold); background: rgba(212,168,67,.07);
-  border: 1px solid rgba(212,168,67,.25); border-radius: 20px;
-  padding: 4px 10px; cursor: pointer; transition: all .18s; line-height: 1.5;
-}
-.ai-example-chip:hover { background: rgba(212,168,67,.18); color: var(--gold-pale); }
-.ai-typing-dot {
-  display: inline-flex; gap: 3px; align-items: center; padding: 4px 0;
-}
-.ai-typing-dot span {
-  width: 5px; height: 5px; border-radius: 50%; background: var(--text2);
-  animation: typingBounce 1.2s ease-in-out infinite;
-}
-.ai-typing-dot span:nth-child(2) { animation-delay: .2s; }
-.ai-typing-dot span:nth-child(3) { animation-delay: .4s; }
-@keyframes typingBounce { 0%,60%,100%{transform:translateY(0);opacity:.4;} 30%{transform:translateY(-4px);opacity:1;} }
-.ai-chat-input-wrap {
-  display: flex; gap: 8px; padding: 10px 14px; border-top: 1px solid var(--border);
-  align-items: flex-end;
-}
-.ai-chat-input {
-  flex: 1; background: var(--bg3); border: 1px solid var(--border2);
-  color: var(--white); font-family: var(--sans); font-size: 12.5px;
-  padding: 9px 12px; border-radius: 6px; resize: none; outline: none;
-  transition: border-color .18s; line-height: 1.5;
-}
-.ai-chat-input:focus { border-color: var(--gold); }
-.ai-chat-input::placeholder { color: var(--text2); }
-.ai-chat-send {
-  background: var(--gold); color: #07080e; border: none; border-radius: 6px;
-  width: 36px; height: 36px; cursor: pointer; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  transition: all .18s; font-weight: 700;
-}
-.ai-chat-send:hover { background: #c49a35; transform: translateY(-1px); }
-.ai-chat-send:disabled { background: var(--border2); color: var(--text2); transform: none; cursor: not-allowed; }
-.ai-chat-disclaimer {
-  font-family: var(--mono); font-size: 9px; color: var(--text2);
-  text-align: center; padding: 8px 14px; letter-spacing: .3px; background: var(--bg3);
-  border-top: 1px solid var(--border);
-}
-
 /* ── MODAL ── */
 .modal-overlay {
   display:none; position:fixed; inset:0;
@@ -817,36 +726,39 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div>
 
 
-      <!-- AI LEGAL ADVICE CHAT -->
-      <div class="ai-chat-panel" id="ai-legal-chat">
-        <div class="ai-chat-head">
-          <span class="ai-chat-icon">⚖️</span>
-          <div>
-            <div class="ai-chat-title">Free Legal Advice</div>
-            <div class="ai-chat-sub">Describe your problem — get instant legal advice</div>
+      <!-- QUICK BOOKING + RZP -->
+      <div class="booking-panel">
+        <div class="booking-panel-head">⚡ QUICK BOOKING</div>
+        <div class="booking-form-row">
+          <input class="booking-input" type="text" placeholder="Your Name" id="bk-name"/>
+          <input class="booking-input" type="tel" placeholder="Mobile Number" id="bk-phone"/>
+        </div>
+        <div class="booking-form-row full">
+          <select class="booking-select" id="bk-service">
+            <option value="" disabled selected>Select a Service</option>
+            <option value="registration">Registration (Sale Deed + EC) ₹9,999</option>
+            <option value="reg">Sale Deed Registration ₹9,999</option>
+            <option value="report">Property Search Report ₹4,999</option>
+            <option value="oral">Property Paper Review ₹4,999</option>
+            <option value="review">Agreement to Sale Review ₹4,999</option>
+            <option value="drafting">Agreement to Sale Drafting ₹4,999</option>
+            <option value="will">WILL Drafting &amp; Registration ₹4,999</option>
+            <option value="trademark">Trademark Registration Custom</option>
+            <option value="docwriter">Document Writer — Starting ₹4,999</option>
+            <option value="liaison">Liaising Officer — ₹99 per document</option>
+          </select>
+        </div>
+        <div class="rzp-btn-wrap">
+          <!-- RAZORPAY PAYMENT BUTTON Replace 'rzp-link' with your actual Razorpay Payment Button embed script from https://dashboard.razorpay.com/app/paymentbuttons/ -->
+          <div id="rzp-payment-container">
+            <button class="rzp-payment-btn" onclick="handleRzpPayment(null, null)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+              Pay &amp; Confirm Booking
+            </button>
           </div>
-          <div class="ai-online-dot"></div>
+          <div class="rzp-logo">🔒 SECURED BY RAZORPAY · UPI · CARDS · NET BANKING</div>
         </div>
-        <div class="ai-chat-messages" id="ai-chat-messages">
-          <div class="ai-msg ai-msg-bot">
-            <div class="ai-msg-avatar">⚖️</div>
-            <div class="ai-msg-bubble">
-              Namaste! 🙏 I'm your free legal advisor. Tell me your property or legal problem — I'll give you advice based on the latest Indian laws and judgments.
-              <div class="ai-msg-examples">
-                <span class="ai-example-chip" onclick="fillLegalQuestion('My landlord is not returning my deposit, what can I do?')">🏠 Landlord not returning deposit</span>
-                <span class="ai-example-chip" onclick="fillLegalQuestion('Property dispute with family member, who gets it after father dies?')">👨‍👩‍👧 Family property dispute</span>
-                <span class="ai-example-chip" onclick="fillLegalQuestion('Builder has not delivered my flat even after 3 years, what are my legal options?')">🏗️ Builder not delivering flat</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="ai-chat-input-wrap">
-          <textarea class="ai-chat-input" id="ai-chat-input" placeholder="Describe your legal problem here..." rows="2" onkeydown="handleChatKey(event)"></textarea>
-          <button class="ai-chat-send" id="ai-chat-send" onclick="sendLegalQuestion()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-          </button>
-        </div>
-        <div class="ai-chat-disclaimer">Free AI advice · Not a substitute for professional legal counsel · Based on latest Indian laws</div>
+        <div class="booking-note">Or book via WhatsApp a team member will call you back within 2 hours.</div>
       </div>
     </div>
   </div>
@@ -1388,7 +1300,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="modal-booking">
       <div class="modal-booking-head">BOOK &amp; PAY SECURELY</div>
       <p style="font-size:12px;color:var(--text2);margin-bottom:0;">Registration (Sale Deed + EC) &nbsp;·&nbsp; ₹9,999 · All Inclusive</p>
-      <button class="modal-rzp-btn" onclick="window.open('https://pages.razorpay.com/stores/st_Ses2ulWyh3zwVI','_blank')">
+      <button class="modal-rzp-btn" onclick="handleRzpPayment('Registration (Sale Deed + EC)', 9999)">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
         Pay ₹9,999 via Razorpay
       </button>
@@ -1433,7 +1345,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="modal-booking-head">BOOK & PAY SECURELY</div>
       <p style="font-size:12px;color:var(--text2);margin-bottom:0;">Sale Deed Registration &nbsp;·&nbsp; ₹9,999 All Inclusive</p>
       <!-- REPLACE: Paste your Razorpay Payment Button script from https://dashboard.razorpay.com/app/paymentbuttons/ here -->
-      <button class="modal-rzp-btn" onclick="window.open('https://pages.razorpay.com/stores/st_Ses2ulWyh3zwVI','_blank')">
+      <button class="modal-rzp-btn" onclick="handleRzpPayment('Sale Deed Registration', 9999)">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
         Pay ₹9,999 via Razorpay
       </button>
@@ -1476,7 +1388,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="modal-booking">
       <div class="modal-booking-head">BOOK & PAY SECURELY</div>
       <p style="font-size:12px;color:var(--text2);margin-bottom:0;">Property Search Report &nbsp;·&nbsp; ₹4,999 · Delivery in 3 Days</p>
-      <button class="modal-rzp-btn" onclick="window.open('https://pages.razorpay.com/stores/st_Ses2ulWyh3zwVI','_blank')">
+      <button class="modal-rzp-btn" onclick="handleRzpPayment('Property Search Report', 4999)">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
         Pay ₹4,999 via Razorpay
       </button>
@@ -1524,7 +1436,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="modal-booking">
       <div class="modal-booking-head">BOOK & PAY SECURELY</div>
       <p style="font-size:12px;color:var(--text2);margin-bottom:0;">Property Paper Review &nbsp;·&nbsp; ₹4,999 · Delivery in 5 Days</p>
-      <button class="modal-rzp-btn" onclick="window.open('https://pages.razorpay.com/stores/st_Ses2ulWyh3zwVI','_blank')">
+      <button class="modal-rzp-btn" onclick="handleRzpPayment('Property Paper Review', 4999)">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
         Pay ₹4,999 via Razorpay
       </button>
@@ -1566,7 +1478,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="modal-booking">
       <div class="modal-booking-head">BOOK & PAY SECURELY</div>
       <p style="font-size:12px;color:var(--text2);margin-bottom:0;">Agreement to Sale Review &nbsp;·&nbsp; ₹4,999 · Delivery in 5 Days</p>
-      <button class="modal-rzp-btn" onclick="window.open('https://pages.razorpay.com/stores/st_Ses2ulWyh3zwVI','_blank')">
+      <button class="modal-rzp-btn" onclick="handleRzpPayment('Agreement to Sale Review', 4999)">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
         Pay ₹4,999 via Razorpay
       </button>
@@ -1603,7 +1515,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="modal-booking">
       <div class="modal-booking-head">BOOK & PAY SECURELY</div>
       <p style="font-size:12px;color:var(--text2);margin-bottom:0;">Agreement to Sale Drafting &nbsp;·&nbsp; ₹4,999 · 2 Working Days</p>
-      <button class="modal-rzp-btn" onclick="window.open('https://pages.razorpay.com/stores/st_Ses2ulWyh3zwVI','_blank')">
+      <button class="modal-rzp-btn" onclick="handleRzpPayment('Agreement to Sale Drafting', 4999)">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
         Pay ₹4,999 via Razorpay
       </button>
@@ -1652,7 +1564,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="modal-booking">
       <div class="modal-booking-head">BOOK & PAY SECURELY</div>
       <p style="font-size:12px;color:var(--text2);margin-bottom:0;">WILL Drafting &amp; Registration &nbsp;·&nbsp; ₹4,999 · 2 Working Days</p>
-      <button class="modal-rzp-btn" onclick="window.open('https://pages.razorpay.com/stores/st_Ses2ulWyh3zwVI','_blank')">
+      <button class="modal-rzp-btn" onclick="handleRzpPayment('Document Writer', 4999)">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
         Pay ₹4,999 via Razorpay
       </button>
@@ -1739,7 +1651,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="modal-booking">
       <div class="modal-booking-head">BOOK &amp; PAY SECURELY</div>
       <p style="font-size:12px;color:var(--text2);margin-bottom:0;">Document Writer &nbsp;·&nbsp; ₹4,999</p>
-      <button class="modal-rzp-btn" onclick="window.open('https://pages.razorpay.com/stores/st_Ses2ulWyh3zwVI','_blank')">
+      <button class="modal-rzp-btn" onclick="handleRzpPayment('Document Writer', 4999)">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
         Pay ₹4,999 via Razorpay
       </button>
@@ -1813,7 +1725,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="modal-booking">
       <div class="modal-booking-head">BOOK &amp; PAY SECURELY</div>
       <p style="font-size:12px;color:var(--text2);margin-bottom:0;">Liaising Officer &nbsp;·&nbsp; ₹99</p>
-      <button class="modal-rzp-btn" onclick="window.open('https://pages.razorpay.com/stores/st_Ses2ulWyh3zwVI','_blank')">
+      <button class="modal-rzp-btn" onclick="handleRzpPayment('Liaising Officer', 99)">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
         Pay ₹99 via Razorpay
       </button>
@@ -1915,8 +1827,11 @@ function handleRzpPayment(serviceName, amount) {
     </div>`
   );
 
-  // WhatsApp notification
-  sendWhatsApp(
+  // Open Razorpay immediately (must happen first before any other window.open)
+  window.open('https://pages.razorpay.com/stores/st_Ses2ulWyh3zwVI', '_blank');
+
+  // WhatsApp notification after short delay so it doesn't block Razorpay
+  setTimeout(() => sendWhatsApp(
 `🛒 *New Order Legaldirectory.ai*
 
 📌 Service: ${service}
@@ -1926,131 +1841,9 @@ function handleRzpPayment(serviceName, amount) {
 🕐 Time: ${ts}
 
 Customer redirected to Razorpay ✅`
-  );
-
-  window.open('https://pages.razorpay.com/stores/st_Ses2ulWyh3zwVI', '_blank');
+  ), 1500);
 }
 
-// ── AI LEGAL CHAT ──
-let chatHistory = [];
-
-function fillLegalQuestion(q) {
-  document.getElementById('ai-chat-input').value = q;
-  document.getElementById('ai-chat-input').focus();
-}
-
-function handleChatKey(e) {
-  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendLegalQuestion(); }
-}
-
-function appendMsg(role, text) {
-  const wrap = document.getElementById('ai-chat-messages');
-  const div = document.createElement('div');
-  div.className = 'ai-msg ' + (role === 'user' ? 'ai-msg-user' : 'ai-msg-bot');
-  div.innerHTML = `<div class="ai-msg-avatar">${role === 'user' ? '👤' : '⚖️'}</div>
-    <div class="ai-msg-bubble">${text}</div>`;
-  wrap.appendChild(div);
-  wrap.scrollTop = wrap.scrollHeight;
-  return div;
-}
-
-function showTyping() {
-  const wrap = document.getElementById('ai-chat-messages');
-  const div = document.createElement('div');
-  div.className = 'ai-msg ai-msg-bot';
-  div.id = 'ai-typing';
-  div.innerHTML = `<div class="ai-msg-avatar">⚖️</div>
-    <div class="ai-msg-bubble"><div class="ai-typing-dot"><span></span><span></span><span></span></div></div>`;
-  wrap.appendChild(div);
-  wrap.scrollTop = wrap.scrollHeight;
-}
-
-async function sendLegalQuestion() {
-  const input = document.getElementById('ai-chat-input');
-  const sendBtn = document.getElementById('ai-chat-send');
-  const q = input.value.trim();
-  if (!q) return;
-
-  input.value = '';
-  sendBtn.disabled = true;
-  appendMsg('user', q);
-  chatHistory.push({ role: 'user', content: q });
-  showTyping();
-
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'anthropic-beta': 'interleaved-thinking-2025-05-14' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        stream: true,
-        system: `You are a free Indian legal advisor on Legaldirectory.ai, a property legal services platform in Bengaluru. You help common Indian people (aam aadmi) understand their legal rights and options.
-
-Your style:
-- Warm, respectful, like a trusted family lawyer
-- Use clear, simple English
-- Always cite relevant Indian laws, acts, and recent Supreme Court / High Court judgments by name
-- Give practical, actionable advice
-- For property matters, reference Karnataka-specific laws where relevant
-- End with a gentle suggestion to consult a professional for their specific case
-- Keep responses concise but comprehensive (200-300 words)
-- Use emojis sparingly to feel warm not corporate`,
-        messages: chatHistory
-      })
-    });
-
-    if (!res.ok || !res.body) throw new Error('Stream failed');
-
-    // Remove typing indicator and create streaming bubble
-    document.getElementById('ai-typing')?.remove();
-    const wrap = document.getElementById('ai-chat-messages');
-    const msgDiv = document.createElement('div');
-    msgDiv.className = 'ai-msg ai-msg-bot';
-    const bubble = document.createElement('div');
-    bubble.className = 'ai-msg-bubble';
-    msgDiv.innerHTML = '<div class="ai-msg-avatar">⚖️</div>';
-    msgDiv.appendChild(bubble);
-    wrap.appendChild(msgDiv);
-
-    // Stream SSE
-    const reader = res.body.getReader();
-    const decoder = new TextDecoder();
-    let fullReply = '';
-    let buffer = '';
-
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      buffer += decoder.decode(value, { stream: true });
-
-      const lines = buffer.split('\n');
-      buffer = lines.pop(); // keep incomplete line
-
-      for (const line of lines) {
-        if (!line.startsWith('data: ')) continue;
-        const raw = line.slice(6).trim();
-        if (raw === '[DONE]') continue;
-        try {
-          const evt = JSON.parse(raw);
-          if (evt.type === 'content_block_delta' && evt.delta?.type === 'text_delta') {
-            fullReply += evt.delta.text;
-            bubble.innerHTML = fullReply.replace(/\n/g, '<br/>');
-            wrap.scrollTop = wrap.scrollHeight;
-          }
-        } catch(e) { /* skip malformed */ }
-      }
-    }
-
-    if (!fullReply) fullReply = 'Sorry, there was an issue getting a response. Please try again or contact us on WhatsApp.';
-    chatHistory.push({ role: 'assistant', content: fullReply });
-
-  } catch (err) {
-    document.getElementById('ai-typing')?.remove();
-    appendMsg('bot', '⚠️ Something went wrong. Please try again or WhatsApp us at: +91 90089 99968');
-  }
-  sendBtn.disabled = false;
-}
-
-
+</script>
+</body>
 </html>
