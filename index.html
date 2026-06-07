@@ -1451,7 +1451,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <span class="phone-flag">🇮🇳 +91</span>
           <input type="tel" id="phone-number" class="phone-input" placeholder="10-digit mobile number" maxlength="10" inputmode="numeric" pattern="[0-9]*"/>
         </div>
-        <div id="recaptcha-container"></div>
         <button class="social-signin-btn phone-btn" id="phone-send-btn" onclick="sendOtp()">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.82 19.79 19.79 0 01.13 1.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.55-.56a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
           Send OTP via SMS
@@ -2222,13 +2221,19 @@ async function sendOtp() {
   setLoginStatus('');
 
   try {
-    // Invisible reCAPTCHA — required by Firebase Phone Auth
-    if (!recaptchaVerifier) {
-      recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-        size: 'invisible',
-        callback: () => {}
-      });
+    // ✅ Fix: Always destroy stale verifier before creating new one
+    if (recaptchaVerifier) {
+      recaptchaVerifier.clear();
+      recaptchaVerifier = null;
     }
+    // ✅ Fix: Pass firebaseAuth as first arg (required), size invisible for static sites
+    recaptchaVerifier = new firebase.auth.RecaptchaVerifier(firebaseAuth, 'recaptcha-container', {
+      size: 'invisible',
+      callback: () => {}
+    });
+    // ✅ Fix: Must call render() before signInWithPhoneNumber
+    await recaptchaVerifier.render();
+
     confirmationResult = await firebaseAuth.signInWithPhoneNumber(phone, recaptchaVerifier);
 
     // Show OTP step
@@ -2253,7 +2258,7 @@ async function sendOtp() {
     restoreBtn('phone-send-btn', `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.82 19.79 19.79 0 01.13 1.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.55-.56a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg> Send OTP via SMS`);
     setLoginStatus('⚠ Could not send OTP. Check the number and try again.', 'error');
     console.error('Phone OTP send:', e);
-    recaptchaVerifier = null; // reset so it can be recreated
+    if (recaptchaVerifier) { recaptchaVerifier.clear(); recaptchaVerifier = null; }
   }
 }
 
@@ -2357,5 +2362,8 @@ Customer redirected to Razorpay ✅`
 }
 
 </script>
+<!-- reCAPTCHA must live outside all modals/hidden elements -->
+<div id="recaptcha-container" style="position:fixed;bottom:0;right:0;z-index:9999;"></div>
+
 </body>
 </html>
