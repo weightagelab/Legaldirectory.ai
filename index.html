@@ -198,6 +198,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta name="twitter:image" content="https://legaldirectory.in/og-image.png"/>
 <meta name="twitter:site" content="@legaldirectoryin"/>
 
+<!-- ── reCAPTCHA v3 — required for Firebase Phone OTP ── -->
+<script src="https://www.google.com/recaptcha/api.js?render=6LciRxItAAAAAJ0UzpiQLnCjsFJ2PMsKbeVYbxqU" async defer></script>
+
 <!-- ── PERFORMANCE: preconnect ── -->
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -2229,6 +2232,7 @@ async function sendOtp() {
     // ✅ Fix: Pass firebaseAuth as first arg (required), size invisible for static sites
     recaptchaVerifier = new firebase.auth.RecaptchaVerifier(firebaseAuth, 'recaptcha-container', {
       size: 'invisible',
+      siteKey: '6LciRxItAAAAAJ0UzpiQLnCjsFJ2PMsKbeVYbxqU',
       callback: () => {}
     });
     // ✅ Fix: Must call render() before signInWithPhoneNumber
