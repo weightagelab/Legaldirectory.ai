@@ -2136,7 +2136,7 @@ const firebaseConfig = {
 let firebaseApp, firebaseAuth, googleProvider, appleProvider, recaptchaVerifier, confirmationResult;
 
 // ── VERSION CHECK — open F12 Console to confirm correct file is live ──
-console.log('%c✅ LegalDirectory v2.6 — profile collection added', 'color:#22c55e;font-size:14px;font-weight:bold;');
+console.log('%c✅ LegalDirectory v2.7 — profile detection fix', 'color:#22c55e;font-size:14px;font-weight:bold;');
 console.log('apiKey:', "AIzaSyDyhtGPV8_OU7kgmz3SA4ixvv44PGVs2XA".slice(0,12) + '...');
 
 // ── INIT ──
@@ -2330,13 +2330,13 @@ async function verifyOtp() {
   try {
     const result = await confirmationResult.confirm(code);
     result.user._isNewUser = result.additionalUserInfo?.isNewUser;
+    console.log('isNewUser:', result.additionalUserInfo?.isNewUser, '| displayName:', result.user.displayName);
     await notifyLogin(result.user, 'Phone OTP');
 
-    if (result.additionalUserInfo?.isNewUser) {
-      // New user — show profile collection step
+    if (result.additionalUserInfo?.isNewUser || !result.user.displayName) {
+      // New user (no display name set yet) — show profile collection step
       document.getElementById('phone-step-2').style.display = 'none';
       document.getElementById('phone-step-3').style.display = 'block';
-      // Pre-fill phone as read-only hint
       window._verifiedUser = result.user;
       setLoginStatus('');
     } else {
