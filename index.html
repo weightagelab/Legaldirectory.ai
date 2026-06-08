@@ -203,7 +203,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta http-equiv="Pragma" content="no-cache"/>
 <meta http-equiv="Expires" content="0"/>
 <!-- ── reCAPTCHA v3 — required for Firebase Phone OTP ── -->
-<script src="https://www.google.com/recaptcha/api.js?render=6LciRxItAAAAAJ0UzpiQLnCjsFJ2PMsKbeVYbxqU" async defer></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LdpjBMtAAAAAIRpOFh-lDJKQ-DNpzzAHdRRMc5g" async defer></script>
 
 <!-- ── PERFORMANCE: preconnect ── -->
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -2089,7 +2089,7 @@ const firebaseConfig = {
 let firebaseApp, firebaseAuth, googleProvider, appleProvider, recaptchaVerifier, confirmationResult;
 
 // ── VERSION CHECK — open F12 Console to confirm correct file is live ──
-console.log('%c✅ LegalDirectory v2.3 — siteKey removed fix', 'color:#22c55e;font-size:14px;font-weight:bold;');
+console.log('%c✅ LegalDirectory v2.5 — standard reCAPTCHA v3 key', 'color:#22c55e;font-size:14px;font-weight:bold;');
 console.log('apiKey:', "AIzaSyDyhtGPV8_OU7kgmz3SA4ixvv44PGVs2XA".slice(0,12) + '...');
 
 // ── INIT ──
@@ -2237,11 +2237,11 @@ async function sendOtp() {
       recaptchaVerifier.clear();
       recaptchaVerifier = null;
     }
-    // ✅ Fix: Pass firebaseAuth as first arg (required), size invisible for static sites
-    recaptchaVerifier = new firebase.auth.RecaptchaVerifier(firebaseAuth, 'recaptcha-container', {
+    // ✅ Fix: compat SDK RecaptchaVerifier takes (container, params, app) NOT auth as first arg
+    recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
       size: 'invisible',
       callback: () => {}
-    });
+    }, firebaseApp);
     // ✅ Fix: Must call render() before signInWithPhoneNumber
     await recaptchaVerifier.render();
 
