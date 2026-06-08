@@ -1270,6 +1270,7 @@
     <div class="sidebar">
       <div class="sidebar-section">NAVIGATION</div>
       <div class="nav-item active" id="nav-PT" onclick="navTo(1)"><span class="nav-code">PT</span> Property Type</div>
+      <div class="nav-item" id="nav-LC" onclick="navTo(1)"><span class="nav-code">LC</span> Location</div>
       <div class="nav-item" id="nav-UP" onclick="navTo(3)"><span class="nav-code">UP</span> Upload Docs</div>
       <div class="nav-item" id="nav-VR" onclick="navTo(4)"><span class="nav-code">VR</span> Verification</div>
       <div class="nav-item" id="nav-CS" onclick="navTo(5)"><span class="nav-code">CS</span> Confidence Score</div>
@@ -1342,7 +1343,7 @@
         <div class="content-desc">Choose your property type to get customised document requirements.</div>
 
         <div class="prop-grid">
-          <div class="prop-card featured" onclick="selectProp('AD','Submit All Compiled Documents','All')">
+          <div class="prop-card featured" onclick="selectProp('AD','Submit All Compiled Documents','All',this)">
             <div class="prop-icon">AD</div>
             <div>
               <div class="prop-name" style="color:var(--teal)">Submit All Compiled Documents</div>
@@ -1350,7 +1351,7 @@
             </div>
           </div>
 
-          <div class="prop-card" onclick="selectProp('RF','Residential Flat/Apartment','6')">
+          <div class="prop-card" onclick="selectProp('RF','Residential Flat/Apartment','6',this)">
             <div class="prop-icon">RF</div>
             <div class="prop-name">Residential Flat/Apartment</div>
             <div class="prop-docs">6 DOCUMENTS REQUIRED</div>
@@ -1362,7 +1363,7 @@
             <div class="prop-more">+ 3 more...</div>
           </div>
 
-          <div class="prop-card" onclick="selectProp('RP','Residential Plot','7')">
+          <div class="prop-card" onclick="selectProp('RP','Residential Plot','7',this)">
             <div class="prop-icon" style="background:rgba(0,200,160,0.12);color:#00c8a0;">RP</div>
             <div class="prop-name">Residential Plot</div>
             <div class="prop-docs">7 DOCUMENTS REQUIRED</div>
@@ -1374,7 +1375,7 @@
             <div class="prop-more">+ 4 more...</div>
           </div>
 
-          <div class="prop-card" onclick="selectProp('VL','Independent Villa/House','6')">
+          <div class="prop-card" onclick="selectProp('VL','Independent Villa/House','6',this)">
             <div class="prop-icon" style="background:rgba(100,160,255,0.12);color:#80a8ff;">VL</div>
             <div class="prop-name">Independent Villa / House</div>
             <div class="prop-docs">6 DOCUMENTS REQUIRED</div>
@@ -1386,7 +1387,7 @@
             <div class="prop-more">+ 3 more...</div>
           </div>
 
-          <div class="prop-card" onclick="selectProp('CM','Commercial Property','7')">
+          <div class="prop-card" onclick="selectProp('CM','Commercial Property','7',this)">
             <div class="prop-icon" style="background:rgba(255,165,0,0.12);color:#ffaa40;">CM</div>
             <div class="prop-name">Commercial Property</div>
             <div class="prop-docs">7 DOCUMENTS REQUIRED</div>
@@ -1398,7 +1399,7 @@
             <div class="prop-more">+ 4 more...</div>
           </div>
 
-          <div class="prop-card" onclick="selectProp('AG','Agricultural Land','8')">
+          <div class="prop-card" onclick="selectProp('AG','Agricultural Land','8',this)">
             <div class="prop-icon" style="background:rgba(100,220,100,0.12);color:#64dc64;">AG</div>
             <div class="prop-name">Agricultural Land</div>
             <div class="prop-docs">8 DOCUMENTS REQUIRED</div>
@@ -1410,7 +1411,7 @@
             <div class="prop-more">+ 5 more...</div>
           </div>
 
-          <div class="prop-card" onclick="selectProp('IN','Industrial Plot/Building','9')">
+          <div class="prop-card" onclick="selectProp('IN','Industrial Plot/Building','9',this)">
             <div class="prop-icon" style="background:rgba(200,100,255,0.12);color:#c864ff;">IN</div>
             <div class="prop-name">Industrial Plot / Building</div>
             <div class="prop-docs">9 DOCUMENTS REQUIRED</div>
@@ -1802,7 +1803,8 @@ function goStep(n){
   if(n===3&&selectedPropType) buildDocList();
   document.querySelectorAll('.step-panel').forEach(p=>p.classList.remove('active'));
   const panelId = n==='pay' ? 'panel-pay' : 'panel-'+n;
-  document.getElementById(panelId).classList.add('active');
+  const panel = document.getElementById(panelId);
+  if(panel) panel.classList.add('active');
   const navMap={1:'PT',3:'UP',4:'VR',5:'CS','pay':'PY'};
   document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));
   if(navMap[n]) document.getElementById('nav-'+navMap[n])?.classList.add('active');
@@ -1810,10 +1812,10 @@ function goStep(n){
 }
 function navTo(n){goStep(n);}
 
-function selectProp(code){
+function selectProp(code, _label, _count, el){
   selectedPropType=code;
   document.querySelectorAll('.prop-card').forEach(c=>c.classList.remove('selected'));
-  event.currentTarget.classList.add('selected');
+  if(el) el.classList.add('selected');
 }
 
 function buildDocList(){
