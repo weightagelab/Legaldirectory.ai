@@ -1481,6 +1481,53 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <button onclick="resetPhoneStep()" style="background:none;border:none;color:var(--text2);font-family:var(--mono);font-size:10px;cursor:pointer;margin-top:10px;display:block;width:100%;text-align:center;">← Change number</button>
       </div>
 
+      <!-- Profile Collection — step 3: shown only for new users after OTP -->
+      <div id="phone-step-3" style="display:none;">
+        <div style="text-align:center;margin-bottom:20px;">
+          <div style="font-size:32px;margin-bottom:8px;">👋</div>
+          <div style="font-family:var(--serif);font-size:20px;color:var(--white);margin-bottom:4px;">Welcome to Legaldirectory.ai</div>
+          <div style="font-family:var(--mono);font-size:11px;color:var(--text2);">Just a few details to complete your profile</div>
+        </div>
+
+        <!-- Full Name -->
+        <div style="margin-bottom:14px;">
+          <label style="font-family:var(--mono);font-size:10px;color:var(--text2);letter-spacing:1px;display:block;margin-bottom:6px;">FULL NAME *</label>
+          <input type="text" id="profile-name" placeholder="Enter your full name"
+            style="width:100%;padding:11px 14px;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--white);font-family:var(--sans);font-size:14px;outline:none;"/>
+        </div>
+
+        <!-- Email -->
+        <div style="margin-bottom:14px;">
+          <label style="font-family:var(--mono);font-size:10px;color:var(--text2);letter-spacing:1px;display:block;margin-bottom:6px;">EMAIL ADDRESS *</label>
+          <input type="email" id="profile-email" placeholder="your@email.com"
+            style="width:100%;padding:11px 14px;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--white);font-family:var(--sans);font-size:14px;outline:none;"/>
+        </div>
+
+        <!-- Gender -->
+        <div style="margin-bottom:20px;">
+          <label style="font-family:var(--mono);font-size:10px;color:var(--text2);letter-spacing:1px;display:block;margin-bottom:8px;">GENDER *</label>
+          <div style="display:flex;gap:10px;">
+            <label style="flex:1;display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;cursor:pointer;font-size:13px;color:var(--text3);">
+              <input type="radio" name="profile-gender" value="Male" style="accent-color:var(--gold);"/> Male
+            </label>
+            <label style="flex:1;display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;cursor:pointer;font-size:13px;color:var(--text3);">
+              <input type="radio" name="profile-gender" value="Female" style="accent-color:var(--gold);"/> Female
+            </label>
+            <label style="flex:1;display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;cursor:pointer;font-size:13px;color:var(--text3);">
+              <input type="radio" name="profile-gender" value="Other" style="accent-color:var(--gold);"/> Other
+            </label>
+          </div>
+        </div>
+
+        <button class="social-signin-btn phone-btn" id="profile-save-btn" onclick="saveProfile()"
+          style="margin-bottom:10px;">
+          Complete Registration →
+        </button>
+        <button onclick="skipProfile()" style="background:none;border:none;color:var(--text2);font-family:var(--mono);font-size:10px;cursor:pointer;display:block;width:100%;text-align:center;">
+          Skip for now →
+        </button>
+      </div>
+
     </div><!-- /login-buttons-panel -->
 
     <!-- ── LOGGED-IN USER CARD ── -->
@@ -2089,7 +2136,7 @@ const firebaseConfig = {
 let firebaseApp, firebaseAuth, googleProvider, appleProvider, recaptchaVerifier, confirmationResult;
 
 // ── VERSION CHECK — open F12 Console to confirm correct file is live ──
-console.log('%c✅ LegalDirectory v2.5 — standard reCAPTCHA v3 key', 'color:#22c55e;font-size:14px;font-weight:bold;');
+console.log('%c✅ LegalDirectory v2.6 — profile collection added', 'color:#22c55e;font-size:14px;font-weight:bold;');
 console.log('apiKey:', "AIzaSyDyhtGPV8_OU7kgmz3SA4ixvv44PGVs2XA".slice(0,12) + '...');
 
 // ── INIT ──
@@ -2284,12 +2331,85 @@ async function verifyOtp() {
     const result = await confirmationResult.confirm(code);
     result.user._isNewUser = result.additionalUserInfo?.isNewUser;
     await notifyLogin(result.user, 'Phone OTP');
-    updateLoginPanel(result.user);
-    setLoginStatus(`✅ Phone verified! Welcome.`, 'success');
+
+    if (result.additionalUserInfo?.isNewUser) {
+      // New user — show profile collection step
+      document.getElementById('phone-step-2').style.display = 'none';
+      document.getElementById('phone-step-3').style.display = 'block';
+      // Pre-fill phone as read-only hint
+      window._verifiedUser = result.user;
+      setLoginStatus('');
+    } else {
+      // Returning user — go straight to dashboard
+      updateLoginPanel(result.user);
+      setLoginStatus(`✅ Welcome back!`, 'success');
+    }
   } catch(e) {
     restoreBtn('otp-verify-btn', 'Verify & Sign In');
     setLoginStatus('⚠ Incorrect OTP. Please try again.', 'error');
   }
+}
+
+async function saveProfile() {
+  const name   = document.getElementById('profile-name').value.trim();
+  const email  = document.getElementById('profile-email').value.trim();
+  const gender = document.querySelector('input[name="profile-gender"]:checked')?.value || '';
+
+  if (!name)   { setLoginStatus('⚠ Please enter your full name.', 'error'); return; }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    setLoginStatus('⚠ Please enter a valid email address.', 'error'); return;
+  }
+  if (!gender) { setLoginStatus('⚠ Please select your gender.', 'error'); return; }
+
+  spinBtn('profile-save-btn', 'Saving…');
+
+  const user = window._verifiedUser;
+  const ts   = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+
+  // Update Firebase display name
+  try {
+    await user.updateProfile({ displayName: name });
+  } catch(e) { /* non-critical */ }
+
+  // Send profile data via WhatsApp + Email to admin
+  sendEmail(
+    `🆕 New User Profile — ${name} — Legaldirectory.ai`,
+    `<div style="font-family:sans-serif;max-width:520px;">
+      <h2 style="color:#d4a843;">🆕 New User Registration</h2>
+      <table style="width:100%;border-collapse:collapse;font-size:14px;">
+        <tr><td style="padding:8px;color:#888;">Name</td><td style="padding:8px;font-weight:bold;">${name}</td></tr>
+        <tr style="background:#f9f9f9;"><td style="padding:8px;color:#888;">Email</td><td style="padding:8px;">${email}</td></tr>
+        <tr><td style="padding:8px;color:#888;">Phone</td><td style="padding:8px;">${user.phoneNumber || '—'}</td></tr>
+        <tr style="background:#f9f9f9;"><td style="padding:8px;color:#888;">Gender</td><td style="padding:8px;">${gender}</td></tr>
+        <tr><td style="padding:8px;color:#888;">UID</td><td style="padding:8px;font-size:11px;">${user.uid}</td></tr>
+        <tr style="background:#f9f9f9;"><td style="padding:8px;color:#888;">Time (IST)</td><td style="padding:8px;">${ts}</td></tr>
+      </table>
+    </div>`
+  );
+
+  setTimeout(() => sendWhatsApp(
+`👤 *New User Profile — Legaldirectory.ai*
+
+📛 Name: ${name}
+📧 Email: ${email}
+📞 Phone: ${user.phoneNumber || '—'}
+⚥ Gender: ${gender}
+🕐 Time: ${ts}
+✅ Profile complete`
+  ), 400);
+
+  // Update user object display name locally
+  user.displayName = name;
+  document.getElementById('phone-step-3').style.display = 'none';
+  updateLoginPanel(user);
+  setLoginStatus(`✅ Welcome, ${name.split(' ')[0]}! Profile saved.`, 'success');
+}
+
+function skipProfile() {
+  const user = window._verifiedUser;
+  document.getElementById('phone-step-3').style.display = 'none';
+  updateLoginPanel(user);
+  setLoginStatus('✅ Logged in successfully.', 'success');
 }
 
 function resetPhoneStep() {
