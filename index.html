@@ -198,6 +198,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta name="twitter:image" content="https://legaldirectory.in/og-image.png"/>
 <meta name="twitter:site" content="@legaldirectoryin"/>
 
+<!-- ── VERSION: v2.1 — OTP fix deployed ── -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
 <!-- ── reCAPTCHA v3 — required for Firebase Phone OTP ── -->
 <script src="https://www.google.com/recaptcha/api.js?render=6LciRxItAAAAAJ0UzpiQLnCjsFJ2PMsKbeVYbxqU" async defer></script>
 
@@ -2083,6 +2087,10 @@ const firebaseConfig = {
 };
 
 let firebaseApp, firebaseAuth, googleProvider, appleProvider, recaptchaVerifier, confirmationResult;
+
+// ── VERSION CHECK — open F12 Console to confirm correct file is live ──
+console.log('%c✅ LegalDirectory v2.1 — OTP fix active', 'color:#22c55e;font-size:14px;font-weight:bold;');
+console.log('apiKey:', "AIzaSyDyhtGPV8_OU7kgmz3SA4ixvv44PGVs2XA".slice(0,12) + '...');
 
 // ── INIT ──
 function initFirebase() {
