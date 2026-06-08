@@ -4,6 +4,11 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Directory.AI — Production Document Verification</title>
+<!-- ── Firebase Auth ── -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+<!-- ── reCAPTCHA v3 (standard, required for Phone OTP) ── -->
+<script src="https://www.google.com/recaptcha/api.js?render=6LdpjBMtAAAAAIRpOFh-lDJKQ-DNpzzAHdRRMc5g" async defer></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
 
@@ -308,6 +313,92 @@
     font-size: 11px;
     color: var(--text-dim);
   }
+
+  /* ── Phone OTP Styles ── */
+  .phone-row {
+    display: flex; align-items: center; gap: 0;
+    background: rgba(26,188,188,0.04);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .phone-row:focus-within {
+    border-color: var(--teal-dim);
+    box-shadow: 0 0 0 3px rgba(26,188,188,0.08);
+  }
+  .phone-prefix {
+    padding: 14px 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--teal);
+    border-right: 1px solid var(--border);
+    white-space: nowrap;
+    background: rgba(26,188,188,0.06);
+  }
+  .phone-input-field {
+    flex: 1; padding: 14px 16px;
+    background: transparent; border: none;
+    color: var(--text-bright);
+    font-family: 'Inter', sans-serif; font-size: 14px;
+    outline: none;
+  }
+  .phone-input-field::placeholder { color: var(--text-dim); }
+
+  .otp-grid {
+    display: flex; gap: 8px; justify-content: center;
+    margin: 16px 0;
+  }
+  .otp-cell {
+    width: 46px; height: 54px;
+    background: rgba(26,188,188,0.04);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--teal);
+    font-family: 'Space Mono', monospace;
+    font-size: 22px; font-weight: 700;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .otp-cell:focus {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(26,188,188,0.12);
+  }
+
+  .auth-status {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; letter-spacing: 0.05em;
+    text-align: center; padding: 10px 0 0;
+    min-height: 24px;
+  }
+  .auth-status.err  { color: var(--red); }
+  .auth-status.ok   { color: var(--green); }
+  .auth-status.info { color: var(--teal); }
+
+  .back-link {
+    background: none; border: none;
+    color: var(--text-dim); font-family: 'Space Mono', monospace;
+    font-size: 10px; letter-spacing: 0.1em;
+    cursor: pointer; display: block;
+    text-align: center; margin-top: 10px;
+    padding: 4px;
+  }
+  .back-link:hover { color: var(--teal); }
+
+  .profile-step { display: none; }
+  .profile-step.active { display: block; }
+  .gender-row { display: flex; gap: 10px; }
+  .gender-opt {
+    flex: 1; display: flex; align-items: center; gap: 8px;
+    background: rgba(26,188,188,0.04); border: 1px solid var(--border);
+    border-radius: 3px; padding: 10px 12px;
+    cursor: pointer; font-size: 13px; color: var(--text-mid);
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.2s;
+  }
+  .gender-opt:hover { border-color: var(--teal-dim); color: var(--text-bright); }
+  .gender-opt input { accent-color: var(--teal); }
 
   /* ─── MAIN DASHBOARD ─────────────────────────── */
   #dashboard {
@@ -1075,29 +1166,80 @@
   <div class="login-box">
     <div class="login-logo">DIRECTORY.AI</div>
     <div class="login-divider"></div>
-    <div class="login-sub">PROPERTY INTELLIGENCE</div>
-    <div class="login-title">Welcome Back</div>
+    <div class="login-sub">PROPERTY INTELLIGENCE PLATFORM</div>
 
-    <div class="field-wrap">
-      <label class="field-label">USERNAME</label>
-      <input class="field-input" type="text" placeholder="Enter your username" id="usernameInput"/>
+    <!-- ── STEP 1: Phone Number ── -->
+    <div id="auth-step-1">
+      <div class="login-title">Access Platform</div>
+      <div class="field-wrap">
+        <label class="field-label">MOBILE NUMBER</label>
+        <div class="phone-row">
+          <span class="phone-prefix">🇮🇳 +91</span>
+          <input class="phone-input-field" type="tel" id="dir-phone"
+            placeholder="10-digit mobile number" maxlength="10" inputmode="numeric"/>
+        </div>
+      </div>
+      <button class="btn-primary" id="dir-send-btn" onclick="dirSendOtp()">
+        SEND OTP →
+      </button>
+      <div class="auth-status" id="dir-status"></div>
+      <div class="powered">Secured by Firebase · reCAPTCHA Protected</div>
     </div>
-    <div class="field-wrap">
-      <label class="field-label">PASSWORD</label>
-      <input class="field-input" type="password" placeholder="Enter your password" id="passwordInput"/>
-    </div>
-    <span class="forgot">Forgot Password?</span>
 
-    <button class="btn-primary" onclick="doLogin()">Enter</button>
-
-    <div class="or-row">OR CONTINUE WITH</div>
-    <div class="oauth-row">
-      <button class="btn-oauth" onclick="doLogin()">Google</button>
-      <button class="btn-oauth" onclick="doLogin()">Microsoft</button>
+    <!-- ── STEP 2: OTP Verification ── -->
+    <div id="auth-step-2" style="display:none;">
+      <div class="login-title">Enter OTP</div>
+      <p id="dir-otp-label" style="font-family:'Space Mono',monospace;font-size:11px;color:var(--text-mid);text-align:center;margin-bottom:4px;letter-spacing:0.05em;"></p>
+      <div class="otp-grid">
+        <input class="otp-cell" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]"/>
+        <input class="otp-cell" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]"/>
+        <input class="otp-cell" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]"/>
+        <input class="otp-cell" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]"/>
+        <input class="otp-cell" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]"/>
+        <input class="otp-cell" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]"/>
+      </div>
+      <button class="btn-primary" id="dir-verify-btn" onclick="dirVerifyOtp()">
+        VERIFY & ENTER →
+      </button>
+      <button class="back-link" onclick="dirResetAuth()">← Change number</button>
+      <div class="auth-status" id="dir-status-2"></div>
     </div>
-    <div class="powered">Powered by Claude AI Web Search</div>
+
+    <!-- ── STEP 3: Profile (new users only) ── -->
+    <div id="auth-step-3" style="display:none;">
+      <div style="text-align:center;margin-bottom:24px;">
+        <div style="font-size:28px;margin-bottom:8px;">👤</div>
+        <div class="login-title" style="margin-bottom:4px;">Complete Profile</div>
+        <p style="font-family:'Space Mono',monospace;font-size:10px;color:var(--text-mid);letter-spacing:0.1em;">ONE-TIME SETUP — TAKES 10 SECONDS</p>
+      </div>
+      <div class="field-wrap">
+        <label class="field-label">FULL NAME *</label>
+        <input class="field-input" type="text" id="dir-pname" placeholder="Enter your full name"/>
+      </div>
+      <div class="field-wrap">
+        <label class="field-label">EMAIL ADDRESS *</label>
+        <input class="field-input" type="email" id="dir-pemail" placeholder="your@email.com"/>
+      </div>
+      <div class="field-wrap">
+        <label class="field-label">GENDER *</label>
+        <div class="gender-row">
+          <label class="gender-opt"><input type="radio" name="dir-gender" value="Male"/> Male</label>
+          <label class="gender-opt"><input type="radio" name="dir-gender" value="Female"/> Female</label>
+          <label class="gender-opt"><input type="radio" name="dir-gender" value="Other"/> Other</label>
+        </div>
+      </div>
+      <button class="btn-primary" id="dir-profile-btn" onclick="dirSaveProfile()">
+        ENTER PLATFORM →
+      </button>
+      <button class="back-link" onclick="dirSkipProfile()">Skip for now →</button>
+      <div class="auth-status" id="dir-status-3"></div>
+    </div>
+
   </div>
 </div>
+
+<!-- reCAPTCHA container — must be outside all modals -->
+<div id="dir-recaptcha" style="position:fixed;bottom:0;right:0;z-index:9999;"></div>
 
 <!-- ─── DASHBOARD ────────────────────────────── -->
 <div class="screen" id="dashboard" style="flex-direction:column;">
@@ -1488,6 +1630,165 @@ buildTicker();
 // ─── SCREEN ROUTING ──────────────────────────────────────────
 function goTo(sid){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(sid).classList.add('active');document.getElementById('backSite').classList.toggle('visible',sid==='dashboard');}
 function doLogin(){goTo('dashboard');}
+
+/* ══════════════════════════════════════════════
+   FIREBASE PHONE OTP AUTH — DIRECTORY.AI
+══════════════════════════════════════════════ */
+const dirFirebaseConfig = {
+  apiKey:            "AIzaSyDyhtGPV8_OU7kgmz3SA4ixvv44PGVs2XA",
+  authDomain:        "legaldirectory-9e309.firebaseapp.com",
+  projectId:         "legaldirectory-9e309",
+  storageBucket:     "legaldirectory-9e309.firebasestorage.app",
+  messagingSenderId: "661232836435",
+  appId:             "1:661232836435:web:8efdbaf0e0f63161f48ba6"
+};
+
+let dirApp, dirAuth, dirRecaptcha, dirConfirmation, dirUser;
+
+function dirInitFirebase() {
+  if (dirApp) return;
+  try {
+    dirApp  = firebase.initializeApp(dirFirebaseConfig, 'directory-ai');
+    dirAuth = firebase.auth(dirApp);
+    dirAuth.onAuthStateChanged(user => {
+      if (user) {
+        dirUser = user;
+        // Auto-login if already authenticated
+        goTo('dashboard');
+        dirUpdateDashboard(user);
+      }
+    });
+  } catch(e) { console.error('Firebase init:', e); }
+}
+
+function dirSetStatus(msg, type, el) {
+  const el2 = document.getElementById(el || 'dir-status');
+  if (!el2) return;
+  el2.textContent = msg;
+  el2.className = 'auth-status ' + (type || '');
+}
+
+async function dirSendOtp() {
+  dirInitFirebase();
+  const raw = document.getElementById('dir-phone').value.trim().replace(/\D/g,'');
+  if (raw.length !== 10) {
+    dirSetStatus('⚠ Enter a valid 10-digit number', 'err'); return;
+  }
+  const phone = '+91' + raw;
+  const btn = document.getElementById('dir-send-btn');
+  btn.disabled = true; btn.textContent = 'SENDING…';
+  dirSetStatus('Initialising secure channel…', 'info');
+
+  try {
+    if (dirRecaptcha) { dirRecaptcha.clear(); dirRecaptcha = null; }
+    dirRecaptcha = new firebase.auth.RecaptchaVerifier('dir-recaptcha', {
+      size: 'invisible', callback: () => {}
+    }, dirApp);
+    await dirRecaptcha.render();
+
+    dirConfirmation = await dirAuth.signInWithPhoneNumber(phone, dirRecaptcha);
+
+    document.getElementById('auth-step-1').style.display = 'none';
+    document.getElementById('auth-step-2').style.display = 'block';
+    document.getElementById('dir-otp-label').textContent =
+      'OTP sent to +91 ' + raw + ' — enter 6-digit code';
+
+    const cells = document.querySelectorAll('.otp-cell');
+    cells[0].focus();
+    cells.forEach((cell, i) => {
+      cell.addEventListener('input', () => {
+        cell.value = cell.value.replace(/\D/,'').slice(-1);
+        if (cell.value && i < cells.length - 1) cells[i+1].focus();
+        if ([...cells].every(c => c.value)) dirVerifyOtp();
+      });
+      cell.addEventListener('keydown', e => {
+        if (e.key === 'Backspace' && !cell.value && i > 0) cells[i-1].focus();
+      });
+    });
+    dirSetStatus('');
+  } catch(e) {
+    console.error('OTP send:', e);
+    btn.disabled = false; btn.textContent = 'SEND OTP →';
+    dirSetStatus('⚠ Could not send OTP. Try again.', 'err');
+    if (dirRecaptcha) { dirRecaptcha.clear(); dirRecaptcha = null; }
+  }
+}
+
+async function dirVerifyOtp() {
+  const cells = document.querySelectorAll('.otp-cell');
+  const code  = [...cells].map(c => c.value).join('');
+  if (code.length < 6) {
+    dirSetStatus('⚠ Enter all 6 digits', 'err', 'dir-status-2'); return;
+  }
+  const btn = document.getElementById('dir-verify-btn');
+  btn.disabled = true; btn.textContent = 'VERIFYING…';
+  dirSetStatus('', '', 'dir-status-2');
+
+  try {
+    const result = await dirConfirmation.confirm(code);
+    dirUser = result.user;
+    const isNew = result.additionalUserInfo?.isNewUser || !result.user.displayName;
+
+    if (isNew) {
+      document.getElementById('auth-step-2').style.display = 'none';
+      document.getElementById('auth-step-3').style.display = 'block';
+    } else {
+      goTo('dashboard');
+      dirUpdateDashboard(result.user);
+    }
+  } catch(e) {
+    console.error('OTP verify:', e);
+    btn.disabled = false; btn.textContent = 'VERIFY & ENTER →';
+    dirSetStatus('⚠ Incorrect OTP. Try again.', 'err', 'dir-status-2');
+  }
+}
+
+async function dirSaveProfile() {
+  const name   = document.getElementById('dir-pname').value.trim();
+  const email  = document.getElementById('dir-pemail').value.trim();
+  const gender = document.querySelector('input[name="dir-gender"]:checked')?.value || '';
+
+  if (!name)  { dirSetStatus('⚠ Enter your full name', 'err', 'dir-status-3'); return; }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    dirSetStatus('⚠ Enter a valid email', 'err', 'dir-status-3'); return;
+  }
+  if (!gender){ dirSetStatus('⚠ Select your gender', 'err', 'dir-status-3'); return; }
+
+  const btn = document.getElementById('dir-profile-btn');
+  btn.disabled = true; btn.textContent = 'SAVING…';
+
+  try { await dirUser.updateProfile({ displayName: name }); } catch(e) {}
+  dirUser.displayName = name;
+
+  goTo('dashboard');
+  dirUpdateDashboard(dirUser);
+}
+
+function dirSkipProfile() {
+  goTo('dashboard');
+  dirUpdateDashboard(dirUser);
+}
+
+function dirResetAuth() {
+  document.getElementById('auth-step-2').style.display = 'none';
+  document.getElementById('auth-step-1').style.display = 'block';
+  document.getElementById('dir-phone').value = '';
+  document.querySelectorAll('.otp-cell').forEach(c => c.value = '');
+  const btn = document.getElementById('dir-send-btn');
+  btn.disabled = false; btn.textContent = 'SEND OTP →';
+  dirSetStatus('');
+  if (dirRecaptcha) { dirRecaptcha.clear(); dirRecaptcha = null; }
+}
+
+function dirUpdateDashboard(user) {
+  // Update top bar with user info
+  const name = user.displayName || user.phoneNumber || 'OPERATOR';
+  const topVer = document.querySelector('.top-bar-ver');
+  if (topVer) topVer.textContent = '● ' + name.split(' ')[0].toUpperCase();
+}
+
+// Init Firebase on page load
+window.addEventListener('load', dirInitFirebase);
 
 // ─── LOCATION DATA ───────────────────────────────────────────
 const regionData={KA:{regions:['Bengaluru Urban','Bengaluru Rural','Mysuru','Hubballi-Dharwad','Mangaluru'],cities:{'Bengaluru Urban':['Indiranagar','Koramangala','Whitefield','HSR Layout','Electronic City','Sarjapur Road','Hebbal','Jayanagar','JP Nagar','Marathahalli','Yelahanka','Bannerghatta'],'Bengaluru Rural':['Doddaballapura','Devanahalli','Hoskote','Nelamangala'],'Mysuru':['Mysuru City','Chamrajnagar','Mandya','Hassan'],'Hubballi-Dharwad':['Hubballi','Dharwad'],'Mangaluru':['Mangaluru City','Udupi']}},MH:{regions:['Mumbai','Pune','Nashik','Nagpur'],cities:{'Mumbai':['Andheri','Bandra','Thane','Navi Mumbai'],'Pune':['Kothrud','Viman Nagar','Hinjewadi'],'Nashik':['Nashik City'],'Nagpur':['Nagpur City']}},TN:{regions:['Chennai','Coimbatore'],cities:{'Chennai':['Anna Nagar','T Nagar','Velachery'],'Coimbatore':['RS Puram','Gandhipuram']}},DL:{regions:['South Delhi','North Delhi'],cities:{'South Delhi':['Hauz Khas','Saket'],'North Delhi':['Rohini','Pitampura']}}};
