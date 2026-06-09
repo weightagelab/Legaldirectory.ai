@@ -1525,8 +1525,15 @@
 
         <!-- Step 2: AI / Backend Verification -->
         <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.2em;color:var(--teal);margin:16px 0 8px;">STEP 2: AI / BACKEND VERIFICATION</div>
+
+        <!-- LEGAL DISCLAIMER — required before charging users -->
+        <div style="background:rgba(245,197,24,0.07);border:1px solid rgba(245,197,24,0.35);border-left:3px solid #f5c518;border-radius:4px;padding:12px 14px;margin-bottom:14px;font-size:11px;line-height:1.6;color:#b8a060;">
+          <strong style="color:#f5c518;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.15em;">⚠ SCREENING TOOL — NOT LEGAL ADVICE</strong><br/>
+          This report is an AI-assisted document screening aid only. It does not constitute legal advice, a title clearance, or a legal opinion. Confidence scores are algorithmic indicators — not legal conclusions. All government portal checks shown as "pending" require official lookup by a qualified lawyer. Do not make a transaction decision based solely on this report.
+        </div>
+
         <div id="claudeBox" style="background:rgba(26,188,188,0.04);border:1px solid rgba(26,188,188,0.2);border-radius:4px;padding:16px;margin-bottom:16px;">
-          <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--teal-dim);margin-bottom:6px;">Source: Secure Backend API / Local Screening</div>
+          <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--teal-dim);margin-bottom:6px;">Source: Document Completeness Screening / Local Analysis (backend OCR not connected)</div>
           <div id="claudeVerdict" style="font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:var(--yellow);margin-bottom:10px;">VERDICT: ANALYSING...</div>
           <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:10px;font-size:12px;" id="claudeRiskRow"></div>
           <div id="claudeText" style="font-size:12px;color:var(--text-mid);line-height:1.7;"></div>
@@ -1553,6 +1560,10 @@
           <button class="btn-back" onclick="resetAll()" style="flex:0;padding:13px 20px;">↺ NEW ANALYSIS</button>
           <button class="btn-next" onclick="window.open('https://weightagelab.github.io/Legaldirectory.ai/','_blank')">⚖️ BOOK LAWYER REVIEW →</button>
           <button class="btn-back" onclick="window.print()" style="flex:0;padding:13px 20px;">↓ PDF</button>
+        </div>
+        <div style="margin-top:16px;padding:12px 14px;background:rgba(255,77,109,0.06);border:1px solid rgba(255,77,109,0.2);border-radius:4px;font-size:11px;color:#a06070;line-height:1.6;">
+          <strong style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.15em;color:#ff4d6d;">LEGAL DISCLAIMER</strong><br/>
+          This report is a screening tool only. It does not constitute legal advice or property title clearance. Government portal checks are not performed by this tool — they require official lookup. Do not use this report as the sole basis for a property transaction. Always consult a qualified property lawyer before purchase, sale, or registration.
         </div>
       </div>
 
@@ -1866,10 +1877,10 @@ function beginAnalysis(){
   startAnalysis();
 }
 
-// ─── PRODUCTION-READY DOCUMENT VERIFICATION FLOW ─────────────
-// Frontend-safe version: no exposed API keys. For real OCR/AI/court/RERA checks,
-// connect your backend by setting VERIFY_API_ENDPOINT below.
-const VERIFY_API_ENDPOINT = ''; // Example: 'https://your-domain.com/api/verify-property-document'
+// ─── DOCUMENT VERIFICATION FLOW ─────────────────────────────────────────────
+// Frontend-safe: no API keys exposed. Performs local completeness screening.
+// For live OCR + AI + court/RERA checks, set VERIFY_API_ENDPOINT to your backend.
+const VERIFY_API_ENDPOINT = ''; // Set to your backend URL to enable live verification
 const MAX_FILE_SIZE_MB = 20;
 const SUPPORTED_EXT = ['pdf','jpg','jpeg','png','docx'];
 
@@ -1999,14 +2010,14 @@ function buildLocalVerificationResult(){
       Taluk:'Pending portal lookup',
       District: document.getElementById('sel-region')?.value || 'Pending'
     },
-    docSummary:`${realFiles.length} file(s) received and validated for format/size: ${files}. This frontend performs document intake, completeness screening, risk scoring, and report generation. Connect VERIFY_API_ENDPOINT to your backend for true OCR, AI extraction and official portal verification.`,
+    docSummary:`${realFiles.length} file(s) received and validated for format/size: ${files}. This report is based on document completeness screening and filename analysis. Full OCR extraction, AI-assisted title analysis, and official portal verification (Kaveri, BBMP, eCourts, CERSAI) require a lawyer-assisted backend review.`,
     claudeVerdict: verdict,
     ownerRisk: stats.hasSale ? 'medium' : 'high',
     courtRisk: stats.hasCourt ? 'high' : 'low',
     reraStatus: stats.hasRera ? 'available' : 'pending',
     marketAlignment:'pending',
     localityRisk:'medium',
-    claudeAnalysis:'Production workflow prepared: upload validation, document completeness checks, title-chain indicators, court-risk flags, portal-check placeholders, final confidence score, recommendations, and PDF/print report. No browser API key is exposed. For live verification, route files to a secure backend that performs OCR and official registry checks.',
+    claudeAnalysis:'Document completeness screening complete. Upload validation, document type checks, title-chain indicators, court-risk flags, and confidence scoring have been performed based on uploaded filenames and document set. For a full legal opinion, official Kaveri/SRO, EC, BBMP Khata, eCourts, CERSAI, and RERA checks must be completed by a qualified property lawyer.',
     flags: stats.hasCourt ? 'Court/litigation document detected — require final order and pending-case verification.' : 'No direct court keyword detected from uploaded filenames. This is not a legal clearance until official searches are completed.',
     checks: stats.checks,
     timeline:[
