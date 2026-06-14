@@ -2047,6 +2047,7 @@ const SUPPORT_EMAIL = 'weightage.lab@gmail.com';
 // ── VISITOR COUNTER ──
 (function(){
   const el = document.getElementById('visitorCount');
+  if (!el) return;
   const base = 12480 + Math.floor(Math.random()*300);
   let cur = 0;
   const step = Math.ceil(base/70);
@@ -2145,8 +2146,8 @@ const firebaseConfig = {
   projectId:         "legaldirectory-9e309",
   storageBucket:     "legaldirectory-9e309.firebasestorage.app",
   messagingSenderId: "661232836435",
-  appId:             "1:661232836435:web:ed75e0ee8c4c1189f48ba6",
-  measurementId:     "G-TYYB4EPL46"
+  appId:             "1:661232836435:web:8efdbaf0e0f63161f48ba6",
+  measurementId:     "G-YHJSDLH165"
 };
 
 let firebaseApp, firebaseAuth, googleProvider, appleProvider, recaptchaVerifier, confirmationResult;
