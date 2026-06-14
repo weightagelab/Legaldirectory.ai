@@ -2,6 +2,15 @@
 <html lang="en">
 <head>
 
+  <!-- 
+    ✅ FIXES APPLIED (v2.8):
+    1. Changed RecaptchaVerifier parameter from firebaseApp to firebaseAuth (line ~2296)
+    2. Added expired-callback handler for reCAPTCHA token expiry
+    3. Added detailed error logging with specific Firebase error codes
+    4. Added Firebase initialization validation at sendOtp start
+    5. Added console logs for debugging OTP flow
+  -->
+
   <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -2276,10 +2285,19 @@ async function signInWithApple() {
 // ── PHONE OTP ──
 async function sendOtp() {
   initFirebase();
+  
+  // ✅ Validate Firebase is initialized
+  if (!firebaseAuth) {
+    setLoginStatus('⚠ Firebase not initialized. Please refresh the page.', 'error');
+    console.error('sendOtp: firebaseAuth is not initialized');
+    return;
+  }
+  
   const raw = document.getElementById('phone-number').value.trim().replace(/\D/g,'');
   if (raw.length !== 10) { setLoginStatus('⚠ Enter a valid 10-digit mobile number.', 'error'); return; }
   const phone = '+91' + raw;
 
+  console.log('Sending OTP to:', phone);
   spinBtn('phone-send-btn', 'Sending OTP…');
   setLoginStatus('');
 
@@ -2289,15 +2307,24 @@ async function sendOtp() {
       recaptchaVerifier.clear();
       recaptchaVerifier = null;
     }
-    // ✅ Fix: compat SDK RecaptchaVerifier takes (container, params, app) NOT auth as first arg
+    // ✅ Fix: compat SDK RecaptchaVerifier takes (container, params, auth) NOT firebaseApp
     recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
       size: 'invisible',
-      callback: () => {}
-    }, firebaseApp);
+      callback: () => {},
+      'expired-callback': () => {
+        console.warn('reCAPTCHA token expired, will retry on next attempt');
+        recaptchaVerifier.clear();
+        recaptchaVerifier = null;
+      }
+    }, firebaseAuth);
     // ✅ Fix: Must call render() before signInWithPhoneNumber
+    console.log('reCAPTCHA verifier created, calling render()...');
     await recaptchaVerifier.render();
+    console.log('reCAPTCHA rendered successfully');
 
+    console.log('Calling signInWithPhoneNumber with phone:', phone);
     confirmationResult = await firebaseAuth.signInWithPhoneNumber(phone, recaptchaVerifier);
+    console.log('OTP sent successfully!');
 
     // Show OTP step
     document.getElementById('phone-step-1').style.display = 'none';
@@ -2319,8 +2346,26 @@ async function sendOtp() {
     });
   } catch(e) {
     restoreBtn('phone-send-btn', `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.82 19.79 19.79 0 01.13 1.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.55-.56a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg> Send OTP via SMS`);
-    setLoginStatus('⚠ Could not send OTP. Check the number and try again.', 'error');
-    console.error('Phone OTP send:', e);
+    
+    // ✅ Enhanced error logging for debugging
+    console.error('Phone OTP send error:', {
+      message: e.message,
+      code: e.code,
+      fullError: e
+    });
+    
+    let errorMsg = '⚠ Could not send OTP. Check the number and try again.';
+    if (e.code === 'auth/invalid-phone-number') {
+      errorMsg = '⚠ Invalid phone number. Please check and try again.';
+    } else if (e.code === 'auth/too-many-requests') {
+      errorMsg = '⚠ Too many attempts. Please wait before trying again.';
+    } else if (e.code === 'auth/operation-not-allowed') {
+      errorMsg = '⚠ Phone authentication is not enabled. Contact support.';
+    } else if (e.code === 'auth/invalid-api-key' || e.code === 'auth/invalid-app') {
+      errorMsg = '⚠ Configuration error. Please contact support.';
+    }
+    setLoginStatus(errorMsg, 'error');
+    
     if (recaptchaVerifier) { recaptchaVerifier.clear(); recaptchaVerifier = null; }
   }
 }
