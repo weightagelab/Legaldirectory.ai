@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form - Legaldirectory.ai</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #07080e;
+            --bg2: #0d0f18;
+            --bg3: #12141f;
+            --bg4: #181b28;
+            --border: #1e2235;
+            --border2: #252a3d;
+            --text2: #8b92a5;
+            --text3: #a8b0c0;
+            --white: #f3f4f6;
+            --blue: #3b82f6;
+            --gold: #d4a843;
+            --green: #22c55e;
+            --red: #ef4444;
+            --sans: 'Plus Jakarta Sans', sans-serif;
+            --mono: 'JetBrains Mono', monospace;
+            --radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--white);
+            font-family: var(--sans);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: var(--bg2);
+            border: 1px solid var(--border2);
+            border-radius: var(--radius);
+            padding: 38px;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+        }
+
+        .login-header {
+            margin-bottom: 24px;
+        }
+
+        .login-tag {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--blue);
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            font-size: 27px;
+            color: var(--white);
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .login-subtitle {
+            font-size: 13px;
+            color: var(--text2);
+            margin-top: 4px;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        label {
+            display: block;
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 1px;
+            color: var(--text2);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 11px 14px;
+            background: var(--bg3);
+            border: 1px solid var(--border2);
+            border-radius: var(--radius);
+            color: var(--white);
+            font-family: var(--sans);
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.15s;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus {
+            border-color: var(--blue);
+        }
+
+        input::placeholder {
+            color: var(--text2);
+        }
+
+        .phone-input-wrap {
+            display: flex;
+            align-items: center;
+            background: var(--bg3);
+            border: 1px solid var(--border2);
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .phone-flag {
+            padding: 11px 12px;
+            font-size: 13px;
+            font-family: var(--mono);
+            color: var(--text2);
+            border-right: 1px solid var(--border2);
+            white-space: nowrap;
+            background: var(--bg4);
+        }
+
+        .phone-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--white);
+            font-family: var(--sans);
+            font-size: 15px;
+            padding: 11px 14px;
+            outline: none;
+        }
+
+        .phone-input::placeholder {
+            color: var(--text2);
+        }
+
+        .login-button {
+            width: 100%;
+            background: linear-gradient(135deg, #072654, #0a3276);
+            border: 1.5px solid rgba(59, 130, 246, 0.4);
+            border-radius: 5px;
+            color: #fff;
+            font-family: var(--sans);
+            font-size: 14px;
+            font-weight: 700;
+            padding: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.2s;
+            margin-top: 6px;
+        }
+
+        .login-button:hover {
+            background: linear-gradient(135deg, #0a3276, #0e42a0);
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.25);
+        }
+
+        .login-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .google-btn {
+            background: #fff;
+            color: #3c4043;
+            border: 1.5px solid #dadce0 !important;
+            margin-bottom: 10px;
+        }
+
+        .google-btn:hover {
+            background: #f8f9fa;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 18px 0 14px;
+            color: var(--text2);
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .login-status {
+            margin-top: 12px;
+            text-align: center;
+            font-family: var(--mono);
+            font-size: 11px;
+            min-height: 18px;
+            line-height: 1.6;
+        }
+
+        .login-status.success {
+            color: var(--green);
+        }
+
+        .login-status.error {
+            color: var(--red);
+        }
+
+        .form-note {
+            font-size: 12px;
+            color: var(--text2);
+            margin-top: 4px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 640px) {
+            .login-container {
+                padding: 22px 16px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <div class="login-tag">CLIENT ACCESS · SECURE LOGIN</div>
+            <h2>Sign In</h2>
+            <p class="login-subtitle">Access your Legaldirectory.ai account to track your service status and documents.</p>
+        </div>
+
+        <!-- Google Sign-In -->
+        <button class="login-button google-btn" id="google-signin-btn" onclick="signInWithGoogle()">
+            <svg width="19" height="19" viewBox="0 0 48 48">
+                <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.9 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 7.9 3l5.7-5.7C34.1 6.5 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.2-.1-2.4-.4-3.5z"/>
+                <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 16 19.1 13 24 13c3.1 0 5.8 1.1 7.9 3l5.7-5.7C34.1 6.5 29.3 4 24 4 16.3 4 9.7 8.4 6.3 14.7z"/>
+                <path fill="#4CAF50" d="M24 44c5.2 0 9.9-1.9 13.4-5.1l-6.2-5.2C29.4 35.5 26.8 36 24 36c-5.3 0-9.7-3.1-11.3-7.5l-6.6 5.1C9.6 39.5 16.3 44 24 44z"/>
+                <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.4 4.3-4.4 5.7l6.2 5.2C36.9 36.3 44 31 44 24c0-1.2-.1-2.4-.4-3.5z"/>
+            </svg>
+            Continue with Google
+        </button>
+
+        <!-- Divider -->
+        <div class="divider"><span>or</span></div>
+
+        <!-- Login Form -->
+        <form id="loginForm" onsubmit="handleFormSubmit(event)">
+            <!-- Full Name -->
+            <div class="form-group">
+                <label for="fullName">Full Name *</label>
+                <input 
+                    type="text" 
+                    id="fullName" 
+                    name="fullName" 
+                    placeholder="Enter your full name"
+                    required
+                />
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    placeholder="your@email.com"
+                    required
+                />
+            </div>
+
+            <!-- Phone Number -->
+            <div class="form-group">
+                <label for="phone">Mobile Number *</label>
+                <div class="phone-input-wrap">
+                    <span class="phone-flag">+91</span>
+                    <input 
+                        type="tel" 
+                        id="phone" 
+                        name="phone" 
+                        class="phone-input"
+                        placeholder="10-digit mobile number"
+                        maxlength="10"
+                        inputmode="numeric"
+                        pattern="[0-9]*"
+                        required
+                    />
+                </div>
+                <p class="form-note">We'll use this to verify your account and send updates.</p>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="login-button" id="submitBtn">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.82 19.79 19.79 0 01.13 1.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.55-.56a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/>
+                </svg>
+                Sign In & Continue
+            </button>
+        </form>
+
+        <!-- Status Message -->
+        <div class="login-status" id="loginStatus"></div>
+
+        <!-- Footer -->
+        <div style="margin-top: 18px; text-align: center;">
+            <a href="https://wa.me/919008999968?text=Hi%2C%20I%20need%20help%20with%20my%20Legaldirectory.ai%20account" target="_blank" style="font-family: var(--mono); font-size: 11px; color: var(--text2); text-decoration: none;">
+                Need help? Chat on WhatsApp →
+            </a>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <!-- reCAPTCHA v3 for Phone OTP -->
+    <script src="https://www.google.com/recaptcha/api.js?render=6Lcu4h4tAAAAAJUhr-BEXsXB4kmvnB2HkH2nFHTJ" async defer></script>
+
+    <script>
+        // FIREBASE CONFIG - Replace with your config
+        const firebaseConfig = {
+            apiKey: "AIzaSyDyhtGPV8_OU7kgmz3SA4ixvv44PGVs2XA",
+            authDomain: "legaldirectory-9e309.firebaseapp.com",
+            projectId: "legaldirectory-9e309",
+            storageBucket: "legaldirectory-9e309.firebasestorage.app",
+            messagingSenderId: "661232836435",
+            appId: "1:661232836435:web:ed75e0ee8c4c1189f48ba6",
+            measurementId: "G-TYYB4EPL46"
+        };
+
+        let firebaseApp, firebaseAuth, googleProvider, recaptchaVerifier, confirmationResult;
+
+        // Initialize Firebase
+        function initFirebase() {
+            if (firebaseApp) return;
+            try {
+                firebaseApp = firebase.initializeApp(firebaseConfig);
+                firebaseAuth = firebase.auth();
+
+                googleProvider = new firebase.auth.GoogleAuthProvider();
+                googleProvider.addScope('email');
+                googleProvider.addScope('profile');
+
+                // Listen for auth state changes
+                firebaseAuth.onAuthStateChanged(user => {
+                    if (user) {
+                        showStatus(`Welcome, ${user.displayName || 'User'}!`, 'success');
+                    }
+                });
+            } catch (e) {
+                console.error('Firebase init failed:', e);
+                showStatus('Firebase initialization failed. Please check your config.', 'error');
+            }
+        }
+
+        // Form Submission Handler
+        async function handleFormSubmit(event) {
+            event.preventDefault();
+            initFirebase();
+
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const fullPhone = '+91' + phone;
+
+            // Validation
+            if (!fullName) {
+                showStatus('Please enter your full name.', 'error');
+                return;
+            }
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showStatus('Please enter a valid email address.', 'error');
+                return;
+            }
+            if (!phone || phone.length !== 10 || !/^[0-9]{10}$/.test(phone)) {
+                showStatus('Please enter a valid 10-digit mobile number.', 'error');
+                return;
+            }
+
+            const submitBtn = document.getElementById('submitBtn');
+            spinBtn(submitBtn, 'Creating account...');
+
+            try {
+                // Create user with email/password (auto-generated password)
+                const tempPassword = generateRandomPassword();
+                const result = await firebaseAuth.createUserWithEmailAndPassword(email, tempPassword);
+                const user = result.user;
+
+                // Update user profile with full name
+                await user.updateProfile({ displayName: fullName });
+
+                // Send verification email
+                await user.sendEmailVerification();
+
+                // Store additional user data
+                const userData = {
+                    fullName: fullName,
+                    email: email,
+                    phone: fullPhone,
+                    uid: user.uid,
+                    createdAt: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+                    verified: false
+                };
+
+                // Send email notification
+                await sendEmailNotification(fullName, email, fullPhone);
+
+                // Send WhatsApp notification
+                await sendWhatsAppNotification(fullName, email, fullPhone);
+
+                showStatus(`Account created! Verification email sent to ${email}`, 'success');
+                document.getElementById('loginForm').reset();
+                restoreBtn(submitBtn, '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.82 19.79 19.79 0 01.13 1.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.55-.56a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>Sign In & Continue');
+
+            } catch (error) {
+                restoreBtn(submitBtn, '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.82 19.79 19.79 0 01.13 1.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.55-.56a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>Sign In & Continue');
+
+                if (error.code === 'auth/email-already-in-use') {
+                    showStatus('This email is already registered. Please log in or use another email.', 'error');
+                } else if (error.code === 'auth/weak-password') {
+                    showStatus('Please try again. There was an issue creating your account.', 'error');
+                } else {
+                    showStatus(`Error: ${error.message}`, 'error');
+                }
+            }
+        }
+
+        // Google Sign-In Handler
+        async function signInWithGoogle() {
+            initFirebase();
+            spinBtn(document.getElementById('google-signin-btn'), 'Connecting to Google…');
+            showStatus('');
+
+            try {
+                const result = await firebaseAuth.signInWithPopup(googleProvider);
+                const user = result.user;
+
+                await sendEmailNotification(user.displayName, user.email, user.phoneNumber || 'N/A');
+                await sendWhatsAppNotification(user.displayName, user.email, user.phoneNumber || 'N/A');
+
+                showStatus(`Welcome, ${user.displayName?.split(' ')[0]}!`, 'success');
+                restoreBtn(document.getElementById('google-signin-btn'), '<svg width="19" height="19" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.9 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 7.9 3l5.7-5.7C34.1 6.5 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.2-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 16 19.1 13 24 13c3.1 0 5.8 1.1 7.9 3l5.7-5.7C34.1 6.5 29.3 4 24 4 16.3 4 9.7 8.4 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-1.9 13.4-5.1l-6.2-5.2C29.4 35.5 26.8 36 24 36c-5.3 0-9.7-3.1-11.3-7.5l-6.6 5.1C9.6 39.5 16.3 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.4 4.3-4.4 5.7l6.2 5.2C36.9 36.3 44 31 44 24c0-1.2-.1-2.4-.4-3.5z"/></svg>Continue with Google');
+            } catch (e) {
+                restoreBtn(document.getElementById('google-signin-btn'), '<svg width="19" height="19" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.9 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 7.9 3l5.7-5.7C34.1 6.5 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.2-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 16 19.1 13 24 13c3.1 0 5.8 1.1 7.9 3l5.7-5.7C34.1 6.5 29.3 4 24 4 16.3 4 9.7 8.4 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-1.9 13.4-5.1l-6.2-5.2C29.4 35.5 26.8 36 24 36c-5.3 0-9.7-3.1-11.3-7.5l-6.6 5.1C9.6 39.5 16.3 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.4 4.3-4.4 5.7l6.2 5.2C36.9 36.3 44 31 44 24c0-1.2-.1-2.4-.4-3.5z"/></svg>Continue with Google');
+
+                if (e.code !== 'auth/popup-closed-by-user') {
+                    showStatus(e.code === 'auth/popup-blocked' ? 'Allow popups for this site, then try again.' : 'Google sign-in failed. Please try again.', 'error');
+                }
+            }
+        }
+
+        // Send Email Notification
+        async function sendEmailNotification(name, email, phone) {
+            try {
+                const ts = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+                const emailBody = `
+                    <div style="font-family:sans-serif;max-width:520px;">
+                        <h2 style="color:#d4a843;">New User Registration — Legaldirectory.ai</h2>
+                        <table style="width:100%;border-collapse:collapse;font-size:14px;">
+                            <tr><td style="padding:8px;color:#888;">Name</td><td style="padding:8px;font-weight:bold;">${name}</td></tr>
+                            <tr style="background:#f9f9f9;"><td style="padding:8px;color:#888;">Email</td><td style="padding:8px;">${email}</td></tr>
+                            <tr><td style="padding:8px;color:#888;">Phone</td><td style="padding:8px;">${phone}</td></tr>
+                            <tr style="background:#f9f9f9;"><td style="padding:8px;color:#888;">Time (IST)</td><td style="padding:8px;">${ts}</td></tr>
+                        </table>
+                    </div>
+                `;
+
+                // Send to admin email via FormSubmit or similar service
+                // Example: await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+                //     method: 'POST',
+                //     body: new FormData(formElement)
+                // });
+
+                console.log('Email notification would be sent to: weightage.lab@gmail.com');
+            } catch (e) {
+                console.error('Email notification failed:', e);
+            }
+        }
+
+        // Send WhatsApp Notification
+        async function sendWhatsAppNotification(name, email, phone) {
+            try {
+                const ts = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+                const message = `
+*New User Registration — Legaldirectory.ai*
+
+Name: ${name}
+Email: ${email}
+Phone: ${phone}
+Time: ${ts}
+
+✅ Account Created Successfully
+                `;
+
+                // Open WhatsApp with message
+                const encodedMsg = encodeURIComponent(message);
+                console.log(`WhatsApp would open with message. Link: https://wa.me/919008999968?text=${encodedMsg}`);
+            } catch (e) {
+                console.error('WhatsApp notification failed:', e);
+            }
+        }
+
+        // Utility: Generate Random Password
+        function generateRandomPassword() {
+            return Math.random().toString(36).slice(-12);
+        }
+
+        // Utility: Spin Button
+        function spinBtn(btn, text) {
+            btn.disabled = true;
+            btn.innerHTML = `<span style="opacity:.6">${text}</span>`;
+        }
+
+        // Utility: Restore Button
+        function restoreBtn(btn, html) {
+            btn.disabled = false;
+            btn.innerHTML = html;
+        }
+
+        // Show Status Message
+        function showStatus(message, type = '') {
+            const statusEl = document.getElementById('loginStatus');
+            statusEl.textContent = message;
+            statusEl.className = 'login-status' + (type ? ' ' + type : '');
+        }
+
+        // Initialize Firebase on page load
+        window.addEventListener('load', initFirebase);
+    </script>
+</body>
+</html>
