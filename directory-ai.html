@@ -8,7 +8,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 <!-- ── reCAPTCHA v3 (standard, required for Phone OTP) ── -->
-<script src="https://www.google.com/recaptcha/api.js?render=6LdpjBMtAAAAAIRpOFh-lDJKQ-DNpzzAHdRRMc5g" async defer></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6Lcu4h4tAAAAAJUhr-BEXsXB4kmvnB2HkH2nFHTJ" async defer></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
 
@@ -165,12 +165,16 @@
   .login-box {
     width: 100%;
     max-width: 460px;
-    padding: 48px 40px;
-    background: rgba(10,31,53,0.9);
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 40px 36px;
+    background: rgba(10,31,53,0.96);
     border: 1px solid var(--border);
     border-radius: 4px;
     backdrop-filter: blur(20px);
     position: relative;
+    scrollbar-width: thin;
+    scrollbar-color: var(--teal-dim) transparent;
   }
   .login-box::before {
     content:'';
@@ -1234,6 +1238,7 @@
     <!-- ── STEP 1: Auth Options ── -->
     <div id="auth-step-1">
       <div class="login-title">Access Platform</div>
+      <div class="auth-status" id="dir-status" style="margin-bottom:10px;min-height:18px;"></div>
 
       <!-- Google Sign-In -->
       <button class="btn-google" id="dir-google-btn" onclick="dirSignInWithGoogle()">
@@ -1297,7 +1302,6 @@
       <button class="btn-primary" id="dir-send-btn" onclick="dirSendOtp()">
         SEND OTP →
       </button>
-      <div class="auth-status" id="dir-status"></div>
       <div class="powered">Secured by Firebase · reCAPTCHA Protected</div>
     </div>
 
@@ -1755,7 +1759,7 @@ function buildTicker(){const t=document.getElementById('ticker');const mk=()=>{c
 buildTicker();
 
 // ─── SCREEN ROUTING ──────────────────────────────────────────
-function goTo(sid){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(sid).classList.add('active');document.getElementById('backSite').classList.toggle('visible',sid==='dashboard');}
+function goTo(sid){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(sid).classList.add('active');document.getElementById('backSite').classList.toggle('visible',sid==='dashboard');if(sid==='login') dirInitFirebase();}
 function doLogin(){goTo('dashboard');}
 
 /* ══════════════════════════════════════════════
@@ -2012,6 +2016,8 @@ function dirUpdateDashboard(user) {
 
 // Init Firebase on page load
 window.addEventListener('load', dirInitFirebase);
+// Also init immediately if DOM already ready
+if (document.readyState !== 'loading') dirInitFirebase();
 
 // ─── LOCATION DATA ───────────────────────────────────────────
 const regionData={KA:{regions:['Bengaluru Urban','Bengaluru Rural','Mysuru','Hubballi-Dharwad','Mangaluru'],cities:{'Bengaluru Urban':['Indiranagar','Koramangala','Whitefield','HSR Layout','Electronic City','Sarjapur Road','Hebbal','Jayanagar','JP Nagar','Marathahalli','Yelahanka','Bannerghatta'],'Bengaluru Rural':['Doddaballapura','Devanahalli','Hoskote','Nelamangala'],'Mysuru':['Mysuru City','Chamrajnagar','Mandya','Hassan'],'Hubballi-Dharwad':['Hubballi','Dharwad'],'Mangaluru':['Mangaluru City','Udupi']}},MH:{regions:['Mumbai','Pune','Nashik','Nagpur'],cities:{'Mumbai':['Andheri','Bandra','Thane','Navi Mumbai'],'Pune':['Kothrud','Viman Nagar','Hinjewadi'],'Nashik':['Nashik City'],'Nagpur':['Nagpur City']}},TN:{regions:['Chennai','Coimbatore'],cities:{'Chennai':['Anna Nagar','T Nagar','Velachery'],'Coimbatore':['RS Puram','Gandhipuram']}},DL:{regions:['South Delhi','North Delhi'],cities:{'South Delhi':['Hauz Khas','Saket'],'North Delhi':['Rohini','Pitampura']}}};
