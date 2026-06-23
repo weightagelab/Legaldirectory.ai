@@ -648,8 +648,17 @@ footer {
 .google-btn { background:#fff; color:#3c4043; border:1.5px solid #dadce0 !important; }
 .google-btn:hover { background:#f8f9fa; box-shadow:0 2px 12px rgba(0,0,0,.18); }
 
-.apple-btn { background:#000; color:#fff; border:1.5px solid #333 !important; }
-.apple-btn:hover { background:#1a1a1a; box-shadow:0 2px 12px rgba(0,0,0,.4); }
+.login-tabs { display:flex; gap:0; margin:0 0 18px; border-bottom:1px solid var(--border); }
+.login-tab-btn { flex:1; background:transparent; border:none; color:var(--text2); font-family:var(--mono); font-size:11px; font-weight:600; padding:11px 0; cursor:pointer; border-bottom:2px solid transparent; transition:all .2s; text-transform:uppercase; letter-spacing:1px; }
+.login-tab-btn.active { color:var(--blue); border-bottom-color:var(--blue); }
+.login-tab-btn:hover:not(.active) { color:var(--text); }
+.login-field-label { display:block; font-family:var(--mono); font-size:10px; letter-spacing:1px; color:var(--text2); margin-bottom:6px; text-transform:uppercase; }
+.login-text-input { width:100%; background:var(--bg3); border:1px solid var(--border2); color:var(--white); font-family:var(--sans); font-size:13px; padding:11px 14px; border-radius:var(--radius); margin-bottom:12px; outline:none; transition:border-color .15s; }
+.login-text-input:focus { border-color:var(--blue); }
+.login-text-input::placeholder { color:var(--text2); }
+.login-email-btn { width:100%; background:linear-gradient(135deg,#072654,#0a3276); border:1px solid rgba(59,130,246,.4); border-radius:var(--radius); color:#fff; font-family:var(--sans); font-size:13px; font-weight:700; padding:12px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; transition:all .2s; margin-top:2px; }
+.login-email-btn:hover { background:linear-gradient(135deg,#0a3276,#0e42a0); box-shadow:0 4px 16px rgba(59,130,246,.25); }
+.login-email-btn:disabled { opacity:.5; cursor:not-allowed; }
 
 .phone-btn { background:linear-gradient(135deg,#0f2744,#0a3276); color:#fff; border:1.5px solid rgba(59,130,246,.4) !important; }
 .phone-btn:hover { background:linear-gradient(135deg,#0a3276,#0e42a0); box-shadow:0 4px 16px rgba(59,130,246,.25); }
@@ -743,8 +752,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
  </a></div></div><!-- FOOTER --><footer><div class="footer-top"><div><div class="footer-logo">Legaldirectory<em>.ai</em></div><div style="font-family:var(--mono);font-size:9px;color:var(--text2);margin-top:6px;letter-spacing:.5px;">India's Trusted Property Legal Intelligence Platform</div></div><div class="footer-disc">Legaldirectory.ai is not a law firm and does not engage in the practice of law or solicit lawyers. We are a technology platform that facilitates access to independent legal professionals. All legal services are rendered by empanelled lawyers in their independent capacity.
  <br/><br/><strong style="color:var(--text1);">AI Property Check Disclaimer:</strong> The Directory AI tool is a document screening aid only. It does not constitute legal advice, a title opinion, or property clearance. Confidence scores and verdicts are algorithmic indicators — not legal conclusions. Always engage a qualified property lawyer before any transaction.
  </div></div><div class="footer-bottom"><div class="footer-tagline">India's Property Legal Intelligence Platform &nbsp;·&nbsp; Verified Senior Lawyers &nbsp;·&nbsp; 24/7 Support</div><div class="footer-copy">© 2026 Legaldirectory.in</div></div><div style="display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px;padding:14px 52px 18px;border-top:1px solid rgba(255,255,255,.05);"><a href="terms.html" target="_blank" style="font-family:var(--mono);font-size:10px;letter-spacing:.8px;color:var(--text2);text-decoration:none;text-transform:uppercase;transition:color .15s;" onmouseover="this.style.color='#3b82f6'" onmouseout="this.style.color='var(--text2)'">Terms &amp; Conditions</a><span style="color:var(--border2);font-size:10px;">·</span><a href="privacy-policy.html" target="_blank" style="font-family:var(--mono);font-size:10px;letter-spacing:.8px;color:var(--text2);text-decoration:none;text-transform:uppercase;transition:color .15s;" onmouseover="this.style.color='#3b82f6'" onmouseout="this.style.color='var(--text2)'">Privacy Policy</a><span style="color:var(--border2);font-size:10px;">·</span><a href="refund-policy.html" target="_blank" style="font-family:var(--mono);font-size:10px;letter-spacing:.8px;color:var(--text2);text-decoration:none;text-transform:uppercase;transition:color .15s;" onmouseover="this.style.color='#3b82f6'" onmouseout="this.style.color='var(--text2)'">Refund Policy</a><span style="color:var(--border2);font-size:10px;">·</span><a href="cancellation-policy.html" target="_blank" style="font-family:var(--mono);font-size:10px;letter-spacing:.8px;color:var(--text2);text-decoration:none;text-transform:uppercase;transition:color .15s;" onmouseover="this.style.color='#3b82f6'" onmouseout="this.style.color='var(--text2)'">Cancellation Policy</a></div></footer><!-- LOGIN MODAL --><div class="modal-overlay" id="m-login"><div class="modal login-modal-inner"><button class="modal-close" onclick="closeModal('m-login')"></button><div class="modal-tag">CLIENT ACCESS · SECURE LOGIN</div><h2>Sign In</h2><p style="font-size:13px;color:var(--text2);margin-bottom:22px;margin-top:4px;">Access your Legaldirectory.ai account to track your service status and documents.</p><!-- SIGN-IN BUTTONS (shown when logged out) --><div id="login-buttons-panel"><!-- Google --><button class="social-signin-btn google-btn" id="google-signin-btn" onclick="signInWithGoogle()"><svg width="19" height="19" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.9 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 7.9 3l5.7-5.7C34.1 6.5 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.2-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 16 19.1 13 24 13c3.1 0 5.8 1.1 7.9 3l5.7-5.7C34.1 6.5 29.3 4 24 4 16.3 4 9.7 8.4 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-1.9 13.4-5.1l-6.2-5.2C29.4 35.5 26.8 36 24 36c-5.3 0-9.7-3.1-11.3-7.5l-6.6 5.1C9.6 39.5 16.3 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.4 4.3-4.4 5.7l6.2 5.2C36.9 36.3 44 31 44 24c0-1.2-.1-2.4-.4-3.5z"/></svg>Continue with Google
- </button><!-- Apple --><button class="social-signin-btn apple-btn" id="apple-signin-btn" onclick="signInWithApple()"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>Continue with Apple
- </button><!-- Divider --><div class="login-or-divider"><span>or</span></div><!-- Phone OTP — step 1: number input --><div id="phone-step-1"><div class="phone-input-wrap"><span class="phone-flag"> +91</span><input type="tel" id="phone-number" class="phone-input" placeholder="10-digit mobile number" maxlength="10" inputmode="numeric" pattern="[0-9]*"/></div><button class="social-signin-btn phone-btn" id="phone-send-btn" onclick="sendOtp()"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.82 19.79 19.79 0 01.13 1.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.55-.56a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>Send OTP via SMS
+ </button><div class="login-or-divider"><span>or</span></div><!-- LOGIN / NEW ACCOUNT TABS --><div class="login-tabs"><button class="login-tab-btn active" id="tab-login-btn" onclick="switchLoginTab('login')">Login</button><button class="login-tab-btn" id="tab-signup-btn" onclick="switchLoginTab('signup')">New Account</button></div><!-- EMAIL LOGIN PANEL --><div id="email-login-panel"><label class="login-field-label">Email Address *</label><input type="email" id="login-email" class="login-text-input" placeholder="your@email.com"/><label class="login-field-label">Password *</label><input type="password" id="login-password" class="login-text-input" placeholder="Enter your password"/><button class="login-email-btn" id="email-login-btn" onclick="emailPasswordLogin()">Sign In</button></div><!-- EMAIL SIGNUP PANEL --><div id="email-signup-panel" style="display:none;"><label class="login-field-label">Full Name *</label><input type="text" id="signup-name" class="login-text-input" placeholder="John Doe"/><label class="login-field-label">Email Address *</label><input type="email" id="signup-email" class="login-text-input" placeholder="your@email.com"/><label class="login-field-label">Password *</label><input type="password" id="signup-password" class="login-text-input" placeholder="Create a password (min 6 characters)"/><label class="login-field-label">Confirm Password *</label><input type="password" id="signup-confirm" class="login-text-input" placeholder="Confirm password"/><button class="login-email-btn" id="email-signup-btn" onclick="emailPasswordSignup()">Create Account</button></div><div class="login-or-divider"><span>or phone otp</span></div><!-- Phone OTP — step 1: number input --><div id="phone-step-1"><div class="phone-input-wrap"><span class="phone-flag"> +91</span><input type="tel" id="phone-number" class="phone-input" placeholder="10-digit mobile number" maxlength="10" inputmode="numeric" pattern="[0-9]*"/></div><button class="social-signin-btn phone-btn" id="phone-send-btn" onclick="sendOtp()"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.82 19.79 19.79 0 01.13 1.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.55-.56a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>Send OTP via SMS
  </button></div><!-- Phone OTP — step 2: code entry --><div id="phone-step-2" style="display:none;"><p style="font-family:var(--mono);font-size:11px;color:var(--text2);margin-bottom:12px;" id="otp-sent-label"></p><div class="otp-inputs" id="otp-boxes"><input class="otp-box" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]"/><input class="otp-box" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]"/><input class="otp-box" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]"/><input class="otp-box" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]"/><input class="otp-box" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]"/><input class="otp-box" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]"/></div><button class="social-signin-btn phone-btn" id="otp-verify-btn" onclick="verifyOtp()" style="margin-top:12px;">Verify & Sign In
  </button><button onclick="resetPhoneStep()" style="background:none;border:none;color:var(--text2);font-family:var(--mono);font-size:10px;cursor:pointer;margin-top:10px;display:block;width:100%;text-align:center;">← Change number</button></div><!-- Profile Collection — step 3: shown only for new users after OTP --><div id="phone-step-3" style="display:none;"><div style="text-align:center;margin-bottom:20px;"><div style="font-family:var(--serif);font-size:20px;color:var(--white);margin-bottom:4px;">Welcome to Legaldirectory.ai</div><div style="font-family:var(--mono);font-size:11px;color:var(--text2);">Just a few details to complete your profile</div></div><!-- Full Name --><div style="margin-bottom:14px;"><label style="font-family:var(--mono);font-size:10px;color:var(--text2);letter-spacing:1px;display:block;margin-bottom:6px;">FULL NAME *</label><input type="text" id="profile-name" placeholder="Enter your full name"
  style="width:100%;padding:11px 14px;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--white);font-family:var(--sans);font-size:14px;outline:none;"/></div><!-- Email --><div style="margin-bottom:14px;"><label style="font-family:var(--mono);font-size:10px;color:var(--text2);letter-spacing:1px;display:block;margin-bottom:6px;">EMAIL ADDRESS *</label><input type="email" id="profile-email" placeholder="your@email.com"
@@ -882,7 +890,7 @@ const firebaseConfig = {
  measurementId: "G-TYYB4EPL46"
 };
 
-let firebaseApp, firebaseAuth, googleProvider, appleProvider, recaptchaVerifier, confirmationResult;
+let firebaseApp, firebaseAuth, googleProvider, recaptchaVerifier, confirmationResult;
 
 // VERSION: LegalDirectory v2.7 
 
@@ -897,9 +905,7 @@ function initFirebase() {
  googleProvider.addScope('email');
  googleProvider.addScope('profile');
 
- appleProvider = new firebase.auth.OAuthProvider('apple.com');
- appleProvider.addScope('email');
- appleProvider.addScope('name');
+ // Apple Sign-In removed
 
  firebaseAuth.onAuthStateChanged(user => {
  const navBtn = document.getElementById('nav-login-btn');
@@ -964,6 +970,75 @@ Verified `
 }
 
 // GOOGLE 
+// ── TAB SWITCHING ──────────────────────────────────────────
+function switchLoginTab(tab) {
+  const loginPanel  = document.getElementById('email-login-panel');
+  const signupPanel = document.getElementById('email-signup-panel');
+  const tabLogin    = document.getElementById('tab-login-btn');
+  const tabSignup   = document.getElementById('tab-signup-btn');
+  if (tab === 'login') {
+    loginPanel.style.display  = 'block';
+    signupPanel.style.display = 'none';
+    tabLogin.classList.add('active');
+    tabSignup.classList.remove('active');
+  } else {
+    loginPanel.style.display  = 'none';
+    signupPanel.style.display = 'block';
+    tabLogin.classList.remove('active');
+    tabSignup.classList.add('active');
+  }
+  setLoginStatus('');
+}
+
+// ── EMAIL / PASSWORD LOGIN ──────────────────────────────────
+async function emailPasswordLogin() {
+  const email    = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  if (!email || !password) { setLoginStatus('Please enter your email and password.', 'error'); return; }
+  const btn = document.getElementById('email-login-btn');
+  spinBtn('email-login-btn', 'Signing in…');
+  setLoginStatus('');
+  try {
+    const result = await firebaseAuth.signInWithEmailAndPassword(email, password);
+    await notifyLogin(result.user, 'Email & Password');
+    updateLoginPanel(result.user);
+    setLoginStatus('Welcome back, ' + (result.user.displayName || result.user.email.split('@')[0]) + '!', 'success');
+  } catch(e) {
+    const msg = (e.code === 'auth/wrong-password' || e.code === 'auth/user-not-found' || e.code === 'auth/invalid-credential')
+      ? 'Incorrect email or password. Please try again.'
+      : (e.code === 'auth/invalid-email' ? 'Invalid email address.' : 'Sign-in failed. Please try again.');
+    setLoginStatus(msg, 'error');
+    restoreBtn('email-login-btn', 'Sign In');
+  }
+}
+
+// ── EMAIL / PASSWORD SIGNUP ─────────────────────────────────
+async function emailPasswordSignup() {
+  const name     = document.getElementById('signup-name').value.trim();
+  const email    = document.getElementById('signup-email').value.trim();
+  const password = document.getElementById('signup-password').value;
+  const confirm  = document.getElementById('signup-confirm').value;
+  if (!name || !email || !password || !confirm) { setLoginStatus('Please fill in all fields.', 'error'); return; }
+  if (password.length < 6)   { setLoginStatus('Password must be at least 6 characters.', 'error'); return; }
+  if (password !== confirm)  { setLoginStatus('Passwords do not match.', 'error'); return; }
+  spinBtn('email-signup-btn', 'Creating account…');
+  setLoginStatus('');
+  try {
+    const result = await firebaseAuth.createUserWithEmailAndPassword(email, password);
+    await result.user.updateProfile({ displayName: name });
+    result.user._isNewUser = true;
+    await notifyLogin(result.user, 'Email Signup');
+    updateLoginPanel(result.user);
+    setLoginStatus('Welcome, ' + name.split(' ')[0] + '! Account created.', 'success');
+  } catch(e) {
+    const msg = e.code === 'auth/email-already-in-use'
+      ? 'Email already registered — please log in instead.'
+      : (e.code === 'auth/invalid-email' ? 'Invalid email address.' : 'Account creation failed. Please try again.');
+    setLoginStatus(msg, 'error');
+    restoreBtn('email-signup-btn', 'Create Account');
+  }
+}
+
 async function signInWithGoogle() {
  initFirebase();
  const GOOGLE_SVG = `<svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.9 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 7.9 3l5.7-5.7C34.1 6.5 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.2-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 16 19.1 13 24 13c3.1 0 5.8 1.1 7.9 3l5.7-5.7C34.1 6.5 29.3 4 24 4 16.3 4 9.7 8.4 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-1.9 13.4-5.1l-6.2-5.2C29.4 35.5 26.8 36 24 36c-5.3 0-9.7-3.1-11.3-7.5l-6.6 5.1C9.6 39.5 16.3 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.4 4.3-4.4 5.7l6.2 5.2C36.9 36.3 44 31 44 24c0-1.2-.1-2.4-.4-3.5z"/></svg> Continue with Google`;
@@ -984,25 +1059,6 @@ async function signInWithGoogle() {
 }
 
 // APPLE 
-async function signInWithApple() {
- initFirebase();
- const APPLE_SVG = `<svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg> Continue with Apple`;
- spinBtn('apple-signin-btn', 'Connecting to Apple…');
- setLoginStatus('');
- try {
- const result = await firebaseAuth.signInWithPopup(appleProvider);
- result.user._isNewUser = result.additionalUserInfo?.isNewUser;
- await notifyLogin(result.user, 'Apple');
- updateLoginPanel(result.user);
- setLoginStatus(`Welcome${result.user.displayName ? ', ' + result.user.displayName.split(' ')[0] : ''}!`, 'success');
- } catch(e) {
- restoreBtn('apple-signin-btn', APPLE_SVG);
- if (e.code !== 'auth/popup-closed-by-user') {
- setLoginStatus(e.code === 'auth/popup-blocked' ? 'Allow popups for this site, then try again.' : 'Apple sign-in failed. Please try again.', 'error');
- console.error('Apple auth:', e);
- }
- }
-}
 
 // PHONE OTP 
 async function sendOtp() {
