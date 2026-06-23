@@ -1221,10 +1221,17 @@
     <div class="splash-logo">DIRECTORY.AI</div>
     <div class="splash-sub">PROPERTY INTELLIGENCE HUB &nbsp;·&nbsp; V3.1</div>
     <div class="splash-tags">DEEP VERIFICATION &nbsp;·&nbsp; FRAUD ANALYTICS &nbsp;·&nbsp; DOCUMENT INTELLIGENCE</div>
-    <div class="orb-wrap" onclick="goTo('login')">
+    <div class="orb-wrap" id="splash-btn" onclick="splashEnter()" style="position:relative;opacity:0.6;pointer-events:none;" title="Checking authentication...">
       <div class="orb"></div>
       <div class="orb-label">ENTER PLATFORM</div>
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60px;height:60px;border:2px solid var(--teal);border-radius:50%;animation:pulse-check 1.5s infinite;pointer-events:none;"></div>
     </div>
+    <style>
+      @keyframes pulse-check {
+        0%, 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        50% { opacity: 0.3; transform: translate(-50%, -50%) scale(1.2); }
+      }
+    </style>
   </div>
 </div>
 
@@ -1320,7 +1327,12 @@
       <button class="btn-primary" id="dir-verify-btn" onclick="dirVerifyOtp()">
         VERIFY & ENTER →
       </button>
-      <button class="back-link" onclick="dirResetAuth()">← Change number</button>
+      <div style="display:flex;gap:12px;margin-top:12px;">
+        <button id="dir-resend-btn" class="back-link" onclick="dirResendOtp()" style="flex:1;text-align:center;padding:10px;border:1px solid var(--border);border-radius:3px;background:transparent;color:var(--text-mid);font-size:12px;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--teal)';this.style.color='var(--teal)';" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-mid)';">
+          🔄 Resend OTP
+        </button>
+        <button class="back-link" onclick="dirResetAuth()" style="flex:1;text-align:center;padding:10px;">← Change number</button>
+      </div>
       <div class="auth-status" id="dir-status-2"></div>
     </div>
 
@@ -1878,6 +1890,14 @@ function dirInitFirebase() {
     dirGoogleProvider.addScope('email');
     dirGoogleProvider.addScope('profile');
     dirAuth.onAuthStateChanged(user => {
+      // Auth check complete — enable splash button
+      const splashBtn = document.getElementById('splash-btn');
+      if (splashBtn) {
+        splashBtn.style.opacity = '1';
+        splashBtn.style.pointerEvents = 'all';
+        splashBtn.title = '';
+      }
+      
       if (user) {
         dirUser = user;
         // Auto-login if already authenticated
@@ -1886,6 +1906,17 @@ function dirInitFirebase() {
       }
     });
   } catch(e) { console.error('Firebase init:', e); }
+}
+
+// ── SPLASH ENTER GUARD ──────────────────────────────────
+function splashEnter() {
+  // Double-check if user is authenticated
+  if (dirAuth && dirAuth.currentUser) {
+    goTo('dashboard');
+    dirUpdateDashboard(dirAuth.currentUser);
+  } else {
+    goTo('login');
+  }
 }
 
 function dirSetStatus(msg, type, el) {
@@ -1920,6 +1951,29 @@ async function dirSendOtp() {
     document.getElementById('dir-otp-label').textContent =
       'OTP sent to +91 ' + raw + ' — enter 6-digit code';
 
+    // Store phone for resend
+    window.dirCurrentPhone = phone;
+    
+    // Enable resend after 30 seconds
+    const resendBtn = document.getElementById('dir-resend-btn');
+    if (resendBtn) {
+      resendBtn.disabled = true;
+      resendBtn.style.opacity = '0.5';
+      resendBtn.textContent = '⏳ Resend in 30s';
+      let countdown = 30;
+      const timer = setInterval(() => {
+        countdown--;
+        if (countdown <= 0) {
+          clearInterval(timer);
+          resendBtn.disabled = false;
+          resendBtn.style.opacity = '1';
+          resendBtn.textContent = '🔄 Resend OTP';
+        } else {
+          resendBtn.textContent = '⏳ Resend in ' + countdown + 's';
+        }
+      }, 1000);
+    }
+
     const cells = document.querySelectorAll('.otp-cell');
     cells[0].focus();
     cells.forEach((cell, i) => {
@@ -1937,6 +1991,58 @@ async function dirSendOtp() {
     console.error('OTP send:', e);
     btn.disabled = false; btn.textContent = 'SEND OTP →';
     dirSetStatus('⚠ Could not send OTP. Try again.', 'err');
+    if (dirRecaptcha) { dirRecaptcha.clear(); dirRecaptcha = null; }
+  }
+}
+
+// ── RESEND OTP ────────────────────────────────────────────
+async function dirResendOtp() {
+  if (!window.dirCurrentPhone) {
+    dirSetStatus('⚠ Phone number lost. Go back and try again.', 'err', 'dir-status-2');
+    return;
+  }
+
+  const resendBtn = document.getElementById('dir-resend-btn');
+  resendBtn.disabled = true;
+  resendBtn.textContent = 'SENDING…';
+  dirSetStatus('Resending OTP…', 'info', 'dir-status-2');
+
+  try {
+    if (dirRecaptcha) { dirRecaptcha.clear(); dirRecaptcha = null; }
+    dirRecaptcha = new firebase.auth.RecaptchaVerifier('dir-recaptcha', {
+      size: 'invisible', callback: () => {}
+    }, dirApp);
+    await dirRecaptcha.render();
+
+    dirConfirmation = await dirAuth.signInWithPhoneNumber(window.dirCurrentPhone, dirRecaptcha);
+
+    dirSetStatus('✓ OTP resent. Check your messages.', 'success', 'dir-status-2');
+    
+    // Clear previous OTP cells
+    document.querySelectorAll('.otp-cell').forEach(c => c.value = '');
+    document.querySelector('.otp-cell')?.focus();
+
+    // Reset countdown
+    resendBtn.disabled = true;
+    resendBtn.style.opacity = '0.5';
+    resendBtn.textContent = '⏳ Resend in 30s';
+    let countdown = 30;
+    const timer = setInterval(() => {
+      countdown--;
+      if (countdown <= 0) {
+        clearInterval(timer);
+        resendBtn.disabled = false;
+        resendBtn.style.opacity = '1';
+        resendBtn.textContent = '🔄 Resend OTP';
+      } else {
+        resendBtn.textContent = '⏳ Resend in ' + countdown + 's';
+      }
+    }, 1000);
+  } catch(e) {
+    console.error('OTP resend:', e);
+    resendBtn.disabled = false;
+    resendBtn.textContent = '🔄 Resend OTP';
+    dirSetStatus('⚠ Could not resend OTP. Try again.', 'err', 'dir-status-2');
     if (dirRecaptcha) { dirRecaptcha.clear(); dirRecaptcha = null; }
   }
 }
