@@ -8,7 +8,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 <!-- ── reCAPTCHA v3 (standard, required for Phone OTP) ── -->
-<script src="https://www.google.com/recaptcha/api.js?render=6LdpjBMtAAAAAIRpOFh-lDJKQ-DNpzzAHdRRMc5g" async defer></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6Lcu4h4tAAAAAJUhr-BEXsXB4kmvnB2HkH2nFHTJ" async defer></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
 
@@ -313,6 +313,69 @@
     font-size: 11px;
     color: var(--text-dim);
   }
+
+  /* ── Google Sign-In ── */
+  .btn-google {
+    width: 100%;
+    padding: 14px 16px;
+    background: #fff;
+    border: 1.5px solid #dadce0;
+    border-radius: 3px;
+    color: #3c4043;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background 0.2s, box-shadow 0.2s;
+    margin-bottom: 0;
+  }
+  .btn-google:hover { background: #f8f9fa; box-shadow: 0 2px 12px rgba(0,0,0,0.18); }
+  .btn-google:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* ── Auth Tabs ── */
+  .auth-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 20px;
+  }
+  .auth-tab-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-mid);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    padding: 10px 0;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+  .auth-tab-btn.active { color: var(--teal); border-bottom-color: var(--teal); }
+  .auth-tab-btn:hover:not(.active) { color: var(--text-bright); }
+
+  /* ── Email inputs inside login ── */
+  .back-link {
+    display: block;
+    text-align: center;
+    background: none;
+    border: none;
+    color: var(--text-mid);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    margin-top: 14px;
+    width: 100%;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--teal); }
 
   /* ── Phone OTP Styles ── */
   .phone-row {
@@ -1168,9 +1231,61 @@
     <div class="login-divider"></div>
     <div class="login-sub">PROPERTY INTELLIGENCE PLATFORM</div>
 
-    <!-- ── STEP 1: Phone Number ── -->
+    <!-- ── STEP 1: Auth Options ── -->
     <div id="auth-step-1">
       <div class="login-title">Access Platform</div>
+
+      <!-- Google Sign-In -->
+      <button class="btn-google" id="dir-google-btn" onclick="dirSignInWithGoogle()">
+        <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.9 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 7.9 3l5.7-5.7C34.1 6.5 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.2-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 16 19.1 13 24 13c3.1 0 5.8 1.1 7.9 3l5.7-5.7C34.1 6.5 29.3 4 24 4 16.3 4 9.7 8.4 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-1.9 13.4-5.1l-6.2-5.2C29.4 35.5 26.8 36 24 36c-5.3 0-9.7-3.1-11.3-7.5l-6.6 5.1C9.6 39.5 16.3 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.4 4.3-4.4 5.7l6.2 5.2C36.9 36.3 44 31 44 24c0-1.2-.1-2.4-.4-3.5z"/></svg>
+        Continue with Google
+      </button>
+
+      <div class="or-row">OR</div>
+
+      <!-- Login / New Account Tabs -->
+      <div class="auth-tabs">
+        <button class="auth-tab-btn active" id="dir-tab-login" onclick="dirSwitchTab('login')">Login</button>
+        <button class="auth-tab-btn" id="dir-tab-signup" onclick="dirSwitchTab('signup')">New Account</button>
+      </div>
+
+      <!-- Email Login Panel -->
+      <div id="dir-email-login">
+        <div class="field-wrap">
+          <label class="field-label">EMAIL ADDRESS</label>
+          <input class="field-input" type="email" id="dir-login-email" placeholder="your@email.com"/>
+        </div>
+        <div class="field-wrap">
+          <label class="field-label">PASSWORD</label>
+          <input class="field-input" type="password" id="dir-login-password" placeholder="Enter your password"/>
+        </div>
+        <button class="btn-primary" id="dir-email-login-btn" onclick="dirEmailLogin()">SIGN IN →</button>
+      </div>
+
+      <!-- Email Signup Panel -->
+      <div id="dir-email-signup" style="display:none;">
+        <div class="field-wrap">
+          <label class="field-label">FULL NAME</label>
+          <input class="field-input" type="text" id="dir-signup-name" placeholder="Enter your full name"/>
+        </div>
+        <div class="field-wrap">
+          <label class="field-label">EMAIL ADDRESS</label>
+          <input class="field-input" type="email" id="dir-signup-email" placeholder="your@email.com"/>
+        </div>
+        <div class="field-wrap">
+          <label class="field-label">PASSWORD</label>
+          <input class="field-input" type="password" id="dir-signup-password" placeholder="Min 6 characters"/>
+        </div>
+        <div class="field-wrap">
+          <label class="field-label">CONFIRM PASSWORD</label>
+          <input class="field-input" type="password" id="dir-signup-confirm" placeholder="Confirm password"/>
+        </div>
+        <button class="btn-primary" id="dir-email-signup-btn" onclick="dirEmailSignup()">CREATE ACCOUNT →</button>
+      </div>
+
+      <div class="or-row">OR PHONE OTP</div>
+
+      <!-- Phone OTP -->
       <div class="field-wrap">
         <label class="field-label">MOBILE NUMBER</label>
         <div class="phone-row">
@@ -1655,13 +1770,109 @@ const dirFirebaseConfig = {
   appId:             "1:661232836435:web:8efdbaf0e0f63161f48ba6"
 };
 
-let dirApp, dirAuth, dirRecaptcha, dirConfirmation, dirUser;
+let dirApp, dirAuth, dirRecaptcha, dirConfirmation, dirUser, dirGoogleProvider;
+
+// ── TAB SWITCH ─────────────────────────────────────────────────
+function dirSwitchTab(tab) {
+  const loginEl  = document.getElementById('dir-email-login');
+  const signupEl = document.getElementById('dir-email-signup');
+  const tLogin   = document.getElementById('dir-tab-login');
+  const tSignup  = document.getElementById('dir-tab-signup');
+  if (tab === 'login') {
+    loginEl.style.display  = 'block';
+    signupEl.style.display = 'none';
+    tLogin.classList.add('active');
+    tSignup.classList.remove('active');
+  } else {
+    loginEl.style.display  = 'none';
+    signupEl.style.display = 'block';
+    tLogin.classList.remove('active');
+    tSignup.classList.add('active');
+  }
+  dirSetStatus('');
+}
+
+// ── GOOGLE SIGN-IN ─────────────────────────────────────────────
+async function dirSignInWithGoogle() {
+  dirInitFirebase();
+  const btn = document.getElementById('dir-google-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span style="opacity:0.6;font-family:Inter,sans-serif;font-size:13px;">Connecting to Google…</span>';
+  dirSetStatus('');
+  try {
+    const result = await dirAuth.signInWithPopup(dirGoogleProvider);
+    dirUser = result.user;
+    goTo('dashboard');
+    dirUpdateDashboard(result.user);
+  } catch(e) {
+    btn.disabled = false;
+    btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.9 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 7.9 3l5.7-5.7C34.1 6.5 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.2-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 16 19.1 13 24 13c3.1 0 5.8 1.1 7.9 3l5.7-5.7C34.1 6.5 29.3 4 24 4 16.3 4 9.7 8.4 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-1.9 13.4-5.1l-6.2-5.2C29.4 35.5 26.8 36 24 36c-5.3 0-9.7-3.1-11.3-7.5l-6.6 5.1C9.6 39.5 16.3 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.4 4.3-4.4 5.7l6.2 5.2C36.9 36.3 44 31 44 24c0-1.2-.1-2.4-.4-3.5z"/></svg>Continue with Google';
+    const msg = e.code === 'auth/popup-blocked'
+      ? '⚠ Allow popups for this site, then retry.'
+      : '⚠ Google sign-in failed. Try again.';
+    dirSetStatus(msg, 'err');
+  }
+}
+
+// ── EMAIL LOGIN ────────────────────────────────────────────────
+async function dirEmailLogin() {
+  dirInitFirebase();
+  const email    = document.getElementById('dir-login-email').value.trim();
+  const password = document.getElementById('dir-login-password').value;
+  if (!email || !password) { dirSetStatus('⚠ Enter email and password', 'err'); return; }
+  const btn = document.getElementById('dir-email-login-btn');
+  btn.disabled = true; btn.textContent = 'SIGNING IN…';
+  dirSetStatus('');
+  try {
+    const result = await dirAuth.signInWithEmailAndPassword(email, password);
+    dirUser = result.user;
+    goTo('dashboard');
+    dirUpdateDashboard(result.user);
+  } catch(e) {
+    btn.disabled = false; btn.textContent = 'SIGN IN →';
+    const msg = (e.code === 'auth/wrong-password' || e.code === 'auth/user-not-found' || e.code === 'auth/invalid-credential')
+      ? '⚠ Incorrect email or password.'
+      : (e.code === 'auth/invalid-email' ? '⚠ Invalid email address.' : '⚠ Sign-in failed. Try again.');
+    dirSetStatus(msg, 'err');
+  }
+}
+
+// ── EMAIL SIGNUP ───────────────────────────────────────────────
+async function dirEmailSignup() {
+  dirInitFirebase();
+  const name     = document.getElementById('dir-signup-name').value.trim();
+  const email    = document.getElementById('dir-signup-email').value.trim();
+  const password = document.getElementById('dir-signup-password').value;
+  const confirm  = document.getElementById('dir-signup-confirm').value;
+  if (!name || !email || !password || !confirm) { dirSetStatus('⚠ Fill in all fields', 'err'); return; }
+  if (password.length < 6)  { dirSetStatus('⚠ Password min 6 characters', 'err'); return; }
+  if (password !== confirm) { dirSetStatus('⚠ Passwords do not match', 'err'); return; }
+  const btn = document.getElementById('dir-email-signup-btn');
+  btn.disabled = true; btn.textContent = 'CREATING ACCOUNT…';
+  dirSetStatus('');
+  try {
+    const result = await dirAuth.createUserWithEmailAndPassword(email, password);
+    await result.user.updateProfile({ displayName: name });
+    dirUser = result.user;
+    goTo('dashboard');
+    dirUpdateDashboard(result.user);
+  } catch(e) {
+    btn.disabled = false; btn.textContent = 'CREATE ACCOUNT →';
+    const msg = e.code === 'auth/email-already-in-use'
+      ? '⚠ Email already registered — login instead.'
+      : (e.code === 'auth/invalid-email' ? '⚠ Invalid email address.' : '⚠ Account creation failed.');
+    dirSetStatus(msg, 'err');
+  }
+}
 
 function dirInitFirebase() {
   if (dirApp) return;
   try {
     dirApp  = firebase.initializeApp(dirFirebaseConfig, 'directory-ai');
     dirAuth = firebase.auth(dirApp);
+    dirGoogleProvider = new firebase.auth.GoogleAuthProvider();
+    dirGoogleProvider.addScope('email');
+    dirGoogleProvider.addScope('profile');
     dirAuth.onAuthStateChanged(user => {
       if (user) {
         dirUser = user;
