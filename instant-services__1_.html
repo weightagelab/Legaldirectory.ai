@@ -755,9 +755,13 @@
         <div class="drawer-total-val" id="drawer-total">₹0</div>
       </div>
       <div class="drawer-fields">
-        <input id="drawer-name"  type="text" class="drawer-input" placeholder="Your Name"
+        <input id="drawer-name"  type="text" class="drawer-input" placeholder="Full Name *" required
           onfocus="this.style.borderColor='#2563eb'" onblur="this.style.borderColor='#2a2d3a'"/>
-        <input id="drawer-phone" type="tel"  class="drawer-input" placeholder="WhatsApp Number (for document delivery)"
+        <input id="drawer-phone" type="tel"  class="drawer-input" placeholder="Phone Number *" required
+          onfocus="this.style.borderColor='#2563eb'" onblur="this.style.borderColor='#2a2d3a'"/>
+        <input id="drawer-whatsapp" type="tel"  class="drawer-input" placeholder="WhatsApp Number (optional)"
+          onfocus="this.style.borderColor='#2563eb'" onblur="this.style.borderColor='#2a2d3a'"/>
+        <input id="drawer-email" type="email"  class="drawer-input" placeholder="Email Address (optional)"
           onfocus="this.style.borderColor='#2563eb'" onblur="this.style.borderColor='#2a2d3a'"/>
       </div>
       <button class="btn-pay-now" id="drawer-pay-btn" onclick="initiateCheckout()">
@@ -929,6 +933,17 @@ async function initiateCheckout() {
   var label = document.getElementById('drawer-pay-label');
   var name  = (document.getElementById('drawer-name')  || {}).value || '';
   var phone = (document.getElementById('drawer-phone') || {}).value || '';
+  
+  // Validate required fields
+  if (!name.trim()) {
+    alert('Please enter your full name');
+    return;
+  }
+  if (!phone.trim()) {
+    alert('Please enter your phone number');
+    return;
+  }
+  
   var total = cartTotal();
 
   // Build items array for the order

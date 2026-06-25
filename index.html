@@ -1412,8 +1412,10 @@ function handleCashfreePayment(serviceName, amount) {
         <span class="ld-cart-total-value" id="ld-drawer-total">₹0</span>
       </div>
       <div class="ld-cart-fields">
-        <input class="ld-cart-input" id="ld-customer-name" type="text" placeholder="Your Name (optional)"/>
-        <input class="ld-cart-input" id="ld-customer-phone" type="tel" placeholder="WhatsApp Number (optional)"/>
+        <input class="ld-cart-input" id="ld-customer-name" type="text" placeholder="Full Name *" required/>
+        <input class="ld-cart-input" id="ld-customer-phone" type="tel" placeholder="Phone Number *" required/>
+        <input class="ld-cart-input" id="ld-customer-whatsapp" type="tel" placeholder="WhatsApp Number (optional)"/>
+        <input class="ld-cart-input" id="ld-customer-email" type="email" placeholder="Email Address (optional)"/>
       </div>
       <button class="ld-cart-pay" id="ld-pay-btn" type="button" onclick="ldCheckout()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
@@ -1746,6 +1748,17 @@ async function ldCheckout() {
   var total = ldCartTotal();
   var name = ((document.getElementById('ld-customer-name') || {}).value || '').trim();
   var phone = ((document.getElementById('ld-customer-phone') || {}).value || '').trim();
+  
+  // Validate required fields
+  if (!name) {
+    alert('Please enter your full name');
+    return;
+  }
+  if (!phone) {
+    alert('Please enter your phone number');
+    return;
+  }
+  
   var items = ldCart.map(function(i){ return { name:i.name, amount:i.price, note:i.note }; });
 
   btn.disabled = true;
