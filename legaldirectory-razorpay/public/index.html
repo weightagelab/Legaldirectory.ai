@@ -1275,19 +1275,67 @@ function handleRzpPayment(serviceName, amount) {
  `<div style="font-family:sans-serif;max-width:520px;"><h2 style="color:#d4a843;">New Order Legaldirectory.ai</h2><table style="width:100%;border-collapse:collapse;font-size:14px;"><tr><td style="padding:8px;color:#888;">Service</td><td style="padding:8px;font-weight:bold;">${service}</td></tr><tr style="background:#f9f9f9;"><td style="padding:8px;color:#888;">Amount</td><td style="padding:8px;font-weight:bold;">${amt}</td></tr><tr><td style="padding:8px;color:#888;">Time (IST)</td><td style="padding:8px;">${ts}</td></tr></table></div>`
  );
 
- // Open Razorpay immediately (must happen first before any other window.open)
- window.open('https://rzp.io/rzp/1hbD0y94', '_blank');
+ // ── RAZORPAY STANDARD CHECKOUT ──
+ if (!amount) {
+   // No fixed price — send to WhatsApp for quote
+   sendWhatsApp(`*New Enquiry — Legaldirectory.ai*\n\nService: ${service}\nTime: ${ts}\n\nPlease guide me on pricing and next steps.`);
+   return;
+ }
 
- // WhatsApp notification after short delay so it doesn't block Razorpay
- setTimeout(() => sendWhatsApp(
-` *New Order Legaldirectory.ai*
-
- Service: ${service}
- Amount: ${amt}
- Time: ${ts}
-
-Customer redirected to Razorpay `
- ), 1500);
+ fetch('/api/create-order', {
+   method: 'POST',
+   headers: { 'Content-Type': 'application/json' },
+   body: JSON.stringify({ amount: amount, currency: 'INR', receipt: 'LD-' + Date.now(), notes: { service: service } })
+ })
+ .then(r => r.json())
+ .then(orderData => {
+   if (!orderData.order_id) throw new Error(orderData.error || 'Order creation failed');
+   var options = {
+     key:         orderData.key_id,
+     amount:      orderData.amount,
+     currency:    orderData.currency,
+     name:        'Legaldirectory.ai',
+     description: service,
+     image:       'https://legaldirectory.in/og-image.png',
+     order_id:    orderData.order_id,
+     theme:       { color: '#c9952a' },
+     notes:       { service: service },
+     handler: function(response) {
+       // Verify payment server-side
+       fetch('/api/verify-payment', {
+         method: 'POST',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify({
+           razorpay_order_id:   response.razorpay_order_id,
+           razorpay_payment_id: response.razorpay_payment_id,
+           razorpay_signature:  response.razorpay_signature,
+           service: service,
+           amount:  amt
+         })
+       })
+       .then(vr => vr.json())
+       .then(v => {
+         if (v.success) {
+           sendWhatsApp(`*Payment Confirmed — Legaldirectory.ai*\n\nService: ${service}\nAmount: ${amt}\nPayment ID: ${response.razorpay_payment_id}\nTime: ${ts}\n\nThank you! Our team will contact you shortly.`);
+           alert('Payment successful! Payment ID: ' + response.razorpay_payment_id + '\n\nOur team will contact you within 2 hours.');
+         }
+       })
+       .catch(() => {
+         alert('Payment received but verification pending. Please WhatsApp us with Payment ID: ' + response.razorpay_payment_id);
+       });
+     },
+     modal: { ondismiss: function() {} }
+   };
+   var rzp = new Razorpay(options);
+   rzp.on('payment.failed', function(r) {
+     alert('Payment failed: ' + (r.error.description || 'Please try again.'));
+   });
+   rzp.open();
+ })
+ .catch(err => {
+   alert('Could not initiate payment: ' + err.message + '\n\nPlease use WhatsApp to book.');
+   sendWhatsApp(`*Booking Request — Legaldirectory.ai*\n\nService: ${service}\nAmount: ${amt}\nTime: ${ts}\n\nPayment gateway error — please assist.`);
+ });
 }
 
 </script><!-- reCAPTCHA must live outside all modals/hidden elements --><div id="recaptcha-container" style="position:fixed;bottom:0;right:0;z-index:9999;"></div>
