@@ -399,7 +399,11 @@
   .footer-brand em { font-style: italic; color: var(--gold); font-weight: 400; }
 </style>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-</head>
+<script>
+const LD_CART='ld_cart_v1';
+function ldCart(){return JSON.parse(localStorage.getItem(LD_CART)||'[]')}
+function ldAdd(name,price){let c=ldCart(),x=c.find(i=>i.name===name);if(x)x.qty++;else c.push({name,price:Number(price),qty:1});localStorage.setItem(LD_CART,JSON.stringify(c));alert('Added to cart');}
+</script></head>
 <body>
 
 <!-- ── TOP BAR ── -->
