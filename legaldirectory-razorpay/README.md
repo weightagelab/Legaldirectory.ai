@@ -1,1 +1,0 @@
-Set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in Vercel Environment Variables. Never upload keys to GitHub.
