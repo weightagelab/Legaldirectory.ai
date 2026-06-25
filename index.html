@@ -141,7 +141,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
  "reviewCount": "3240"
  }
 }
-</script><meta name="twitter:image" content="https://legaldirectory.in/og-image.png"/><meta name="twitter:site" content="@legaldirectoryin"/><!-- VERSION: v2.1 — OTP fix deployed --><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/><meta http-equiv="Pragma" content="no-cache"/><meta http-equiv="Expires" content="0"/><!-- reCAPTCHA v3 — required for Firebase Phone OTP --><script src="https://www.google.com/recaptcha/api.js?render=6Lcu4h4tAAAAAJUhr-BEXsXB4kmvnB2HkH2nFHTJ" async defer></script><!-- PERFORMANCE: preconnect --><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link rel="preconnect" href="https://checkout.razorpay.com"/><link rel="dns-prefetch" href="https://wa.me"/><script src="https://checkout.razorpay.com/v1/checkout.js"></script><!-- FAVICON --><link rel="icon" type="image/png" href="/favicon.png"/><link rel="apple-touch-icon" href="/apple-touch-icon.png"/><!-- THEME COLOR (mobile browser chrome) --><meta name="theme-color" content="#07080e"/><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/><style>
+</script><meta name="twitter:image" content="https://legaldirectory.in/og-image.png"/><meta name="twitter:site" content="@legaldirectoryin"/><!-- VERSION: v2.1 — OTP fix deployed --><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/><meta http-equiv="Pragma" content="no-cache"/><meta http-equiv="Expires" content="0"/><!-- reCAPTCHA v3 — required for Firebase Phone OTP --><script src="https://www.google.com/recaptcha/api.js?render=6Lcu4h4tAAAAAJUhr-BEXsXB4kmvnB2HkH2nFHTJ" async defer></script><script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script><!-- PERFORMANCE: preconnect --><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link rel="preconnect" href="https://sdk.cashfree.com"/><link rel="dns-prefetch" href="https://wa.me"/><!-- FAVICON --><link rel="icon" type="image/png" href="/favicon.png"/><link rel="apple-touch-icon" href="/apple-touch-icon.png"/><!-- THEME COLOR (mobile browser chrome) --><meta name="theme-color" content="#07080e"/><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/><style>
 :root {
  --bg: #07080e;
  --bg2: #0d0f18;
@@ -323,7 +323,7 @@ nav {
 .visitor-n { font-family:var(--mono); font-size:38px; color:var(--gold); letter-spacing:1px; }
 .visitor-l { font-family:var(--mono); font-size:9px; color:var(--text2); letter-spacing:2.5px; margin-top:4px; }
 
-/* BOOKING PANEL (RZP) */
+/* BOOKING PANEL (CF) */
 .booking-panel {
  background:var(--bg2); border:1px solid rgba(59,130,246,.25);
  border-radius:var(--radius); padding:24px; margin-top:18px;
@@ -350,17 +350,17 @@ nav {
  outline:none; cursor:pointer; transition:border-color .18s;
 }
 .booking-select:focus { border-color:var(--blue); }
-.rzp-btn-wrap { margin-top:14px; }
-/* Razorpay button placeholder styling */
-.rzp-payment-btn {
+.cf-btn-wrap { margin-top:14px; }
+/* Cashfree button placeholder styling */
+.cf-payment-btn {
  width:100%; background:linear-gradient(135deg, #072654, #0a3276);
  border:1px solid rgba(59,130,246,.4); border-radius:5px;
  color:#fff; font-family:var(--sans); font-size:13px; font-weight:700;
  padding:13px 20px; cursor:pointer; display:flex; align-items:center;
  justify-content:center; gap:10px; transition:all .2s; letter-spacing:.2px;
 }
-.rzp-payment-btn:hover { background:linear-gradient(135deg,#0a3276,#0e42a0); box-shadow:0 4px 20px rgba(59,130,246,.3); }
-.rzp-logo { font-family:var(--mono); font-size:9px; color:rgba(120,180,255,.7); margin-top:8px; text-align:center; letter-spacing:.5px; }
+.cf-payment-btn:hover { background:linear-gradient(135deg,#0a3276,#0e42a0); box-shadow:0 4px 20px rgba(59,130,246,.3); }
+.cf-logo { font-family:var(--mono); font-size:9px; color:rgba(120,180,255,.7); margin-top:8px; text-align:center; letter-spacing:.5px; }
 .booking-note { font-size:11px; color:var(--text2); text-align:center; margin-top:8px; line-height:1.6; }
 
 /* DISCLAIMER */
@@ -569,20 +569,20 @@ footer {
 .modal li { font-size:13px; color:var(--text2); line-height:1.78; margin-bottom:5px; }
 .modal-divider { border:none; border-top:1px solid var(--border); margin:18px 0; }
 
-/* RZP in modal */
+/* CF in modal */
 .modal-booking {
  background:var(--bg3); border:1px solid rgba(59,130,246,.2);
  border-radius:var(--radius); padding:22px; margin-top:22px;
 }
 .modal-booking-head { font-family:var(--mono); font-size:10px; letter-spacing:1.5px; color:var(--blue); margin-bottom:16px; }
-.modal-rzp-btn {
+.modal-cf-btn {
  width:100%; background:linear-gradient(135deg, #072654, #0a3276);
  border:1px solid rgba(59,130,246,.4); border-radius:5px;
  color:#fff; font-family:var(--sans); font-size:13px; font-weight:700;
  padding:14px 20px; cursor:pointer; display:flex; align-items:center;
  justify-content:center; gap:10px; transition:all .2s; letter-spacing:.2px; margin-top:14px;
 }
-.modal-rzp-btn:hover { background:linear-gradient(135deg,#0a3276,#0e42a0); box-shadow:0 4px 20px rgba(59,130,246,.3); }
+.modal-cf-btn:hover { background:linear-gradient(135deg,#0a3276,#0e42a0); box-shadow:0 4px 20px rgba(59,130,246,.3); }
 .modal-wa-alt {
  display:flex; align-items:center; justify-content:center; gap:8px;
  background:#25d366; color:#050810; font-family:var(--mono); font-size:12px; font-weight:700;
@@ -590,7 +590,7 @@ footer {
  transition:all .18s; width:100%;
 }
 .modal-wa-alt:hover { background:#1ebe5d; }
-.rzp-secure-note { font-family:var(--mono); font-size:9px; color:var(--text2); text-align:center; margin-top:10px; letter-spacing:.5px; }
+.cf-secure-note { font-family:var(--mono); font-size:9px; color:var(--text2); text-align:center; margin-top:10px; letter-spacing:.5px; }
 
 /* RESPONSIVE */
 @media(max-width:1050px){
@@ -709,52 +709,68 @@ footer {
 .login-field label { display:block; font-family:var(--mono); font-size:10px; letter-spacing:1px; color:var(--text2); margin-bottom:6px; text-transform:uppercase; }
 .login-submit-btn { width:100%; background:linear-gradient(135deg,#072654,#0a3276); border:1px solid rgba(59,130,246,.4); border-radius:5px; color:#fff; font-family:var(--sans); font-size:14px; font-weight:700; padding:13px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px; transition:all .2s; margin-top:6px; }
 
-/* CART BAR + DRAWER */
-.card.selected { outline:2px solid var(--gold); outline-offset:-2px; background:rgba(212,168,67,.06); }
-.card-cta { cursor:pointer; }
-.card.selected .card-cta { color:#000; background:var(--gold); border-color:var(--gold); }
-#cart-bar { position:fixed; bottom:0; left:0; right:0; background:#0d0f18; border-top:1px solid var(--border); z-index:300; transform:translateY(100%); transition:transform .3s ease; box-shadow:0 -8px 40px rgba(0,0,0,.6); }
-#cart-bar.visible { transform:translateY(0); }
-.cart-bar-inner { max-width:1240px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:14px 28px; }
-.cart-summary { display:flex; flex-direction:column; gap:2px; }
-.cart-count { font-family:var(--mono); font-size:11px; font-weight:700; color:var(--text2); letter-spacing:1px; text-transform:uppercase; }
-.cart-total { font-size:22px; font-weight:800; color:var(--white); letter-spacing:-.02em; }
-.cart-actions { display:flex; gap:10px; align-items:center; flex-shrink:0; }
-.btn-view-cart, .btn-checkout, .btn-pay-now, .drawer-item-remove { font-family:var(--sans); cursor:pointer; transition:all .15s; }
-.btn-view-cart { background:transparent; color:var(--text3); font-size:12px; font-weight:600; border:1px solid var(--border2); border-radius:5px; padding:9px 16px; }
-.btn-view-cart:hover { border-color:var(--text3); color:var(--white); }
-.btn-checkout { background:var(--gold); color:#000; font-size:13px; font-weight:800; border:none; border-radius:5px; padding:11px 22px; display:inline-flex; align-items:center; gap:7px; }
-.btn-checkout:hover, .btn-pay-now:hover { opacity:.88; }
-#cart-drawer-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.72); z-index:400; }
-#cart-drawer-overlay.open { display:flex; align-items:flex-end; justify-content:center; }
-#cart-drawer { background:#0d0f18; border:1px solid var(--border); border-radius:12px 12px 0 0; width:100%; max-width:540px; max-height:90vh; display:flex; flex-direction:column; box-shadow:0 24px 64px rgba(0,0,0,.65); }
-.drawer-header { display:flex; align-items:center; justify-content:space-between; padding:20px 24px 16px; border-bottom:1px solid var(--border); flex-shrink:0; }
-.drawer-title { font-size:14px; font-weight:800; color:var(--white); }
-.drawer-close { background:none; border:none; color:var(--text2); font-size:24px; cursor:pointer; line-height:1; padding:4px; }
-.drawer-items { overflow-y:auto; flex:1; padding:8px 0; }
-.drawer-item { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 24px; border-bottom:1px solid rgba(30,34,53,.7); }
-.drawer-item-info { flex:1; min-width:0; }
-.drawer-item-name { font-size:13px; font-weight:700; color:var(--white); line-height:1.35; }
-.drawer-item-delivery { font-size:11px; color:var(--text2); margin-top:2px; }
-.drawer-item-price { font-size:15px; font-weight:800; color:var(--white); flex-shrink:0; }
-.drawer-item-remove { background:none; border:1px solid var(--border2); color:var(--text2); border-radius:4px; padding:4px 8px; font-size:11px; flex-shrink:0; }
-.drawer-item-remove:hover { border-color:var(--red); color:var(--red); }
-.drawer-footer { padding:16px 24px 20px; border-top:1px solid var(--border); flex-shrink:0; }
-.drawer-total-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
-.drawer-total-label { font-family:var(--mono); font-size:11px; color:var(--text2); letter-spacing:1px; text-transform:uppercase; }
-.drawer-total-val { font-size:26px; font-weight:800; color:var(--white); letter-spacing:-.02em; }
-.drawer-fields { display:grid; gap:10px; margin-bottom:14px; }
-.drawer-input { width:100%; background:var(--bg3); border:1px solid var(--border2); border-radius:6px; padding:10px 13px; color:var(--white); font-size:13px; font-family:var(--sans); outline:none; transition:border-color .15s; }
-.drawer-input:focus { border-color:var(--blue); }
-.btn-pay-now { width:100%; background:var(--gold); color:#000; font-size:14px; font-weight:800; border:none; border-radius:6px; padding:14px; display:flex; align-items:center; justify-content:center; gap:9px; margin-bottom:10px; letter-spacing:.03em; }
-.btn-pay-now:disabled { opacity:.5; cursor:not-allowed; }
-.btn-wa-order { width:100%; background:#25D366; color:#fff; font-size:13px; font-weight:700; border-radius:6px; padding:12px; display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none; font-family:var(--sans); letter-spacing:.02em; transition:opacity .15s; }
-.btn-wa-order:hover { opacity:.88; }
-.secure-note { text-align:center; font-family:var(--mono); font-size:10px; color:var(--text2); margin-top:12px; letter-spacing:.05em; }
-#pay-toast { display:none; position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:var(--green); color:#fff; font-weight:700; font-size:13px; padding:12px 24px; border-radius:8px; z-index:9999; font-family:var(--sans); white-space:nowrap; box-shadow:0 8px 24px rgba(0,0,0,.4); }
-@media(min-width:600px){ #cart-drawer-overlay.open { align-items:center; } #cart-drawer { border-radius:12px; max-height:85vh; } }
-@media(max-width:520px){ .cart-bar-inner { flex-direction:column; align-items:stretch; padding:12px 16px; gap:10px; } .cart-actions { justify-content:stretch; } .btn-view-cart, .btn-checkout { flex:1; justify-content:center; text-align:center; } }
-
+/* CART CHECKOUT */
+.ld-cart-selected { outline:2px solid var(--gold); outline-offset:-2px; }
+.ld-cart-selected .card-cta { background:var(--gold); color:#07080e; border-color:var(--gold); }
+#ld-cart-bar {
+ position:fixed; left:0; right:0; bottom:0; z-index:8800;
+ background:rgba(13,15,24,.98); border-top:1px solid var(--border2);
+ transform:translateY(110%); transition:transform .28s ease; box-shadow:0 -14px 40px rgba(0,0,0,.55);
+}
+#ld-cart-bar.visible { transform:translateY(0); }
+.ld-cart-inner { max-width:1180px; margin:0 auto; padding:14px 24px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+.ld-cart-count { font-family:var(--mono); font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--text2); }
+.ld-cart-total { font-size:22px; font-weight:800; color:var(--white); line-height:1.2; }
+.ld-cart-actions { display:flex; align-items:center; gap:10px; }
+.ld-cart-secondary, .ld-cart-primary, .ld-cart-pay {
+ border:none; border-radius:6px; font-family:var(--sans); font-weight:800; cursor:pointer; white-space:nowrap; transition:opacity .16s, transform .16s, border-color .16s;
+}
+.ld-cart-secondary { background:transparent; color:var(--text3); border:1px solid var(--border2); padding:10px 16px; }
+.ld-cart-primary, .ld-cart-pay { background:var(--gold); color:#07080e; padding:12px 22px; }
+.ld-cart-secondary:hover, .ld-cart-primary:hover, .ld-cart-pay:hover { opacity:.88; transform:translateY(-1px); }
+#ld-cart-overlay { display:none; position:fixed; inset:0; z-index:9000; background:rgba(0,0,0,.74); align-items:flex-end; justify-content:center; padding:16px; }
+#ld-cart-overlay.open { display:flex; }
+.ld-cart-drawer {
+ width:100%; max-width:540px; max-height:88vh; overflow:hidden; display:flex; flex-direction:column;
+ background:#0d0f18; border:1px solid var(--border2); border-radius:14px; box-shadow:0 24px 80px rgba(0,0,0,.7);
+}
+.ld-cart-head, .ld-cart-foot { padding:18px 22px; border-bottom:1px solid var(--border); }
+.ld-cart-head { display:flex; align-items:center; justify-content:space-between; }
+.ld-cart-title { font-size:15px; font-weight:800; color:var(--white); }
+.ld-cart-close { background:none; border:none; color:var(--text2); font-size:24px; cursor:pointer; line-height:1; }
+.ld-cart-items { overflow:auto; padding:6px 0; }
+.ld-cart-item { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 22px; border-bottom:1px solid rgba(37,42,61,.55); }
+.ld-cart-item-name { font-size:13px; font-weight:700; color:var(--white); line-height:1.35; }
+.ld-cart-item-note { font-size:11px; color:var(--text2); margin-top:2px; }
+.ld-cart-item-price { font-size:15px; font-weight:800; color:var(--white); }
+.ld-cart-remove { background:transparent; border:1px solid var(--border2); color:var(--text2); border-radius:4px; padding:5px 8px; font-size:11px; cursor:pointer; }
+.ld-cart-remove:hover { border-color:var(--red); color:var(--red); }
+.ld-cart-foot { border-top:1px solid var(--border); border-bottom:none; }
+.ld-cart-total-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+.ld-cart-total-label { font-family:var(--mono); font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--text2); }
+.ld-cart-total-value { font-size:26px; font-weight:800; color:var(--white); }
+.ld-cart-fields { display:grid; gap:10px; margin-bottom:14px; }
+.ld-cart-input { width:100%; background:#12141f; border:1px solid var(--border2); border-radius:6px; color:var(--white); padding:12px 13px; font-family:var(--sans); font-size:13px; outline:none; }
+.ld-cart-input:focus { border-color:var(--blue); }
+.ld-cart-pay { width:100%; display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:10px; }
+.ld-cart-pay:disabled { opacity:.55; cursor:not-allowed; transform:none; }
+.ld-cart-wa { width:100%; display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none; background:#25d366; color:#05120a; border-radius:6px; padding:12px; font-size:13px; font-weight:800; }
+.ld-cart-secure { margin-top:12px; text-align:center; font-family:var(--mono); font-size:10px; letter-spacing:.6px; color:var(--text2); }
+#ld-success-page { display:none; min-height:100vh; padding:90px 24px; background:radial-gradient(ellipse 80% 50% at 50% 0%, rgba(34,197,94,.12), transparent 60%), var(--bg); color:var(--text); }
+#ld-success-page.visible { display:flex; align-items:center; justify-content:center; }
+.ld-success-card { max-width:560px; width:100%; text-align:center; border:1px solid var(--border2); border-radius:14px; background:#0d0f18; padding:42px 28px; box-shadow:var(--shadow); }
+.ld-success-mark { width:58px; height:58px; margin:0 auto 18px; border-radius:50%; display:grid; place-items:center; background:rgba(34,197,94,.14); color:var(--green); font-size:30px; }
+.ld-success-card h1 { color:var(--white); font-family:var(--serif); font-size:34px; line-height:1.12; margin-bottom:12px; }
+.ld-success-card p { color:var(--text3); font-size:14px; margin-bottom:20px; }
+.ld-success-meta { background:#12141f; border:1px solid var(--border); border-radius:8px; padding:14px; margin:18px 0; font-family:var(--mono); font-size:11px; color:var(--text3); word-break:break-word; }
+@media(max-width:560px){
+ body { padding-bottom:78px; }
+ .ld-cart-inner { flex-direction:column; align-items:stretch; padding:12px 16px; gap:10px; }
+ .ld-cart-actions { display:grid; grid-template-columns:1fr 1fr; }
+ .ld-cart-secondary, .ld-cart-primary { width:100%; }
+ #ld-cart-overlay { padding:0; }
+ .ld-cart-drawer { border-radius:14px 14px 0 0; max-height:92vh; }
+}
 </style><!-- BREADCRUMB SCHEMA --><script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -792,8 +808,8 @@ footer {
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><!-- End Google Tag Manager (noscript) --><!-- NAV --><nav aria-label="Main navigation"><div class="logo-wrap"><span class="logo">Legaldirectory<em>.ai</em></span><span class="logo-badge">v3.4</span></div><div class="nav-links"><a href="#services">Services</a><a href="#how-it-works">How It Works</a><a href="#registration">Property FAQ</a><a href="#contact">Contact</a></div><div class="nav-right"><a href="directory-ai.html" class="btn btn-ai-extension btn-sm" title="Open AI Property Verification">AI Verify Property
  </a><div class="status-dot">Platform Active</div><button id="nav-login-btn" class="btn btn-ghost btn-sm" onclick="openModal('m-login')" style="white-space:nowrap;"> Login</button><a href="https://wa.me/919008999968" target="_blank" class="btn btn-wa btn-sm"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp
  </a></div></nav><!-- HERO --><main class="hero-wrap" role="main"><div class="hero"><div><div class="hero-eyebrow">Property Legal Intelligence</div><h1>Your Property.<br/><em>Legally Secured.</em><br/>At Your Doorstep.</h1><p class="hero-lead">Senior lawyers review your property documents, visit your home, and deliver a complete legal opinion clearly, transparently, and within 2 working days.</p><div class="hero-actions"><a href="#services" class="btn btn-primary">Explore Services</a><a href="directory-ai.html" class="btn btn-gold">Run AI Property Check</a><a href="https://wa.me/919008999968" target="_blank" class="btn btn-wa"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Chat with Us
- </a><a href="mailto:weightage.lab@gmail.com" class="btn btn-ghost">Send Email</a></div></div><!-- RIGHT PANEL: STATS + QUICK BOOKING --><div><!-- QUICK BOOKING + RZP --><div class="booking-panel"><div class="booking-panel-head">QUICK BOOKING</div><div class="booking-form-row"><input class="booking-input" type="text" placeholder="Your Name (Optional)" id="bk-name"/><input class="booking-input" type="tel" placeholder="Mobile Number (Optional)" id="bk-phone"/></div><div class="booking-form-row full"><select class="booking-select" id="bk-service"><option value="" disabled selected>Select a Service</option><option value="registration">Registration (Sale Deed + EC) ₹9,999</option><option value="reg">Sale Deed Registration ₹9,999</option><option value="report">Property Search Report ₹4,999</option><option value="oral">Property Paper Review ₹4,999</option><option value="review">Agreement to Sale Review ₹4,999</option><option value="drafting">Agreement to Sale Drafting ₹4,999</option><option value="will">WILL Drafting &amp; Registration ₹4,999</option><option value="trademark">Trademark Registration Custom</option><option value="docwriter">Document Writer — Starting ₹4,999</option><option value="liaison">Liaising Officer — ₹99 per document</option></select></div><div class="rzp-btn-wrap"><!-- RAZORPAY PAYMENT BUTTON Replace 'rzp-link' with your actual Razorpay Payment Button embed script from https://dashboard.razorpay.com/app/paymentbuttons/ --><div id="rzp-payment-container"><button class="rzp-payment-btn" onclick="showPayConfirm()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Pay &amp; Confirm Booking
- </button></div><div class="rzp-logo">SECURED BY RAZORPAY · UPI · CARDS · NET BANKING</div></div><div class="booking-note">Or book via WhatsApp a team member will call you back within 2 hours.</div></div></div></div></div><!-- INSTANT SERVICES BANNER - ALL SERVICES --><div style="background:var(--bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:48px 28px;"><div style="max-width:1240px;margin:0 auto;"><div style="font-family:var(--mono);font-size:10px;letter-spacing:1.5px;color:var(--text2);text-transform:uppercase;margin-bottom:24px;"> Instant Services — Government Documents & Utilities</div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;"><a href="instant-services__1_.html" style="background:rgba(201,149,42,.08);border:1px solid rgba(201,149,42,.25);border-radius:8px;padding:20px;text-decoration:none;transition:all .2s;display:flex;flex-direction:column;gap:12px;"><div style="font-weight:600;color:var(--white);font-size:14px;"> Certified Copy</div><div style="font-size:12px;color:var(--text2);">₹299 · 2-3 days</div><div style="font-size:11px;color:var(--gold);font-weight:600;">Get Document →</div></a><a href="instant-services__1_.html" style="background:rgba(201,149,42,.08);border:1px solid rgba(201,149,42,.25);border-radius:8px;padding:20px;text-decoration:none;transition:all .2s;display:flex;flex-direction:column;gap:12px;"><div style="font-weight:600;color:var(--white);font-size:14px;"> Encumbrance Certificate</div><div style="font-size:12px;color:var(--text2);">₹299 · Same day</div><div style="font-size:11px;color:var(--gold);font-weight:600;">Get Document →</div></a><a href="instant-services__1_.html" style="background:rgba(201,149,42,.08);border:1px solid rgba(201,149,42,.25);border-radius:8px;padding:20px;text-decoration:none;transition:all .2s;display:flex;flex-direction:column;gap:12px;"><div style="font-weight:600;color:var(--white);font-size:14px;"> Bhoomi RTC / Pahani</div><div style="font-size:12px;color:var(--text2);">₹299 · Same day</div><div style="font-size:11px;color:var(--gold);font-weight:600;">Get Document →</div></a><a href="instant-services__1_.html" style="background:rgba(201,149,42,.08);border:1px solid rgba(201,149,42,.25);border-radius:8px;padding:20px;text-decoration:none;transition:all .2s;display:flex;flex-direction:column;gap:12px;"><div style="font-weight:600;color:var(--white);font-size:14px;"> Mutation Record</div><div style="font-size:12px;color:var(--text2);">₹299 · 1-2 days</div><div style="font-size:11px;color:var(--gold);font-weight:600;">Get Document →</div></a><a href="instant-services__1_.html" style="background:rgba(201,149,42,.08);border:1px solid rgba(201,149,42,.25);border-radius:8px;padding:20px;text-decoration:none;transition:all .2s;display:flex;flex-direction:column;gap:12px;"><div style="font-weight:600;color:var(--white);font-size:14px;"> E-Khata / E-Swathu</div><div style="font-size:12px;color:var(--text2);">₹299 · Same day</div><div style="font-size:11px;color:var(--gold);font-weight:600;">Get Document →</div></a><a href="instant-services__1_.html" style="background:rgba(201,149,42,.08);border:1px solid rgba(201,149,42,.25);border-radius:8px;padding:20px;text-decoration:none;transition:all .2s;display:flex;flex-direction:column;gap:12px;"><div style="font-weight:600;color:var(--white);font-size:14px;"> Survey Documents</div><div style="font-size:12px;color:var(--text2);">₹299 · 1-2 days</div><div style="font-size:11px;color:var(--gold);font-weight:600;">Get Document →</div></a><a href="instant-services__1_.html" style="background:rgba(201,149,42,.08);border:1px solid rgba(201,149,42,.25);border-radius:8px;padding:20px;text-decoration:none;transition:all .2s;display:flex;flex-direction:column;gap:12px;"><div style="font-weight:600;color:var(--white);font-size:14px;">💳 CERSAI Mortgage Report</div><div style="font-size:12px;color:var(--text2);">₹399 · Same day</div><div style="font-size:11px;color:var(--gold);font-weight:600;">Get Report →</div></a><a href="instant-services__1_.html" style="background:rgba(201,149,42,.08);border:1px solid rgba(201,149,42,.25);border-radius:8px;padding:20px;text-decoration:none;transition:all .2s;display:flex;flex-direction:column;gap:12px;"><div style="font-weight:600;color:var(--white);font-size:14px;">🔄 Convert Khata to E-Aasthi</div><div style="font-size:12px;color:var(--text2);">₹2,000 · 7-14 days</div><div style="font-size:11px;color:var(--gold);font-weight:600;">Get Started →</div></a><a href="instant-services__1_.html" style="background:rgba(201,149,42,.08);border:1px solid rgba(201,149,42,.25);border-radius:8px;padding:20px;text-decoration:none;transition:all .2s;display:flex;flex-direction:column;gap:12px;"><div style="font-weight:600;color:var(--white);font-size:14px;">💧 BWSSB Water Connection</div><div style="font-size:12px;color:var(--text2);">₹3,000 · Up to 30 days</div><div style="font-size:11px;color:var(--gold);font-weight:600;">Get Started →</div></a><a href="instant-services__1_.html" style="background:rgba(201,149,42,.08);border:1px solid rgba(201,149,42,.25);border-radius:8px;padding:20px;text-decoration:none;transition:all .2s;display:flex;flex-direction:column;gap:12px;"><div style="font-weight:600;color:var(--white);font-size:14px;"> BESCOM Name Transfer</div><div style="font-size:12px;color:var(--text2);">₹7,499 · 3-4 weeks</div><div style="font-size:11px;color:var(--gold);font-weight:600;">Get Started →</div></a><a href="instant-services__1_.html" style="background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3);border-radius:8px;padding:20px;text-decoration:none;transition:all .2s;display:flex;flex-direction:column;gap:12px;"><div style="font-weight:600;color:var(--white);font-size:14px;">🚀 View All Services</div><div style="font-size:12px;color:var(--text2);">10+ instant government documents</div><div style="font-size:11px;color:var(--blue);font-weight:600;">Explore →</div></a></div></div></div><!-- TRUST BAR --></main><div class="trust-bar"><div class="trust-bar-inner"><div class="trust-bar-item"><div class="trust-bar-text"><b> Instant Documents</b><br/>EC, E-Khata, Mutation & more from ₹299</div></div><div class="trust-bar-divider"></div><div class="trust-bar-item"><div class="trust-bar-text"><b>Doorstep Service</b><br/>Lawyer visits your home in Bengaluru</div></div><div class="trust-bar-divider"></div><div class="trust-bar-item"><div class="trust-bar-text"><b>2-Day Delivery</b><br/>Fastest in the industry</div></div><div class="trust-bar-divider"></div><div class="trust-bar-item"><div class="trust-bar-text"><b>Secure Payments</b><br/>Razorpay encrypted checkout</div></div><div class="trust-bar-divider"></div><div class="trust-bar-item"><div class="trust-bar-text"><b>24/7 Support</b><br/>WhatsApp & Email always available</div></div></div></div><hr class="sep"/><!-- SERVICES --><div class="section" id="services"><div class="section-eyebrow">Property & Documentation</div><div class="section-title">Legal Services</div><div class="section-sub">End-to-end property legal services handled by verified senior lawyers from registration to succession planning.</div><div class="services-grid"><!-- 1 Registration NEW CARD --><div class="card featured-card" data-name="Registration (Sale Deed + EC)" data-price="9999" data-delivery="EC included" onclick="openModal('m-registration')"><div class="card-top"><div class="card-tag">PROPERTY & DOCUMENTATION</div><div class="card-title">Registration</div><div class="card-rating">4.9 <span>· Most Booked</span></div><div class="badge-row" style="margin-top:8px;"><span class="badge b-blue">Lawyer Visit</span><span class="badge b-gold">Most Popular</span><span class="badge b-green">End-to-End</span></div></div><div class="card-body"><div class="card-desc">Complete end-to-end registration service from sale deed preparation and stamp duty to Sub-Registrar coordination and obtaining your Encumbrance Certificate.</div><ul class="card-features"><li>Supervision & coordination with Sub-Registrar office</li><li>Complete sale deed preparation & stamp duty guidance</li><li>Getting the registered document from Sub-Registrar</li><li>Encumbrance Certificate (EC) obtained on your behalf</li><li>Identity verification (Aadhaar / PAN) for all parties</li><li>Witness arrangement support</li></ul></div><div class="card-foot"><div><div class="card-price">₹9,999</div><div class="card-price-note">All inclusive · EC included</div></div><span class="card-cta" onclick="toggleCart(event, this)">+ Add to Cart</span></div></div><!-- 2 Property Registration (Sale Deed) --><div class="card" data-name="Sale Deed Registration" data-price="9999" data-delivery="All inclusive" onclick="openModal('m-reg')"><div class="card-top"><div class="card-tag">PROPERTY & DOCUMENTATION</div><div class="card-title">Property Registration<br/>(Sale Deed Registration)</div><div class="badge-row"><span class="badge b-blue">Lawyer Visit</span><span class="badge b-gold">Popular</span></div></div><div class="card-body"><div class="card-desc">Full-service sale deed registration by an expert property lawyer stamp duty calculation through Sub-Registrar office filing.</div><ul class="card-features"><li>Property value estimation & stamp duty guidance</li><li>Complete sale deed preparation</li><li>Sub-Registrar coordination & attendance</li><li>Witness arrangement support</li><li>Identity verification (Aadhaar / PAN)</li></ul></div><div class="card-foot"><div><div class="card-price">₹9,999</div><div class="card-price-note">All inclusive</div></div><span class="card-cta" onclick="toggleCart(event, this)">+ Add to Cart</span></div></div><!-- 2 Property Report --><div class="card featured-card" data-name="Property Search Report" data-price="4999" data-delivery="Delivery in 3 days" onclick="openModal('m-report')"><div class="card-top"><div class="card-tag">PROPERTY & DOCUMENTATION</div><div class="card-title">Property Search Report</div><div class="card-rating">4.8 <span>· 3,000+ clients</span></div><div class="badge-row" style="margin-top:8px;"><span class="badge b-blue">Lawyer Visit</span><span class="badge b-green">Top Rated</span></div></div><div class="card-body"><div class="card-desc">A detailed written report on your property ownership chain, financial liabilities, title clarity, missing documents prepared by a senior lawyer.</div><ul class="card-features"><li>200–300 page in-depth document review</li><li>Government records cross-verification</li><li>Property paper trail continuity check</li><li>Missing documents identification</li><li>Dedicated consultation post-delivery</li><li>Vernacular language documents accepted</li></ul></div><div class="card-foot"><div><div class="card-price">₹4,999</div><div class="card-price-note">Delivery in 3 days</div></div><span class="card-cta" onclick="toggleCart(event, this)">+ Add to Cart</span></div></div><!-- 3 Oral Discussion --><div class="card" data-name="Property Paper Review" data-price="4999" data-delivery="Delivery in 5 days" onclick="openModal('m-oral')"><div class="card-top"><div class="card-tag">DOCUMENT REVIEW</div><div class="card-title">Property Paper Review<br/>(Oral Discussion)</div><div class="badge-row"><span class="badge b-blue">Lawyer Visit</span></div></div><div class="card-body"><div class="card-desc">Expert legal review of your property papers followed by a one-on-one consultation ideal for quick decisions without a formal written report.</div><ul class="card-features"><li>Review of Sale Deed, Title Deed, Mutation Records</li><li>Dedicated one-on-one legal call</li><li>Verbal opinion on ownership & encumbrances</li><li>Compliance check with local laws</li><li>Consult in your preferred language</li></ul></div><div class="card-foot"><div><div class="card-price">₹4,999</div><div class="card-price-note">Delivery in 5 days</div></div><span class="card-cta" onclick="toggleCart(event, this)">+ Add to Cart</span></div></div><!-- 4 Sale Agreement Review --><div class="card" data-name="Agreement to Sale Review" data-price="4999" data-delivery="Delivery in 5 days" onclick="openModal('m-review')"><div class="card-top"><div class="card-tag">DOCUMENT REVIEW</div><div class="card-title">Sale Agreement /<br/>Agreement to Sale Review</div><div class="card-rating">4.8 <span>· 675 reviews</span></div><div class="badge-row" style="margin-top:8px;"><span class="badge b-gold">45 Min Consult</span></div></div><div class="card-body"><div class="card-desc">Senior lawyers break down complex Sale Agreement legal language into plain terms, flag risks, and recommend protective changes.</div><ul class="card-features"><li>Upload Sale Deed / Agreement to Sale</li><li>45-minute dedicated consultation</li><li>Schedule at your convenience</li><li>Critical legal clause explanation</li><li>Consult in your language</li></ul></div><div class="card-foot"><div><div class="card-price">₹4,999</div><div class="card-price-note">Delivery in 5 days</div></div><span class="card-cta" onclick="toggleCart(event, this)">+ Add to Cart</span></div></div><!-- 5 ATS Drafting --><div class="card" data-name="Agreement to Sale Drafting" data-price="4999" data-delivery="2 working days" onclick="openModal('m-drafting')"><div class="card-top"><div class="card-tag">PROPERTY & DOCUMENTATION</div><div class="card-title">Agreement to Sale Drafting</div><div class="badge-row"><span class="badge b-blue">Home Visit</span><span class="badge b-green">Drafting</span></div></div><div class="card-body"><div class="card-desc">A professionally drafted Agreement to Sale that sets clear ground rules for your property transaction. Lawyer visits post-consultation.</div><ul class="card-features"><li>Property document collection at your home</li><li>Senior lawyer drafts legally sound ATS</li><li>Price, payment terms, possession date covered</li><li>Default & dispute resolution clauses included</li><li>Online consultation + home visit available</li></ul></div><div class="card-foot"><div><div class="card-price">₹4,999</div><div class="card-price-note">2 working days</div></div><span class="card-cta" onclick="toggleCart(event, this)">+ Add to Cart</span></div></div><!-- 6 WILL --><div class="card" data-name="WILL Drafting &amp; Registration" data-price="4999" data-delivery="2 working days" onclick="openModal('m-will')"><div class="card-top"><div class="card-tag">SUCCESSION PLANNING</div><div class="card-title">WILL Drafting &amp; Registration</div><div class="card-rating" style="color:var(--green);"><span style="color:var(--text2);">10,987 people have secured their legacy</span></div><div class="badge-row" style="margin-top:8px;"><span class="badge b-purple">Succession Law</span><span class="badge b-gold">2 Free Iterations</span></div></div><div class="card-body"><div class="card-desc">Protect your family's future with a properly drafted Will by senior lawyers skilled in Indian Succession Laws.</div><ul class="card-features"><li>Dedicated lawyer consultation for drafting</li><li>First draft within 2 working days</li><li>2 free iterations to incorporate changes</li><li>Optional registration for legal enforceability</li><li>Video recording of signing available</li></ul></div><div class="card-foot"><div><div class="card-price">₹4,999</div><div class="card-price-note">4.5 Customer Score</div></div><span class="card-cta" onclick="toggleCart(event, this)">+ Add to Cart</span></div></div><!-- 7 Trademark --><div class="card" onclick="openModal('m-trademark')"><div class="card-top"><div class="card-tag">STARTUP SERVICES</div><div class="card-title">Trademark Registration</div><div class="card-rating" style="color:var(--green);"><span style="color:var(--text2);">2,970 trademarks filed</span></div><div class="badge-row" style="margin-top:8px;"><span class="badge b-gold">MSME 50% Rebate</span><span class="badge b-green">IP Protection</span></div></div><div class="card-body"><div class="card-desc">Protect your brand identity with full trademark registration preliminary search, filing, examination response, and hearing support.</div><ul class="card-features"><li>Conflict search on official TM database</li><li>Application preparation & filing with affidavit</li><li>Examination report review & response</li><li>Hearing support before Examiner/Registrar</li><li>MSME/Startup 50% government fee rebate</li></ul></div><div class="card-foot"><div><div class="card-price">Custom</div><div class="card-price-note">Contact for pricing</div></div><span class="card-cta">Get Quote →</span></div></div><!-- 8 Document Writer --><div class="card" data-name="Document Writer" data-price="4999" data-delivery="Starting price" onclick="openModal('m-docwriter')"><div class="card-top"><div class="card-tag">DOCUMENT DRAFTING</div><div class="card-title">Document Writer</div><div class="card-rating" style="color:var(--green);"><span style="color:var(--text2);">Get Your New Document Written, Hassle-Free</span></div><div class="badge-row" style="margin-top:8px;"><span class="badge b-blue">KA-Licensed Advocate</span><span class="badge b-green">Stamp Paper Included</span></div></div><div class="card-body"><div class="card-desc">Karnataka-licensed advocate drafts airtight property deeds — sale, lease, GPA/SPA, mortgage (MODT) or rental agreements. Draft ready in 1–2 working days, printed on state-prescribed non-judicial stamp paper.</div><ul class="card-features"><li>30-min call with legal expert to capture requirements</li><li>Draft prepared in 2–3 working days</li><li>Review &amp; print on stamp paper — 1 day</li><li>Delivery as secure PDF + optional hard copy courier</li><li>Sale, Lease, GPA/SPA, Mortgage (MODT), Rental</li></ul></div><div class="card-foot"><div><div class="card-price">₹4,999</div><div class="card-price-note">Starting price</div></div><span class="card-cta" onclick="toggleCart(event, this)">+ Add to Cart</span></div></div><!-- 9 Liaising Officer --><div class="card featured-card" data-name="Liaising Officer" data-price="99" data-delivery="24-hour delivery" onclick="openModal('m-liaison')"><div class="card-top"><div class="card-tag">GOVT DOCUMENT ASSISTANCE</div><div class="card-title">Liaising Officer</div><div class="card-rating" style="color:var(--green);"><span style="color:var(--text2);">Any govt document in 24 hours</span></div><div class="badge-row" style="margin-top:8px;"><span class="badge b-gold">24-Hour Delivery</span><span class="badge b-green"> Instant Docs</span><span class="badge b-blue">EC to BBMP</span></div></div><div class="card-body"><div class="card-desc">Book a dedicated Liaising Officer who handles the procurement of any government property document on your behalf — from EC to BBMP Tax Receipt — within 24 hours, without you stepping into any office.</div><ul class="card-features"><li>Karnataka Encumbrance Certificate </li><li>E-Khata / E-Swathu, Village Map, BDA Land Use </li><li>BBMP Tax Receipt, Mutation Record, RTC </li><li>BBMP Occupancy, Commencement, Plan Approval </li><li>Any Procure / Standard document on request</li></ul></div><div class="card-foot"><div><div class="card-price">₹99</div><div class="card-price-note">Per document · 24-hr delivery</div></div><span class="card-cta" onclick="toggleCart(event, this)">+ Add to Cart</span></div></div></div></div><hr class="sep"/><!-- HOW IT WORKS --><div class="section" id="how-it-works"><div class="section-eyebrow">Process</div><div class="section-title">How It Works</div><div class="section-sub">A seamless four-step process from document collection at your doorstep to delivery of your legal opinion.</div><div class="hiw-grid"><div class="hiw-step"><div class="hiw-step-num">01 COLLECT</div><div class="hiw-title">Document Collection</div><div class="hiw-desc">Upload property papers securely via our portal, or have a lawyer collect hard copies directly from your address.</div><div class="hiw-badge">HOME VISIT AVAILABLE</div></div><div class="hiw-step"><div class="hiw-step-num">02 REVIEW</div><div class="hiw-title">Expert Review & Analysis</div><div class="hiw-desc">A senior property lawyer conducts an in-depth review covering title chain, encumbrances, legal red flags, and court records.</div><div class="hiw-badge">200–300 PAGE REVIEW</div></div><div class="hiw-step"><div class="hiw-step-num">03 CONSULT</div><div class="hiw-title">Consultation + Home Visit</div><div class="hiw-desc">Post-review, your lawyer schedules a dedicated consultation by call, video, or in-person visit to explain findings in your language.</div><div class="hiw-badge">FLEXIBLE SCHEDULING</div></div><div class="hiw-step"><div class="hiw-step-num">04 DELIVER</div><div class="hiw-title">Legal Solution Delivered</div><div class="hiw-desc">Your detailed legal opinion, drafted document, or verified report is delivered within 2 working days clear, actionable, and complete.</div><div class="hiw-badge">2 WORKING DAYS</div></div></div></div><hr class="sep"/><div class="faq-wrap" id="registration"><div class="faq-inner"><div class="section-eyebrow">Property Registration</div><div class="section-title">Documents & Procedure</div><div class="section-sub">Everything you need to know about registering property in India documents, process, and common questions answered.</div><div style="margin-top:36px;"><div class="section-eyebrow" style="font-size:10px;">Documents Required (Tentative List)</div><table class="proc-table"><thead><tr><th>#</th><th>Document / Step</th><th>Details</th></tr></thead><tbody><tr><td>01</td><td>Property Value Estimation</td><td>Accurate estimate required for stamp duty calculation per the applicable ready reckoner.</td></tr><tr><td>02</td><td>Sale Deed</td><td>Primary document transferring ownership. Must be executed and signed by all parties.</td></tr><tr><td>03</td><td>Stamp Duty & Registration Charges</td><td>Varies by state. Deficit stamp duty results in registration refusal. Women buyers may receive rebates.</td></tr><tr><td>04</td><td>Sub-Registrar Approach</td><td>Approach the Sub-Registrar of Assurances in whose jurisdiction the property is situated.</td></tr><tr><td>05</td><td>Document Submission</td><td>Submit originals with property card and proof of stamp duty payment before the registrar.</td></tr><tr><td>06</td><td>Identity Documents</td><td>Aadhaar, PAN, or government-issued ID for all parties and two witnesses. Biometrics will be scanned.</td></tr></tbody></table></div><div class="faq-cols"><div><div class="faq-col-label">Registration FAQ</div><div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Who must be present during registration? <span class="faq-toggle">+</span></div><div class="faq-a">Authorised signatories for both seller and purchaser must be present with two witnesses. All must carry valid photo ID. If a Power of Attorney is used, it must be presented. Biometric identity of all parties including witnesses will be scanned at the registrar's office.</div></div><div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What if a company is party to the agreement? <span class="faq-toggle">+</span></div><div class="faq-a">The representative must carry a Power of Attorney or Letter of Authority along with a Board Resolution copy authorising them to complete the registration on the company's behalf.</div></div><div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What is stamp duty and how is it calculated? <span class="faq-toggle">+</span></div><div class="faq-a">Stamp duty is the tax paid to the government for legal ownership of an asset. It varies by state and is calculated based on the property's market value or ready reckoner rate (whichever is higher). Women buyers often receive rebates in most states.</div></div><div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What happens if stamp duty paid is insufficient? <span class="faq-toggle">+</span></div><div class="faq-a">The sub-registrar verifies stamp duty against the ready reckoner before registration. If there is any deficit, registration will be refused. Our lawyers ensure the correct amount is calculated before you appear at the office.</div></div><div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What is the role of witnesses? <span class="faq-toggle">+</span></div><div class="faq-a">Two witnesses are mandatory for registration. They must present valid ID proofs and address proofs before the sub-registrar, and their biometric identity will also be scanned. Without proper witnesses, registration cannot be completed.</div></div></div><div><div class="faq-col-label">Report & Will FAQ</div><div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Is it mandatory to register a Will? <span class="faq-toggle">+</span></div><div class="faq-a">No. Registration of a Will is not mandatory under Indian law. However, registering it with the Sub-Registrar under the Indian Registration Act, 1908 significantly reduces the chance of it being challenged after the maker's death and is strongly advisable.</div></div><div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Can a Will be video recorded? <span class="faq-toggle">+</span></div><div class="faq-a">Yes. Video recording of the Will-making process is admissible as evidence under the Indian Evidence Act, 1872. It serves as a strong safeguard against future allegations of fraud or execution under duress.</div></div><div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Can a Muslim distribute property through a Will? <span class="faq-toggle">+</span></div><div class="faq-a">Under Muslim personal law applicable in India, a Muslim may dispose of only up to one-third of their property by Will (after funeral expenses and debts) without the consent of heirs. This is governed by personal law, not the Indian Succession Act, 1925.</div></div><div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What does the Property Search Report include? <span class="faq-toggle">+</span></div><div class="faq-a">The report covers ownership chain continuity, pending financial liabilities or loans, missing or invalid documents, legal red flags, compliance with local regulations, and any encumbrances or disputes. It is prepared after a 200–300 page review and includes a dedicated post-delivery consultation.</div></div><div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What is the difference between Agreement to Sale and Sale Deed? <span class="faq-toggle">+</span></div><div class="faq-a">An Agreement to Sale (ATS) is a commitment to transfer property at a future date upon fulfillment of conditions it does not immediately transfer ownership. A Sale Deed is the final document that actually transfers ownership and must be registered at the Sub-Registrar's office to be legally effective.</div></div></div></div></div></div><!-- CONTACT --><div class="contact-bg" id="contact"><div class="contact-inner"><div class="contact-card"><div class="contact-type">WhatsApp</div><div class="contact-val">+91 90089 99968</div><div class="contact-note">Available 24/7 on WhatsApp & Email. For bookings, queries, and document submissions.</div><a href="https://wa.me/919008999968" target="_blank" class="wa-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Chat on WhatsApp
+ </a><a href="mailto:weightage.lab@gmail.com" class="btn btn-ghost">Send Email</a></div></div><!-- RIGHT PANEL: STATS + QUICK BOOKING --><div><!-- QUICK BOOKING + CF --><div class="booking-panel"><div class="booking-panel-head">QUICK BOOKING</div><div class="booking-form-row"><input class="booking-input" type="text" placeholder="Your Name (Optional)" id="bk-name"/><input class="booking-input" type="tel" placeholder="Mobile Number (Optional)" id="bk-phone"/></div><div class="booking-form-row full"><select class="booking-select" id="bk-service"><option value="" disabled selected>Select a Service</option><option value="registration">Registration (Sale Deed + EC) ₹9,999</option><option value="reg">Sale Deed Registration ₹9,999</option><option value="report">Property Search Report ₹4,999</option><option value="oral">Property Paper Review ₹4,999</option><option value="review">Agreement to Sale Review ₹4,999</option><option value="drafting">Agreement to Sale Drafting ₹4,999</option><option value="will">WILL Drafting &amp; Registration ₹4,999</option><option value="trademark">Trademark Registration Custom</option><option value="docwriter">Document Writer — Starting ₹4,999</option><option value="liaison">Liaising Officer — ₹99 per document</option></select></div><div class="cf-btn-wrap"><!-- CASHFREE PAYMENT BUTTON Replace 'cf-link' with your actual Cashfree Payment Button embed script from https://dashboard.cashfree.com/app/paymentbuttons/ --><div id="cf-payment-container"><button class="cf-payment-btn" onclick="showPayConfirm()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Pay &amp; Confirm Booking
+ </button></div><div class="cf-logo">SECURED BY CASHFREE · UPI · CARDS · NET BANKING</div></div><div class="booking-note">Or book via WhatsApp a team member will call you back within 2 hours.</div></div></div></div></div><!-- INSTANT SERVICES BANNER - ALL SERVICES --><div style="background:var(--bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:48px 28px;"><div style="max-width:1240px;margin:0 auto;"><div style="font-family:var(--mono);font-size:10px;letter-spacing:1.5px;color:var(--text2);text-transform:uppercase;margin-bottom:24px;"> Instant Services — Government Documents & Utilities</div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;"><a href="instant-services__1_.html" style="background:rgba(201,149,42,.08);border:1px solid rgba(201,149,42,.25);border-radius:8px;padding:20px;text-decoration:none;transition:all .2s;display:flex;flex-direction:column;gap:12px;"><div style="font-weight:600;color:var(--white);font-size:14px;"> Certified Copy</div><div style="font-size:12px;color:var(--text2);">₹299 · 2-3 days</div><div style="font-size:11px;color:var(--gold);font-weight:600;">Get Document →</div></a><a href="instant-services__1_.html" style="background:rgba(201,149,42,.08);border:1px solid rgba(201,149,42,.25);border-radius:8px;padding:20px;text-decoration:none;transition:all .2s;display:flex;flex-direction:column;gap:12px;"><div style="font-weight:600;color:var(--white);font-size:14px;"> Encumbrance Certificate</div><div style="font-size:12px;color:var(--text2);">₹299 · Same day</div><div style="font-size:11px;color:var(--gold);font-weight:600;">Get Document →</div></a><a href="instant-services__1_.html" style="background:rgba(201,149,42,.08);border:1px solid rgba(201,149,42,.25);border-radius:8px;padding:20px;text-decoration:none;transition:all .2s;display:flex;flex-direction:column;gap:12px;"><div style="font-weight:600;color:var(--white);font-size:14px;"> Bhoomi RTC / Pahani</div><div style="font-size:12px;color:var(--text2);">₹299 · Same day</div><div style="font-size:11px;color:var(--gold);font-weight:600;">Get Document →</div></a><a href="instant-services__1_.html" style="background:rgba(201,149,42,.08);border:1px solid rgba(201,149,42,.25);border-radius:8px;padding:20px;text-decoration:none;transition:all .2s;display:flex;flex-direction:column;gap:12px;"><div style="font-weight:600;color:var(--white);font-size:14px;"> Mutation Record</div><div style="font-size:12px;color:var(--text2);">₹299 · 1-2 days</div><div style="font-size:11px;color:var(--gold);font-weight:600;">Get Document →</div></a><a href="instant-services__1_.html" style="background:rgba(201,149,42,.08);border:1px solid rgba(201,149,42,.25);border-radius:8px;padding:20px;text-decoration:none;transition:all .2s;display:flex;flex-direction:column;gap:12px;"><div style="font-weight:600;color:var(--white);font-size:14px;"> E-Khata / E-Swathu</div><div style="font-size:12px;color:var(--text2);">₹299 · Same day</div><div style="font-size:11px;color:var(--gold);font-weight:600;">Get Document →</div></a><a href="instant-services__1_.html" style="background:rgba(201,149,42,.08);border:1px solid rgba(201,149,42,.25);border-radius:8px;padding:20px;text-decoration:none;transition:all .2s;display:flex;flex-direction:column;gap:12px;"><div style="font-weight:600;color:var(--white);font-size:14px;"> Survey Documents</div><div style="font-size:12px;color:var(--text2);">₹299 · 1-2 days</div><div style="font-size:11px;color:var(--gold);font-weight:600;">Get Document →</div></a><a href="instant-services__1_.html" style="background:rgba(201,149,42,.08);border:1px solid rgba(201,149,42,.25);border-radius:8px;padding:20px;text-decoration:none;transition:all .2s;display:flex;flex-direction:column;gap:12px;"><div style="font-weight:600;color:var(--white);font-size:14px;">💳 CERSAI Mortgage Report</div><div style="font-size:12px;color:var(--text2);">₹399 · Same day</div><div style="font-size:11px;color:var(--gold);font-weight:600;">Get Report →</div></a><a href="instant-services__1_.html" style="background:rgba(201,149,42,.08);border:1px solid rgba(201,149,42,.25);border-radius:8px;padding:20px;text-decoration:none;transition:all .2s;display:flex;flex-direction:column;gap:12px;"><div style="font-weight:600;color:var(--white);font-size:14px;">🔄 Convert Khata to E-Aasthi</div><div style="font-size:12px;color:var(--text2);">₹2,000 · 7-14 days</div><div style="font-size:11px;color:var(--gold);font-weight:600;">Get Started →</div></a><a href="instant-services__1_.html" style="background:rgba(201,149,42,.08);border:1px solid rgba(201,149,42,.25);border-radius:8px;padding:20px;text-decoration:none;transition:all .2s;display:flex;flex-direction:column;gap:12px;"><div style="font-weight:600;color:var(--white);font-size:14px;">💧 BWSSB Water Connection</div><div style="font-size:12px;color:var(--text2);">₹3,000 · Up to 30 days</div><div style="font-size:11px;color:var(--gold);font-weight:600;">Get Started →</div></a><a href="instant-services__1_.html" style="background:rgba(201,149,42,.08);border:1px solid rgba(201,149,42,.25);border-radius:8px;padding:20px;text-decoration:none;transition:all .2s;display:flex;flex-direction:column;gap:12px;"><div style="font-weight:600;color:var(--white);font-size:14px;"> BESCOM Name Transfer</div><div style="font-size:12px;color:var(--text2);">₹7,499 · 3-4 weeks</div><div style="font-size:11px;color:var(--gold);font-weight:600;">Get Started →</div></a><a href="instant-services__1_.html" style="background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3);border-radius:8px;padding:20px;text-decoration:none;transition:all .2s;display:flex;flex-direction:column;gap:12px;"><div style="font-weight:600;color:var(--white);font-size:14px;">🚀 View All Services</div><div style="font-size:12px;color:var(--text2);">10+ instant government documents</div><div style="font-size:11px;color:var(--blue);font-weight:600;">Explore →</div></a></div></div></div><!-- TRUST BAR --></main><div class="trust-bar"><div class="trust-bar-inner"><div class="trust-bar-item"><div class="trust-bar-text"><b> Instant Documents</b><br/>EC, E-Khata, Mutation & more from ₹299</div></div><div class="trust-bar-divider"></div><div class="trust-bar-item"><div class="trust-bar-text"><b>Doorstep Service</b><br/>Lawyer visits your home in Bengaluru</div></div><div class="trust-bar-divider"></div><div class="trust-bar-item"><div class="trust-bar-text"><b>2-Day Delivery</b><br/>Fastest in the industry</div></div><div class="trust-bar-divider"></div><div class="trust-bar-item"><div class="trust-bar-text"><b>Secure Payments</b><br/>Cashfree encrypted checkout</div></div><div class="trust-bar-divider"></div><div class="trust-bar-item"><div class="trust-bar-text"><b>24/7 Support</b><br/>WhatsApp & Email always available</div></div></div></div><hr class="sep"/><!-- SERVICES --><div class="section" id="services"><div class="section-eyebrow">Property & Documentation</div><div class="section-title">Legal Services</div><div class="section-sub">End-to-end property legal services handled by verified senior lawyers from registration to succession planning.</div><div class="services-grid"><!-- 1 Registration NEW CARD --><div class="card featured-card" onclick="openModal('m-registration')"><div class="card-top"><div class="card-tag">PROPERTY & DOCUMENTATION</div><div class="card-title">Registration</div><div class="card-rating">4.9 <span>· Most Booked</span></div><div class="badge-row" style="margin-top:8px;"><span class="badge b-blue">Lawyer Visit</span><span class="badge b-gold">Most Popular</span><span class="badge b-green">End-to-End</span></div></div><div class="card-body"><div class="card-desc">Complete end-to-end registration service from sale deed preparation and stamp duty to Sub-Registrar coordination and obtaining your Encumbrance Certificate.</div><ul class="card-features"><li>Supervision & coordination with Sub-Registrar office</li><li>Complete sale deed preparation & stamp duty guidance</li><li>Getting the registered document from Sub-Registrar</li><li>Encumbrance Certificate (EC) obtained on your behalf</li><li>Identity verification (Aadhaar / PAN) for all parties</li><li>Witness arrangement support</li></ul></div><div class="card-foot"><div><div class="card-price">₹9,999</div><div class="card-price-note">All inclusive · EC included</div></div><span class="card-cta">Add to Cart</span></div></div><!-- 2 Property Registration (Sale Deed) --><div class="card" onclick="openModal('m-reg')"><div class="card-top"><div class="card-tag">PROPERTY & DOCUMENTATION</div><div class="card-title">Property Registration<br/>(Sale Deed Registration)</div><div class="badge-row"><span class="badge b-blue">Lawyer Visit</span><span class="badge b-gold">Popular</span></div></div><div class="card-body"><div class="card-desc">Full-service sale deed registration by an expert property lawyer stamp duty calculation through Sub-Registrar office filing.</div><ul class="card-features"><li>Property value estimation & stamp duty guidance</li><li>Complete sale deed preparation</li><li>Sub-Registrar coordination & attendance</li><li>Witness arrangement support</li><li>Identity verification (Aadhaar / PAN)</li></ul></div><div class="card-foot"><div><div class="card-price">₹9,999</div><div class="card-price-note">All inclusive</div></div><span class="card-cta">Add to Cart</span></div></div><!-- 2 Property Report --><div class="card featured-card" onclick="openModal('m-report')"><div class="card-top"><div class="card-tag">PROPERTY & DOCUMENTATION</div><div class="card-title">Property Search Report</div><div class="card-rating">4.8 <span>· 3,000+ clients</span></div><div class="badge-row" style="margin-top:8px;"><span class="badge b-blue">Lawyer Visit</span><span class="badge b-green">Top Rated</span></div></div><div class="card-body"><div class="card-desc">A detailed written report on your property ownership chain, financial liabilities, title clarity, missing documents prepared by a senior lawyer.</div><ul class="card-features"><li>200–300 page in-depth document review</li><li>Government records cross-verification</li><li>Property paper trail continuity check</li><li>Missing documents identification</li><li>Dedicated consultation post-delivery</li><li>Vernacular language documents accepted</li></ul></div><div class="card-foot"><div><div class="card-price">₹4,999</div><div class="card-price-note">Delivery in 3 days</div></div><span class="card-cta">Add to Cart</span></div></div><!-- 3 Oral Discussion --><div class="card" onclick="openModal('m-oral')"><div class="card-top"><div class="card-tag">DOCUMENT REVIEW</div><div class="card-title">Property Paper Review<br/>(Oral Discussion)</div><div class="badge-row"><span class="badge b-blue">Lawyer Visit</span></div></div><div class="card-body"><div class="card-desc">Expert legal review of your property papers followed by a one-on-one consultation ideal for quick decisions without a formal written report.</div><ul class="card-features"><li>Review of Sale Deed, Title Deed, Mutation Records</li><li>Dedicated one-on-one legal call</li><li>Verbal opinion on ownership & encumbrances</li><li>Compliance check with local laws</li><li>Consult in your preferred language</li></ul></div><div class="card-foot"><div><div class="card-price">₹4,999</div><div class="card-price-note">Delivery in 5 days</div></div><span class="card-cta">Add to Cart</span></div></div><!-- 4 Sale Agreement Review --><div class="card" onclick="openModal('m-review')"><div class="card-top"><div class="card-tag">DOCUMENT REVIEW</div><div class="card-title">Sale Agreement /<br/>Agreement to Sale Review</div><div class="card-rating">4.8 <span>· 675 reviews</span></div><div class="badge-row" style="margin-top:8px;"><span class="badge b-gold">45 Min Consult</span></div></div><div class="card-body"><div class="card-desc">Senior lawyers break down complex Sale Agreement legal language into plain terms, flag risks, and recommend protective changes.</div><ul class="card-features"><li>Upload Sale Deed / Agreement to Sale</li><li>45-minute dedicated consultation</li><li>Schedule at your convenience</li><li>Critical legal clause explanation</li><li>Consult in your language</li></ul></div><div class="card-foot"><div><div class="card-price">₹4,999</div><div class="card-price-note">Delivery in 5 days</div></div><span class="card-cta">Add to Cart</span></div></div><!-- 5 ATS Drafting --><div class="card" onclick="openModal('m-drafting')"><div class="card-top"><div class="card-tag">PROPERTY & DOCUMENTATION</div><div class="card-title">Agreement to Sale Drafting</div><div class="badge-row"><span class="badge b-blue">Home Visit</span><span class="badge b-green">Drafting</span></div></div><div class="card-body"><div class="card-desc">A professionally drafted Agreement to Sale that sets clear ground rules for your property transaction. Lawyer visits post-consultation.</div><ul class="card-features"><li>Property document collection at your home</li><li>Senior lawyer drafts legally sound ATS</li><li>Price, payment terms, possession date covered</li><li>Default & dispute resolution clauses included</li><li>Online consultation + home visit available</li></ul></div><div class="card-foot"><div><div class="card-price">₹4,999</div><div class="card-price-note">2 working days</div></div><span class="card-cta">Add to Cart</span></div></div><!-- 6 WILL --><div class="card" onclick="openModal('m-will')"><div class="card-top"><div class="card-tag">SUCCESSION PLANNING</div><div class="card-title">WILL Drafting &amp; Registration</div><div class="card-rating" style="color:var(--green);"><span style="color:var(--text2);">10,987 people have secured their legacy</span></div><div class="badge-row" style="margin-top:8px;"><span class="badge b-purple">Succession Law</span><span class="badge b-gold">2 Free Iterations</span></div></div><div class="card-body"><div class="card-desc">Protect your family's future with a properly drafted Will by senior lawyers skilled in Indian Succession Laws.</div><ul class="card-features"><li>Dedicated lawyer consultation for drafting</li><li>First draft within 2 working days</li><li>2 free iterations to incorporate changes</li><li>Optional registration for legal enforceability</li><li>Video recording of signing available</li></ul></div><div class="card-foot"><div><div class="card-price">₹4,999</div><div class="card-price-note">4.5 Customer Score</div></div><span class="card-cta">Add to Cart</span></div></div><!-- 7 Trademark --><div class="card" onclick="openModal('m-trademark')"><div class="card-top"><div class="card-tag">STARTUP SERVICES</div><div class="card-title">Trademark Registration</div><div class="card-rating" style="color:var(--green);"><span style="color:var(--text2);">2,970 trademarks filed</span></div><div class="badge-row" style="margin-top:8px;"><span class="badge b-gold">MSME 50% Rebate</span><span class="badge b-green">IP Protection</span></div></div><div class="card-body"><div class="card-desc">Protect your brand identity with full trademark registration preliminary search, filing, examination response, and hearing support.</div><ul class="card-features"><li>Conflict search on official TM database</li><li>Application preparation & filing with affidavit</li><li>Examination report review & response</li><li>Hearing support before Examiner/Registrar</li><li>MSME/Startup 50% government fee rebate</li></ul></div><div class="card-foot"><div><div class="card-price">Custom</div><div class="card-price-note">Contact for pricing</div></div><span class="card-cta">Get Quote →</span></div></div><!-- 8 Document Writer --><div class="card" onclick="openModal('m-docwriter')"><div class="card-top"><div class="card-tag">DOCUMENT DRAFTING</div><div class="card-title">Document Writer</div><div class="card-rating" style="color:var(--green);"><span style="color:var(--text2);">Get Your New Document Written, Hassle-Free</span></div><div class="badge-row" style="margin-top:8px;"><span class="badge b-blue">KA-Licensed Advocate</span><span class="badge b-green">Stamp Paper Included</span></div></div><div class="card-body"><div class="card-desc">Karnataka-licensed advocate drafts airtight property deeds — sale, lease, GPA/SPA, mortgage (MODT) or rental agreements. Draft ready in 1–2 working days, printed on state-prescribed non-judicial stamp paper.</div><ul class="card-features"><li>30-min call with legal expert to capture requirements</li><li>Draft prepared in 2–3 working days</li><li>Review &amp; print on stamp paper — 1 day</li><li>Delivery as secure PDF + optional hard copy courier</li><li>Sale, Lease, GPA/SPA, Mortgage (MODT), Rental</li></ul></div><div class="card-foot"><div><div class="card-price">₹4,999</div><div class="card-price-note">Starting price</div></div><span class="card-cta">Add to Cart</span></div></div><!-- 9 Liaising Officer --><div class="card featured-card" onclick="openModal('m-liaison')"><div class="card-top"><div class="card-tag">GOVT DOCUMENT ASSISTANCE</div><div class="card-title">Liaising Officer</div><div class="card-rating" style="color:var(--green);"><span style="color:var(--text2);">Any govt document in 24 hours</span></div><div class="badge-row" style="margin-top:8px;"><span class="badge b-gold">24-Hour Delivery</span><span class="badge b-green"> Instant Docs</span><span class="badge b-blue">EC to BBMP</span></div></div><div class="card-body"><div class="card-desc">Book a dedicated Liaising Officer who handles the procurement of any government property document on your behalf — from EC to BBMP Tax Receipt — within 24 hours, without you stepping into any office.</div><ul class="card-features"><li>Karnataka Encumbrance Certificate </li><li>E-Khata / E-Swathu, Village Map, BDA Land Use </li><li>BBMP Tax Receipt, Mutation Record, RTC </li><li>BBMP Occupancy, Commencement, Plan Approval </li><li>Any Procure / Standard document on request</li></ul></div><div class="card-foot"><div><div class="card-price">₹99</div><div class="card-price-note">Per document · 24-hr delivery</div></div><span class="card-cta">Book Officer →</span></div></div></div></div><hr class="sep"/><!-- HOW IT WORKS --><div class="section" id="how-it-works"><div class="section-eyebrow">Process</div><div class="section-title">How It Works</div><div class="section-sub">A seamless four-step process from document collection at your doorstep to delivery of your legal opinion.</div><div class="hiw-grid"><div class="hiw-step"><div class="hiw-step-num">01 COLLECT</div><div class="hiw-title">Document Collection</div><div class="hiw-desc">Upload property papers securely via our portal, or have a lawyer collect hard copies directly from your address.</div><div class="hiw-badge">HOME VISIT AVAILABLE</div></div><div class="hiw-step"><div class="hiw-step-num">02 REVIEW</div><div class="hiw-title">Expert Review & Analysis</div><div class="hiw-desc">A senior property lawyer conducts an in-depth review covering title chain, encumbrances, legal red flags, and court records.</div><div class="hiw-badge">200–300 PAGE REVIEW</div></div><div class="hiw-step"><div class="hiw-step-num">03 CONSULT</div><div class="hiw-title">Consultation + Home Visit</div><div class="hiw-desc">Post-review, your lawyer schedules a dedicated consultation by call, video, or in-person visit to explain findings in your language.</div><div class="hiw-badge">FLEXIBLE SCHEDULING</div></div><div class="hiw-step"><div class="hiw-step-num">04 DELIVER</div><div class="hiw-title">Legal Solution Delivered</div><div class="hiw-desc">Your detailed legal opinion, drafted document, or verified report is delivered within 2 working days clear, actionable, and complete.</div><div class="hiw-badge">2 WORKING DAYS</div></div></div></div><hr class="sep"/><div class="faq-wrap" id="registration"><div class="faq-inner"><div class="section-eyebrow">Property Registration</div><div class="section-title">Documents & Procedure</div><div class="section-sub">Everything you need to know about registering property in India documents, process, and common questions answered.</div><div style="margin-top:36px;"><div class="section-eyebrow" style="font-size:10px;">Documents Required (Tentative List)</div><table class="proc-table"><thead><tr><th>#</th><th>Document / Step</th><th>Details</th></tr></thead><tbody><tr><td>01</td><td>Property Value Estimation</td><td>Accurate estimate required for stamp duty calculation per the applicable ready reckoner.</td></tr><tr><td>02</td><td>Sale Deed</td><td>Primary document transferring ownership. Must be executed and signed by all parties.</td></tr><tr><td>03</td><td>Stamp Duty & Registration Charges</td><td>Varies by state. Deficit stamp duty results in registration refusal. Women buyers may receive rebates.</td></tr><tr><td>04</td><td>Sub-Registrar Approach</td><td>Approach the Sub-Registrar of Assurances in whose jurisdiction the property is situated.</td></tr><tr><td>05</td><td>Document Submission</td><td>Submit originals with property card and proof of stamp duty payment before the registrar.</td></tr><tr><td>06</td><td>Identity Documents</td><td>Aadhaar, PAN, or government-issued ID for all parties and two witnesses. Biometrics will be scanned.</td></tr></tbody></table></div><div class="faq-cols"><div><div class="faq-col-label">Registration FAQ</div><div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Who must be present during registration? <span class="faq-toggle">+</span></div><div class="faq-a">Authorised signatories for both seller and purchaser must be present with two witnesses. All must carry valid photo ID. If a Power of Attorney is used, it must be presented. Biometric identity of all parties including witnesses will be scanned at the registrar's office.</div></div><div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What if a company is party to the agreement? <span class="faq-toggle">+</span></div><div class="faq-a">The representative must carry a Power of Attorney or Letter of Authority along with a Board Resolution copy authorising them to complete the registration on the company's behalf.</div></div><div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What is stamp duty and how is it calculated? <span class="faq-toggle">+</span></div><div class="faq-a">Stamp duty is the tax paid to the government for legal ownership of an asset. It varies by state and is calculated based on the property's market value or ready reckoner rate (whichever is higher). Women buyers often receive rebates in most states.</div></div><div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What happens if stamp duty paid is insufficient? <span class="faq-toggle">+</span></div><div class="faq-a">The sub-registrar verifies stamp duty against the ready reckoner before registration. If there is any deficit, registration will be refused. Our lawyers ensure the correct amount is calculated before you appear at the office.</div></div><div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What is the role of witnesses? <span class="faq-toggle">+</span></div><div class="faq-a">Two witnesses are mandatory for registration. They must present valid ID proofs and address proofs before the sub-registrar, and their biometric identity will also be scanned. Without proper witnesses, registration cannot be completed.</div></div></div><div><div class="faq-col-label">Report & Will FAQ</div><div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Is it mandatory to register a Will? <span class="faq-toggle">+</span></div><div class="faq-a">No. Registration of a Will is not mandatory under Indian law. However, registering it with the Sub-Registrar under the Indian Registration Act, 1908 significantly reduces the chance of it being challenged after the maker's death and is strongly advisable.</div></div><div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Can a Will be video recorded? <span class="faq-toggle">+</span></div><div class="faq-a">Yes. Video recording of the Will-making process is admissible as evidence under the Indian Evidence Act, 1872. It serves as a strong safeguard against future allegations of fraud or execution under duress.</div></div><div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Can a Muslim distribute property through a Will? <span class="faq-toggle">+</span></div><div class="faq-a">Under Muslim personal law applicable in India, a Muslim may dispose of only up to one-third of their property by Will (after funeral expenses and debts) without the consent of heirs. This is governed by personal law, not the Indian Succession Act, 1925.</div></div><div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What does the Property Search Report include? <span class="faq-toggle">+</span></div><div class="faq-a">The report covers ownership chain continuity, pending financial liabilities or loans, missing or invalid documents, legal red flags, compliance with local regulations, and any encumbrances or disputes. It is prepared after a 200–300 page review and includes a dedicated post-delivery consultation.</div></div><div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What is the difference between Agreement to Sale and Sale Deed? <span class="faq-toggle">+</span></div><div class="faq-a">An Agreement to Sale (ATS) is a commitment to transfer property at a future date upon fulfillment of conditions it does not immediately transfer ownership. A Sale Deed is the final document that actually transfers ownership and must be registered at the Sub-Registrar's office to be legally effective.</div></div></div></div></div></div><!-- CONTACT --><div class="contact-bg" id="contact"><div class="contact-inner"><div class="contact-card"><div class="contact-type">WhatsApp</div><div class="contact-val">+91 90089 99968</div><div class="contact-note">Available 24/7 on WhatsApp & Email. For bookings, queries, and document submissions.</div><a href="https://wa.me/919008999968" target="_blank" class="wa-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Chat on WhatsApp
  </a></div><div class="contact-card"><div class="contact-type"> Instant Services</div><div class="contact-val" style="font-size:12.5px;">Government Documents & Utilities</div><div class="contact-note">Access 10+ instant government property documents and utility services. Same-day delivery for documents like EC, E-Khata, Mutation Records and more.</div><a href="instant-services__1_.html" class="btn btn-ghost btn-sm" style="margin-top:14px;">Explore All Services →</a></div><div class="contact-card"><div class="contact-type">Email</div><div class="contact-val" style="font-size:12.5px;">weightage.lab@gmail.com</div><div class="contact-note">For document submissions, detailed enquiries, or custom service requests. We respond within 24 hours on working days.</div><a href="mailto:weightage.lab@gmail.com" class="btn btn-ghost btn-sm" style="margin-top:14px;">Send Email →</a></div><div class="contact-card"><div class="contact-type">Platform</div><div class="contact-val">Legaldirectory.ai</div><div class="contact-note">India's property legal intelligence platform connecting homebuyers, investors, and sellers with verified senior lawyers for transparent, timely legal services.</div><div style="display:flex;gap:8px;margin-top:14px;justify-content:center;flex-wrap:wrap;"><span class="badge b-blue">Bengaluru</span></div></div></div></div><!-- JOIN AS LAWYER compact --><div id="join-lawyer" style="background:var(--bg2);border-top:1px solid rgba(212,168,67,.18);position:relative;z-index:1;"><div style="max-width:1240px;margin:0 auto;padding:44px 52px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;"><div><div style="font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:6px;">For Legal Professionals</div><div style="font-family:var(--serif);font-size:22px;color:var(--white);margin-bottom:6px;">Join as a Verified Lawyer</div><div style="font-size:13px;color:var(--text2);max-width:480px;line-height:1.7;">Empanel with Legaldirectory.ai and receive verified property legal work on your schedule, at your terms. Send your basic details to get started.</div></div><a href="mailto:weightage.lab@gmail.com?subject=Lawyer%20Empanelment%20Application&body=Name%3A%0AMobile%3A%0ABar%20Council%20Enrollment%20No%3A%0AState%20Bar%20Council%3A%0ACity%3A%0AYears%20of%20Experience%3A%0ASpecialisation%3A%0A%0APlease%20attach%20your%20Bar%20Council%20Membership%20Certificate."
  style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#7c5c00,#c49a35);color:#fff;font-family:var(--sans);font-size:13px;font-weight:700;padding:13px 26px;border-radius:var(--radius);text-decoration:none;white-space:nowrap;transition:opacity .18s;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">Apply — weightage.lab@gmail.com
  </a></div></div><!-- FOOTER --><footer><div class="footer-top"><div><div class="footer-logo">Legaldirectory<em>.ai</em></div><div style="font-family:var(--mono);font-size:9px;color:var(--text2);margin-top:6px;letter-spacing:.5px;">India's Trusted Property Legal Intelligence Platform</div></div><div class="footer-disc">Legaldirectory.ai is not a law firm and does not engage in the practice of law or solicit lawyers. We are a technology platform that facilitates access to independent legal professionals. All legal services are rendered by empanelled lawyers in their independent capacity.
@@ -810,24 +826,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
  style="margin-bottom:10px;">Complete Registration →
  </button><button onclick="skipProfile()" style="background:none;border:none;color:var(--text2);font-family:var(--mono);font-size:10px;cursor:pointer;display:block;width:100%;text-align:center;">Skip for now →
  </button></div></div><!-- /login-buttons-panel --><!-- LOGGED-IN USER CARD --><div id="login-user-panel" style="display:none;"><div style="display:flex;align-items:center;gap:14px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);padding:16px;margin-bottom:16px;"><img id="user-avatar" src="" width="42" height="42" style="border-radius:50%;border:2px solid var(--gold);display:none;" alt=""/><div id="user-avatar-placeholder" style="width:42px;height:42px;border-radius:50%;background:var(--bg4);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:18px;"></div><div style="flex:1;min-width:0;"><div id="user-name" style="font-family:var(--serif);font-size:16px;color:var(--white);"></div><div id="user-email-display" style="font-family:var(--mono);font-size:11px;color:var(--text2);margin-top:2px;word-break:break-all;"></div></div><div><span style="font-family:var(--mono);font-size:9px;color:var(--green);background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.22);padding:4px 10px;border-radius:20px;white-space:nowrap;"> Verified</span></div></div><button class="social-signin-btn" onclick="signOutUser()" style="background:rgba(255,255,255,.04);border:1px solid var(--border2);color:var(--text3);">Sign Out
- </button></div><div class="login-status" id="login-status"></div><div style="margin-top:18px;text-align:center;"><a href="https://wa.me/919008999968?text=Hi%2C%20I%20need%20help%20with%20my%20Legaldirectory.ai%20account" target="_blank" style="font-family:var(--mono);font-size:11px;color:var(--text2);text-decoration:none;">Need help? Chat on WhatsApp →</a></div></div></div><!-- MODALS --><!-- Registration (NEW Sale Deed + Sub-Registrar + EC) --><div class="modal-overlay" id="m-registration"><div class="modal"><button class="modal-close" onclick="closeModal('m-registration')"></button><div class="modal-tag">PROPERTY & DOCUMENTATION · MOST POPULAR</div><h2>Registration</h2><div class="modal-price">₹9,999 End-to-End, All Inclusive</div><div class="modal-section">WHAT'S INCLUDED</div><ul><li>Supervision &amp; coordination with Sub-Registrar office your lawyer manages the entire process</li><li>Complete Sale Deed preparation and stamp duty calculation</li><li>Attendance at Sub-Registrar office on your behalf</li><li>Getting the registered document from the Sub-Registrar</li><li>Encumbrance Certificate (EC) procured on your behalf</li><li>Witness arrangement support</li><li>Identity verification for all parties (Aadhaar / PAN)</li></ul><div class="modal-section">GOVERNING LAWS</div><ul><li>Registration Act, 1908</li><li>Transfer of Property Act, 1882</li><li>Indian Stamp Act, 1899 &amp; applicable State Stamp Acts</li></ul><div class="modal-section">PROCESS OVERVIEW</div><ol><li>Document collection at your home or secure upload via portal</li><li>Property value estimation &amp; accurate stamp duty calculation</li><li>Sale Deed drafted and reviewed by senior lawyer</li><li>Coordinated appearance at the Sub-Registrar office</li><li>Registered document collected and delivered to you</li><li>Encumbrance Certificate (EC) obtained and handed over</li></ol><hr class="modal-divider"/><div class="modal-booking"><div class="modal-booking-head">ADD TO CART &amp; CHECKOUT SECURELY</div><p style="font-size:12px;color:var(--text2);margin-bottom:0;">Registration (Sale Deed + EC) &nbsp;·&nbsp; ₹9,999 · All Inclusive</p><button class="modal-rzp-btn" onclick="addModalServiceToCart('m-registration')">+ Add to Cart
+ </button></div><div class="login-status" id="login-status"></div><div style="margin-top:18px;text-align:center;"><a href="https://wa.me/919008999968?text=Hi%2C%20I%20need%20help%20with%20my%20Legaldirectory.ai%20account" target="_blank" style="font-family:var(--mono);font-size:11px;color:var(--text2);text-decoration:none;">Need help? Chat on WhatsApp →</a></div></div></div><!-- MODALS --><!-- Registration (NEW Sale Deed + Sub-Registrar + EC) --><div class="modal-overlay" id="m-registration"><div class="modal"><button class="modal-close" onclick="closeModal('m-registration')"></button><div class="modal-tag">PROPERTY & DOCUMENTATION · MOST POPULAR</div><h2>Registration</h2><div class="modal-price">₹9,999 End-to-End, All Inclusive</div><div class="modal-section">WHAT'S INCLUDED</div><ul><li>Supervision &amp; coordination with Sub-Registrar office your lawyer manages the entire process</li><li>Complete Sale Deed preparation and stamp duty calculation</li><li>Attendance at Sub-Registrar office on your behalf</li><li>Getting the registered document from the Sub-Registrar</li><li>Encumbrance Certificate (EC) procured on your behalf</li><li>Witness arrangement support</li><li>Identity verification for all parties (Aadhaar / PAN)</li></ul><div class="modal-section">GOVERNING LAWS</div><ul><li>Registration Act, 1908</li><li>Transfer of Property Act, 1882</li><li>Indian Stamp Act, 1899 &amp; applicable State Stamp Acts</li></ul><div class="modal-section">PROCESS OVERVIEW</div><ol><li>Document collection at your home or secure upload via portal</li><li>Property value estimation &amp; accurate stamp duty calculation</li><li>Sale Deed drafted and reviewed by senior lawyer</li><li>Coordinated appearance at the Sub-Registrar office</li><li>Registered document collected and delivered to you</li><li>Encumbrance Certificate (EC) obtained and handed over</li></ol><hr class="modal-divider"/><div class="modal-booking"><div class="modal-booking-head">BOOK &amp; PAY SECURELY</div><p style="font-size:12px;color:var(--text2);margin-bottom:0;">Registration (Sale Deed + EC) &nbsp;·&nbsp; ₹9,999 · All Inclusive</p><button class="modal-cf-btn" onclick="handleCashfreePayment('Registration (Sale Deed + EC)', 9999)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Pay ₹9,999 via Cashfree
  </button><a href="https://wa.me/919008999968?text=I%20want%20to%20book%20Registration%20(Sale%20Deed%20%2B%20EC)%20%E2%80%94%20%E2%82%B99%2C999" target="_blank" class="modal-wa-alt"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Or Book on WhatsApp
- </a><div class="rzp-secure-note">PAYMENTS SECURED BY RAZORPAY · UPI · CARDS · NET BANKING · WALLETS</div></div></div></div><!-- Sale Deed Registration --><div class="modal-overlay" id="m-reg"><div class="modal"><button class="modal-close" onclick="closeModal('m-reg')"></button><div class="modal-tag">PROPERTY PRODUCTS</div><h2>Sale Deed Registration</h2><div class="modal-price">₹9,999 All Inclusive</div><div class="modal-section">WHAT IS INCLUDED</div><p>End-to-end support for getting your Sale Deed registered through an Expert Property Lawyer from stamp duty calculation to Sub-Registrar attendance.</p><div class="modal-section">DOCUMENTS REQUIRED (Tentative)</div><ol><li>Estimation of the property value</li><li>Sale deed prepared and vetted by our lawyer</li><li>Proof of stamp duty & registration charge payment</li><li>Identity proofs Aadhaar / PAN for all parties</li><li>Two witnesses with valid ID and address proof</li><li>Power of Attorney (if applicable)</li><li>Property card and consent documents</li></ol><div class="modal-section">REGISTRATION PROCEDURE</div><ul><li>Documents submitted to the Sub-Registrar of Assurances in the jurisdiction of the property</li><li>Authorised signatories for buyer and seller must be present with two witnesses</li><li>Biometric identity of all parties will be scanned</li><li>Our lawyer ensures correct stamp duty is paid to prevent registration refusal</li><li>Women buyers may receive state-specific stamp duty rebates lawyer will advise accordingly</li></ul><hr class="modal-divider"/><div class="modal-booking"><div class="modal-booking-head">ADD TO CART &amp; CHECKOUT SECURELY</div><p style="font-size:12px;color:var(--text2);margin-bottom:0;">Sale Deed Registration &nbsp;·&nbsp; ₹9,999 All Inclusive</p><!-- REPLACE: Paste your Razorpay Payment Button script from https://dashboard.razorpay.com/app/paymentbuttons/ here --><button class="modal-rzp-btn" onclick="addModalServiceToCart('m-reg')">+ Add to Cart
+ </a><div class="cf-secure-note">PAYMENTS SECURED BY CASHFREE · UPI · CARDS · NET BANKING · WALLETS</div></div></div></div><!-- Sale Deed Registration --><div class="modal-overlay" id="m-reg"><div class="modal"><button class="modal-close" onclick="closeModal('m-reg')"></button><div class="modal-tag">PROPERTY PRODUCTS</div><h2>Sale Deed Registration</h2><div class="modal-price">₹9,999 All Inclusive</div><div class="modal-section">WHAT IS INCLUDED</div><p>End-to-end support for getting your Sale Deed registered through an Expert Property Lawyer from stamp duty calculation to Sub-Registrar attendance.</p><div class="modal-section">DOCUMENTS REQUIRED (Tentative)</div><ol><li>Estimation of the property value</li><li>Sale deed prepared and vetted by our lawyer</li><li>Proof of stamp duty & registration charge payment</li><li>Identity proofs Aadhaar / PAN for all parties</li><li>Two witnesses with valid ID and address proof</li><li>Power of Attorney (if applicable)</li><li>Property card and consent documents</li></ol><div class="modal-section">REGISTRATION PROCEDURE</div><ul><li>Documents submitted to the Sub-Registrar of Assurances in the jurisdiction of the property</li><li>Authorised signatories for buyer and seller must be present with two witnesses</li><li>Biometric identity of all parties will be scanned</li><li>Our lawyer ensures correct stamp duty is paid to prevent registration refusal</li><li>Women buyers may receive state-specific stamp duty rebates lawyer will advise accordingly</li></ul><hr class="modal-divider"/><div class="modal-booking"><div class="modal-booking-head">BOOK & PAY SECURELY</div><p style="font-size:12px;color:var(--text2);margin-bottom:0;">Sale Deed Registration &nbsp;·&nbsp; ₹9,999 All Inclusive</p><!-- REPLACE: Paste your Cashfree Payment Button script from https://dashboard.cashfree.com/app/paymentbuttons/ here --><button class="modal-cf-btn" onclick="handleCashfreePayment('Sale Deed Registration', 9999)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Pay ₹9,999 via Cashfree
  </button><a href="https://wa.me/919008999968?text=I%20want%20to%20book%20Sale%20Deed%20Registration%20%E2%80%94%20%E2%82%B99%2C999" target="_blank" class="modal-wa-alt"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Or Book on WhatsApp
- </a><div class="rzp-secure-note">PAYMENTS SECURED BY RAZORPAY · UPI · CARDS · NET BANKING · WALLETS</div></div></div></div><!-- Property Search Report --><div class="modal-overlay" id="m-report"><div class="modal"><button class="modal-close" onclick="closeModal('m-report')"></button><div class="modal-tag">PROPERTY SEARCH REPORT · 4.8 · 3,000+ CLIENTS</div><h2>Property Search Report</h2><div class="modal-price">₹4,999 Delivery in 3 Days</div><div class="modal-section">WHY YOU NEED THIS</div><p>When purchasing property, you must ensure it is free from defects, hidden litigation, or financial liabilities. This report provides complete legal clarity before you commit to the most significant financial decision of your life.</p><div class="modal-section">REVIEW PROCESS</div><ol><li>Upload documents via our portal or our lawyer collects them from your address</li><li>200–300 page in-depth review by a Senior Property Lawyer</li><li>Verification of property details against Government records where required</li><li>Property paper trail continuity mapping and identification of missing documents</li><li>Detailed verification report with the lawyer's observations</li><li>Dedicated consultation slot to clarify all doubts post-delivery</li></ol><div class="modal-section">SERVICE INCLUDES</div><ul><li>Detailed analysis of all property papers</li><li>Online records search where necessary</li><li>Analysis of pending financial liabilities or loans on the property</li><li>Detailed written legal report in English</li><li>Vernacular language documents accepted</li></ul><hr class="modal-divider"/><div class="modal-booking"><div class="modal-booking-head">ADD TO CART &amp; CHECKOUT SECURELY</div><p style="font-size:12px;color:var(--text2);margin-bottom:0;">Property Search Report &nbsp;·&nbsp; ₹4,999 · Delivery in 3 Days</p><button class="modal-rzp-btn" onclick="addModalServiceToCart('m-report')">+ Add to Cart
+ </a><div class="cf-secure-note">PAYMENTS SECURED BY CASHFREE · UPI · CARDS · NET BANKING · WALLETS</div></div></div></div><!-- Property Search Report --><div class="modal-overlay" id="m-report"><div class="modal"><button class="modal-close" onclick="closeModal('m-report')"></button><div class="modal-tag">PROPERTY SEARCH REPORT · 4.8 · 3,000+ CLIENTS</div><h2>Property Search Report</h2><div class="modal-price">₹4,999 Delivery in 3 Days</div><div class="modal-section">WHY YOU NEED THIS</div><p>When purchasing property, you must ensure it is free from defects, hidden litigation, or financial liabilities. This report provides complete legal clarity before you commit to the most significant financial decision of your life.</p><div class="modal-section">REVIEW PROCESS</div><ol><li>Upload documents via our portal or our lawyer collects them from your address</li><li>200–300 page in-depth review by a Senior Property Lawyer</li><li>Verification of property details against Government records where required</li><li>Property paper trail continuity mapping and identification of missing documents</li><li>Detailed verification report with the lawyer's observations</li><li>Dedicated consultation slot to clarify all doubts post-delivery</li></ol><div class="modal-section">SERVICE INCLUDES</div><ul><li>Detailed analysis of all property papers</li><li>Online records search where necessary</li><li>Analysis of pending financial liabilities or loans on the property</li><li>Detailed written legal report in English</li><li>Vernacular language documents accepted</li></ul><hr class="modal-divider"/><div class="modal-booking"><div class="modal-booking-head">BOOK & PAY SECURELY</div><p style="font-size:12px;color:var(--text2);margin-bottom:0;">Property Search Report &nbsp;·&nbsp; ₹4,999 · Delivery in 3 Days</p><button class="modal-cf-btn" onclick="handleCashfreePayment('Property Search Report', 4999)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Pay ₹4,999 via Cashfree
  </button><a href="https://wa.me/919008999968?text=I%20want%20to%20book%20Property%20Search%20Report%20%E2%80%94%20%E2%82%B94%2C999" target="_blank" class="modal-wa-alt"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Or Book on WhatsApp
- </a><div class="rzp-secure-note">PAYMENTS SECURED BY RAZORPAY · UPI · CARDS · NET BANKING · WALLETS</div></div></div></div><!-- Property Paper Review --><div class="modal-overlay" id="m-oral"><div class="modal"><button class="modal-close" onclick="closeModal('m-oral')"></button><div class="modal-tag">DOCUMENT REVIEW</div><h2>Property Paper Review (Oral Discussion)</h2><div class="modal-price">₹4,999 Delivery in 5 Days</div><div class="modal-section">WHO IS THIS FOR</div><ul><li>Homebuyers wanting to validate documents before purchase</li><li>Real estate investors evaluating properties</li><li>Heirs or inheritors unsure of legal ownership</li><li>Sellers ensuring paperwork is in order</li><li>Anyone seeking legal clarity before any transaction</li></ul><div class="modal-section">WHAT YOU RECEIVE</div><ul><li>Expert review of Sale Deed, Title Deed, Agreement to Sale, Mutation Records, Tax Receipts</li><li>One-on-one dedicated consultation with the lawyer</li><li>Verbal legal opinion on ownership, encumbrances, and missing documents</li><li>Legal red flags and risks explained clearly in plain language</li><li>Compliance check with applicable local laws</li></ul><div class="modal-section">HOW IT WORKS</div><ol><li>Upload or email your documents securely</li><li>A lawyer from our panel is assigned to your case</li><li>Schedule your discussion at your preferred time</li><li>Speak with the lawyer and get all queries answered</li><li>Proceed with your property decision confidently</li></ol><hr class="modal-divider"/><div class="modal-booking"><div class="modal-booking-head">ADD TO CART &amp; CHECKOUT SECURELY</div><p style="font-size:12px;color:var(--text2);margin-bottom:0;">Property Paper Review &nbsp;·&nbsp; ₹4,999 · Delivery in 5 Days</p><button class="modal-rzp-btn" onclick="addModalServiceToCart('m-oral')">+ Add to Cart
+ </a><div class="cf-secure-note">PAYMENTS SECURED BY CASHFREE · UPI · CARDS · NET BANKING · WALLETS</div></div></div></div><!-- Property Paper Review --><div class="modal-overlay" id="m-oral"><div class="modal"><button class="modal-close" onclick="closeModal('m-oral')"></button><div class="modal-tag">DOCUMENT REVIEW</div><h2>Property Paper Review (Oral Discussion)</h2><div class="modal-price">₹4,999 Delivery in 5 Days</div><div class="modal-section">WHO IS THIS FOR</div><ul><li>Homebuyers wanting to validate documents before purchase</li><li>Real estate investors evaluating properties</li><li>Heirs or inheritors unsure of legal ownership</li><li>Sellers ensuring paperwork is in order</li><li>Anyone seeking legal clarity before any transaction</li></ul><div class="modal-section">WHAT YOU RECEIVE</div><ul><li>Expert review of Sale Deed, Title Deed, Agreement to Sale, Mutation Records, Tax Receipts</li><li>One-on-one dedicated consultation with the lawyer</li><li>Verbal legal opinion on ownership, encumbrances, and missing documents</li><li>Legal red flags and risks explained clearly in plain language</li><li>Compliance check with applicable local laws</li></ul><div class="modal-section">HOW IT WORKS</div><ol><li>Upload or email your documents securely</li><li>A lawyer from our panel is assigned to your case</li><li>Schedule your discussion at your preferred time</li><li>Speak with the lawyer and get all queries answered</li><li>Proceed with your property decision confidently</li></ol><hr class="modal-divider"/><div class="modal-booking"><div class="modal-booking-head">BOOK & PAY SECURELY</div><p style="font-size:12px;color:var(--text2);margin-bottom:0;">Property Paper Review &nbsp;·&nbsp; ₹4,999 · Delivery in 5 Days</p><button class="modal-cf-btn" onclick="handleCashfreePayment('Property Paper Review', 4999)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Pay ₹4,999 via Cashfree
  </button><a href="https://wa.me/919008999968?text=I%20want%20to%20book%20Property%20Paper%20Review%20%E2%80%94%20%E2%82%B94%2C999" target="_blank" class="modal-wa-alt"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Or Book on WhatsApp
- </a><div class="rzp-secure-note">PAYMENTS SECURED BY RAZORPAY · UPI · CARDS · NET BANKING · WALLETS</div></div></div></div><!-- Sale Agreement Review --><div class="modal-overlay" id="m-review"><div class="modal"><button class="modal-close" onclick="closeModal('m-review')"></button><div class="modal-tag">DOCUMENT REVIEW · 4.8 · 675 REVIEWS</div><h2>Sale Agreement / Agreement to Sale Review</h2><div class="modal-price">₹4,999 Delivery in 5 Days</div><div class="modal-section">SERVICE DESCRIPTION</div><ul><li>Upload Sale Deed / Agreement to Sale for lawyer review</li><li>45 minutes of dedicated consultation with a Senior Property Lawyer</li><li>Schedule your consultation at your preferred date and time</li><li>All critical legal clauses explained in plain language</li><li>Consult in your preferred language</li></ul><div class="modal-section">KEY ELEMENTS REVIEWED</div><ol><li>Details of parties names, ages, addresses of buyer and seller</li><li>Description of property exact location, size, survey numbers</li><li>Sale price and payment terms schedule and method of payment</li><li>Possession date when buyer takes possession</li><li>Default clause consequences if either party defaults</li><li>Dispute resolution mediation, arbitration, or litigation</li><li>Representations, warranties, and indemnity provisions</li></ol><hr class="modal-divider"/><div class="modal-booking"><div class="modal-booking-head">ADD TO CART &amp; CHECKOUT SECURELY</div><p style="font-size:12px;color:var(--text2);margin-bottom:0;">Agreement to Sale Review &nbsp;·&nbsp; ₹4,999 · Delivery in 5 Days</p><button class="modal-rzp-btn" onclick="addModalServiceToCart('m-review')">+ Add to Cart
+ </a><div class="cf-secure-note">PAYMENTS SECURED BY CASHFREE · UPI · CARDS · NET BANKING · WALLETS</div></div></div></div><!-- Sale Agreement Review --><div class="modal-overlay" id="m-review"><div class="modal"><button class="modal-close" onclick="closeModal('m-review')"></button><div class="modal-tag">DOCUMENT REVIEW · 4.8 · 675 REVIEWS</div><h2>Sale Agreement / Agreement to Sale Review</h2><div class="modal-price">₹4,999 Delivery in 5 Days</div><div class="modal-section">SERVICE DESCRIPTION</div><ul><li>Upload Sale Deed / Agreement to Sale for lawyer review</li><li>45 minutes of dedicated consultation with a Senior Property Lawyer</li><li>Schedule your consultation at your preferred date and time</li><li>All critical legal clauses explained in plain language</li><li>Consult in your preferred language</li></ul><div class="modal-section">KEY ELEMENTS REVIEWED</div><ol><li>Details of parties names, ages, addresses of buyer and seller</li><li>Description of property exact location, size, survey numbers</li><li>Sale price and payment terms schedule and method of payment</li><li>Possession date when buyer takes possession</li><li>Default clause consequences if either party defaults</li><li>Dispute resolution mediation, arbitration, or litigation</li><li>Representations, warranties, and indemnity provisions</li></ol><hr class="modal-divider"/><div class="modal-booking"><div class="modal-booking-head">BOOK & PAY SECURELY</div><p style="font-size:12px;color:var(--text2);margin-bottom:0;">Agreement to Sale Review &nbsp;·&nbsp; ₹4,999 · Delivery in 5 Days</p><button class="modal-cf-btn" onclick="handleCashfreePayment('Agreement to Sale Review', 4999)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Pay ₹4,999 via Cashfree
  </button><a href="https://wa.me/919008999968?text=I%20want%20to%20book%20Sale%20Agreement%20Review%20%E2%80%94%20%E2%82%B94%2C999" target="_blank" class="modal-wa-alt"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Or Book on WhatsApp
- </a><div class="rzp-secure-note">PAYMENTS SECURED BY RAZORPAY · UPI · CARDS · NET BANKING · WALLETS</div></div></div></div><!-- ATS Drafting --><div class="modal-overlay" id="m-drafting"><div class="modal"><button class="modal-close" onclick="closeModal('m-drafting')"></button><div class="modal-tag">PROPERTY PRODUCTS · HOME VISIT INCLUDED</div><h2>Agreement to Sale Drafting</h2><div class="modal-price">₹4,999 2 Working Days</div><div class="modal-section">WHY A PROFESSIONALLY DRAFTED ATS?</div><p>A professionally drafted Agreement to Sale establishes clear ground rules for your property transaction covering price, payment schedule, conditions, and what happens if either party defaults. Our lawyer visits your home post-consultation to finalise and execute the document.</p><div class="modal-section">KEY ELEMENTS COVERED</div><ol><li>Complete details of buyer and seller parties</li><li>Accurate property description location, size, type, survey identifiers</li><li>Sale price and payment schedule mode and timeline</li><li>Possession date when buyer takes possession</li><li>Conditions precedent and subsequent to the sale</li><li>Representations, warranties, and seller indemnity clause</li><li>Dispute resolution mechanism mediation, arbitration, or litigation</li><li>Termination clause conditions and consequences</li></ol><hr class="modal-divider"/><div class="modal-booking"><div class="modal-booking-head">ADD TO CART &amp; CHECKOUT SECURELY</div><p style="font-size:12px;color:var(--text2);margin-bottom:0;">Agreement to Sale Drafting &nbsp;·&nbsp; ₹4,999 · 2 Working Days</p><button class="modal-rzp-btn" onclick="addModalServiceToCart('m-drafting')">+ Add to Cart
+ </a><div class="cf-secure-note">PAYMENTS SECURED BY CASHFREE · UPI · CARDS · NET BANKING · WALLETS</div></div></div></div><!-- ATS Drafting --><div class="modal-overlay" id="m-drafting"><div class="modal"><button class="modal-close" onclick="closeModal('m-drafting')"></button><div class="modal-tag">PROPERTY PRODUCTS · HOME VISIT INCLUDED</div><h2>Agreement to Sale Drafting</h2><div class="modal-price">₹4,999 2 Working Days</div><div class="modal-section">WHY A PROFESSIONALLY DRAFTED ATS?</div><p>A professionally drafted Agreement to Sale establishes clear ground rules for your property transaction covering price, payment schedule, conditions, and what happens if either party defaults. Our lawyer visits your home post-consultation to finalise and execute the document.</p><div class="modal-section">KEY ELEMENTS COVERED</div><ol><li>Complete details of buyer and seller parties</li><li>Accurate property description location, size, type, survey identifiers</li><li>Sale price and payment schedule mode and timeline</li><li>Possession date when buyer takes possession</li><li>Conditions precedent and subsequent to the sale</li><li>Representations, warranties, and seller indemnity clause</li><li>Dispute resolution mechanism mediation, arbitration, or litigation</li><li>Termination clause conditions and consequences</li></ol><hr class="modal-divider"/><div class="modal-booking"><div class="modal-booking-head">BOOK & PAY SECURELY</div><p style="font-size:12px;color:var(--text2);margin-bottom:0;">Agreement to Sale Drafting &nbsp;·&nbsp; ₹4,999 · 2 Working Days</p><button class="modal-cf-btn" onclick="handleCashfreePayment('Agreement to Sale Drafting', 4999)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Pay ₹4,999 via Cashfree
  </button><a href="https://wa.me/919008999968?text=I%20want%20to%20book%20Agreement%20to%20Sale%20Drafting%20%E2%80%94%20%E2%82%B94%2C999" target="_blank" class="modal-wa-alt"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Or Book on WhatsApp
- </a><div class="rzp-secure-note">PAYMENTS SECURED BY RAZORPAY · UPI · CARDS · NET BANKING · WALLETS</div></div></div></div><!-- WILL Drafting --><div class="modal-overlay" id="m-will"><div class="modal"><button class="modal-close" onclick="closeModal('m-will')"></button><div class="modal-tag">SUCCESSION PLANNING · 10,987 PURCHASED</div><h2>WILL Drafting &amp; Registration</h2><div class="modal-price">₹4,999 First Draft in 2 Working Days</div><div class="modal-section">KEY DELIVERABLES</div><ul><li>Dedicated consultation time with the lawyer for drafting</li><li>First draft of the Will delivered within 2 working days</li><li>2 free iterations to incorporate your changes and suggestions</li><li>Optional registration service for legal enforceability</li><li>Video recording of the Will-signing process available</li></ul><div class="modal-section">GOVERNING LAWS IN INDIA</div><ul><li>Indian Succession Act, 1925</li><li>Hindu Succession Act, 1956</li><li>The Muslim Personal Law (Shariat) Application Act, 1937</li><li>Transfer of Property Act, 1882 · Registration Act, 1908</li></ul><div class="modal-section">CONTENTS OF A WELL-DRAFTED WILL</div><ol><li>Details of maker name, age, address for identification</li><li>Legal declaration of the maker's testamentary capacity</li><li>Clear intention for property distribution among beneficiaries</li><li>Details of all named beneficiaries</li><li>Guardian appointment for any minor beneficiaries</li><li>Executor of the Will appointed to carry out its terms</li><li>Execution after death clause</li></ol><hr class="modal-divider"/><div class="modal-booking"><div class="modal-booking-head">ADD TO CART &amp; CHECKOUT SECURELY</div><p style="font-size:12px;color:var(--text2);margin-bottom:0;">WILL Drafting &amp; Registration &nbsp;·&nbsp; ₹4,999 · 2 Working Days</p><button class="modal-rzp-btn" onclick="addModalServiceToCart('m-will')">+ Add to Cart</button><a href="https://wa.me/919008999968?text=I%20want%20to%20book%20WILL%20Drafting%20%E2%80%94%20%E2%82%B94%2C999" target="_blank" class="modal-wa-alt"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Or Book on WhatsApp
- </a><div class="rzp-secure-note">PAYMENTS SECURED BY RAZORPAY · UPI · CARDS · NET BANKING · WALLETS</div></div></div></div><!-- Trademark --><div class="modal-overlay" id="m-trademark"><div class="modal"><button class="modal-close" onclick="closeModal('m-trademark')"></button><div class="modal-tag">STARTUP SERVICES · 2,970 TRADEMARKS FILED</div><h2>Trademark Registration</h2><div class="modal-price">Custom Pricing Contact Us</div><div class="modal-section">WHY REGISTER YOUR TRADEMARK</div><ul><li>Adds to company valuation as a key intellectual property asset</li><li>Establishes unique identity and brand for goods or services</li><li>Builds trust, goodwill, and quality perception in customers' minds</li><li>Basis for trademark filing in other countries if required</li><li>Only registered owners can claim damages in infringement cases</li></ul><div class="modal-section">REGISTRATION PROCESS</div><ol><li>Preliminary conflict search on the official Trademark Registry database</li><li>Application preparation and filing including User Affidavit and mandatory documents</li><li>Review of Examination Report issued by the Registrar</li><li>Detailed response to Examination Report (if required)</li><li>Attending hearing before the Examiner / Registrar (if required)</li></ol><div class="modal-section">DOCUMENTS REQUIRED</div><ul><li>PAN Card and Address Proof of Applicant</li><li>Brand name and logo symbol or wordmark to be registered</li><li>User Affidavit if the trademark is already in use</li><li>MSME / Startup Recognition certificate for 50% government fee rebate</li><li>Signed Form TM-48 authorising the lawyer to file on your behalf</li></ul><a href="https://wa.me/919008999968?text=I%20want%20to%20enquire%20about%20Trademark%20Registration" target="_blank" class="modal-wa-alt" style="margin-top:22px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Get Quote on WhatsApp
- </a></div></div><!-- Document Writer Modal --><div class="modal-overlay" id="m-docwriter"><div class="modal"><button class="modal-close" onclick="closeModal('m-docwriter')"></button><div class="modal-tag">DOCUMENT DRAFTING · KARNATAKA-LICENSED ADVOCATE</div><h2>Document Writer</h2><div class="modal-price">₹4,999 Starting Price</div><div class="modal-section">ABOUT THIS SERVICE</div><p>Legaldirectory.ai's Document Writer pairs you with a Karnataka-licensed advocate to craft airtight property deeds — sale, lease, GPA/SPA, mortgage (MODT) or rental agreements. After a 30-minute requirements call, your draft is prepared in 1–2 working days, reviewed, and printed on state-prescribed non-judicial stamp paper within a day. The finished deed arrives as a secure PDF or couriered hard copy, ready for registration.</p><div class="modal-section">HOW IT WORKS</div><ol><li><strong>Call with legal expert</strong> — 30-min requirements chat to understand parties, property details, and specific clauses needed</li><li><strong>Drafting</strong> — 2–3 working days for full document preparation by a licensed advocate</li><li><strong>Review &amp; print on stamp paper</strong> — 1 day for final review and printing on state-prescribed non-judicial stamp paper</li><li><strong>Delivery</strong> — Secure PDF delivered digitally; optional hard copy courier available</li></ol><div class="modal-section">DOCUMENT TYPES COVERED</div><ul><li>Sale Deed / Absolute Sale Deed</li><li>Lease Deed (residential &amp; commercial)</li><li>General Power of Attorney (GPA) / Special Power of Attorney (SPA)</li><li>Mortgage Deed / MODT (Memorandum of Deposit of Title Deeds)</li><li>Rental / Leave &amp; Licence Agreement</li><li>Gift Deed, Relinquishment Deed, Partition Deed</li></ul><div class="modal-section">GOVERNING LAWS</div><ul><li>Registration Act, 1908</li><li>Transfer of Property Act, 1882</li><li>Indian Stamp Act, 1899 &amp; Karnataka Stamp Act</li><li>Powers of Attorney Act, 1882</li></ul><hr class="modal-divider"/><div class="modal-booking"><div class="modal-booking-head">ADD TO CART &amp; CHECKOUT SECURELY</div><p style="font-size:12px;color:var(--text2);margin-bottom:0;">Document Writer &nbsp;·&nbsp; ₹4,999</p><button class="modal-rzp-btn" onclick="addModalServiceToCart('m-docwriter')">+ Add to Cart</button><a href="https://wa.me/919008999968?text=I%20want%20to%20book%20Document%20Writer%20%E2%80%94%20%E2%82%B94%2C999" target="_blank" class="modal-wa-alt"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Or Book on WhatsApp
- </a><div class="rzp-secure-note">PAYMENTS SECURED BY RAZORPAY · UPI · CARDS · NET BANKING · WALLETS</div></div></div></div><!-- Liaising Officer Modal --><div class="modal-overlay" id="m-liaison"><div class="modal"><button class="modal-close" onclick="closeModal('m-liaison')"></button><div class="modal-tag">GOVT DOCUMENT ASSISTANCE · 24-HOUR DELIVERY</div><h2>Liaising Officer</h2><div class="modal-price">₹99 per document · 24-Hour Delivery</div><div class="modal-section">ABOUT THIS SERVICE</div><p>Book a dedicated Liaising Officer who handles the procurement of any government property document on your behalf — from an Encumbrance Certificate to BBMP Tax Receipt — within 24 hours. No queues, no office visits, no hassle. Your officer manages the entire process end-to-end.</p><div class="modal-section">INSTANT DOCUMENTS (Available in &lt;24 hrs)</div><ul><li>Karnataka Encumbrance Certificate </li><li>Search by Name </li><li>Karnataka Certified RTC / Pahani </li><li>Find My Survey No. </li><li>Karnataka Akarbandh </li><li>E-Khata / E-Swathu </li><li>Village Map </li><li>BDA Land Use </li><li>Mutation Record </li><li>BBMP Occupancy Certificate </li><li>BBMP Commencement Certificate </li><li>BBMP Plan Approval </li></ul><div class="modal-section">PROCURE / STANDARD DOCUMENTS</div><ul><li>Convert Khata to E-Aasthi</li><li>Karnataka Certified Copy</li><li>Karnataka Khata Transfer</li><li>Karnataka Certified Survey Documents</li><li>Karnataka CERSAI Mortgage Report</li><li>Karnataka E-Stamp</li><li>Karnataka Certified Encumbrance Certificate</li><li>BBMP Tax Receipt</li><li>BWSSB Water Connection</li><li>Guideline Value</li><li>Panchayat Property Tax Receipt</li><li>Land Survey</li><li>BESCOM Transfer</li><li>BBMP Sanction Plan</li><li>BBMP E-Khata (e-Aasthi)</li><li>Survey Verification</li><li>Document Pack</li><li>RERA Report</li><li>Document Translation</li><li>Registration Services</li><li>Karnataka Legal Opinion</li><li>BIAAPA Construction Approval</li><li>Karnataka Physical Land Survey</li></ul><div class="modal-section">HOW IT WORKS</div><ol><li>Book your Liaising Officer and share property details via WhatsApp</li><li>Officer confirms the document type and estimated turnaround</li><li>Officer procures the document from relevant government portal or office</li><li>Document delivered as a verified PDF within 24 hours</li></ol><hr class="modal-divider"/><div class="modal-booking"><div class="modal-booking-head">ADD TO CART &amp; CHECKOUT SECURELY</div><p style="font-size:12px;color:var(--text2);margin-bottom:0;">Liaising Officer &nbsp;·&nbsp; ₹99</p><button class="modal-rzp-btn" onclick="addModalServiceToCart('m-liaison')">+ Add to Cart
+ </a><div class="cf-secure-note">PAYMENTS SECURED BY CASHFREE · UPI · CARDS · NET BANKING · WALLETS</div></div></div></div><!-- WILL Drafting --><div class="modal-overlay" id="m-will"><div class="modal"><button class="modal-close" onclick="closeModal('m-will')"></button><div class="modal-tag">SUCCESSION PLANNING · 10,987 PURCHASED</div><h2>WILL Drafting &amp; Registration</h2><div class="modal-price">₹4,999 First Draft in 2 Working Days</div><div class="modal-section">KEY DELIVERABLES</div><ul><li>Dedicated consultation time with the lawyer for drafting</li><li>First draft of the Will delivered within 2 working days</li><li>2 free iterations to incorporate your changes and suggestions</li><li>Optional registration service for legal enforceability</li><li>Video recording of the Will-signing process available</li></ul><div class="modal-section">GOVERNING LAWS IN INDIA</div><ul><li>Indian Succession Act, 1925</li><li>Hindu Succession Act, 1956</li><li>The Muslim Personal Law (Shariat) Application Act, 1937</li><li>Transfer of Property Act, 1882 · Registration Act, 1908</li></ul><div class="modal-section">CONTENTS OF A WELL-DRAFTED WILL</div><ol><li>Details of maker name, age, address for identification</li><li>Legal declaration of the maker's testamentary capacity</li><li>Clear intention for property distribution among beneficiaries</li><li>Details of all named beneficiaries</li><li>Guardian appointment for any minor beneficiaries</li><li>Executor of the Will appointed to carry out its terms</li><li>Execution after death clause</li></ol><hr class="modal-divider"/><div class="modal-booking"><div class="modal-booking-head">BOOK & PAY SECURELY</div><p style="font-size:12px;color:var(--text2);margin-bottom:0;">WILL Drafting &amp; Registration &nbsp;·&nbsp; ₹4,999 · 2 Working Days</p><button class="modal-cf-btn" onclick="handleCashfreePayment('Document Writer', 4999)">Pay ₹4,999 via Cashfree</button><a href="https://wa.me/919008999968?text=I%20want%20to%20book%20WILL%20Drafting%20%E2%80%94%20%E2%82%B94%2C999" target="_blank" class="modal-wa-alt"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Or Book on WhatsApp
+ </a><div class="cf-secure-note">PAYMENTS SECURED BY CASHFREE · UPI · CARDS · NET BANKING · WALLETS</div></div></div></div><!-- Trademark --><div class="modal-overlay" id="m-trademark"><div class="modal"><button class="modal-close" onclick="closeModal('m-trademark')"></button><div class="modal-tag">STARTUP SERVICES · 2,970 TRADEMARKS FILED</div><h2>Trademark Registration</h2><div class="modal-price">Custom Pricing Contact Us</div><div class="modal-section">WHY REGISTER YOUR TRADEMARK</div><ul><li>Adds to company valuation as a key intellectual property asset</li><li>Establishes unique identity and brand for goods or services</li><li>Builds trust, goodwill, and quality perception in customers' minds</li><li>Basis for trademark filing in other countries if required</li><li>Only registered owners can claim damages in infringement cases</li></ul><div class="modal-section">REGISTRATION PROCESS</div><ol><li>Preliminary conflict search on the official Trademark Registry database</li><li>Application preparation and filing including User Affidavit and mandatory documents</li><li>Review of Examination Report issued by the Registrar</li><li>Detailed response to Examination Report (if required)</li><li>Attending hearing before the Examiner / Registrar (if required)</li></ol><div class="modal-section">DOCUMENTS REQUIRED</div><ul><li>PAN Card and Address Proof of Applicant</li><li>Brand name and logo symbol or wordmark to be registered</li><li>User Affidavit if the trademark is already in use</li><li>MSME / Startup Recognition certificate for 50% government fee rebate</li><li>Signed Form TM-48 authorising the lawyer to file on your behalf</li></ul><a href="https://wa.me/919008999968?text=I%20want%20to%20enquire%20about%20Trademark%20Registration" target="_blank" class="modal-wa-alt" style="margin-top:22px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Get Quote on WhatsApp
+ </a></div></div><!-- Document Writer Modal --><div class="modal-overlay" id="m-docwriter"><div class="modal"><button class="modal-close" onclick="closeModal('m-docwriter')"></button><div class="modal-tag">DOCUMENT DRAFTING · KARNATAKA-LICENSED ADVOCATE</div><h2>Document Writer</h2><div class="modal-price">₹4,999 Starting Price</div><div class="modal-section">ABOUT THIS SERVICE</div><p>Legaldirectory.ai's Document Writer pairs you with a Karnataka-licensed advocate to craft airtight property deeds — sale, lease, GPA/SPA, mortgage (MODT) or rental agreements. After a 30-minute requirements call, your draft is prepared in 1–2 working days, reviewed, and printed on state-prescribed non-judicial stamp paper within a day. The finished deed arrives as a secure PDF or couriered hard copy, ready for registration.</p><div class="modal-section">HOW IT WORKS</div><ol><li><strong>Call with legal expert</strong> — 30-min requirements chat to understand parties, property details, and specific clauses needed</li><li><strong>Drafting</strong> — 2–3 working days for full document preparation by a licensed advocate</li><li><strong>Review &amp; print on stamp paper</strong> — 1 day for final review and printing on state-prescribed non-judicial stamp paper</li><li><strong>Delivery</strong> — Secure PDF delivered digitally; optional hard copy courier available</li></ol><div class="modal-section">DOCUMENT TYPES COVERED</div><ul><li>Sale Deed / Absolute Sale Deed</li><li>Lease Deed (residential &amp; commercial)</li><li>General Power of Attorney (GPA) / Special Power of Attorney (SPA)</li><li>Mortgage Deed / MODT (Memorandum of Deposit of Title Deeds)</li><li>Rental / Leave &amp; Licence Agreement</li><li>Gift Deed, Relinquishment Deed, Partition Deed</li></ul><div class="modal-section">GOVERNING LAWS</div><ul><li>Registration Act, 1908</li><li>Transfer of Property Act, 1882</li><li>Indian Stamp Act, 1899 &amp; Karnataka Stamp Act</li><li>Powers of Attorney Act, 1882</li></ul><hr class="modal-divider"/><div class="modal-booking"><div class="modal-booking-head">BOOK &amp; PAY SECURELY</div><p style="font-size:12px;color:var(--text2);margin-bottom:0;">Document Writer &nbsp;·&nbsp; ₹4,999</p><button class="modal-cf-btn" onclick="handleCashfreePayment('Document Writer', 4999)">Pay ₹4,999 via Cashfree</button><a href="https://wa.me/919008999968?text=I%20want%20to%20book%20Document%20Writer%20%E2%80%94%20%E2%82%B94%2C999" target="_blank" class="modal-wa-alt"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Or Book on WhatsApp
+ </a><div class="cf-secure-note">PAYMENTS SECURED BY CASHFREE · UPI · CARDS · NET BANKING · WALLETS</div></div></div></div><!-- Liaising Officer Modal --><div class="modal-overlay" id="m-liaison"><div class="modal"><button class="modal-close" onclick="closeModal('m-liaison')"></button><div class="modal-tag">GOVT DOCUMENT ASSISTANCE · 24-HOUR DELIVERY</div><h2>Liaising Officer</h2><div class="modal-price">₹99 per document · 24-Hour Delivery</div><div class="modal-section">ABOUT THIS SERVICE</div><p>Book a dedicated Liaising Officer who handles the procurement of any government property document on your behalf — from an Encumbrance Certificate to BBMP Tax Receipt — within 24 hours. No queues, no office visits, no hassle. Your officer manages the entire process end-to-end.</p><div class="modal-section">INSTANT DOCUMENTS (Available in &lt;24 hrs)</div><ul><li>Karnataka Encumbrance Certificate </li><li>Search by Name </li><li>Karnataka Certified RTC / Pahani </li><li>Find My Survey No. </li><li>Karnataka Akarbandh </li><li>E-Khata / E-Swathu </li><li>Village Map </li><li>BDA Land Use </li><li>Mutation Record </li><li>BBMP Occupancy Certificate </li><li>BBMP Commencement Certificate </li><li>BBMP Plan Approval </li></ul><div class="modal-section">PROCURE / STANDARD DOCUMENTS</div><ul><li>Convert Khata to E-Aasthi</li><li>Karnataka Certified Copy</li><li>Karnataka Khata Transfer</li><li>Karnataka Certified Survey Documents</li><li>Karnataka CERSAI Mortgage Report</li><li>Karnataka E-Stamp</li><li>Karnataka Certified Encumbrance Certificate</li><li>BBMP Tax Receipt</li><li>BWSSB Water Connection</li><li>Guideline Value</li><li>Panchayat Property Tax Receipt</li><li>Land Survey</li><li>BESCOM Transfer</li><li>BBMP Sanction Plan</li><li>BBMP E-Khata (e-Aasthi)</li><li>Survey Verification</li><li>Document Pack</li><li>RERA Report</li><li>Document Translation</li><li>Registration Services</li><li>Karnataka Legal Opinion</li><li>BIAAPA Construction Approval</li><li>Karnataka Physical Land Survey</li></ul><div class="modal-section">HOW IT WORKS</div><ol><li>Book your Liaising Officer and share property details via WhatsApp</li><li>Officer confirms the document type and estimated turnaround</li><li>Officer procures the document from relevant government portal or office</li><li>Document delivered as a verified PDF within 24 hours</li></ol><hr class="modal-divider"/><div class="modal-booking"><div class="modal-booking-head">BOOK &amp; PAY SECURELY</div><p style="font-size:12px;color:var(--text2);margin-bottom:0;">Liaising Officer &nbsp;·&nbsp; ₹99</p><button class="modal-cf-btn" onclick="handleCashfreePayment('Liaising Officer', 99)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Pay ₹99 via Cashfree
  </button><a href="https://wa.me/919008999968?text=I%20want%20to%20book%20a%20Liaising%20Officer%20%E2%80%94%20%E2%82%B999" target="_blank" class="modal-wa-alt"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Or Book on WhatsApp
- </a><div class="rzp-secure-note">PAYMENTS SECURED BY RAZORPAY · UPI · CARDS · NET BANKING · WALLETS</div></div></div></div><script>
+ </a><div class="cf-secure-note">PAYMENTS SECURED BY CASHFREE · UPI · CARDS · NET BANKING · WALLETS</div></div></div></div><script>
 const SUPPORT_EMAIL = 'weightage.lab@gmail.com';
 
 // VISITOR COUNTER 
@@ -1279,7 +1295,7 @@ async function signOutUser() {
 window.addEventListener('load', initFirebase);
 
 
-function handleRzpPayment(serviceName, amount) {
+function handleCashfreePayment(serviceName, amount) {
  const name = document.getElementById('bk-name') ? document.getElementById('bk-name').value.trim() : '';
  const phone = document.getElementById('bk-phone') ? document.getElementById('bk-phone').value.trim() : '';
  const serviceSelect = document.getElementById('bk-service');
@@ -1296,7 +1312,7 @@ function handleRzpPayment(serviceName, amount) {
  const ts = new Date().toLocaleString('en-IN', {timeZone:'Asia/Kolkata'});
 
  // ── SHOW LOADING STATE ──
- const btn = (window.event && window.event.currentTarget) || document.querySelector('[onclick*="handleRzpPayment"]');
+ const btn = (window.event && window.event.currentTarget) || document.querySelector('[onclick*="handleCashfreePayment"]');
  if (btn) {
    btn.disabled = true;
    const originalText = btn.innerHTML;
@@ -1322,7 +1338,7 @@ function handleRzpPayment(serviceName, amount) {
  `<div style="font-family:sans-serif;max-width:520px;"><h2 style="color:#d4a843;">New Order Legaldirectory.ai</h2><table style="width:100%;border-collapse:collapse;font-size:14px;"><tr><td style="padding:8px;color:#888;">Service</td><td style="padding:8px;font-weight:bold;">${service}</td></tr><tr style="background:#f9f9f9;"><td style="padding:8px;color:#888;">Amount</td><td style="padding:8px;font-weight:bold;">${amt}</td></tr><tr><td style="padding:8px;color:#888;">Time (IST)</td><td style="padding:8px;">${ts}</td></tr></table></div>`
  );
 
- // ── RAZORPAY STANDARD CHECKOUT ──
+ // ── CASHFREE STANDARD CHECKOUT ──
  if (!amount) {
    // No fixed price — send to WhatsApp for quote
    sendWhatsApp(`*New Enquiry — Legaldirectory.ai*\n\nService: ${service}\nTime: ${ts}\n\nPlease guide me on pricing and next steps.`);
@@ -1337,47 +1353,29 @@ function handleRzpPayment(serviceName, amount) {
  .then(r => r.json())
  .then(orderData => {
    if (!orderData.order_id) throw new Error(orderData.error || 'Order creation failed');
-   var options = {
-     key:         orderData.key_id,
-     amount:      orderData.amount,
-     currency:    orderData.currency,
-     name:        'Legaldirectory.ai',
-     description: service,
-     image:       'https://legaldirectory.in/og-image.png',
-     order_id:    orderData.order_id,
-     theme:       { color: '#c9952a' },
-     notes:       { service: service },
-     handler: function(response) {
-       // Verify payment server-side
-       fetch('/api/verify-payment', {
-         method: 'POST',
-         headers: { 'Content-Type': 'application/json' },
-         body: JSON.stringify({
-           razorpay_order_id:   response.razorpay_order_id,
-           razorpay_payment_id: response.razorpay_payment_id,
-           razorpay_signature:  response.razorpay_signature,
-           service: service,
-           amount:  amt
-         })
+   if (!orderData.payment_session_id) throw new Error(orderData.error || 'Payment session missing');
+   var cashfree = Cashfree({ mode: orderData.mode || 'production' });
+   return cashfree.checkout({
+     paymentSessionId: orderData.payment_session_id,
+     redirectTarget: '_modal'
+   }).then(function() {
+     return fetch('/api/verify-payment', {
+       method: 'POST',
+       headers: { 'Content-Type': 'application/json' },
+       body: JSON.stringify({
+         order_id: orderData.order_id,
+         service: service,
+         amount: amt
        })
-       .then(vr => vr.json())
-       .then(v => {
-         if (v.success) {
-           sendWhatsApp(`*Payment Confirmed — Legaldirectory.ai*\n\nService: ${service}\nAmount: ${amt}\nPayment ID: ${response.razorpay_payment_id}\nTime: ${ts}\n\nThank you! Our team will contact you shortly.`);
-           alert('Payment successful! Payment ID: ' + response.razorpay_payment_id + '\n\nOur team will contact you within 2 hours.');
-         }
-       })
-       .catch(() => {
-         alert('Payment received but verification pending. Please WhatsApp us with Payment ID: ' + response.razorpay_payment_id);
-       });
-     },
-     modal: { ondismiss: function() {} }
-   };
-   var rzp = new Razorpay(options);
-   rzp.on('payment.failed', function(r) {
-     alert('Payment failed: ' + (r.error.description || 'Please try again.'));
+     });
+   }).then(vr => vr.json()).then(v => {
+     if (v.success) {
+       sendWhatsApp(`*Payment Confirmed — Legaldirectory.ai*\n\nService: ${service}\nAmount: ${amt}\nOrder ID: ${orderData.order_id}\nTime: ${ts}\n\nThank you! Our team will contact you shortly.`);
+       alert('Payment successful! Order ID: ' + orderData.order_id + '\n\nOur team will contact you within 2 hours.');
+     } else {
+       alert('Payment not completed yet. Order status: ' + (v.order_status || 'Pending'));
+     }
    });
-   rzp.open();
  })
  .catch(err => {
    alert('Could not initiate payment: ' + err.message + '\n\nPlease use WhatsApp to book.');
@@ -1386,50 +1384,60 @@ function handleRzpPayment(serviceName, amount) {
 }
 
 </script>
-<div id="cart-bar">
-  <div class="cart-bar-inner">
-    <div class="cart-summary">
-      <div class="cart-count" id="cart-count-label">0 services selected</div>
-      <div class="cart-total" id="cart-total-display">₹0</div>
+
+<!-- Cart checkout drawer -->
+<div id="ld-cart-bar">
+  <div class="ld-cart-inner">
+    <div>
+      <div class="ld-cart-count" id="ld-cart-count">0 services selected</div>
+      <div class="ld-cart-total" id="ld-cart-total">₹0</div>
     </div>
-    <div class="cart-actions">
-      <button class="btn-view-cart" onclick="openCartDrawer()">View Cart</button>
-      <button class="btn-checkout" onclick="openCartDrawer()">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-        Checkout
-      </button>
+    <div class="ld-cart-actions">
+      <button class="ld-cart-secondary" type="button" onclick="ldOpenCart()">View Cart</button>
+      <button class="ld-cart-primary" type="button" onclick="ldOpenCart()">Checkout</button>
     </div>
   </div>
 </div>
-<div id="cart-drawer-overlay" onclick="handleCartOverlayClick(event)">
-  <div id="cart-drawer">
-    <div class="drawer-header">
-      <div class="drawer-title">Your Cart</div>
-      <button class="drawer-close" onclick="closeCartDrawer()">×</button>
+
+<div id="ld-cart-overlay" onclick="ldOverlayClose(event)">
+  <div class="ld-cart-drawer" role="dialog" aria-modal="true" aria-labelledby="ld-cart-title">
+    <div class="ld-cart-head">
+      <div class="ld-cart-title" id="ld-cart-title">Your Cart</div>
+      <button class="ld-cart-close" type="button" onclick="ldCloseCart()" aria-label="Close cart">×</button>
     </div>
-    <div class="drawer-items" id="drawer-items-list"></div>
-    <div class="drawer-footer">
-      <div class="drawer-total-row">
-        <div class="drawer-total-label">Total</div>
-        <div class="drawer-total-val" id="drawer-total">₹0</div>
+    <div class="ld-cart-items" id="ld-cart-items"></div>
+    <div class="ld-cart-foot">
+      <div class="ld-cart-total-row">
+        <span class="ld-cart-total-label">Total</span>
+        <span class="ld-cart-total-value" id="ld-drawer-total">₹0</span>
       </div>
-      <div class="drawer-fields">
-        <input id="drawer-name" type="text" class="drawer-input" placeholder="Your Name"/>
-        <input id="drawer-phone" type="tel" class="drawer-input" placeholder="WhatsApp Number"/>
+      <div class="ld-cart-fields">
+        <input class="ld-cart-input" id="ld-customer-name" type="text" placeholder="Your Name (optional)"/>
+        <input class="ld-cart-input" id="ld-customer-phone" type="tel" placeholder="WhatsApp Number (optional)"/>
       </div>
-      <button class="btn-pay-now" id="drawer-pay-btn" onclick="initiateCartCheckout()">
+      <button class="ld-cart-pay" id="ld-pay-btn" type="button" onclick="ldCheckout()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-        <span id="drawer-pay-label">Pay Now</span>
+        <span id="ld-pay-label">Pay Now</span>
       </button>
-      <a id="drawer-wa-btn" href="#" target="_blank" rel="noopener" class="btn-wa-order">Order via WhatsApp Instead</a>
-      <div class="secure-note">SECURED BY RAZORPAY · UPI · CARDS · NET BANKING · WALLETS</div>
+      <a class="ld-cart-wa" id="ld-wa-cart" href="https://wa.me/919008999968" target="_blank" rel="noopener">Order via WhatsApp Instead</a>
+      <div class="ld-cart-secure">SECURED BY CASHFREE · UPI · CARDS · NET BANKING</div>
     </div>
   </div>
 </div>
-<div id="pay-toast">Payment Successful! Redirecting to confirmation...</div>
+
+<section id="ld-success-page" aria-live="polite">
+  <div class="ld-success-card">
+    <div class="ld-success-mark">✓</div>
+    <h1>Payment Successful</h1>
+    <p>Your booking is confirmed. Our team will contact you shortly on WhatsApp with the next steps.</p>
+    <div class="ld-success-meta" id="ld-success-meta"></div>
+    <a class="btn btn-gold" href="index.html">Back to Home</a>
+  </div>
+</section>
+
 <!-- reCAPTCHA must live outside all modals/hidden elements --><div id="recaptcha-container" style="position:fixed;bottom:0;right:0;z-index:9999;"></div>
 <!-- ══════════════════════════════════════════
-     BOOKING PAYMENT MODAL — RAZORPAY STD CHECKOUT
+     BOOKING PAYMENT MODAL — CASHFREE STD CHECKOUT
 ══════════════════════════════════════════════ -->
 <div id="bk-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:9100;align-items:center;justify-content:center;padding:16px;">
   <div style="background:#0d0f18;border:1px solid #252a3d;border-radius:12px;padding:32px 28px;max-width:430px;width:100%;position:relative;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 24px 64px rgba(0,0,0,.6);">
@@ -1450,9 +1458,9 @@ function handleRzpPayment(serviceName, amount) {
     </div>
 
     <div id="bk-pay-btn-wrap" style="display:grid;gap:10px;">
-      <button id="bk-rzp-btn" onclick="bkInitiatePayment()" style="width:100%;background:#3b82f6;color:#fff;font-size:14px;font-weight:700;border:none;border-radius:6px;padding:14px;cursor:pointer;font-family:inherit;letter-spacing:.02em;display:flex;align-items:center;justify-content:center;gap:9px;transition:opacity .15s;">
+      <button id="bk-cf-btn" onclick="bkInitiatePayment()" style="width:100%;background:#3b82f6;color:#fff;font-size:14px;font-weight:700;border:none;border-radius:6px;padding:14px;cursor:pointer;font-family:inherit;letter-spacing:.02em;display:flex;align-items:center;justify-content:center;gap:9px;transition:opacity .15s;">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-        <span id="bk-rzp-label">Pay Now</span>
+        <span id="bk-cf-label">Pay Now</span>
       </button>
       <a id="bk-wa-link" href="#" target="_blank"
         style="width:100%;background:#25D366;color:#fff;font-size:13px;font-weight:700;border-radius:6px;padding:12px;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font-family:inherit;letter-spacing:.02em;">
@@ -1461,7 +1469,7 @@ function handleRzpPayment(serviceName, amount) {
     </div>
 
     <div style="text-align:center;font-size:10px;color:#6b7694;margin-top:14px;letter-spacing:.06em;">
-      🔒 SECURED BY RAZORPAY · UPI · CARDS · NET BANKING
+      🔒 SECURED BY CASHFREE · UPI · CARDS · NET BANKING
     </div>
   </div>
 </div>
@@ -1502,11 +1510,11 @@ function showPayConfirm() {
   document.getElementById('bk-modal-amt').innerText = _bkAmtStr;
 
   var cNote = document.getElementById('bk-custom-note');
-  var rzpBtn = document.getElementById('bk-rzp-btn');
-  if (!_bkAmt) { cNote.style.display='block'; rzpBtn.style.display='none'; }
-  else          { cNote.style.display='none';  rzpBtn.style.display='flex'; }
+  var cfBtn = document.getElementById('bk-cf-btn');
+  if (!_bkAmt) { cNote.style.display='block'; cfBtn.style.display='none'; }
+  else          { cNote.style.display='none';  cfBtn.style.display='flex'; }
 
-  document.getElementById('bk-rzp-label').innerText = _bkAmt ? 'Pay ' + _bkAmtStr + ' Now' : 'Pay Now';
+  document.getElementById('bk-cf-label').innerText = _bkAmt ? 'Pay ' + _bkAmtStr + ' Now' : 'Pay Now';
 
   bkRefreshWa();
 
@@ -1517,7 +1525,7 @@ function showPayConfirm() {
 function closeBkModal() {
   document.getElementById('bk-overlay').style.display = 'none';
   document.body.style.overflow = '';
-  var btn = document.getElementById('bk-rzp-btn');
+  var btn = document.getElementById('bk-cf-btn');
   if (btn) { btn.disabled = false; }
 }
 
@@ -1541,8 +1549,8 @@ function bkRefreshWa() {
 async function bkInitiatePayment() {
   if (!_bkAmt) return;
 
-  var btn   = document.getElementById('bk-rzp-btn');
-  var label = document.getElementById('bk-rzp-label');
+  var btn   = document.getElementById('bk-cf-btn');
+  var label = document.getElementById('bk-cf-label');
   var name  = ((document.getElementById('bk-name')||{}).value||'').trim();
   var phone = ((document.getElementById('bk-phone')||{}).value||'').trim();
 
@@ -1557,49 +1565,24 @@ async function bkInitiatePayment() {
         amount:  _bkAmt,
         currency:'INR',
         receipt: 'LD-BK-' + Date.now(),
+        customer: { name: name, phone: phone },
         notes:   { service: _bkSvc }
       })
     });
 
     var orderData = await orderRes.json();
     if (!orderRes.ok || !orderData.order_id) throw new Error(orderData.error || 'Order failed');
+    if (!orderData.payment_session_id) throw new Error(orderData.error || 'Payment session missing');
 
     label.innerText = 'Opening payment…';
 
-    var options = {
-      key:         orderData.key_id,
-      amount:      orderData.amount,
-      currency:    orderData.currency,
-      name:        'Legaldirectory.ai',
-      description: _bkSvc,
-      image:       'https://legaldirectory.in/og-image.png',
-      order_id:    orderData.order_id,
-      theme:       { color: '#3b82f6' },
-      prefill: {
-        name:    name,
-        contact: phone ? (phone.startsWith('+') ? phone : '+91' + phone) : ''
-      },
-      notes: { service: _bkSvc },
-      modal: {
-        ondismiss: function() {
-          btn.disabled = false;
-          label.innerText = 'Pay ' + _bkAmtStr + ' Now';
-        }
-      },
-      handler: function(response) {
-        bkVerifyPayment(response, name, phone);
-      }
-    };
-
-    var rzp = new Razorpay(options);
-    rzp.on('payment.failed', function(r){
-      alert('Payment failed: ' + (r.error.description || 'Please try again.'));
-      btn.disabled = false;
-      label.innerText = 'Pay ' + _bkAmtStr + ' Now';
-    });
-
     closeBkModal();
-    rzp.open();
+    var cashfree = Cashfree({ mode: orderData.mode || 'production' });
+    await cashfree.checkout({
+      paymentSessionId: orderData.payment_session_id,
+      redirectTarget: '_modal'
+    });
+    await bkVerifyPayment(orderData.order_id, name, phone);
 
   } catch(err) {
     alert('Could not initiate payment: ' + err.message + '\n\nPlease use WhatsApp to book.');
@@ -1608,24 +1591,22 @@ async function bkInitiatePayment() {
   }
 }
 
-async function bkVerifyPayment(rzpResp, name, phone) {
+async function bkVerifyPayment(orderId, name, phone) {
   try {
     var vr = await fetch('/api/verify-payment', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        razorpay_order_id:   rzpResp.razorpay_order_id,
-        razorpay_payment_id: rzpResp.razorpay_payment_id,
-        razorpay_signature:  rzpResp.razorpay_signature,
+        order_id: orderId,
         service: _bkSvc, amount: _bkAmtStr,
         customer: { name, phone }
       })
     });
     var vd = await vr.json();
-    if (vd.success) bkShowToast(rzpResp.razorpay_payment_id, name, phone);
-    else alert('Payment received (ID: ' + rzpResp.razorpay_payment_id + ') but verification pending. We will confirm via WhatsApp.');
+    if (vd.success) bkShowToast(orderId, name, phone);
+    else alert('Payment not completed yet. Order status: ' + (vd.order_status || 'Pending'));
   } catch(e) {
-    bkShowToast(rzpResp.razorpay_payment_id, name, phone);
+    alert('Payment verification is pending. Please contact us with Order ID: ' + orderId);
   }
 }
 
@@ -1640,141 +1621,249 @@ function bkShowToast(payId, name, phone) {
 }
 </script>
 
-
 <script>
-var cart = [];
-function fmtCart(n){ return '₹' + Number(n || 0).toLocaleString('en-IN'); }
-function cartTotal(){ return cart.reduce(function(sum, item){ return sum + item.price; }, 0); }
-function escCart(str){ return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function serviceFromCard(card){ return { name: card.dataset.name || 'Legal Service', price: parseInt(card.dataset.price, 10) || 0, delivery: card.dataset.delivery || '', cardEl: card }; }
-function addItemToCart(card, openAfterAdd){
-  var service = serviceFromCard(card);
-  if (!service.price) { openModal('m-trademark'); return; }
-  var existing = cart.findIndex(function(item){ return item.name === service.name; });
-  if (existing === -1) { cart.push(service); card.classList.add('selected'); }
-  var cta = card.querySelector('.card-cta');
-  if (cta) cta.textContent = 'Added';
-  updateCartBar();
-  updateCartDrawer();
-  if (openAfterAdd) openCartDrawer();
+var ldCart = [];
+
+function ldFmt(n) {
+  return '\u20b9' + Number(n || 0).toLocaleString('en-IN');
 }
-function removeItemByName(name){
-  var idx = cart.findIndex(function(item){ return item.name === name; });
-  if (idx === -1) return;
-  var card = cart[idx].cardEl;
-  cart.splice(idx, 1);
-  if (card) {
-    card.classList.remove('selected');
-    var cta = card.querySelector('.card-cta');
-    if (cta) cta.textContent = '+ Add to Cart';
+
+function ldEsc(v) {
+  return String(v || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function ldPriceFromText(text) {
+  var match = String(text || '').replace(/,/g, '').match(/\u20b9\s*([0-9]+)/);
+  return match ? parseInt(match[1], 10) : 0;
+}
+
+function ldGetCardData(card) {
+  var titleEl = card.querySelector('.card-title');
+  var priceEl = card.querySelector('.card-price');
+  var noteEl  = card.querySelector('.card-price-note');
+  return {
+    name: titleEl ? titleEl.textContent.replace(/\s+/g, ' ').trim() : 'Legal Service',
+    price: ldPriceFromText(priceEl ? priceEl.textContent : ''),
+    note: noteEl ? noteEl.textContent.replace(/\s+/g, ' ').trim() : ''
+  };
+}
+
+function ldAddOrRemove(btn, data, sourceEl) {
+  if (!data.price) {
+    alert('This service has custom pricing. Please contact us on WhatsApp for a quote.');
+    return;
   }
-  updateCartBar();
-  updateCartDrawer();
-}
-function toggleCart(event, el){
-  if (event) event.stopPropagation();
-  var card = el.closest('.card');
-  if (!card) return;
-  var service = serviceFromCard(card);
-  var existing = cart.findIndex(function(item){ return item.name === service.name; });
-  if (existing === -1) addItemToCart(card, false);
-  else removeItemByName(service.name);
-}
-function addModalServiceToCart(modalId){
-  var card = document.querySelector('.card[onclick="openModal(\'' + modalId + '\')"]');
-  if (!card) return;
-  closeModal(modalId);
-  addItemToCart(card, true);
-}
-function updateCartBar(){
-  var count = cart.length;
-  var bar = document.getElementById('cart-bar');
-  document.getElementById('cart-count-label').textContent = count === 0 ? '0 services selected' : count === 1 ? '1 service selected' : count + ' services selected';
-  document.getElementById('cart-total-display').textContent = fmtCart(cartTotal());
-  if (bar) bar.classList.toggle('visible', count > 0);
-}
-function openCartDrawer(){ updateCartDrawer(); document.getElementById('cart-drawer-overlay').classList.add('open'); document.body.style.overflow = 'hidden'; }
-function closeCartDrawer(){ document.getElementById('cart-drawer-overlay').classList.remove('open'); document.body.style.overflow = ''; }
-function handleCartOverlayClick(e){ if (e.target === document.getElementById('cart-drawer-overlay')) closeCartDrawer(); }
-function updateCartDrawer(){
-  var list = document.getElementById('drawer-items-list');
-  var total = cartTotal();
-  if (!list) return;
-  if (!cart.length) {
-    list.innerHTML = '<div style="padding:32px 24px;text-align:center;color:var(--text2);font-size:13px;">No services selected yet.<br>Tap <b style="color:var(--white)">+ Add to Cart</b> on any service.</div>';
+  var key = data.name;
+  var existing = ldCart.findIndex(function(item){ return item.key === key; });
+  if (existing >= 0) {
+    ldCart.splice(existing, 1);
+    if (sourceEl) sourceEl.classList.remove('ld-cart-selected');
+    if (btn) btn.textContent = 'Add to Cart';
   } else {
-    list.innerHTML = cart.map(function(item){
-      return '<div class="drawer-item"><div class="drawer-item-info"><div class="drawer-item-name">' + escCart(item.name) + '</div>' + (item.delivery ? '<div class="drawer-item-delivery">' + escCart(item.delivery) + '</div>' : '') + '</div><div style="display:flex;align-items:center;gap:10px;"><div class="drawer-item-price">' + fmtCart(item.price) + '</div><button class="drawer-item-remove" onclick="removeItemByName(\'' + escCart(item.name).replace(/'/g,'&#39;') + '\')">Remove</button></div></div>';
+    ldCart.push({ key:key, name:data.name, price:data.price, note:data.note, sourceEl:sourceEl, btn:btn });
+    if (sourceEl) sourceEl.classList.add('ld-cart-selected');
+    if (btn) btn.textContent = 'Added';
+  }
+  ldUpdateCart();
+}
+
+function ldCartTotal() {
+  return ldCart.reduce(function(sum, item){ return sum + item.price; }, 0);
+}
+
+function ldUpdateCart() {
+  var total = ldCartTotal();
+  var count = ldCart.length;
+  document.getElementById('ld-cart-count').textContent =
+    count === 0 ? '0 services selected' : count === 1 ? '1 service selected' : count + ' services selected';
+  document.getElementById('ld-cart-total').textContent = ldFmt(total);
+  document.getElementById('ld-drawer-total').textContent = ldFmt(total);
+  document.getElementById('ld-cart-bar').classList.toggle('visible', count > 0);
+  ldRenderItems();
+  ldRefreshWhatsApp();
+}
+
+function ldRenderItems() {
+  var list = document.getElementById('ld-cart-items');
+  if (!ldCart.length) {
+    list.innerHTML = '<div style="padding:32px 22px;text-align:center;color:var(--text2);font-size:13px;">No services selected yet. Tap Add to Cart on any service.</div>';
+  } else {
+    list.innerHTML = ldCart.map(function(item, idx){
+      return '<div class="ld-cart-item"><div><div class="ld-cart-item-name">' + ldEsc(item.name) + '</div>' +
+        (item.note ? '<div class="ld-cart-item-note">' + ldEsc(item.note) + '</div>' : '') +
+        '</div><div style="display:flex;align-items:center;gap:10px;"><div class="ld-cart-item-price">' + ldFmt(item.price) + '</div>' +
+        '<button class="ld-cart-remove" type="button" onclick="ldRemoveItem(' + idx + ')">Remove</button></div></div>';
     }).join('');
   }
-  document.getElementById('drawer-total').textContent = fmtCart(total);
-  var payBtn = document.getElementById('drawer-pay-btn');
-  var payLabel = document.getElementById('drawer-pay-label');
-  payBtn.disabled = cart.length === 0;
-  payLabel.textContent = cart.length === 0 ? 'Pay Now' : 'Pay ' + fmtCart(total) + ' Now';
-  refreshCartWhatsApp();
+  var payBtn = document.getElementById('ld-pay-btn');
+  var payLabel = document.getElementById('ld-pay-label');
+  payBtn.disabled = ldCart.length === 0;
+  payLabel.textContent = ldCart.length ? 'Pay ' + ldFmt(ldCartTotal()) + ' Now' : 'Pay Now';
 }
-function refreshCartWhatsApp(){
-  var name = ((document.getElementById('drawer-name') || {}).value || '').trim();
-  var phone = ((document.getElementById('drawer-phone') || {}).value || '').trim();
-  var itemLines = cart.map(function(item){ return '- ' + item.name + ' - ' + fmtCart(item.price); }).join('\n');
-  var msg = encodeURIComponent('Hi Legaldirectory.ai, I want to order:\n\n' + itemLines + '\n\nTotal: ' + fmtCart(cartTotal()) + (name ? '\nName: ' + name : '') + (phone ? '\nWhatsApp: ' + phone : '') + '\n\nPlease guide me on next steps.');
-  document.getElementById('drawer-wa-btn').href = 'https://wa.me/919008999968?text=' + msg;
+
+function ldRemoveItem(idx) {
+  var item = ldCart[idx];
+  if (!item) return;
+  if (item.sourceEl) item.sourceEl.classList.remove('ld-cart-selected');
+  if (item.btn) item.btn.textContent = 'Add to Cart';
+  ldCart.splice(idx, 1);
+  ldUpdateCart();
 }
-['drawer-name','drawer-phone'].forEach(function(id){ var el = document.getElementById(id); if (el) el.addEventListener('input', refreshCartWhatsApp); });
-document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && document.getElementById('cart-drawer-overlay')) closeCartDrawer(); });
-async function initiateCartCheckout(){
-  if (!cart.length) return;
-  var btn = document.getElementById('drawer-pay-btn');
-  var label = document.getElementById('drawer-pay-label');
-  var name = ((document.getElementById('drawer-name') || {}).value || '').trim();
-  var phone = ((document.getElementById('drawer-phone') || {}).value || '').trim();
-  var items = cart.map(function(item){ return { name:item.name, amount:item.price, delivery:item.delivery }; });
-  var total = cartTotal();
+
+function ldOpenCart() {
+  ldUpdateCart();
+  document.getElementById('ld-cart-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function ldCloseCart() {
+  document.getElementById('ld-cart-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function ldOverlayClose(e) {
+  if (e.target === document.getElementById('ld-cart-overlay')) ldCloseCart();
+}
+
+function ldRefreshWhatsApp() {
+  var name = ((document.getElementById('ld-customer-name') || {}).value || '').trim();
+  var phone = ((document.getElementById('ld-customer-phone') || {}).value || '').trim();
+  var itemLines = ldCart.map(function(i){ return '- ' + i.name + ' - ' + ldFmt(i.price); }).join('\n');
+  var msg = encodeURIComponent(
+    'Hi Legaldirectory.ai, I want to book:\n\n' + itemLines +
+    '\n\nTotal: ' + ldFmt(ldCartTotal()) +
+    (name ? '\nName: ' + name : '') +
+    (phone ? '\nPhone: ' + phone : '') +
+    '\n\nPlease guide me on next steps.'
+  );
+  document.getElementById('ld-wa-cart').href = 'https://wa.me/919008999968?text=' + msg;
+}
+
+async function ldCheckout() {
+  if (!ldCart.length) return;
+  var btn = document.getElementById('ld-pay-btn');
+  var label = document.getElementById('ld-pay-label');
+  var total = ldCartTotal();
+  var name = ((document.getElementById('ld-customer-name') || {}).value || '').trim();
+  var phone = ((document.getElementById('ld-customer-phone') || {}).value || '').trim();
+  var items = ldCart.map(function(i){ return { name:i.name, amount:i.price, note:i.note }; });
+
   btn.disabled = true;
   label.textContent = 'Creating order...';
+
   try {
-    var orderRes = await fetch('/api/create-order', { method:'POST', headers:{ 'Content-Type':'application/json' }, body:JSON.stringify({ amount:total, currency:'INR', receipt:'LD-CART-' + Date.now(), items:items, notes:{ services:items.map(function(item){ return item.name; }).join(', '), customer:name || 'Guest' } }) });
+    var orderRes = await fetch('/api/create-order', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json' },
+      body:JSON.stringify({
+        amount:total,
+        currency:'INR',
+        receipt:'LD-CART-' + Date.now(),
+        customer:{ name:name, phone:phone },
+        notes:{ services:items.map(function(i){ return i.name; }).join(', '), customer:name || 'Guest' }
+      })
+    });
     var orderData = await orderRes.json();
     if (!orderRes.ok || !orderData.order_id) throw new Error(orderData.error || 'Order creation failed');
+    if (!orderData.payment_session_id) throw new Error(orderData.error || 'Payment session missing');
+
     label.textContent = 'Opening payment...';
-    var description = items.length === 1 ? items[0].name : items.length + ' services - ' + items.map(function(item){ return item.name; }).join(', ');
-    var options = {
-      key: orderData.key_id, amount: orderData.amount, currency: orderData.currency, name: 'Legaldirectory.ai', description: description, image: 'https://legaldirectory.in/og-image.png', order_id: orderData.order_id, theme: { color: '#d4a843' },
-      prefill: { name: name, contact: phone ? (phone.startsWith('+') ? phone : '+91' + phone) : '' },
-      notes: { services: items.map(function(item){ return item.name; }).join(', ') },
-      modal: { ondismiss: function(){ btn.disabled = false; label.textContent = 'Pay ' + fmtCart(total) + ' Now'; } },
-      handler: function(response){ verifyCartPayment(response, items, total, name, phone); }
-    };
-    var rzp = new Razorpay(options);
-    rzp.on('payment.failed', function(response){ alert('Payment failed: ' + (response.error.description || 'Please try again.')); btn.disabled = false; label.textContent = 'Pay ' + fmtCart(total) + ' Now'; });
-    closeCartDrawer();
-    rzp.open();
+    ldCloseCart();
+    var cashfree = Cashfree({ mode: orderData.mode || 'production' });
+    await cashfree.checkout({
+      paymentSessionId: orderData.payment_session_id,
+      redirectTarget: '_modal'
+    });
+    await ldVerifyPayment(orderData.order_id, items, total, name, phone);
   } catch(err) {
-    alert('Could not initiate payment: ' + err.message + '\n\nPlease use the WhatsApp option or try again.');
+    alert('Could not initiate payment: ' + err.message + '\n\nPlease try again or use WhatsApp.');
     btn.disabled = false;
-    label.textContent = 'Pay ' + fmtCart(total) + ' Now';
+    label.textContent = 'Pay ' + ldFmt(total) + ' Now';
   }
 }
-async function verifyCartPayment(rzpResponse, items, total, name, phone){
+
+async function ldVerifyPayment(orderId, items, total, name, phone) {
   try {
-    var verRes = await fetch('/api/verify-payment', { method:'POST', headers:{ 'Content-Type':'application/json' }, body:JSON.stringify({ razorpay_order_id:rzpResponse.razorpay_order_id, razorpay_payment_id:rzpResponse.razorpay_payment_id, razorpay_signature:rzpResponse.razorpay_signature, service:items.map(function(item){ return item.name; }).join(', '), items:items, amount:fmtCart(total), customer:{ name:name, phone:phone } }) });
+    var verRes = await fetch('/api/verify-payment', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json' },
+      body:JSON.stringify({
+        order_id:orderId,
+        service:items.map(function(i){ return i.name; }).join(', '),
+        items:items,
+        amount:ldFmt(total),
+        customer:{ name:name, phone:phone }
+      })
+    });
     var verData = await verRes.json();
     if (!verData.success) throw new Error(verData.error || 'Payment verification failed');
-    redirectToPaymentSuccess(rzpResponse, items, total);
+    var successUrl = 'index.html?payment=success&order_id=' + encodeURIComponent(orderId) + '&amount=' + encodeURIComponent(ldFmt(total));
+    window.location.href = successUrl;
   } catch(err) {
-    alert('Payment received but verification is pending. Please contact us with Payment ID: ' + rzpResponse.razorpay_payment_id);
+    alert('Payment is not completed yet or verification is pending. Please contact us with Order ID: ' + orderId);
   }
 }
-function redirectToPaymentSuccess(rzpResponse, items, total){
-  var toast = document.getElementById('pay-toast');
-  if (toast) toast.style.display = 'block';
-  var params = new URLSearchParams({ payment_id: rzpResponse.razorpay_payment_id || '', order_id: rzpResponse.razorpay_order_id || '', amount: fmtCart(total), services: items.map(function(item){ return item.name; }).join(', ') });
-  cart.forEach(function(item){ if (item.cardEl) { item.cardEl.classList.remove('selected'); var cta = item.cardEl.querySelector('.card-cta'); if (cta) cta.textContent = '+ Add to Cart'; } });
-  cart = [];
-  updateCartBar();
-  setTimeout(function(){ window.location.href = '/payment-success.html?' + params.toString(); }, 900);
+
+function ldShowSuccessFromQuery() {
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('payment') !== 'success') return;
+  Array.prototype.forEach.call(document.body.children, function(child){
+    if (child.id !== 'ld-success-page') child.style.display = 'none';
+  });
+  var payId = params.get('order_id') || params.get('payment_id') || '';
+  var amount = params.get('amount') || '';
+  document.getElementById('ld-success-meta').textContent =
+    'Order ID: ' + (payId || 'Confirmed') + (amount ? ' | Amount: ' + amount : '');
+  document.getElementById('ld-success-page').classList.add('visible');
 }
+
+function ldInitCart() {
+  document.querySelectorAll('.card-cta').forEach(function(cta){
+    cta.textContent = 'Add to Cart';
+    cta.setAttribute('role', 'button');
+    cta.setAttribute('tabindex', '0');
+    cta.addEventListener('click', function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      var card = cta.closest('.card');
+      if (!card) return;
+      ldAddOrRemove(cta, ldGetCardData(card), card);
+    });
+    cta.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        cta.click();
+      }
+    });
+  });
+
+  document.querySelectorAll('.modal-cf-btn').forEach(function(btn){
+    var call = btn.getAttribute('onclick') || '';
+    var match = call.match(/handleCashfreePayment\('([^']+)'\s*,\s*([0-9]+)/);
+    if (!match) return;
+    btn.textContent = 'Add to Cart';
+    btn.setAttribute('onclick', '');
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      ldAddOrRemove(btn, { name:match[1], price:parseInt(match[2],10), note:'' }, null);
+      document.querySelectorAll('.modal-overlay.open').forEach(function(m){ closeModal(m.id); });
+      ldOpenCart();
+    });
+  });
+
+  ['ld-customer-name','ld-customer-phone'].forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('input', ldRefreshWhatsApp);
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') ldCloseCart(); });
+  ldUpdateCart();
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  ldShowSuccessFromQuery();
+  ldInitCart();
+});
 </script>
 
 </body></html>
