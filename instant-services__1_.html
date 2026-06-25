@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instant Services – Legaldirectory.ai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<style>
+  :root {
+    --bg:       #07080e;
+    --bg2:      #0f1018;
+    --bg3:      #161820;
+    --surface:  #1a1c26;
+    --border:   #2a2d3a;
+    --border2:  #353848;
+    --ink:      #f0f0f4;
+    --ink-mid:  #9a9bb0;
+    --ink-muted:#5a5c70;
+    --gold:     #c9952a;
+    --gold-dim: rgba(201,149,42,0.15);
+    --gold-border: rgba(201,149,42,0.3);
+    --accent:   #2563eb;
+    --green:    #22c55e;
+    --green-dim:rgba(34,197,94,0.12);
+    --radius:   8px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 28px; height: 56px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg); position: sticky; top: 0; z-index: 200;
+  }
+  .brand { font-size: 17px; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; text-decoration: none; }
+  .brand em { font-style: italic; color: var(--gold); font-weight: 400; }
+  .brand-ver { font-size: 10px; color: var(--ink-muted); margin-left: 5px; vertical-align: super; }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-links a { font-size: 12px; font-weight: 500; color: var(--ink-mid); text-decoration: none; letter-spacing: 0.02em; transition: color 0.15s; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta { font-size: 12px; font-weight: 700; color: var(--bg); background: var(--ink); padding: 7px 16px; border-radius: 5px; text-decoration: none; transition: opacity 0.15s; }
+  .nav-cta:hover { opacity: 0.85; }
+  @media(max-width:640px){ .nav-links { display: none; } .topbar { padding: 0 16px; } }
+
+  /* ── BANNER ── */
+  .banner {
+    padding: 56px 24px 64px; text-align: center;
+    border-bottom: 1px solid var(--border);
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,149,42,0.06) 0%, transparent 70%);
+  }
+  .banner-eyebrow {
+    display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold-border);
+    border-radius: 3px; padding: 4px 12px; margin-bottom: 20px; background: var(--gold-dim);
+  }
+  .banner h1 { font-size: clamp(28px, 5vw, 50px); font-weight: 900; color: var(--ink); letter-spacing: -0.03em; line-height: 1.12; margin-bottom: 12px; }
+  .banner h1 em { font-style: italic; color: var(--gold); font-weight: 400; }
+  .banner-sub { font-size: 15px; color: var(--ink-mid); max-width: 500px; margin: 0 auto 28px; }
+  .banner-badges { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+  .badge { display: inline-flex; align-items: center; gap: 6px; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 6px 14px; font-size: 11px; font-weight: 500; color: var(--ink-mid); }
+  .badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+
+  /* ── HOW IT WORKS ── */
+  .how-wrap { max-width: 1060px; margin: 44px auto 0; padding: 0 24px; }
+  .how-label { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 20px; }
+  .how-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .how-step { background: var(--surface); padding: 20px; }
+  .how-num { font-size: 11px; font-weight: 700; color: var(--gold); letter-spacing: 0.08em; margin-bottom: 8px; }
+  .how-step h4 { font-size: 13px; font-weight: 700; margin-bottom: 5px; }
+  .how-step p { font-size: 12px; color: var(--ink-mid); line-height: 1.5; }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    display: flex; align-items: center; gap: 12px;
+    padding: 44px 24px 18px; max-width: 1060px; margin: 0 auto;
+  }
+  .section-label h2 { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); white-space: nowrap; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ── GRID ── */
+  .grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(308px, 1fr));
+    gap: 1px; padding: 0 24px; max-width: 1060px; margin: 0 auto;
+    background: var(--border); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--bg2); padding: 24px;
+    display: flex; flex-direction: column; position: relative;
+    transition: background 0.15s; cursor: default;
+  }
+  .card:hover { background: var(--surface); }
+
+  /* Selected state */
+  .card.selected {
+    background: rgba(201,149,42,0.07);
+    outline: 2px solid var(--gold);
+    outline-offset: -2px;
+  }
+  .card.selected:hover { background: rgba(201,149,42,0.11); }
+
+  .card-eyebrow { font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 10px; }
+  .card h3 { font-size: 16px; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; line-height: 1.25; margin-bottom: 10px; }
+  .card-desc { font-size: 13px; color: var(--ink-mid); line-height: 1.6; margin-bottom: 16px; }
+  .card-bullets { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-bottom: 20px; flex: 1; }
+  .card-bullets li { font-size: 12px; color: var(--ink-mid); display: flex; align-items: flex-start; gap: 8px; line-height: 1.4; }
+  .card-bullets li::before { content: '—'; color: var(--ink-muted); flex-shrink: 0; font-size: 11px; }
+
+  .card-footer {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    padding-top: 16px; border-top: 1px solid var(--border); margin-top: auto;
+  }
+  .card-price { font-size: 18px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; display: block; }
+  .card-delivery { font-size: 10px; color: var(--ink-muted); font-weight: 500; letter-spacing: 0.04em; }
+
+  /* Add-to-cart button */
+  .btn-add {
+    background: var(--surface); color: var(--ink); font-size: 12px; font-weight: 700;
+    border: 1px solid var(--border2); border-radius: 5px; padding: 9px 16px;
+    cursor: pointer; display: inline-flex; align-items: center; gap: 5px;
+    white-space: nowrap; transition: all 0.15s; letter-spacing: 0.01em; flex-shrink: 0;
+  }
+  .btn-add:hover { background: var(--border2); }
+  .card.selected .btn-add {
+    background: var(--gold); color: #000; border-color: var(--gold);
+  }
+  .card.selected .btn-add:hover { opacity: 0.85; }
+
+  .pop-tag {
+    position: absolute; top: 0; right: 0;
+    font-size: 9px; font-weight: 800; letter-spacing: 0.12em;
+    color: #000; background: var(--gold); padding: 4px 12px; border-radius: 0 8px 0 6px;
+  }
+
+  /* ── STICKY CART BAR ── */
+  #cart-bar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: #0d0e17; border-top: 1px solid var(--border);
+    z-index: 300; transform: translateY(100%); transition: transform 0.3s ease;
+    box-shadow: 0 -8px 40px rgba(0,0,0,0.6);
+  }
+  #cart-bar.visible { transform: translateY(0); }
+  .cart-bar-inner {
+    max-width: 1060px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 14px 24px;
+  }
+  .cart-summary { display: flex; flex-direction: column; gap: 2px; }
+  .cart-count { font-size: 11px; font-weight: 700; color: var(--ink-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  .cart-total { font-size: 22px; font-weight: 900; color: var(--ink); letter-spacing: -0.02em; }
+  .cart-actions { display: flex; gap: 10px; align-items: center; flex-shrink: 0; }
+  .btn-view-cart {
+    background: none; color: var(--ink-mid); font-size: 12px; font-weight: 600;
+    border: 1px solid var(--border2); border-radius: 5px; padding: 9px 16px;
+    cursor: pointer; transition: all 0.15s; white-space: nowrap; font-family: inherit;
+  }
+  .btn-view-cart:hover { border-color: var(--ink-mid); color: var(--ink); }
+  .btn-checkout {
+    background: var(--gold); color: #000; font-size: 13px; font-weight: 800;
+    border: none; border-radius: 5px; padding: 11px 22px;
+    cursor: pointer; display: inline-flex; align-items: center; gap: 7px;
+    white-space: nowrap; transition: opacity 0.15s; letter-spacing: 0.02em; font-family: inherit;
+  }
+  .btn-checkout:hover { opacity: 0.88; }
+  @media(max-width:480px){
+    .cart-bar-inner { flex-direction: column; align-items: stretch; padding: 12px 16px; gap: 10px; }
+    .cart-actions { justify-content: stretch; }
+    .btn-checkout { flex: 1; justify-content: center; }
+    .btn-view-cart { flex: 1; text-align: center; }
+  }
+
+  /* ── CART DRAWER (slide-over) ── */
+  #cart-drawer-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 400;
+  }
+  #cart-drawer-overlay.open { display: flex; align-items: flex-end; justify-content: center; }
+  @media(min-width:600px){
+    #cart-drawer-overlay.open { align-items: center; }
+  }
+  #cart-drawer {
+    background: #0f1018; border: 1px solid var(--border);
+    border-radius: 12px 12px 0 0; width: 100%; max-width: 520px;
+    max-height: 90vh; display: flex; flex-direction: column;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  @media(min-width:600px){
+    #cart-drawer { border-radius: 12px; max-height: 85vh; }
+  }
+  .drawer-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 24px 16px; border-bottom: 1px solid var(--border); flex-shrink: 0;
+  }
+  .drawer-title { font-size: 14px; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; }
+  .drawer-close {
+    background: none; border: none; color: var(--ink-muted); font-size: 22px;
+    cursor: pointer; line-height: 1; padding: 4px;
+  }
+  .drawer-items { overflow-y: auto; flex: 1; padding: 8px 0; }
+  .drawer-item {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 14px 24px; border-bottom: 1px solid rgba(42,45,58,0.5);
+  }
+  .drawer-item-info { flex: 1; min-width: 0; }
+  .drawer-item-name { font-size: 13px; font-weight: 600; color: var(--ink); line-height: 1.3; }
+  .drawer-item-delivery { font-size: 11px; color: var(--ink-muted); margin-top: 2px; }
+  .drawer-item-price { font-size: 15px; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; flex-shrink: 0; }
+  .drawer-item-remove {
+    background: none; border: 1px solid var(--border); color: var(--ink-muted);
+    border-radius: 4px; padding: 4px 8px; font-size: 11px; cursor: pointer;
+    transition: all 0.15s; flex-shrink: 0; font-family: inherit;
+  }
+  .drawer-item-remove:hover { border-color: #ef4444; color: #ef4444; }
+  .drawer-footer { padding: 16px 24px 20px; border-top: 1px solid var(--border); flex-shrink: 0; }
+  .drawer-total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .drawer-total-label { font-size: 12px; color: var(--ink-muted); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+  .drawer-total-val { font-size: 26px; font-weight: 900; color: var(--ink); letter-spacing: -0.02em; }
+
+  /* Contact inputs inside drawer */
+  .drawer-fields { display: grid; gap: 10px; margin-bottom: 14px; }
+  .drawer-input {
+    width: 100%; background: #161820; border: 1px solid var(--border);
+    border-radius: 6px; padding: 10px 13px; color: var(--ink);
+    font-size: 13px; font-family: inherit; outline: none; transition: border-color 0.15s;
+  }
+  .drawer-input:focus { border-color: #2563eb; }
+
+  .btn-pay-now {
+    width: 100%; background: var(--gold); color: #000; font-size: 14px; font-weight: 800;
+    border: none; border-radius: 6px; padding: 14px;
+    cursor: pointer; font-family: inherit; letter-spacing: 0.03em;
+    display: flex; align-items: center; justify-content: center; gap: 9px;
+    margin-bottom: 10px; transition: opacity 0.15s;
+  }
+  .btn-pay-now:hover { opacity: 0.88; }
+  .btn-pay-now:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .btn-wa-order {
+    width: 100%; background: #25D366; color: #fff; font-size: 13px; font-weight: 700;
+    border-radius: 6px; padding: 12px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    text-decoration: none; font-family: inherit; letter-spacing: 0.02em; transition: opacity 0.15s;
+  }
+  .btn-wa-order:hover { opacity: 0.88; }
+
+  .secure-note {
+    text-align: center; font-size: 10px; color: var(--ink-muted);
+    margin-top: 12px; letter-spacing: 0.06em;
+  }
+
+  /* ── TRUST STRIP ── */
+  .trust-strip {
+    max-width: 1060px; margin: 40px auto 0; padding: 0 24px 80px;
+    display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap;
+  }
+  .trust-strip span { font-size: 10px; color: var(--ink-muted); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+  .trust-strip .sep { color: var(--border2); }
+
+  /* ── DISCLAIMER ── */
+  .disclaimer {
+    text-align: center; padding: 40px 24px 56px;
+    font-size: 11px; color: var(--ink-muted);
+    max-width: 680px; margin: 0 auto; line-height: 1.8;
+    border-top: 1px solid var(--border); margin-top: 0;
+  }
+  .disclaimer a { color: var(--ink-muted); text-decoration: underline; }
+  .footer-brand { font-size: 13px; font-weight: 800; color: var(--ink); margin-bottom: 8px; }
+  .footer-brand em { font-style: italic; color: var(--gold); font-weight: 400; }
+
+  /* ── SUCCESS TOAST ── */
+  #pay-toast {
+    display: none; position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--green); color: #fff; font-weight: 700; font-size: 13px;
+    padding: 12px 24px; border-radius: 8px; z-index: 9999;
+    font-family: 'Inter', sans-serif; white-space: nowrap;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+
+  /* ── MOBILE RESPONSIVE ── */
+  @media(max-width:640px){
+    .how-strip { grid-template-columns: 1fr 1fr; }
+    .grid { padding: 0 16px; }
+    .section-label { padding: 32px 16px 14px; }
+    .trust-strip { padding: 24px 12px 80px; font-size: 10px; gap: 6px; }
+    .disclaimer { padding: 28px 16px 48px; font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── TOP BAR ── -->
+<nav class="topbar">
+  <a href="https://legaldirectory.in/" class="brand">Legaldirectory<em>.ai</em><span class="brand-ver">v3.4</span></a>
+  <div class="nav-links">
+    <a href="https://legaldirectory.in/#services">Services</a>
+    <a href="https://legaldirectory.in/#how-it-works">How It Works</a>
+    <a href="https://legaldirectory.in/directory-ai.html">AI Verify</a>
+    <a href="https://legaldirectory.in/#contact">Contact</a>
+    <a href="https://wa.me/919008999968" class="nav-cta">WhatsApp →</a>
+  </div>
+</nav>
+
+<!-- ── BANNER ── -->
+<section class="banner">
+  <div class="banner-eyebrow">⚡ Instant Services</div>
+  <h1>Karnataka Property<br><em>Documents. Delivered.</em></h1>
+  <p class="banner-sub">Pick one or more services, add them to your cart, and pay in a single checkout. Documents delivered to your WhatsApp.</p>
+  <div class="banner-badges">
+    <span class="badge"><span class="dot"></span> KA Official Records</span>
+    <span class="badge"><span class="dot"></span> Multi-Service Cart</span>
+    <span class="badge"><span class="dot"></span> Delivered via WhatsApp</span>
+    <span class="badge"><span class="dot"></span> All prices inclusive</span>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ── -->
+<div class="how-wrap">
+  <div class="how-label">How It Works</div>
+  <div class="how-strip">
+    <div class="how-step">
+      <div class="how-num">01 · SELECT</div>
+      <h4>Pick Services</h4>
+      <p>Add one or more services to your cart — pay once for all.</p>
+    </div>
+    <div class="how-step">
+      <div class="how-num">02 · PAY</div>
+      <h4>Single Checkout</h4>
+      <p>One Razorpay payment for your entire order. UPI, Card, Net Banking.</p>
+    </div>
+    <div class="how-step">
+      <div class="how-num">03 · SHARE</div>
+      <h4>Send Details</h4>
+      <p>Our team collects your property info via WhatsApp.</p>
+    </div>
+    <div class="how-step">
+      <div class="how-num">04 · RECEIVE</div>
+      <h4>Documents Delivered</h4>
+      <p>Verified PDFs delivered to your WhatsApp within the stated time.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     SECTION 1 – PROPERTY RECORDS
+════════════════════════════════ -->
+<div class="section-label"><h2>Property Records &amp; Certificates</h2></div>
+<div class="grid">
+
+  <div class="card" data-name="Karnataka Certified Copy" data-price="299" data-delivery="2–3 working days">
+    <div class="pop-tag">POPULAR</div>
+    <div class="card-eyebrow">KA Stamps &amp; Registration · Official</div>
+    <h3>Karnataka Certified Copy</h3>
+    <p class="card-desc">Official authenticated copy of a registered property document issued by the Karnataka Department of Stamps and Registration. Legally valid for disputes, loans, and ownership proof.</p>
+    <ul class="card-bullets">
+      <li>Legal proof of property ownership</li>
+      <li>Required for property transactions &amp; loan applications</li>
+      <li>Authenticated by SRO / Kaveri Registry</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">2–3 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Encumbrance Certificate (EC)" data-price="299" data-delivery="Same day">
+    <div class="card-eyebrow">Kaveri Online · Encumbrance</div>
+    <h3>Encumbrance Certificate (EC)</h3>
+    <p class="card-desc">Search registered transactions and encumbrance history from the Karnataka Kaveri registry. Essential before buying, selling, or applying for a home loan.</p>
+    <ul class="card-bullets">
+      <li>Sale, mortgage, gift &amp; release history</li>
+      <li>5 / 13 / 20-year or custom period</li>
+      <li>Search by Survey No, Party Name, Flat, Khata &amp; more</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Bhoomi RTC / Pahani" data-price="299" data-delivery="Same day">
+    <div class="card-eyebrow">Bhoomi Portal · Agricultural Land</div>
+    <h3>Bhoomi RTC / Pahani</h3>
+    <p class="card-desc">Record of Rights, Tenancy and Crops for agricultural land in Karnataka. Confirms landholder details, survey number, extent, crop entries, and mutation references.</p>
+    <ul class="card-bullets">
+      <li>Landholder &amp; khatedar details</li>
+      <li>Survey no., hissa &amp; land extent</li>
+      <li>Regular or Certified Digitally Signed</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Karnataka Mutation Record" data-price="299" data-delivery="1–2 working days">
+    <div class="card-eyebrow">KA Revenue Records · Ownership</div>
+    <h3>Karnataka Mutation Record</h3>
+    <p class="card-desc">Tracks property ownership changes in government records after sale, inheritance, or transfer by gift, will, or partition. Ensures new owner is legally recorded.</p>
+    <ul class="card-bullets">
+      <li>Post-sale / inheritance ownership update record</li>
+      <li>Legal &amp; taxation record confirmation</li>
+      <li>Regular or Certified Digitally Signed</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">1–2 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="E-Khata / E-Swathu" data-price="299" data-delivery="Same day">
+    <div class="card-eyebrow">BBMP · Municipal · Gram Panchayat</div>
+    <h3>E-Khata / E-Swathu</h3>
+    <p class="card-desc">Property-account, ownership, tax, and local-body details for your property across BBMP, Municipal, and Gram Panchayat areas.</p>
+    <ul class="card-bullets">
+      <li>Property ID, khata &amp; assessment details</li>
+      <li>Local-body classification &amp; tax account</li>
+      <li>Search by Property ID (last 5 digits)</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Karnataka Survey Documents" data-price="299" data-delivery="1–2 working days">
+    <div class="card-eyebrow">KA Survey Department · Land Records</div>
+    <h3>Karnataka Survey Documents</h3>
+    <p class="card-desc">Land records providing detailed boundary information, measurements, and ownership for land parcels. Critical for transactions and resolving boundary disputes.</p>
+    <ul class="card-bullets">
+      <li>Verify land boundaries &amp; official measurements</li>
+      <li>Access certified ownership details</li>
+      <li>Akarbandh &amp; Village Map records</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">1–2 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════
+     SECTION 2 – FINANCIAL
+════════════════════════════════ -->
+<div class="section-label"><h2>Financial &amp; Legal Reports</h2></div>
+<div class="grid">
+
+  <div class="card" data-name="Karnataka CERSAI Mortgage Report" data-price="399" data-delivery="Same day">
+    <div class="card-eyebrow">CERSAI National Registry · Mortgage</div>
+    <h3>Karnataka CERSAI Mortgage Report</h3>
+    <p class="card-desc">Report on property mortgages and hypothecation from the Central Registry of Securitisation. Covers immovable and movable assets nationwide.</p>
+    <ul class="card-bullets">
+      <li>Check if property is mortgaged or pledged</li>
+      <li>Covers residential, commercial &amp; other land types</li>
+      <li>Search by Survey No, Door No, Plot No, Pin Code</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹399</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════
+     SECTION 2A – PROPERTY LEGAL DOCUMENTS
+════════════════════════════════ -->
+<div class="section-label"><h2>Property Legal Documents</h2></div>
+<div class="grid">
+
+  <div class="card" data-name="BBMP Sanction Plan & Documents" data-price="1499" data-delivery="2–3 working days">
+    <div class="card-eyebrow">BBMP · Building Approval</div>
+    <h3>BBMP Sanction Plan &amp; Documents</h3>
+    <p class="card-desc">Verified BBMP building sanction plan, approval documents, and property layout details for your Bengaluru property. Essential for transactions and loan applications.</p>
+    <ul class="card-bullets">
+      <li>BBMP sanction plan retrieval</li>
+      <li>Building approval layout &amp; schedule</li>
+      <li>Property dimensions &amp; classification</li>
+      <li>Certified government document</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹1,499</span>
+        <span class="card-delivery">2–3 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Bangalore Property Document Pack" data-price="1499" data-delivery="5–7 working days">
+    <div class="card-eyebrow">Complete · All-in-One</div>
+    <h3>Bangalore Property Document Pack</h3>
+    <p class="card-desc">Complete package: Certified EC, Sale Deed, E-Khata, RTC, Property Tax Receipt, and Building Approval — all in one bundle.</p>
+    <ul class="card-bullets">
+      <li>Certified Encumbrance Certificate</li>
+      <li>Sale Deed &amp; ownership documents</li>
+      <li>E-Khata &amp; property tax details</li>
+      <li>Building approval &amp; survey documents</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹1,499</span>
+        <span class="card-delivery">5–7 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Non-Agricultural Property Documents" data-price="999" data-delivery="5–7 days (digital)">
+    <div class="card-eyebrow">Non-Agricultural · Residential/Commercial</div>
+    <h3>Non-Agricultural Property Documents</h3>
+    <p class="card-desc">Complete set including Certified EC, Sale Deed, E-Khata, Property Tax Receipt, and Guideline Value certification.</p>
+    <ul class="card-bullets">
+      <li>Certified EC (2004–2026)</li>
+      <li>Certified Sale Deed</li>
+      <li>E-Khata &amp; property tax receipt</li>
+      <li>Guideline value certificate</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹999</span>
+        <span class="card-delivery">5–7 days (digital)</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Agricultural Property Documents" data-price="1499" data-delivery="5–7 days (digital)">
+    <div class="card-eyebrow">Agricultural · Land Records</div>
+    <h3>Agricultural Property Documents</h3>
+    <p class="card-desc">Complete agricultural document set: Certified EC, RTC, Mutation Record, Property Tax, and Survey Map documents for agricultural land.</p>
+    <ul class="card-bullets">
+      <li>Certified EC (2004–2026)</li>
+      <li>RTC / Pahani records</li>
+      <li>Certified Mutation Record</li>
+      <li>Survey maps &amp; boundary docs</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹1,499</span>
+        <span class="card-delivery">5–7 days (digital)</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════
+     SECTION 2B – LOAN DOCUMENTS
+════════════════════════════════ -->
+<div class="section-label"><h2>Loan &amp; Mortgage Documents</h2></div>
+<div class="grid">
+
+  <div class="card" data-name="Loan Document Package (Non-Agricultural)" data-price="1299" data-delivery="2–3 days">
+    <div class="card-eyebrow">Home Loan · Bank-Ready</div>
+    <h3>Loan Document Package (Non-Agricultural)</h3>
+    <p class="card-desc">Bank-ready package including Title Deed, EC, Encumbrance verification, Mortgage Report, and Khata clearance.</p>
+    <ul class="card-bullets">
+      <li>Title Deed &amp; ownership verification</li>
+      <li>Encumbrance Certificate search</li>
+      <li>Mortgage Report (CERSAI)</li>
+      <li>Property tax &amp; khata clearance</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹1,299</span>
+        <span class="card-delivery">2–3 days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Loan Document Package (Agricultural)" data-price="1299" data-delivery="2–3 days">
+    <div class="card-eyebrow">Farm Loan · Agricultural Credit</div>
+    <h3>Loan Document Package (Agricultural)</h3>
+    <p class="card-desc">Agricultural loan package: RTC, Mutation Record, Property Tax, Survey documents, and government record clearances for farm credit applications.</p>
+    <ul class="card-bullets">
+      <li>RTC / Pahani records</li>
+      <li>Certified Mutation Record</li>
+      <li>Property tax &amp; survey documents</li>
+      <li>Government clearance confirmation</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹1,299</span>
+        <span class="card-delivery">2–3 days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════
+     SECTION 3 – DIGITAL TRANSITION
+════════════════════════════════ -->
+<div class="section-label"><h2>Digital Record Transition</h2></div>
+<div class="grid">
+
+  <div class="card" data-name="Convert Khata to E-Aasthi" data-price="2000" data-delivery="7–14 working days">
+    <div class="pop-tag">NEW</div>
+    <div class="card-eyebrow">BBMP · Municipal · Town Panchayat</div>
+    <h3>Convert Khata to E-Aasthi</h3>
+    <p class="card-desc">Digital migration of your property record from E-Khata to E-Aasthi — Karnataka's GIS-linked, real-time property registry, reducing fraud risk.</p>
+    <ul class="card-bullets">
+      <li>GIS-linked real-time ownership certificates</li>
+      <li>Updated tax receipts &amp; boundary maps</li>
+      <li>Required for buying, selling &amp; loan applications</li>
+      <li>Covers BBMP, Municipal &amp; Town Panchayat areas</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹2,000</span>
+        <span class="card-delivery">7–14 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════
+     SECTION 4 – UTILITY SERVICES
+════════════════════════════════ -->
+<div class="section-label"><h2>Utility &amp; Connection Services</h2></div>
+<div class="grid">
+
+  <div class="card" data-name="New Water Connection (BWSSB)" data-price="3000" data-delivery="Up to 30 days">
+    <div class="card-eyebrow">BWSSB · Bangalore Water Supply</div>
+    <h3>New Water Connection (BWSSB)</h3>
+    <p class="card-desc">Secure a new Bangalore Water Supply and Sewerage Board connection. We manage the entire application end-to-end.</p>
+    <ul class="card-bullets">
+      <li>₹1,500 upfront (deducted from final fee)</li>
+      <li>Documents collected via WhatsApp</li>
+      <li>Final connection within ~30 days</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹3,000</span>
+        <span class="card-delivery">Up to 30 days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="BESCOM Name Transfer" data-price="7499" data-delivery="3–4 weeks">
+    <div class="card-eyebrow">BESCOM · Electricity Name Transfer</div>
+    <h3>BESCOM Name Transfer</h3>
+    <p class="card-desc">Transfer your Bangalore property's electricity bill to your name without visiting a BESCOM office. We handle all paperwork and submission.</p>
+    <ul class="card-bullets">
+      <li>Register Number &amp; NOC collected by our team</li>
+      <li>Application submitted to correct BESCOM office</li>
+      <li>Name updated on bill in 3–4 weeks</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹7,499</span>
+        <span class="card-delivery">3–4 weeks</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── TRUST STRIP ── -->
+<div class="trust-strip">
+  <span>Secured by Razorpay</span><span class="sep">·</span>
+  <span>UPI</span><span class="sep">·</span>
+  <span>Cards</span><span class="sep">·</span>
+  <span>Net Banking</span><span class="sep">·</span>
+  <span>WhatsApp Delivery</span><span class="sep">·</span>
+  <span>Official KA Records</span>
+</div>
+
+<!-- ── DISCLAIMER ── -->
+<div class="disclaimer">
+  <div class="footer-brand">Legal<em>directory</em></div>
+  Legal Directory is a technology platform and is not a government entity, nor affiliated with any government agency. All government records are fetched from official Karnataka portals on your behalf. Prices are inclusive and may vary based on document type and jurisdiction.<br><br>
+  <a href="https://legaldirectory.in/terms.html">Terms &amp; Conditions</a> ·
+  <a href="https://legaldirectory.in/privacy-policy.html">Privacy Policy</a> ·
+  <a href="https://legaldirectory.in/refund-policy.html">Refund Policy</a><br><br>
+  © 2026 Legal Directory.in · Bengaluru, Karnataka
+</div>
+
+<!-- ══════════════════════════════
+     STICKY CART BAR
+══════════════════════════════ -->
+<div id="cart-bar">
+  <div class="cart-bar-inner">
+    <div class="cart-summary">
+      <div class="cart-count" id="cart-count-label">0 services selected</div>
+      <div class="cart-total" id="cart-total-display">₹0</div>
+    </div>
+    <div class="cart-actions">
+      <button class="btn-view-cart" onclick="openDrawer()">View Cart</button>
+      <button class="btn-checkout" onclick="openDrawer()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        Checkout
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     CART DRAWER
+══════════════════════════════ -->
+<div id="cart-drawer-overlay" onclick="handleOverlayClick(event)">
+  <div id="cart-drawer">
+    <div class="drawer-header">
+      <div class="drawer-title">🛒 Your Cart</div>
+      <button class="drawer-close" onclick="closeDrawer()">×</button>
+    </div>
+    <div class="drawer-items" id="drawer-items-list">
+      <!-- populated by JS -->
+    </div>
+    <div class="drawer-footer">
+      <div class="drawer-total-row">
+        <div class="drawer-total-label">Total</div>
+        <div class="drawer-total-val" id="drawer-total">₹0</div>
+      </div>
+      <div class="drawer-fields">
+        <input id="drawer-name"  type="text" class="drawer-input" placeholder="Your Name"
+          onfocus="this.style.borderColor='#2563eb'" onblur="this.style.borderColor='#2a2d3a'"/>
+        <input id="drawer-phone" type="tel"  class="drawer-input" placeholder="WhatsApp Number (for document delivery)"
+          onfocus="this.style.borderColor='#2563eb'" onblur="this.style.borderColor='#2a2d3a'"/>
+      </div>
+      <button class="btn-pay-now" id="drawer-pay-btn" onclick="initiateCheckout()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        <span id="drawer-pay-label">Pay Now</span>
+      </button>
+      <a id="drawer-wa-btn" href="#" target="_blank" rel="noopener" class="btn-wa-order">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Order via WhatsApp Instead
+      </a>
+      <div class="secure-note">🔒 SECURED BY RAZORPAY · UPI · CARDS · NET BANKING · WALLETS</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SUCCESS TOAST ── -->
+<div id="pay-toast">✅ Payment Successful! Documents will be sent to your WhatsApp.</div>
+
+<!-- ══════════════════════════════════════════
+     CART + RAZORPAY LOGIC
+══════════════════════════════════════════ -->
+<script>
+// ─── CART STATE ───────────────────────────────────────────────────
+// Each item: { name, price (number), delivery, cardEl, btnEl }
+var cart = [];
+
+function fmt(n) {
+  return '₹' + n.toLocaleString('en-IN');
+}
+
+function cartTotal() {
+  return cart.reduce(function(s, i){ return s + i.price; }, 0);
+}
+
+// ─── TOGGLE ADD/REMOVE FROM CART ──────────────────────────────────
+function toggleCart(btn) {
+  var card     = btn.closest('.card');
+  var name     = card.dataset.name;
+  var price    = parseInt(card.dataset.price, 10);
+  var delivery = card.dataset.delivery || '';
+
+  var idx = cart.findIndex(function(i){ return i.name === name; });
+
+  if (idx === -1) {
+    // Add
+    cart.push({ name: name, price: price, delivery: delivery, cardEl: card, btnEl: btn });
+    card.classList.add('selected');
+    btn.textContent = '✓ Added';
+  } else {
+    // Remove
+    cart.splice(idx, 1);
+    card.classList.remove('selected');
+    btn.textContent = '+ Add to Cart';
+  }
+
+  updateCartBar();
+  updateDrawer();
+}
+
+// ─── CART BAR ─────────────────────────────────────────────────────
+function updateCartBar() {
+  var bar   = document.getElementById('cart-bar');
+  var count = cart.length;
+  var total = cartTotal();
+
+  document.getElementById('cart-count-label').textContent =
+    count === 0 ? '0 services selected' :
+    count === 1 ? '1 service selected'  : count + ' services selected';
+  document.getElementById('cart-total-display').textContent = fmt(total);
+
+  if (count > 0) {
+    bar.classList.add('visible');
+  } else {
+    bar.classList.remove('visible');
+  }
+}
+
+// ─── CART DRAWER ──────────────────────────────────────────────────
+function openDrawer() {
+  updateDrawer();
+  document.getElementById('cart-drawer-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDrawer() {
+  document.getElementById('cart-drawer-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('cart-drawer-overlay')) closeDrawer();
+}
+
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeDrawer(); });
+
+function updateDrawer() {
+  var list  = document.getElementById('drawer-items-list');
+  var total = cartTotal();
+
+  if (cart.length === 0) {
+    list.innerHTML = '<div style="padding:32px 24px;text-align:center;color:var(--ink-muted);font-size:13px;">No services selected yet.<br>Close this and tap <b style=\'color:var(--ink)\'>"+ Add to Cart"</b> on any service.</div>';
+  } else {
+    list.innerHTML = cart.map(function(item, idx) {
+      return '<div class="drawer-item">' +
+        '<div class="drawer-item-info">' +
+          '<div class="drawer-item-name">' + escHtml(item.name) + '</div>' +
+          (item.delivery ? '<div class="drawer-item-delivery">⏱ ' + escHtml(item.delivery) + '</div>' : '') +
+        '</div>' +
+        '<div style="display:flex;align-items:center;gap:10px;">' +
+          '<div class="drawer-item-price">' + fmt(item.price) + '</div>' +
+          '<button class="drawer-item-remove" onclick="removeFromDrawer(' + idx + ')">Remove</button>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  document.getElementById('drawer-total').textContent = fmt(total);
+
+  // Update pay button label
+  var payBtn = document.getElementById('drawer-pay-btn');
+  var payLabel = document.getElementById('drawer-pay-label');
+  payBtn.disabled = cart.length === 0;
+  payLabel.textContent = cart.length === 0 ? 'Pay Now' : 'Pay ' + fmt(total) + ' Now';
+
+  // WhatsApp fallback
+  refreshWaBtn();
+}
+
+function removeFromDrawer(idx) {
+  var item = cart[idx];
+  if (item) {
+    item.cardEl.classList.remove('selected');
+    item.btnEl.textContent = '+ Add to Cart';
+    cart.splice(idx, 1);
+  }
+  updateCartBar();
+  updateDrawer();
+}
+
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function refreshWaBtn() {
+  var name  = (document.getElementById('drawer-name')  || {}).value || '';
+  var phone = (document.getElementById('drawer-phone') || {}).value || '';
+  var itemLines = cart.map(function(i){ return '• ' + i.name + ' — ' + fmt(i.price); }).join('\n');
+  var total = cartTotal();
+  var msg = encodeURIComponent(
+    'Hi Legaldirectory.ai, I want to order:\n\n' + itemLines +
+    '\n\nTotal: ' + fmt(total) +
+    (name  ? '\n\n👤 Name: '     + name.trim()  : '') +
+    (phone ? '\n📱 WhatsApp: '   + phone.trim() : '') +
+    '\n\nPlease guide me on next steps.'
+  );
+  document.getElementById('drawer-wa-btn').href = 'https://wa.me/919008999968?text=' + msg;
+}
+
+['drawer-name','drawer-phone'].forEach(function(id){
+  var el = document.getElementById(id);
+  if (el) el.addEventListener('input', refreshWaBtn);
+});
+
+// ─── RAZORPAY CHECKOUT ────────────────────────────────────────────
+async function initiateCheckout() {
+  if (cart.length === 0) return;
+
+  var btn   = document.getElementById('drawer-pay-btn');
+  var label = document.getElementById('drawer-pay-label');
+  var name  = (document.getElementById('drawer-name')  || {}).value || '';
+  var phone = (document.getElementById('drawer-phone') || {}).value || '';
+  var total = cartTotal();
+
+  // Build items array for the order
+  var items = cart.map(function(i){ return { name: i.name, amount: i.price, delivery: i.delivery }; });
+
+  btn.disabled = true;
+  label.textContent = 'Creating order…';
+
+  try {
+    // Step 1: Create a single Razorpay order for the cart total
+    var orderRes = await fetch('/api/create-order', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({
+        amount:   total,
+        currency: 'INR',
+        receipt:  'LD-CART-' + Date.now(),
+        items:    items,
+        notes: {
+          services: items.map(function(i){ return i.name; }).join(', '),
+          customer: name || 'Guest'
+        }
+      })
+    });
+
+    var orderData = await orderRes.json();
+
+    if (!orderRes.ok || !orderData.order_id) {
+      throw new Error(orderData.error || 'Order creation failed');
+    }
+
+    label.textContent = 'Opening payment…';
+
+    // Build a readable description for the Razorpay overlay
+    var descText = items.length === 1
+      ? items[0].name
+      : items.length + ' services — ' + items.map(function(i){ return i.name; }).join(', ');
+
+    // Step 2: Open Razorpay Standard Checkout
+    var options = {
+      key:         orderData.key_id,
+      amount:      orderData.amount,
+      currency:    orderData.currency,
+      name:        'Legaldirectory.ai',
+      description: descText,
+      image:       'https://legaldirectory.in/og-image.png',
+      order_id:    orderData.order_id,
+      theme:       { color: '#c9952a' },
+      prefill: {
+        name:    name,
+        contact: phone ? (phone.startsWith('+') ? phone : '+91' + phone) : ''
+      },
+      notes: {
+        services: items.map(function(i){ return i.name; }).join(', ')
+      },
+      modal: {
+        ondismiss: function() {
+          btn.disabled = false;
+          label.textContent = 'Pay ' + fmt(total) + ' Now';
+        }
+      },
+      handler: function(response) {
+        verifyPayment(response, items, total, name, phone);
+      }
+    };
+
+    var rzp = new Razorpay(options);
+    rzp.on('payment.failed', function(response) {
+      alert('Payment failed: ' + (response.error.description || 'Please try again.'));
+      btn.disabled = false;
+      label.textContent = 'Pay ' + fmt(total) + ' Now';
+    });
+
+    closeDrawer();
+    rzp.open();
+
+  } catch(err) {
+    console.error('Checkout error:', err);
+    alert('Could not initiate payment: ' + err.message + '\n\nPlease use the WhatsApp option or try again.');
+    btn.disabled = false;
+    label.textContent = 'Pay ' + fmt(total) + ' Now';
+  }
+}
+
+// Step 3: Verify payment signature on server
+async function verifyPayment(rzpResponse, items, total, name, phone) {
+  try {
+    var verRes = await fetch('/api/verify-payment', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({
+        razorpay_order_id:   rzpResponse.razorpay_order_id,
+        razorpay_payment_id: rzpResponse.razorpay_payment_id,
+        razorpay_signature:  rzpResponse.razorpay_signature,
+        items:    items,
+        amount:   fmt(total),
+        customer: { name: name, phone: phone }
+      })
+    });
+
+    var verData = await verRes.json();
+
+    if (verData.success) {
+      showToast();
+      // WhatsApp notification to team
+      var ts  = new Date().toLocaleString('en-IN', {timeZone:'Asia/Kolkata'});
+      var itemLines = items.map(function(i){ return '• ' + i.name + ' (' + fmt(i.price) + ')'; }).join('\n');
+      var wa  = encodeURIComponent(
+        '✅ *Payment Received — Legaldirectory.ai*\n\n' +
+        'Services:\n' + itemLines + '\n\n' +
+        'Total: ' + fmt(total) + '\n' +
+        'Payment ID: ' + rzpResponse.razorpay_payment_id + '\n' +
+        (name  ? 'Name: '  + name  + '\n' : '') +
+        (phone ? 'Phone: ' + phone + '\n' : '') +
+        'Time: ' + ts
+      );
+      setTimeout(function(){
+        window.open('https://wa.me/919008999968?text=' + wa, '_blank');
+      }, 800);
+
+      // Clear cart after success
+      clearCartAfterSuccess();
+    } else {
+      alert('Payment received but verification failed. Please contact us with your payment ID: ' + rzpResponse.razorpay_payment_id);
+    }
+  } catch(err) {
+    console.error('Verify error:', err);
+    showToast(); // payment likely went through
+  }
+}
+
+function clearCartAfterSuccess() {
+  cart.forEach(function(item){
+    item.cardEl.classList.remove('selected');
+    item.btnEl.textContent = '+ Add to Cart';
+  });
+  cart = [];
+  updateCartBar();
+  updateDrawer();
+}
+
+function showToast() {
+  var t = document.getElementById('pay-toast');
+  t.style.display = 'block';
+  setTimeout(function(){ t.style.display = 'none'; }, 7000);
+}
+</script>
+
+</body>
+</html>
