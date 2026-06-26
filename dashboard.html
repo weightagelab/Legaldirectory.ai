@@ -259,12 +259,12 @@ function handlePaymentReturn() {
 }
 
 auth.onAuthStateChanged(async (user) => {
-  handlePaymentReturn();
   document.getElementById('loading-spinner').style.display = 'none';
   if (!user) {
     document.getElementById('login-required').style.display = 'block';
     return;
   }
+  handlePaymentReturn();
   document.getElementById('dashboard').style.display = 'block';
   document.getElementById('user-name-nav').textContent = user.displayName || user.email || '';
   document.getElementById('welcome-name').textContent = 'Welcome back' + (user.displayName ? ', ' + user.displayName.split(' ')[0] : '');
@@ -279,12 +279,18 @@ auth.onAuthStateChanged(async (user) => {
       if (paidDoc.exists) {
         const paidData = { id: paidDoc.id, ...paidDoc.data() };
         byId.set(paidDoc.id, paidData);
-        if (!paidData.uid) db.collection('orders').doc(paidDoc.id).set({ uid: user.uid }, { merge: true }).catch(console.error);
+        // Always stamp uid — Cashfree redirect lands on index.html before auth resolves,
+        // so the initial Firestore write may lack uid. Re-stamp here unconditionally.
+        db.collection('orders').doc(paidDoc.id).set({ uid: user.uid }, { merge: true }).catch(console.error);
       }
     }
     try {
       const localOrder = JSON.parse(localStorage.getItem('ld_last_order') || 'null');
-      if (localOrder && localOrder.orderId && (!LAST_PAYMENT_RETURN || localOrder.orderId === LAST_PAYMENT_RETURN.orderId)) byId.set(localOrder.orderId, localOrder);
+      if (localOrder && localOrder.orderId && LAST_PAYMENT_RETURN && localOrder.orderId === LAST_PAYMENT_RETURN.orderId && !byId.has(localOrder.orderId)) {
+        byId.set(localOrder.orderId, localOrder);
+        // stamp uid so future dashboard loads find it via Firestore query
+        db.collection('orders').doc(localOrder.orderId).set({ uid: user.uid }, { merge: true }).catch(console.error);
+      }
     } catch(e) {}
     const orders = Array.from(byId.values());
     const active    = orders.filter(o => (o.status||'pending') !== 'completed');
