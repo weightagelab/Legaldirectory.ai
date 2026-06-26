@@ -1,5 +1,5 @@
 // api/verify-payment.js — Vercel Serverless Function
-// Verifies Cashfree payment with retry, writes to Google Sheet + Firestore
+// Verifies Cashfree payment with retry, writes to Google Sheet, updates Firestore
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -14,7 +14,6 @@ export default async function handler(req, res) {
   const CF_APP_ID = process.env.CASHFREE_APP_ID;
   const CF_SECRET = process.env.CASHFREE_SECRET_KEY;
   const CF_ENV    = process.env.CASHFREE_ENV || 'production';
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby9szbPBrX6V5fXkMTUbd8TTCJStiSjZf-4DiS1avVWRsIb18_7a03U0kQRXCcc2uML/exec';
 
   if (!CF_APP_ID || !CF_SECRET)
     return res.status(500).json({ error: 'Gateway not configured' });
@@ -25,9 +24,9 @@ export default async function handler(req, res) {
 
   const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-  // ── 1. VERIFY WITH CASHFREE — retry 6x with 3s delay (18s total window) ──
+  // ── 1. VERIFY WITH CASHFREE — retry up to 4x with 2s delay ──
   let paid = null;
-  for (let attempt = 1; attempt <= 6; attempt++) {
+  for (let attempt = 1; attempt <= 4; attempt++) {
     try {
       const cfRes = await fetch(`${apiBase}/orders/${order_id}/payments`, {
         headers: {
@@ -37,34 +36,16 @@ export default async function handler(req, res) {
         },
       });
       const payments = await cfRes.json();
-      console.log(`Attempt ${attempt} response:`, JSON.stringify(payments).slice(0, 200));
       paid = Array.isArray(payments)
         ? payments.find(p => p.payment_status === 'SUCCESS')
-        : (payments?.payment_status === 'SUCCESS' ? payments : null);
-      if (paid) { console.log(`✅ Payment SUCCESS on attempt ${attempt}`); break; }
-      if (attempt < 6) await sleep(3000);
+        : null;
+      if (paid) break;
+      console.log(`Attempt ${attempt}: payment not SUCCESS yet, waiting...`);
+      if (attempt < 4) await sleep(2000);
     } catch (e) {
       console.error(`Attempt ${attempt} error:`, e.message);
-      if (attempt < 6) await sleep(3000);
+      if (attempt < 4) await sleep(2000);
     }
-  }
-
-  if (!paid) {
-    // ── FALLBACK: check order status directly ──
-    try {
-      const orderRes = await fetch(`${apiBase}/orders/${order_id}`, {
-        headers: {
-          'x-api-version':   '2023-08-01',
-          'x-client-id':     CF_APP_ID,
-          'x-client-secret': CF_SECRET,
-        },
-      });
-      const orderData = await orderRes.json();
-      console.log('Order status fallback:', JSON.stringify(orderData).slice(0, 300));
-      if (orderData?.order_status === 'PAID') {
-        paid = { cf_payment_id: orderData.cf_order_id, order_amount: orderData.order_amount };
-      }
-    } catch(e) { console.error('Order status fallback error:', e.message); }
   }
 
   if (!paid) {
@@ -82,9 +63,10 @@ export default async function handler(req, res) {
   const amtStr = amount || ('₹' + (paid.order_amount || 0));
   const ts     = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
 
-  console.log('✅ Verified:', { order_id, paymentId, serviceList, amtStr });
+  console.log('✅ Payment verified:', { order_id, paymentId, serviceList });
 
   // ── 2. WRITE TO GOOGLE SHEET ──
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby9szbPBrX6V5fXkMTUbd8TTCJStiSjZf-4DiS1avVWRsIb18_7a03U0kQRXCcc2uML/exec';
   try {
     await fetch(APPS_SCRIPT_URL, {
       method:  'POST',
