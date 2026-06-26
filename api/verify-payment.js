@@ -1,5 +1,5 @@
 // api/verify-payment.js — Vercel Serverless Function
-// Verifies Cashfree payment with retry, writes to Google Sheet, returns confirmed status.
+// Verifies Cashfree payment with retry, returns confirmed status.
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -14,7 +14,6 @@ export default async function handler(req, res) {
   const CF_APP_ID = process.env.CASHFREE_APP_ID;
   const CF_SECRET = process.env.CASHFREE_SECRET_KEY;
   const CF_ENV = process.env.CASHFREE_ENV || 'production';
-  const APPS_SCRIPT_URL = process.env.APPS_SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbwLZsnKhacDaxg7hjsw6a2PGWG-YKLMuVMOgsWVflcJ14l8i1JK8Dq__QlxjVCxciJn/exec';
   if (!CF_APP_ID || !CF_SECRET) return res.status(500).json({ error: 'Gateway not configured' });
 
   const apiBase = CF_ENV === 'sandbox' ? 'https://sandbox.cashfree.com/pg' : 'https://api.cashfree.com/pg';
@@ -39,13 +38,6 @@ export default async function handler(req, res) {
   const serviceList = Array.isArray(items) && items.length ? items.map(i => i.name).join(', ') : (service || (typeof items === 'string' ? items : ''));
   const amtStr = amount || ('₹' + (paid.order_amount || 0));
   const ts = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
-
-  try {
-    await fetch(APPS_SCRIPT_URL, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' }, redirect: 'follow',
-      body: JSON.stringify({ orderId: order_id, date: ts, name: customer?.name || '', phone: customer?.phone || '', services: serviceList, amount: amtStr, paymentId, status: 'Paid ✅', source: 'legaldirectory.in' })
-    });
-  } catch (e) { console.error('Sheet write non-fatal', e.message); }
 
   return res.status(200).json({ success: true, order_status: 'PAID', payment_id: paymentId, order_id, service_list: serviceList, amount: amtStr, customer: customer || {}, timestamp: ts, message: 'Payment verified' });
 }
