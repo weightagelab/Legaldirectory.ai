@@ -1836,8 +1836,6 @@ async function bkInitiatePayment() {
     if (!orderData.payment_session_id) throw new Error(orderData.error || 'Payment session missing');
 
     label.innerText = 'Opening payment…';
-    // Save order before payment
-    ldSaveOrderToFirestore(orderData.order_id, '', bkService||'', '₹'+amount, bkName, bkPhone, 'awaiting');
 
     closeBkModal();
     var cashfree = Cashfree({ mode: orderData.mode || 'production' });
@@ -1866,12 +1864,8 @@ async function bkVerifyPayment(orderId, name, phone) {
       })
     });
     var vd = await vr.json();
-    if (vd.success) {
-      ldSaveOrderToFirestore(orderId, vd.payment_id||'', bkService||'', '', name, phone, 'confirmed');
-      window.location.href = 'dashboard.html?payment=success&order_id='+encodeURIComponent(orderId);
-    } else {
-      alert('Payment pending. Order ID: '+orderId+'. WhatsApp us if payment was deducted.');
-    }
+    if (vd.success) bkShowToast(orderId, name, phone);
+    else alert('Payment not completed yet. Order status: ' + (vd.order_status || 'Pending'));
   } catch(e) {
     alert('Payment verification is pending. Please contact us with Order ID: ' + orderId);
   }
@@ -2047,15 +2041,12 @@ async function ldCheckout() {
 
     label.textContent = 'Opening payment...';
     ldCloseCart();
-    // Save order before payment opens so dashboard shows it immediately
-    ldSaveOrderToFirestore(orderData.order_id, '', items.map(function(i){return i.name;}).join(', '), ldFmt(total), name, phone, 'awaiting');
-    sessionStorage.setItem('ld_pending', JSON.stringify({
-      order_id: orderData.order_id,
-      service: items.map(function(i){return i.name;}).join(', '),
-      amount: ldFmt(total), customer: { name: name, phone: phone }, items: items, total: total
-    }));
     var cashfree = Cashfree({ mode: orderData.mode || 'production' });
-    cashfree.checkout({ paymentSessionId: orderData.payment_session_id, redirectTarget: '_self' });
+    await cashfree.checkout({
+      paymentSessionId: orderData.payment_session_id,
+      redirectTarget: '_modal'
+    });
+    await ldVerifyPayment(orderData.order_id, items, total, name, phone);
   } catch(err) {
     alert('Could not initiate payment: ' + err.message + '\n\nPlease try again or use WhatsApp.');
     btn.disabled = false;
@@ -2080,7 +2071,8 @@ async function ldVerifyPayment(orderId, items, total, name, phone) {
     if (!verData.success) throw new Error(verData.error || 'Payment verification failed');
     // Save to Firestore with confirmed status
     ldSaveOrderToFirestore(orderId, verData.payment_id||'', items.map(function(i){return i.name;}).join(', '), ldFmt(total), name, phone, 'confirmed');
-    window.location.href = 'dashboard.html?payment=success&order_id=' + encodeURIComponent(orderId) + '&amount=' + encodeURIComponent(ldFmt(total));
+    var successUrl = 'index.html?payment=success&order_id=' + encodeURIComponent(orderId) + '&amount=' + encodeURIComponent(ldFmt(total));
+    window.location.href = successUrl;
   } catch(err) {
     alert('Payment is not completed yet or verification is pending. Please contact us with Order ID: ' + orderId);
   }
@@ -2124,7 +2116,9 @@ async function ldHandleCashfreeReturn() {
       var ts = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
       var wa = encodeURIComponent('✅ *Payment Confirmed — Legaldirectory.ai*\n\nService: '+(pending?.service||'')+'\nAmount: '+(pending?.amount||'')+'\nOrder ID: '+orderId+'\nTime: '+ts+'\n\nThank you! Our team will contact you within 2 hours.');
       setTimeout(function(){ window.open('https://wa.me/919008999968?text='+wa,'_blank'); }, 800);
-      window.location.href = 'dashboard.html?payment=success&order_id='+encodeURIComponent(orderId)+'&amount='+encodeURIComponent(pending?.amount||'');
+      window.history.replaceState({}, '', 'index.html?payment=success&order_id='+encodeURIComponent(orderId)+'&amount='+encodeURIComponent(pending?.amount||''));
+      ldShowSuccessFromQuery();
+  ldHandleCashfreeReturn();
     }
   } catch(e) { console.error('Return verify error:', e); }
 }
@@ -2447,8 +2441,6 @@ async function ldInitiatePayment() {
     if (!order.payment_session_id)  throw new Error('Payment session missing');
     lbl.textContent = 'Opening payment…';
     ldCloseDrawer();
-    // Save order before payment opens
-    ldSaveOrderToFirestore(order.order_id, '', items.map(function(i){return i.name;}).join(', '), ldFmt(total), name, phone, 'awaiting');
     var cashfree = Cashfree({ mode: order.mode || 'production' });
     sessionStorage.setItem('ld_pending', JSON.stringify({
       order_id: order.order_id, service: services||items.map(function(i){return i.name;}).join(', '),
