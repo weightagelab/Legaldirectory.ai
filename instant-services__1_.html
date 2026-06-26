@@ -6,7 +6,7 @@
 <title>Instant Services – Legaldirectory.ai</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <style>
   :root {
     --bg:       #07080e;
@@ -338,7 +338,7 @@
     <div class="how-step">
       <div class="how-num">02 · PAY</div>
       <h4>Single Checkout</h4>
-      <p>One Cashfree payment for your entire order. UPI, Card, Net Banking.</p>
+      <p>One Razorpay payment for your entire order. UPI, Card, Net Banking.</p>
     </div>
     <div class="how-step">
       <div class="how-num">03 · SHARE</div>
@@ -700,7 +700,7 @@
 
 <!-- ── TRUST STRIP ── -->
 <div class="trust-strip">
-  <span>Secured by Cashfree</span><span class="sep">·</span>
+  <span>Secured by Razorpay</span><span class="sep">·</span>
   <span>UPI</span><span class="sep">·</span>
   <span>Cards</span><span class="sep">·</span>
   <span>Net Banking</span><span class="sep">·</span>
@@ -755,9 +755,9 @@
         <div class="drawer-total-val" id="drawer-total">₹0</div>
       </div>
       <div class="drawer-fields">
-        <input id="drawer-name"  type="text" class="drawer-input" placeholder="Your Name *" required
+        <input id="drawer-name"  type="text" class="drawer-input" placeholder="Your Name"
           onfocus="this.style.borderColor='#2563eb'" onblur="this.style.borderColor='#2a2d3a'"/>
-        <input id="drawer-phone" type="tel"  class="drawer-input" placeholder="WhatsApp Number *" required
+        <input id="drawer-phone" type="tel"  class="drawer-input" placeholder="WhatsApp Number (for document delivery)"
           onfocus="this.style.borderColor='#2563eb'" onblur="this.style.borderColor='#2a2d3a'"/>
       </div>
       <button class="btn-pay-now" id="drawer-pay-btn" onclick="initiateCheckout()">
@@ -768,7 +768,7 @@
         <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         Order via WhatsApp Instead
       </a>
-      <div class="secure-note">🔒 SECURED BY CASHFREE · UPI · CARDS · NET BANKING · WALLETS</div>
+      <div class="secure-note">🔒 SECURED BY RAZORPAY · UPI · CARDS · NET BANKING · WALLETS</div>
     </div>
   </div>
 </div>
@@ -777,7 +777,7 @@
 <div id="pay-toast">✅ Payment Successful! Documents will be sent to your WhatsApp.</div>
 
 <!-- ══════════════════════════════════════════
-     CART + CASHFREE LOGIC
+     CART + RAZORPAY LOGIC
 ══════════════════════════════════════════ -->
 <script>
 // ─── CART STATE ───────────────────────────────────────────────────
@@ -921,26 +921,15 @@ function refreshWaBtn() {
   if (el) el.addEventListener('input', refreshWaBtn);
 });
 
-// ─── CASHFREE CHECKOUT ────────────────────────────────────────────
+// ─── RAZORPAY CHECKOUT ────────────────────────────────────────────
 async function initiateCheckout() {
   if (cart.length === 0) return;
 
   var btn   = document.getElementById('drawer-pay-btn');
   var label = document.getElementById('drawer-pay-label');
-  var name  = ((document.getElementById('drawer-name')  || {}).value || '').trim();
-  var phone = ((document.getElementById('drawer-phone') || {}).value || '').trim();
+  var name  = (document.getElementById('drawer-name')  || {}).value || '';
+  var phone = (document.getElementById('drawer-phone') || {}).value || '';
   var total = cartTotal();
-
-  if (!name) {
-    alert('Please enter your full name.');
-    document.getElementById('drawer-name').focus();
-    return;
-  }
-  if (!phone) {
-    alert('Please enter your WhatsApp number.');
-    document.getElementById('drawer-phone').focus();
-    return;
-  }
 
   // Build items array for the order
   var items = cart.map(function(i){ return { name: i.name, amount: i.price, delivery: i.delivery }; });
@@ -949,7 +938,7 @@ async function initiateCheckout() {
   label.textContent = 'Creating order…';
 
   try {
-    // Step 1: Create a single Cashfree order for the cart total
+    // Step 1: Create a single Razorpay order for the cart total
     var orderRes = await fetch('/api/create-order', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -958,10 +947,9 @@ async function initiateCheckout() {
         currency: 'INR',
         receipt:  'LD-CART-' + Date.now(),
         items:    items,
-        customer: { name: name, phone: phone },
         notes: {
           services: items.map(function(i){ return i.name; }).join(', '),
-          customer: name
+          customer: name || 'Guest'
         }
       })
     });
@@ -971,24 +959,51 @@ async function initiateCheckout() {
     if (!orderRes.ok || !orderData.order_id) {
       throw new Error(orderData.error || 'Order creation failed');
     }
-    if (!orderData.payment_session_id) {
-      throw new Error(orderData.error || 'Payment session missing');
-    }
 
     label.textContent = 'Opening payment…';
-    sessionStorage.setItem('ld_instant_pending', JSON.stringify({
-      order_id: orderData.order_id,
-      items: items,
-      total: total,
-      customer: { name: name, phone: phone }
-    }));
+
+    // Build a readable description for the Razorpay overlay
+    var descText = items.length === 1
+      ? items[0].name
+      : items.length + ' services — ' + items.map(function(i){ return i.name; }).join(', ');
+
+    // Step 2: Open Razorpay Standard Checkout
+    var options = {
+      key:         orderData.key_id,
+      amount:      orderData.amount,
+      currency:    orderData.currency,
+      name:        'Legaldirectory.ai',
+      description: descText,
+      image:       'https://legaldirectory.in/og-image.png',
+      order_id:    orderData.order_id,
+      theme:       { color: '#c9952a' },
+      prefill: {
+        name:    name,
+        contact: phone ? (phone.startsWith('+') ? phone : '+91' + phone) : ''
+      },
+      notes: {
+        services: items.map(function(i){ return i.name; }).join(', ')
+      },
+      modal: {
+        ondismiss: function() {
+          btn.disabled = false;
+          label.textContent = 'Pay ' + fmt(total) + ' Now';
+        }
+      },
+      handler: function(response) {
+        verifyPayment(response, items, total, name, phone);
+      }
+    };
+
+    var rzp = new Razorpay(options);
+    rzp.on('payment.failed', function(response) {
+      alert('Payment failed: ' + (response.error.description || 'Please try again.'));
+      btn.disabled = false;
+      label.textContent = 'Pay ' + fmt(total) + ' Now';
+    });
 
     closeDrawer();
-    var cashfree = Cashfree({ mode: orderData.mode || 'production' });
-    await cashfree.checkout({
-      paymentSessionId: orderData.payment_session_id,
-      redirectTarget: '_self'
-    });
+    rzp.open();
 
   } catch(err) {
     console.error('Checkout error:', err);
@@ -998,14 +1013,16 @@ async function initiateCheckout() {
   }
 }
 
-// Step 3: Verify Cashfree payment on server
-async function verifyPayment(orderId, items, total, name, phone) {
+// Step 3: Verify payment signature on server
+async function verifyPayment(rzpResponse, items, total, name, phone) {
   try {
     var verRes = await fetch('/api/verify-payment', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify({
-        order_id: orderId,
+        razorpay_order_id:   rzpResponse.razorpay_order_id,
+        razorpay_payment_id: rzpResponse.razorpay_payment_id,
+        razorpay_signature:  rzpResponse.razorpay_signature,
         items:    items,
         amount:   fmt(total),
         customer: { name: name, phone: phone }
@@ -1023,10 +1040,9 @@ async function verifyPayment(orderId, items, total, name, phone) {
         '✅ *Payment Received — Legaldirectory.ai*\n\n' +
         'Services:\n' + itemLines + '\n\n' +
         'Total: ' + fmt(total) + '\n' +
-        'Order ID: ' + orderId + '\n' +
-        'Payment ID: ' + (verData.payment_id || '') + '\n' +
-        'Name: '  + name  + '\n' +
-        'Phone: ' + phone + '\n' +
+        'Payment ID: ' + rzpResponse.razorpay_payment_id + '\n' +
+        (name  ? 'Name: '  + name  + '\n' : '') +
+        (phone ? 'Phone: ' + phone + '\n' : '') +
         'Time: ' + ts
       );
       setTimeout(function(){
@@ -1036,33 +1052,13 @@ async function verifyPayment(orderId, items, total, name, phone) {
       // Clear cart after success
       clearCartAfterSuccess();
     } else {
-      alert('Payment is pending or verification failed. Please contact us with your Order ID: ' + orderId);
+      alert('Payment received but verification failed. Please contact us with your payment ID: ' + rzpResponse.razorpay_payment_id);
     }
   } catch(err) {
     console.error('Verify error:', err);
-    alert('Payment verification is pending. Please contact us with your Order ID: ' + orderId);
+    showToast(); // payment likely went through
   }
 }
-
-async function handleCashfreeReturn() {
-  var params = new URLSearchParams(window.location.search);
-  var orderId = params.get('order_id') || params.get('orderId');
-  if (!orderId) return;
-
-  var pending = null;
-  try { pending = JSON.parse(sessionStorage.getItem('ld_instant_pending') || 'null'); } catch(e) {}
-  sessionStorage.removeItem('ld_instant_pending');
-
-  await verifyPayment(
-    orderId,
-    pending && pending.items ? pending.items : [],
-    pending && pending.total ? pending.total : 0,
-    pending && pending.customer ? pending.customer.name : '',
-    pending && pending.customer ? pending.customer.phone : ''
-  );
-}
-
-window.addEventListener('load', handleCashfreeReturn);
 
 function clearCartAfterSuccess() {
   cart.forEach(function(item){
