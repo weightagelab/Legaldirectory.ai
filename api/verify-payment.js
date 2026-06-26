@@ -55,7 +55,7 @@ export default async function handler(req, res) {
     console.log('✅ Payment verified:', { order_id, paymentId, serviceList });
 
     // ── 2. WRITE TO GOOGLE SHEET VIA APPS SCRIPT ──
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxXjpKEiqQlErW8eozGwh7T52Rt1CuToYqNwfPoBTGXgLhasa6m5qLS6bN7CK5l60UH/exec';
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby9szbPBrX6V5fXkMTUbd8TTCJStiSjZf-4DiS1avVWRsIb18_7a03U0kQRXCcc2uML/exec';
 
     try {
       const sheetRes = await fetch(APPS_SCRIPT_URL, {
