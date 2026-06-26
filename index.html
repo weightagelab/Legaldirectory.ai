@@ -1629,12 +1629,28 @@ function handleCashfreePayment(serviceName, amount) {
  .then(orderData => {
    if (!orderData.order_id) throw new Error(orderData.error || 'Order creation failed');
    if (!orderData.payment_session_id) throw new Error(orderData.error || 'Payment session missing');
-   sessionStorage.setItem('ld_pending', JSON.stringify({
-     order_id: orderData.order_id, service: service, amount: amt,
-     customer: { name: document.getElementById('bk-name')?.value || '', phone: document.getElementById('bk-phone')?.value || '' }
-   }));
    var cashfree = Cashfree({ mode: orderData.mode || 'production' });
-   cashfree.checkout({ paymentSessionId: orderData.payment_session_id, redirectTarget: '_self' });
+   return cashfree.checkout({
+     paymentSessionId: orderData.payment_session_id,
+     redirectTarget: '_modal'
+   }).then(function() {
+     return fetch('/api/verify-payment', {
+       method: 'POST',
+       headers: { 'Content-Type': 'application/json' },
+       body: JSON.stringify({
+         order_id: orderData.order_id,
+         service: service,
+         amount: amt
+       })
+     });
+   }).then(vr => vr.json()).then(v => {
+     if (v.success) {
+       sendWhatsApp(`*Payment Confirmed — Legaldirectory.ai*\n\nService: ${service}\nAmount: ${amt}\nOrder ID: ${orderData.order_id}\nTime: ${ts}\n\nThank you! Our team will contact you shortly.`);
+       alert('Payment successful! Order ID: ' + orderData.order_id + '\n\nOur team will contact you within 2 hours.');
+     } else {
+       alert('Payment not completed yet. Order status: ' + (v.order_status || 'Pending'));
+     }
+   });
  })
  .catch(err => {
    alert('Could not initiate payment: ' + err.message + '\n\nPlease use WhatsApp to book.');
@@ -2069,8 +2085,6 @@ async function ldVerifyPayment(orderId, items, total, name, phone) {
     });
     var verData = await verRes.json();
     if (!verData.success) throw new Error(verData.error || 'Payment verification failed');
-    // Save to Firestore with confirmed status
-    ldSaveOrderToFirestore(orderId, verData.payment_id||'', items.map(function(i){return i.name;}).join(', '), ldFmt(total), name, phone, 'confirmed');
     var successUrl = 'index.html?payment=success&order_id=' + encodeURIComponent(orderId) + '&amount=' + encodeURIComponent(ldFmt(total));
     window.location.href = successUrl;
   } catch(err) {
@@ -2089,38 +2103,6 @@ function ldShowSuccessFromQuery() {
   document.getElementById('ld-success-meta').textContent =
     'Order ID: ' + (payId || 'Confirmed') + (amount ? ' | Amount: ' + amount : '');
   document.getElementById('ld-success-page').classList.add('visible');
-}
-
-// ── Handle Cashfree redirect return — verify payment on page load ──
-async function ldHandleCashfreeReturn() {
-  var params = new URLSearchParams(window.location.search);
-  var orderId = params.get('order_id');
-  if (!orderId) return;
-  var pending = null;
-  try { pending = JSON.parse(sessionStorage.getItem('ld_pending') || 'null'); } catch(e){}
-  sessionStorage.removeItem('ld_pending');
-  try {
-    var vr = await fetch('/api/verify-payment', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        order_id: orderId,
-        items: pending ? [{ name: pending.service }] : [],
-        amount: pending?.amount || '',
-        customer: pending?.customer || {}
-      })
-    });
-    var vd = await vr.json();
-    if (vd.success) {
-      ldSaveOrderToFirestore(orderId, vd.payment_id||'', pending?.service||'', pending?.amount||'', pending?.customer?.name||'', pending?.customer?.phone||'', 'confirmed');
-      var ts = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
-      var wa = encodeURIComponent('✅ *Payment Confirmed — Legaldirectory.ai*\n\nService: '+(pending?.service||'')+'\nAmount: '+(pending?.amount||'')+'\nOrder ID: '+orderId+'\nTime: '+ts+'\n\nThank you! Our team will contact you within 2 hours.');
-      setTimeout(function(){ window.open('https://wa.me/919008999968?text='+wa,'_blank'); }, 800);
-      window.history.replaceState({}, '', 'index.html?payment=success&order_id='+encodeURIComponent(orderId)+'&amount='+encodeURIComponent(pending?.amount||''));
-      ldShowSuccessFromQuery();
-  ldHandleCashfreeReturn();
-    }
-  } catch(e) { console.error('Return verify error:', e); }
 }
 
 function ldInitCart() {
@@ -2442,11 +2424,8 @@ async function ldInitiatePayment() {
     lbl.textContent = 'Opening payment…';
     ldCloseDrawer();
     var cashfree = Cashfree({ mode: order.mode || 'production' });
-    sessionStorage.setItem('ld_pending', JSON.stringify({
-      order_id: order.order_id, service: services||items.map(function(i){return i.name;}).join(', '),
-      amount: ldFmt(total), customer: { name: name, phone: phone }, items: items, total: total
-    }));
-    cashfree.checkout({ paymentSessionId: order.payment_session_id, redirectTarget: '_self' });
+    await cashfree.checkout({ paymentSessionId: order.payment_session_id, redirectTarget: '_modal' });
+    await ldVerifyPayment(order.order_id, items, total, name, phone, services);
   } catch(err) {
     console.error('Checkout error:', err);
     alert('Could not initiate payment: '+err.message+'\n\nPlease use WhatsApp.');
@@ -2468,10 +2447,10 @@ async function ldVerifyPayment(orderId, items, total, name, phone, services) {
       ldShowToast();
       var ts = new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'});
       var lines = items.map(function(i){ return '• '+i.name+' ('+ldFmt(i.amount)+')'; }).join('\n');
-      var wa = encodeURIComponent('✅ *Payment Confirmed — Legaldirectory.ai*\n\nServices:\n'+lines+'\n\nTotal: '+ldFmt(total)+'\nOrder ID: '+orderId+'\nPayment ID: '+(vd.payment_id||'')+'\nName: '+name+'\nPhone: '+phone+'\nTime: '+ts);
+      var wa = encodeURIComponent('✅ *Payment Received — Legaldirectory.ai*\n\nServices:\n'+lines+'\n\nTotal: '+ldFmt(total)+'\nOrder ID: '+orderId+'\nPayment ID: '+(vd.payment_id||'')+'\nName: '+name+'\nPhone: '+phone+'\nTime: '+ts);
       setTimeout(function(){ window.open('https://wa.me/919008999968?text='+wa,'_blank'); }, 800);
       ldClearCart();
-      ldSaveOrderToFirestore(orderId, vd.payment_id||'', services, total, name, phone, 'confirmed');
+      ldSaveOrderToFirestore(orderId, vd.payment_id||'', services, total, name, phone);
     } else {
       alert('Payment pending. Order ID: '+orderId+'. Please WhatsApp us if payment was deducted.');
     }
@@ -2498,7 +2477,7 @@ function ldShowToast() {
 }
 
 // ── SAVE ORDER TO FIRESTORE ──
-function ldSaveOrderToFirestore(orderId, paymentId, services, amount, name, phone, status) {
+function ldSaveOrderToFirestore(orderId, paymentId, services, amount, name, phone) {
   try {
     if (typeof firebase === 'undefined') return;
     var db = firebase.firestore();
@@ -2508,13 +2487,13 @@ function ldSaveOrderToFirestore(orderId, paymentId, services, amount, name, phon
       orderId: orderId, paymentId: paymentId,
       serviceName: services, amount: amount,
       customer: { name: name, phone: phone },
-      status: status || 'confirmed',
+      status: 'pending',
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       source: 'index'
     };
     if (user) data.uid = user.uid;
     db.collection('orders').doc(orderId).set(data)
-      .then(function(){ console.log('Order saved to Firestore:', orderId); })
+      .then(function(){ console.log('Order saved to Firestore'); })
       .catch(function(e){ console.error('Firestore save error:', e); });
   } catch(e) { console.error('Firestore error:', e); }
 }

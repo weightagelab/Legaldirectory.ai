@@ -174,11 +174,10 @@ const auth = firebase.auth();
 const db   = firebase.firestore();
 
 const STATUSES = {
-  pending:    { label:'Payment Confirmed ✅', cls:'s-pending',    steps:[1,0,0,0] },
-  confirmed:  { label:'Payment Confirmed ✅', cls:'s-pending',    steps:[1,0,0,0] },
-  inprogress: { label:'In Progress',          cls:'s-inprogress', steps:[1,1,0,0] },
-  review:     { label:'Under Review',         cls:'s-review',     steps:[1,1,1,0] },
-  completed:  { label:'Completed',            cls:'s-completed',  steps:[1,1,1,1] }
+  pending:    { label:'Payment Received',   cls:'s-pending',    steps:[1,0,0,0] },
+  inprogress: { label:'In Progress',        cls:'s-inprogress', steps:[1,1,0,0] },
+  review:     { label:'Under Review',       cls:'s-review',     steps:[1,1,1,0] },
+  completed:  { label:'Completed',          cls:'s-completed',  steps:[1,1,1,1] }
 };
 const STEPS = ['Payment Confirmed','Work in Progress','Final Review','Delivered'];
 

@@ -936,34 +936,25 @@ async function handleCheckout() {
     }
     
     closeDrawer();
-
-    // Store cart context for post-redirect verify
-    sessionStorage.setItem('ld_pending', JSON.stringify({
-      order_id: orderData.order_id,
-      service: items.map(function(i){ return i.name; }).join(', '),
-      amount: '₹' + fmt(total),
-      items: items,
-      total: total,
-      customer: { name: name, phone: phone },
-      source: 'instant-services'
-    }));
-
+    
     var cashfree = Cashfree({ mode: orderData.mode || 'production' });
-    // Use _self so Cashfree redirects back after payment — verify runs on landing
-    cashfree.checkout({
+    await cashfree.checkout({
       paymentSessionId: orderData.payment_session_id,
-      redirectTarget: '_self'
+      redirectTarget: '_modal'
     });
-
+    
+    await verifyPayment(orderData.order_id, items, total, name, phone);
+    
   } catch(err) {
     console.error('Checkout error:', err);
     alert('Could not initiate payment: ' + err.message + '\n\nPlease use the WhatsApp option or try again.');
+  } finally {
     btn.disabled = false;
     payBtn.disabled = false;
   }
 }
 
-// ── VERIFY PAYMENT — runs after Cashfree redirects back ──────────────
+// ── VERIFY PAYMENT ──────────────────────────────────────────────────
 async function verifyPayment(orderId, items, total, name, phone) {
   try {
     var verRes = await fetch('/api/verify-payment', {
@@ -972,22 +963,23 @@ async function verifyPayment(orderId, items, total, name, phone) {
       body: JSON.stringify({
         order_id: orderId,
         items: items,
-        amount: '₹' + fmt(total),
+        amount: fmt(total),
         customer: { name: name, phone: phone }
       })
     });
-
+    
     var verData = await verRes.json();
-
+    
     if (verData.success) {
+      showToast();
+      
       var ts = new Date().toLocaleString('en-IN', {timeZone:'Asia/Kolkata'});
       var itemLines = items.map(function(i) {
         return '• ' + i.name + ' (₹' + fmt(i.price) + ')';
       }).join('\n');
-
-      // WhatsApp confirmation
+      
       var wa = encodeURIComponent(
-        '✅ *Payment Confirmed — Legaldirectory.ai*\n\n' +
+        '*Payment Received — Legaldirectory.ai*\n\n' +
         'Services:\n' + itemLines + '\n\n' +
         'Total: ₹' + fmt(total) + '\n' +
         'Order ID: ' + orderId + '\n' +
@@ -995,50 +987,20 @@ async function verifyPayment(orderId, items, total, name, phone) {
         (phone ? 'Phone: ' + phone + '\n' : '') +
         'Time: ' + ts
       );
+      
       setTimeout(function() {
         window.open('https://wa.me/919008999968?text=' + wa, '_blank');
       }, 800);
-
-      // Redirect to dashboard with confirmed status
-      window.location.href = 'dashboard.html?payment=success&order_id=' + encodeURIComponent(orderId) + '&amount=' + encodeURIComponent('₹' + fmt(total));
+      
+      clearCartAfterSuccess();
     } else {
-      alert('Payment status: ' + (verData.order_status || 'Pending') + '.\nOrder ID: ' + orderId + '\nPlease WhatsApp us if payment was deducted.');
+      alert('Payment status: ' + (verData.order_status || 'Pending'));
     }
   } catch(err) {
     console.error('Verify error:', err);
-    // Still redirect to dashboard — payment may be confirmed
-    window.location.href = 'dashboard.html?payment=success&order_id=' + encodeURIComponent(orderId);
+    alert('Payment verification pending. Order ID: ' + orderId);
   }
 }
-
-// ── ON PAGE LOAD: handle Cashfree redirect return ────────────────────
-async function handleCashfreeReturn() {
-  var params = new URLSearchParams(window.location.search);
-  var orderId = params.get('order_id');
-  if (!orderId) return;
-
-  var pending = null;
-  try { pending = JSON.parse(sessionStorage.getItem('ld_pending') || 'null'); } catch(e) {}
-  sessionStorage.removeItem('ld_pending');
-
-  if (!pending) {
-    // No context — just go to dashboard
-    window.location.href = 'dashboard.html?payment=success&order_id=' + encodeURIComponent(orderId);
-    return;
-  }
-
-  await verifyPayment(
-    orderId,
-    pending.items || [],
-    pending.total || 0,
-    pending.customer?.name || '',
-    pending.customer?.phone || ''
-  );
-}
-
-window.addEventListener('DOMContentLoaded', function() {
-  handleCashfreeReturn();
-});
 
 function clearCartAfterSuccess() {
   cart.forEach(function(item) {
