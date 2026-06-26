@@ -6,7 +6,7 @@
 <title>Instant Services – Legaldirectory.ai</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
 <style>
   :root {
     --bg:       #07080e;
@@ -289,7 +289,23 @@
     box-shadow: 0 8px 24px rgba(0,0,0,0.4);
   }
 
-  /* ── MOBILE RESPONSIVE ── */
+  .drawer-input.required-field { border-color: #ef4444 !important; }
+  .drawer-input-wrap { position: relative; }
+  .req-star { color: #ef4444; font-size: 12px; position: absolute; right: 12px; top: 50%; transform: translateY(-50%); pointer-events: none; }
+  .field-error { font-size: 10px; color: #ef4444; margin-top: 3px; display: none; padding-left: 2px; letter-spacing: 0.04em; }
+  .field-error.show { display: block; }
+
+  /* RGRHCL card special styling */
+  .card.rgrhcl-card { background: linear-gradient(135deg, #0f1018 0%, #141620 100%); }
+  .card.rgrhcl-card:hover { background: linear-gradient(135deg, #161820 0%, #1a1c26 100%); }
+  .card.rgrhcl-card.selected { background: rgba(201,149,42,0.09); }
+  .govt-badge { display: inline-flex; align-items: center; gap: 5px; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25); border-radius: 3px; padding: 3px 8px; font-size: 9px; font-weight: 700; color: #22c55e; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+  .scheme-list { list-style: none; display: flex; flex-direction: column; gap: 4px; margin: 10px 0 16px; }
+  .scheme-list li { font-size: 11px; color: var(--ink-mid); display: flex; align-items: flex-start; gap: 7px; line-height: 1.4; }
+  .scheme-list li::before { content: '◆'; color: var(--gold); flex-shrink: 0; font-size: 8px; margin-top: 3px; }
+  .per-hour-tag { font-size: 10px; color: var(--ink-muted); font-weight: 500; }
+
+
   @media(max-width:640px){
     .how-strip { grid-template-columns: 1fr 1fr; }
     .grid { padding: 0 16px; }
@@ -338,7 +354,7 @@
     <div class="how-step">
       <div class="how-num">02 · PAY</div>
       <h4>Single Checkout</h4>
-      <p>One Razorpay payment for your entire order. UPI, Card, Net Banking.</p>
+      <p>One Cashfree payment for your entire order. UPI, Card, Net Banking.</p>
     </div>
     <div class="how-step">
       <div class="how-num">03 · SHARE</div>
@@ -351,6 +367,47 @@
       <p>Verified PDFs delivered to your WhatsApp within the stated time.</p>
     </div>
   </div>
+</div>
+
+<!-- ═══════════════════════════════
+     SECTION ★ – GOVERNMENT HOUSING SCHEMES
+════════════════════════════════ -->
+<div class="section-label"><h2>★ Government Housing Scheme Consultancy</h2></div>
+<div class="grid">
+
+  <div class="card rgrhcl-card" data-name="RGRHCL Housing Scheme Consultancy" data-price="501" data-delivery="For pre-verification &amp; approval">
+    <div class="pop-tag">★ GOVT</div>
+    <div class="govt-badge">
+      <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      Karnataka Government Enterprise
+    </div>
+    <div class="card-eyebrow">RGRHCL · Housing Schemes · EWS</div>
+    <h3>Rajiv Gandhi Housing Corporation Limited (RGRHCL) — Full Consultancy</h3>
+    <p class="card-desc">End-to-end consultancy for government housing schemes under RGRHCL — a Karnataka Government Enterprise. Eligibility checked, reports prepared, and pre-application guided for pre-verification &amp; approval.</p>
+    <ul class="card-bullets">
+      <li><strong style="color:var(--ink)">Credit Report</strong> — financial eligibility assessment for housing scheme</li>
+      <li><strong style="color:var(--ink)">Asset Report</strong> — current asset declaration and valuation summary</li>
+      <li><strong style="color:var(--ink)">Eligibility Report</strong> — scheme-specific qualification analysis</li>
+      <li><strong style="color:var(--ink)">Pre-Application Process</strong> — guided document checklist and form prep</li>
+    </ul>
+    <div style="background:rgba(201,149,42,0.07);border:1px solid var(--gold-border);border-radius:6px;padding:12px 14px;margin-bottom:16px;">
+      <div style="font-size:10px;font-weight:700;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">Major Schemes Covered</div>
+      <ul class="scheme-list">
+        <li>Basava Vasati Yojana — housing for economically weaker sections</li>
+        <li>Devraj Urs Scheme — housing support for backward communities</li>
+        <li>Chief Minister's One Lakh Housing Scheme (Bengaluru Urban) — urban EWS housing</li>
+      </ul>
+      <div style="font-size:10px;color:var(--ink-muted);line-height:1.6;">Financial support or raw materials provided to eligible beneficiaries for house construction.</div>
+    </div>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹501</span>
+        <span class="card-delivery">For pre-verification &amp; approval</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
 </div>
 
 <!-- ═══════════════════════════════
@@ -698,9 +755,38 @@
 
 </div>
 
+<!-- ═══════════════════════════════
+     SECTION 6 – FILE ARRANGEMENT
+════════════════════════════════ -->
+<div class="section-label"><h2>★ Document Management Services</h2></div>
+<div class="grid">
+
+  <div class="card" data-name="File Arrangement &amp; Scanning (Per Hour)" data-price="799" data-delivery="At your office or home">
+    <div class="pop-tag">★ NEW</div>
+    <div class="card-eyebrow">At-Home / Office · Scan · Index</div>
+    <h3>File Arrangement, Scanning &amp; Indexing Service</h3>
+    <p class="card-desc">Our team visits your home or office to sort, scan, and properly index your physical property and legal documents — creating a clean, searchable digital archive with a structured index.</p>
+    <ul class="card-bullets">
+      <li>Physical sorting and arrangement of all loose files and documents</li>
+      <li>High-quality scanning of each document to PDF</li>
+      <li>Proper labelling and indexing with document reference numbers</li>
+      <li>Digital folder structure created and delivered via WhatsApp / Google Drive</li>
+      <li>At your home or office — we come to you</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹799 <span class="per-hour-tag">/ hour</span></span>
+        <span class="card-delivery">At your location · Book via WhatsApp</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
 <!-- ── TRUST STRIP ── -->
 <div class="trust-strip">
-  <span>Secured by Razorpay</span><span class="sep">·</span>
+  <span>Secured by Cashfree</span><span class="sep">·</span>
   <span>UPI</span><span class="sep">·</span>
   <span>Cards</span><span class="sep">·</span>
   <span>Net Banking</span><span class="sep">·</span>
@@ -755,10 +841,18 @@
         <div class="drawer-total-val" id="drawer-total">₹0</div>
       </div>
       <div class="drawer-fields">
-        <input id="drawer-name"  type="text" class="drawer-input" placeholder="Your Name"
-          onfocus="this.style.borderColor='#2563eb'" onblur="this.style.borderColor='#2a2d3a'"/>
-        <input id="drawer-phone" type="tel"  class="drawer-input" placeholder="WhatsApp Number (for document delivery)"
-          onfocus="this.style.borderColor='#2563eb'" onblur="this.style.borderColor='#2a2d3a'"/>
+        <div class="drawer-input-wrap">
+          <input id="drawer-name" type="text" class="drawer-input" placeholder="Your Full Name *" required autocomplete="name"
+            onfocus="this.style.borderColor='#2563eb'" onblur="validateField(this,'name-err')"/>
+          <span class="req-star">★</span>
+          <div class="field-error" id="name-err">Full name is required</div>
+        </div>
+        <div class="drawer-input-wrap">
+          <input id="drawer-phone" type="tel" class="drawer-input" placeholder="WhatsApp Number (10 digits) *" required autocomplete="tel" maxlength="10"
+            onfocus="this.style.borderColor='#2563eb'" onblur="validateField(this,'phone-err')"/>
+          <span class="req-star">★</span>
+          <div class="field-error" id="phone-err">Valid 10-digit WhatsApp number required</div>
+        </div>
       </div>
       <button class="btn-pay-now" id="drawer-pay-btn" onclick="initiateCheckout()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
@@ -768,7 +862,7 @@
         <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         Order via WhatsApp Instead
       </a>
-      <div class="secure-note">🔒 SECURED BY RAZORPAY · UPI · CARDS · NET BANKING · WALLETS</div>
+      <div class="secure-note">🔒 SECURED BY CASHFREE · UPI · CARDS · NET BANKING · WALLETS</div>
     </div>
   </div>
 </div>
@@ -777,7 +871,7 @@
 <div id="pay-toast">✅ Payment Successful! Documents will be sent to your WhatsApp.</div>
 
 <!-- ══════════════════════════════════════════
-     CART + RAZORPAY LOGIC
+     CART + CASHFREE LOGIC
 ══════════════════════════════════════════ -->
 <script>
 // ─── CART STATE ───────────────────────────────────────────────────
@@ -792,6 +886,36 @@ function cartTotal() {
   return cart.reduce(function(s, i){ return s + i.price; }, 0);
 }
 
+// ─── FIELD VALIDATION ─────────────────────────────────────────────
+function validateField(input, errId) {
+  var err = document.getElementById(errId);
+  var val = input.value.trim();
+  var invalid = false;
+
+  if (errId === 'phone-err') {
+    invalid = !val || !/^[6-9]\d{9}$/.test(val);
+  } else {
+    invalid = !val || val.length < 2;
+  }
+
+  if (invalid) {
+    input.style.borderColor = '#ef4444';
+    if (err) err.classList.add('show');
+  } else {
+    input.style.borderColor = '#22c55e';
+    if (err) err.classList.remove('show');
+  }
+  return !invalid;
+}
+
+function validateAll() {
+  var nameOk  = validateField(document.getElementById('drawer-name'),  'name-err');
+  var phoneOk = validateField(document.getElementById('drawer-phone'), 'phone-err');
+  if (!nameOk)  { document.getElementById('drawer-name').focus(); return false; }
+  if (!phoneOk) { document.getElementById('drawer-phone').focus(); return false; }
+  return true;
+}
+
 // ─── TOGGLE ADD/REMOVE FROM CART ──────────────────────────────────
 function toggleCart(btn) {
   var card     = btn.closest('.card');
@@ -802,12 +926,10 @@ function toggleCart(btn) {
   var idx = cart.findIndex(function(i){ return i.name === name; });
 
   if (idx === -1) {
-    // Add
     cart.push({ name: name, price: price, delivery: delivery, cardEl: card, btnEl: btn });
     card.classList.add('selected');
     btn.textContent = '✓ Added';
   } else {
-    // Remove
     cart.splice(idx, 1);
     card.classList.remove('selected');
     btn.textContent = '+ Add to Cart';
@@ -876,13 +998,11 @@ function updateDrawer() {
 
   document.getElementById('drawer-total').textContent = fmt(total);
 
-  // Update pay button label
-  var payBtn = document.getElementById('drawer-pay-btn');
+  var payBtn   = document.getElementById('drawer-pay-btn');
   var payLabel = document.getElementById('drawer-pay-label');
   payBtn.disabled = cart.length === 0;
   payLabel.textContent = cart.length === 0 ? 'Pay Now' : 'Pay ' + fmt(total) + ' Now';
 
-  // WhatsApp fallback
   refreshWaBtn();
 }
 
@@ -921,24 +1041,30 @@ function refreshWaBtn() {
   if (el) el.addEventListener('input', refreshWaBtn);
 });
 
-// ─── RAZORPAY CHECKOUT ────────────────────────────────────────────
+// ─── CASHFREE CHECKOUT ────────────────────────────────────────────
 async function initiateCheckout() {
   if (cart.length === 0) return;
+  if (!validateAll()) return;
 
   var btn   = document.getElementById('drawer-pay-btn');
   var label = document.getElementById('drawer-pay-label');
-  var name  = (document.getElementById('drawer-name')  || {}).value || '';
-  var phone = (document.getElementById('drawer-phone') || {}).value || '';
+  var name  = document.getElementById('drawer-name').value.trim();
+  var phone = document.getElementById('drawer-phone').value.trim();
   var total = cartTotal();
 
-  // Build items array for the order
+  if (sessionStorage.getItem('ld_instant_payment_in_progress')) {
+    alert('A payment is already in progress. Please complete it or refresh the page before trying again.');
+    return;
+  }
+  sessionStorage.setItem('ld_instant_payment_in_progress', '1');
+
   var items = cart.map(function(i){ return { name: i.name, amount: i.price, delivery: i.delivery }; });
 
   btn.disabled = true;
   label.textContent = 'Creating order…';
 
   try {
-    // Step 1: Create a single Razorpay order for the cart total
+    // Step 1: Create a single Cashfree order for the cart total
     var orderRes = await fetch('/api/create-order', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -947,9 +1073,10 @@ async function initiateCheckout() {
         currency: 'INR',
         receipt:  'LD-CART-' + Date.now(),
         items:    items,
+        customer: { name: name, phone: phone },
         notes: {
           services: items.map(function(i){ return i.name; }).join(', '),
-          customer: name || 'Guest'
+          customer: name
         }
       })
     });
@@ -959,53 +1086,27 @@ async function initiateCheckout() {
     if (!orderRes.ok || !orderData.order_id) {
       throw new Error(orderData.error || 'Order creation failed');
     }
+    if (!orderData.payment_session_id) {
+      throw new Error(orderData.error || 'Payment session missing');
+    }
 
     label.textContent = 'Opening payment…';
-
-    // Build a readable description for the Razorpay overlay
-    var descText = items.length === 1
-      ? items[0].name
-      : items.length + ' services — ' + items.map(function(i){ return i.name; }).join(', ');
-
-    // Step 2: Open Razorpay Standard Checkout
-    var options = {
-      key:         orderData.key_id,
-      amount:      orderData.amount,
-      currency:    orderData.currency,
-      name:        'Legaldirectory.ai',
-      description: descText,
-      image:       'https://legaldirectory.in/og-image.png',
-      order_id:    orderData.order_id,
-      theme:       { color: '#c9952a' },
-      prefill: {
-        name:    name,
-        contact: phone ? (phone.startsWith('+') ? phone : '+91' + phone) : ''
-      },
-      notes: {
-        services: items.map(function(i){ return i.name; }).join(', ')
-      },
-      modal: {
-        ondismiss: function() {
-          btn.disabled = false;
-          label.textContent = 'Pay ' + fmt(total) + ' Now';
-        }
-      },
-      handler: function(response) {
-        verifyPayment(response, items, total, name, phone);
-      }
-    };
-
-    var rzp = new Razorpay(options);
-    rzp.on('payment.failed', function(response) {
-      alert('Payment failed: ' + (response.error.description || 'Please try again.'));
-      btn.disabled = false;
-      label.textContent = 'Pay ' + fmt(total) + ' Now';
-    });
+    sessionStorage.setItem('ld_instant_pending', JSON.stringify({
+      order_id: orderData.order_id,
+      items: items,
+      total: total,
+      customer: { name: name, phone: phone }
+    }));
 
     closeDrawer();
-    rzp.open();
+    var cashfree = Cashfree({ mode: orderData.mode || 'production' });
+    await cashfree.checkout({
+      paymentSessionId: orderData.payment_session_id,
+      redirectTarget: '_self'
+    });
 
   } catch(err) {
+    sessionStorage.removeItem('ld_instant_payment_in_progress');
     console.error('Checkout error:', err);
     alert('Could not initiate payment: ' + err.message + '\n\nPlease use the WhatsApp option or try again.');
     btn.disabled = false;
@@ -1013,16 +1114,14 @@ async function initiateCheckout() {
   }
 }
 
-// Step 3: Verify payment signature on server
-async function verifyPayment(rzpResponse, items, total, name, phone) {
+// ─── CASHFREE VERIFY ──────────────────────────────────────────────
+async function verifyPayment(orderId, items, total, name, phone) {
   try {
     var verRes = await fetch('/api/verify-payment', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify({
-        razorpay_order_id:   rzpResponse.razorpay_order_id,
-        razorpay_payment_id: rzpResponse.razorpay_payment_id,
-        razorpay_signature:  rzpResponse.razorpay_signature,
+        order_id: orderId,
         items:    items,
         amount:   fmt(total),
         customer: { name: name, phone: phone }
@@ -1033,32 +1132,57 @@ async function verifyPayment(rzpResponse, items, total, name, phone) {
 
     if (verData.success) {
       showToast();
-      // WhatsApp notification to team
       var ts  = new Date().toLocaleString('en-IN', {timeZone:'Asia/Kolkata'});
       var itemLines = items.map(function(i){ return '• ' + i.name + ' (' + fmt(i.price) + ')'; }).join('\n');
       var wa  = encodeURIComponent(
         '✅ *Payment Received — Legaldirectory.ai*\n\n' +
         'Services:\n' + itemLines + '\n\n' +
-        'Total: ' + fmt(total) + '\n' +
-        'Payment ID: ' + rzpResponse.razorpay_payment_id + '\n' +
-        (name  ? 'Name: '  + name  + '\n' : '') +
-        (phone ? 'Phone: ' + phone + '\n' : '') +
-        'Time: ' + ts
+        'Total: '      + fmt(total) + '\n' +
+        'Order ID: '   + orderId   + '\n' +
+        'Payment ID: ' + (verData.payment_id || '') + '\n' +
+        'Name: '  + name  + '\n' +
+        'Phone: ' + phone + '\n' +
+        'Time: '  + ts
       );
       setTimeout(function(){
         window.open('https://wa.me/919008999968?text=' + wa, '_blank');
       }, 800);
-
-      // Clear cart after success
       clearCartAfterSuccess();
     } else {
-      alert('Payment received but verification failed. Please contact us with your payment ID: ' + rzpResponse.razorpay_payment_id);
+      alert('Payment is pending or verification failed. Please contact us with your Order ID: ' + orderId);
     }
   } catch(err) {
     console.error('Verify error:', err);
-    showToast(); // payment likely went through
+    alert('Payment verification is pending. Please contact us with your Order ID: ' + orderId);
   }
 }
+
+async function handleCashfreeReturn() {
+  var params  = new URLSearchParams(window.location.search);
+  var orderId = params.get('order_id') || params.get('orderId');
+  if (!orderId) return;
+  var processedKey = 'ld_instant_order_processed_' + orderId;
+  if (localStorage.getItem(processedKey)) {
+    sessionStorage.removeItem('ld_instant_payment_in_progress');
+    return;
+  }
+
+  var pending = null;
+  try { pending = JSON.parse(sessionStorage.getItem('ld_instant_pending') || 'null'); } catch(e) {}
+  sessionStorage.removeItem('ld_instant_pending');
+
+  await verifyPayment(
+    orderId,
+    pending && pending.items    ? pending.items             : [],
+    pending && pending.total    ? pending.total             : 0,
+    pending && pending.customer ? pending.customer.name     : '',
+    pending && pending.customer ? pending.customer.phone    : ''
+  );
+  localStorage.setItem(processedKey, String(Date.now()));
+  sessionStorage.removeItem('ld_instant_payment_in_progress');
+}
+
+window.addEventListener('load', handleCashfreeReturn);
 
 function clearCartAfterSuccess() {
   cart.forEach(function(item){
@@ -1075,6 +1199,7 @@ function showToast() {
   t.style.display = 'block';
   setTimeout(function(){ t.style.display = 'none'; }, 7000);
 }
+
 </script>
 
 </body>
