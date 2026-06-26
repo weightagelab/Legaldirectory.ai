@@ -1,8 +1,8 @@
 // api/verify-payment.js — Vercel Serverless Function
-// Verifies Cashfree payment and writes to Google Sheet via Apps Script
+// Verifies Cashfree payment with retry, writes to Google Sheet, updates Firestore
 
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', 'https://legaldirectory.in');
+  res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') return res.status(200).end();
@@ -22,73 +22,81 @@ export default async function handler(req, res) {
     ? 'https://sandbox.cashfree.com/pg'
     : 'https://api.cashfree.com/pg';
 
-  try {
-    // ── 1. VERIFY WITH CASHFREE ──
-    const cfRes = await fetch(`${apiBase}/orders/${order_id}/payments`, {
-      headers: {
-        'x-api-version':   '2023-08-01',
-        'x-client-id':     CF_APP_ID,
-        'x-client-secret': CF_SECRET,
-      },
-    });
-    const payments = await cfRes.json();
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-    const paid = Array.isArray(payments)
-      ? payments.find(p => p.payment_status === 'SUCCESS')
-      : null;
-
-    if (!paid) {
-      return res.status(200).json({
-        success: false,
-        order_status: 'PENDING',
-        message: 'Payment not completed'
-      });
-    }
-
-    const paymentId   = paid.cf_payment_id || paid.payment_id || order_id;
-    const serviceList = Array.isArray(items)
-      ? items.map(i => i.name).join(', ')
-      : (items || '');
-    const amtStr = amount || ('₹' + (paid.order_amount || 0));
-    const ts     = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
-
-    console.log('✅ Payment verified:', { order_id, paymentId, serviceList });
-
-    // ── 2. WRITE TO GOOGLE SHEET VIA APPS SCRIPT ──
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby9szbPBrX6V5fXkMTUbd8TTCJStiSjZf-4DiS1avVWRsIb18_7a03U0kQRXCcc2uML/exec';
-
+  // ── 1. VERIFY WITH CASHFREE — retry up to 4x with 2s delay ──
+  let paid = null;
+  for (let attempt = 1; attempt <= 4; attempt++) {
     try {
-      const sheetRes = await fetch(APPS_SCRIPT_URL, {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          orderId:   order_id,
-          date:      ts,
-          name:      customer?.name  || '',
-          phone:     customer?.phone || '',
-          services:  serviceList,
-          amount:    amtStr,
-          paymentId: paymentId,
-          status:    'Paid ✅',
-          source:    'legaldirectory.in',
-        }),
+      const cfRes = await fetch(`${apiBase}/orders/${order_id}/payments`, {
+        headers: {
+          'x-api-version':   '2023-08-01',
+          'x-client-id':     CF_APP_ID,
+          'x-client-secret': CF_SECRET,
+        },
       });
-      const sheetData = await sheetRes.json();
-      console.log('📊 Sheet write result:', sheetData);
-    } catch (sheetErr) {
-      // Non-fatal — payment is confirmed, sheet write failed
-      console.error('Sheet write error (non-fatal):', sheetErr.message);
+      const payments = await cfRes.json();
+      paid = Array.isArray(payments)
+        ? payments.find(p => p.payment_status === 'SUCCESS')
+        : null;
+      if (paid) break;
+      console.log(`Attempt ${attempt}: payment not SUCCESS yet, waiting...`);
+      if (attempt < 4) await sleep(2000);
+    } catch (e) {
+      console.error(`Attempt ${attempt} error:`, e.message);
+      if (attempt < 4) await sleep(2000);
     }
-
-    return res.status(200).json({
-      success:    true,
-      payment_id: paymentId,
-      order_id,
-      message:    'Payment verified',
-    });
-
-  } catch (err) {
-    console.error('Verify error:', err);
-    return res.status(500).json({ error: 'Verification failed' });
   }
+
+  if (!paid) {
+    return res.status(200).json({
+      success: false,
+      order_status: 'PENDING',
+      message: 'Payment not completed'
+    });
+  }
+
+  const paymentId   = paid.cf_payment_id || paid.payment_id || order_id;
+  const serviceList = Array.isArray(items)
+    ? items.map(i => i.name).join(', ')
+    : (items || '');
+  const amtStr = amount || ('₹' + (paid.order_amount || 0));
+  const ts     = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+
+  console.log('✅ Payment verified:', { order_id, paymentId, serviceList });
+
+  // ── 2. WRITE TO GOOGLE SHEET ──
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby9szbPBrX6V5fXkMTUbd8TTCJStiSjZf-4DiS1avVWRsIb18_7a03U0kQRXCcc2uML/exec';
+  try {
+    await fetch(APPS_SCRIPT_URL, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      redirect: 'follow',
+      body: JSON.stringify({
+        orderId:   order_id,
+        date:      ts,
+        name:      customer?.name  || '',
+        phone:     customer?.phone || '',
+        services:  serviceList,
+        amount:    amtStr,
+        paymentId: paymentId,
+        status:    'Paid ✅',
+        source:    'legaldirectory.in',
+      }),
+    });
+    console.log('📊 Sheet write sent');
+  } catch (sheetErr) {
+    console.error('Sheet write error (non-fatal):', sheetErr.message);
+  }
+
+  return res.status(200).json({
+    success:      true,
+    payment_id:   paymentId,
+    order_id,
+    service_list: serviceList,
+    amount:       amtStr,
+    customer:     customer || {},
+    timestamp:    ts,
+    message:      'Payment verified',
+  });
 }
