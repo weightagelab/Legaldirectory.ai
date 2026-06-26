@@ -674,8 +674,8 @@
         <span class="drawer-total-val">₹<span id="drawer-total">0</span></span>
       </div>
       <div class="drawer-fields">
-        <input type="text" class="drawer-input" id="customer-name" placeholder="Your Name (optional)">
-        <input type="tel" class="drawer-input" id="customer-phone" placeholder="Your WhatsApp Number (optional)">
+        <input type="text" class="drawer-input" id="customer-name" placeholder="Your Name *" required>
+        <input type="tel" class="drawer-input" id="customer-phone" placeholder="Your WhatsApp Number *" required>
       </div>
       <button class="btn-pay-now" id="pay-btn" onclick="handleCheckout()">
         <span>₹</span><span id="pay-amount">0</span><span>Pay Now</span>
@@ -903,10 +903,12 @@ async function handleCheckout() {
   try {
     var name = document.getElementById('customer-name').value.trim();
     var phone = document.getElementById('customer-phone').value.trim();
+    if (!name) { alert('Please enter your full name.'); btn.disabled = false; payBtn.disabled = false; return; }
+    if (!phone) { alert('Please enter your WhatsApp number.'); btn.disabled = false; payBtn.disabled = false; return; }
     var total = cart.reduce(function(sum, item) { return sum + item.price; }, 0);
     
     var items = cart.map(function(item) {
-      return { name: item.name, price: item.price };
+      return { name: item.name, price: item.price, amount: item.price };
     });
     
     var orderRes = await fetch('/api/create-order', {
@@ -936,11 +938,13 @@ async function handleCheckout() {
     }
     
     closeDrawer();
+    sessionStorage.setItem('ld_pending', JSON.stringify({ order_id: orderData.order_id, service: items.map(function(i){ return i.name; }).join(', '), amount: '₹' + fmt(total), items: items, total: total, customer: { name: name, phone: phone }, source: 'instant-services' }));
+    await saveOrderToFirestore(orderData.order_id, '', items.map(function(i){ return i.name; }).join(', '), '₹' + fmt(total), name, phone, 'awaiting');
     
     var cashfree = Cashfree({ mode: orderData.mode || 'production' });
     await cashfree.checkout({
       paymentSessionId: orderData.payment_session_id,
-      redirectTarget: '_modal'
+      redirectTarget: '_self'
     });
     
     await verifyPayment(orderData.order_id, items, total, name, phone);
@@ -992,14 +996,33 @@ async function verifyPayment(orderId, items, total, name, phone) {
         window.open('https://wa.me/919008999968?text=' + wa, '_blank');
       }, 800);
       
+      await saveOrderToFirestore(orderId, verData.payment_id || '', items.map(function(i){ return i.name; }).join(', '), verData.amount || ('₹' + fmt(total)), name, phone, 'confirmed');
       clearCartAfterSuccess();
+      window.location.href = 'dashboard.html?payment=success&order_id=' + encodeURIComponent(orderId) + '&amount=' + encodeURIComponent(verData.amount || ('₹' + fmt(total)));
     } else {
-      alert('Payment status: ' + (verData.order_status || 'Pending'));
+      await saveOrderToFirestore(orderId, '', items.map(function(i){ return i.name; }).join(', '), '₹' + fmt(total), name, phone, 'awaiting');
+      window.location.href = 'dashboard.html?payment=pending&order_id=' + encodeURIComponent(orderId) + '&amount=' + encodeURIComponent('₹' + fmt(total));
     }
   } catch(err) {
     console.error('Verify error:', err);
-    alert('Payment verification pending. Order ID: ' + orderId);
+    await saveOrderToFirestore(orderId, '', items.map(function(i){ return i.name; }).join(', '), '₹' + fmt(total), name, phone, 'awaiting');
+    window.location.href = 'dashboard.html?payment=pending&order_id=' + encodeURIComponent(orderId) + '&amount=' + encodeURIComponent('₹' + fmt(total));
   }
+}
+
+// ── SAVE ORDER TO FIRESTORE ─────────────────────────────────────────
+function saveOrderToFirestore(orderId, paymentId, services, amount, name, phone, status) {
+  try {
+    if (typeof firebase === 'undefined' || !firebase.firestore) return Promise.resolve();
+    var db = firebase.firestore();
+    var auth = firebase.auth ? firebase.auth() : null;
+    var user = auth && auth.currentUser;
+    var data = { orderId: orderId, paymentId: paymentId || '', serviceName: services || 'Instant Service', service: services || 'Instant Service', amount: amount || '', customer: { name: name || '', phone: phone || '' }, status: status || 'awaiting', paymentStatus: status === 'confirmed' ? 'paid' : 'awaiting', updatedAt: firebase.firestore.FieldValue.serverTimestamp(), source: 'instant-services' };
+    if (status === 'awaiting') data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+    if (user) data.uid = user.uid;
+    localStorage.setItem('ld_last_order', JSON.stringify({ id: orderId, orderId: orderId, paymentId: paymentId || '', serviceName: services || 'Instant Service', amount: amount || '', customer: data.customer, status: status || 'awaiting', updatedAt: Date.now(), source: 'instant-services' }));
+    return db.collection('orders').doc(orderId).set(data, { merge: true });
+  } catch(e) { console.error('Firestore error:', e); return Promise.resolve(); }
 }
 
 function clearCartAfterSuccess() {
@@ -1017,6 +1040,19 @@ function showToast() {
   t.style.display = 'block';
   setTimeout(function() { t.style.display = 'none'; }, 5000);
 }
+
+
+async function handleCashfreeReturn() {
+  var params = new URLSearchParams(window.location.search);
+  var orderId = params.get('order_id') || params.get('orderId');
+  if (!orderId) return;
+  var pending = null;
+  try { pending = JSON.parse(sessionStorage.getItem('ld_pending') || 'null'); } catch(e) {}
+  sessionStorage.removeItem('ld_pending');
+  if (!pending) { window.location.href = 'dashboard.html?payment=pending&order_id=' + encodeURIComponent(orderId); return; }
+  await verifyPayment(orderId, pending.items || [], pending.total || 0, pending.customer?.name || '', pending.customer?.phone || '');
+}
+window.addEventListener('DOMContentLoaded', handleCashfreeReturn);
 
 // Initialize
 updateCartBar();
