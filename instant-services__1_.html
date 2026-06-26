@@ -6,9 +6,6 @@
 <title>Instant Services – Legaldirectory.ai</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
 <style>
   :root {
@@ -951,10 +948,8 @@ async function handleCheckout() {
       source: 'instant-services'
     }));
 
-    // Save to Firestore BEFORE payment — shows in dashboard immediately
-    saveOrderToFirestore(orderData.order_id, '', items.map(function(i){return i.name;}).join(', '), '₹'+fmt(total), name, phone, 'awaiting');
-
     var cashfree = Cashfree({ mode: orderData.mode || 'production' });
+    // Use _self so Cashfree redirects back after payment — verify runs on landing
     cashfree.checkout({
       paymentSessionId: orderData.payment_session_id,
       redirectTarget: '_self'
