@@ -6,7 +6,7 @@
 <title>Instant Services – Legaldirectory.ai</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <style>
   :root {
     --bg:       #07080e;
@@ -133,10 +133,8 @@
     border: 1px solid var(--border2); border-radius: 5px; padding: 9px 16px;
     cursor: pointer; display: inline-flex; align-items: center; gap: 5px;
     white-space: nowrap; transition: all 0.15s; letter-spacing: 0.01em; flex-shrink: 0;
-    font-family: inherit;
   }
-  .btn-add:hover:not(:disabled) { background: var(--border2); }
-  .btn-add:disabled { opacity: 0.6; cursor: not-allowed; }
+  .btn-add:hover { background: var(--border2); }
   .card.selected .btn-add {
     background: var(--gold); color: #000; border-color: var(--gold);
   }
@@ -177,8 +175,7 @@
     cursor: pointer; display: inline-flex; align-items: center; gap: 7px;
     white-space: nowrap; transition: opacity 0.15s; letter-spacing: 0.02em; font-family: inherit;
   }
-  .btn-checkout:hover:not(:disabled) { opacity: 0.88; }
-  .btn-checkout:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-checkout:hover { opacity: 0.88; }
   @media(max-width:480px){
     .cart-bar-inner { flex-direction: column; align-items: stretch; padding: 12px 16px; gap: 10px; }
     .cart-actions { justify-content: stretch; }
@@ -248,7 +245,7 @@
     display: flex; align-items: center; justify-content: center; gap: 9px;
     margin-bottom: 10px; transition: opacity 0.15s;
   }
-  .btn-pay-now:hover:not(:disabled) { opacity: 0.88; }
+  .btn-pay-now:hover { opacity: 0.88; }
   .btn-pay-now:disabled { opacity: 0.5; cursor: not-allowed; }
 
   .btn-wa-order {
@@ -256,7 +253,6 @@
     border-radius: 6px; padding: 12px;
     display: flex; align-items: center; justify-content: center; gap: 8px;
     text-decoration: none; font-family: inherit; letter-spacing: 0.02em; transition: opacity 0.15s;
-    border: none; cursor: pointer;
   }
   .btn-wa-order:hover { opacity: 0.88; }
 
@@ -319,7 +315,7 @@
 
 <!-- ── BANNER ── -->
 <section class="banner">
-  <div class="banner-eyebrow">Instant Services</div>
+  <div class="banner-eyebrow">⚡ Instant Services</div>
   <h1>Karnataka Property<br><em>Documents. Delivered.</em></h1>
   <p class="banner-sub">Pick one or more services, add them to your cart, and pay in a single checkout. Documents delivered to your WhatsApp.</p>
   <div class="banner-badges">
@@ -342,7 +338,7 @@
     <div class="how-step">
       <div class="how-num">02 · PAY</div>
       <h4>Single Checkout</h4>
-      <p>One Cashfree payment for your entire order. UPI, Card, Net Banking.</p>
+      <p>One Razorpay payment for your entire order. UPI, Card, Net Banking.</p>
     </div>
     <div class="how-step">
       <div class="how-num">03 · SHARE</div>
@@ -360,13 +356,68 @@
 <!-- ═══════════════════════════════
      SECTION 1 – PROPERTY RECORDS
 ════════════════════════════════ -->
-<div class="section-label"><h2>Property Records &amp; Search</h2></div>
+<div class="section-label"><h2>Property Records &amp; Certificates</h2></div>
 <div class="grid">
 
-  <div class="card" data-name="Karnataka Certified Copy" data-price="299" data-delivery="1–2 working days">
-    <div class="card-eyebrow">GBA · Registered Office</div>
+  <div class="card" data-name="Karnataka Certified Copy" data-price="299" data-delivery="2–3 working days">
+    <div class="pop-tag">POPULAR</div>
+    <div class="card-eyebrow">KA Stamps &amp; Registration · Official</div>
     <h3>Karnataka Certified Copy</h3>
-    <p class="card-desc">Certified extract from the land register (RTC) showing current ownership, encumbrances, and property classification.</p>
+    <p class="card-desc">Official authenticated copy of a registered property document issued by the Karnataka Department of Stamps and Registration. Legally valid for disputes, loans, and ownership proof.</p>
+    <ul class="card-bullets">
+      <li>Legal proof of property ownership</li>
+      <li>Required for property transactions &amp; loan applications</li>
+      <li>Authenticated by SRO / Kaveri Registry</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">2–3 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Encumbrance Certificate (EC)" data-price="299" data-delivery="Same day">
+    <div class="card-eyebrow">Kaveri Online · Encumbrance</div>
+    <h3>Encumbrance Certificate (EC)</h3>
+    <p class="card-desc">Search registered transactions and encumbrance history from the Karnataka Kaveri registry. Essential before buying, selling, or applying for a home loan.</p>
+    <ul class="card-bullets">
+      <li>Sale, mortgage, gift &amp; release history</li>
+      <li>5 / 13 / 20-year or custom period</li>
+      <li>Search by Survey No, Party Name, Flat, Khata &amp; more</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Bhoomi RTC / Pahani" data-price="299" data-delivery="Same day">
+    <div class="card-eyebrow">Bhoomi Portal · Agricultural Land</div>
+    <h3>Bhoomi RTC / Pahani</h3>
+    <p class="card-desc">Record of Rights, Tenancy and Crops for agricultural land in Karnataka. Confirms landholder details, survey number, extent, crop entries, and mutation references.</p>
+    <ul class="card-bullets">
+      <li>Landholder &amp; khatedar details</li>
+      <li>Survey no., hissa &amp; land extent</li>
+      <li>Regular or Certified Digitally Signed</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Karnataka Mutation Record" data-price="299" data-delivery="1–2 working days">
+    <div class="card-eyebrow">KA Revenue Records · Ownership</div>
+    <h3>Karnataka Mutation Record</h3>
+    <p class="card-desc">Tracks property ownership changes in government records after sale, inheritance, or transfer by gift, will, or partition. Ensures new owner is legally recorded.</p>
     <ul class="card-bullets">
       <li>Post-sale / inheritance ownership update record</li>
       <li>Legal &amp; taxation record confirmation</li>
@@ -382,9 +433,9 @@
   </div>
 
   <div class="card" data-name="E-Khata / E-Swathu" data-price="299" data-delivery="Same day">
-    <div class="card-eyebrow">GBA · Municipal · Gram Panchayat</div>
+    <div class="card-eyebrow">BBMP · Municipal · Gram Panchayat</div>
     <h3>E-Khata / E-Swathu</h3>
-    <p class="card-desc">Property-account, ownership, tax, and local-body details for your property across GBA, Municipal, and Gram Panchayat areas.</p>
+    <p class="card-desc">Property-account, ownership, tax, and local-body details for your property across BBMP, Municipal, and Gram Panchayat areas.</p>
     <ul class="card-bullets">
       <li>Property ID, khata &amp; assessment details</li>
       <li>Local-body classification &amp; tax account</li>
@@ -451,12 +502,12 @@
 <div class="section-label"><h2>Property Legal Documents</h2></div>
 <div class="grid">
 
-  <div class="card" data-name="GBA Sanction Plan & Documents" data-price="1499" data-delivery="2–3 working days">
-    <div class="card-eyebrow">GBA · Building Approval</div>
-    <h3>GBA Sanction Plan &amp; Documents</h3>
-    <p class="card-desc">Verified GBA building sanction plan, approval documents, and property layout details for your Bengaluru property. Essential for transactions and loan applications.</p>
+  <div class="card" data-name="BBMP Sanction Plan & Documents" data-price="1499" data-delivery="2–3 working days">
+    <div class="card-eyebrow">BBMP · Building Approval</div>
+    <h3>BBMP Sanction Plan &amp; Documents</h3>
+    <p class="card-desc">Verified BBMP building sanction plan, approval documents, and property layout details for your Bengaluru property. Essential for transactions and loan applications.</p>
     <ul class="card-bullets">
-      <li>GBA sanction plan retrieval</li>
+      <li>BBMP sanction plan retrieval</li>
       <li>Building approval layout &amp; schedule</li>
       <li>Property dimensions &amp; classification</li>
       <li>Certified government document</li>
@@ -554,20 +605,20 @@
     </div>
   </div>
 
-  <div class="card" data-name="Property Registration Support" data-price="2999" data-delivery="3–5 working days">
-    <div class="card-eyebrow">Registration · Legal Support</div>
-    <h3>Property Registration Support</h3>
-    <p class="card-desc">End-to-end registration support including Sale Deed drafting, Encumbrance clearance, and document verification by a senior property lawyer.</p>
+  <div class="card" data-name="Loan Document Package (Agricultural)" data-price="1299" data-delivery="2–3 days">
+    <div class="card-eyebrow">Farm Loan · Agricultural Credit</div>
+    <h3>Loan Document Package (Agricultural)</h3>
+    <p class="card-desc">Agricultural loan package: RTC, Mutation Record, Property Tax, Survey documents, and government record clearances for farm credit applications.</p>
     <ul class="card-bullets">
-      <li>Sale Deed drafting &amp; review</li>
-      <li>Encumbrance Certificate verification</li>
-      <li>Registration application assistance</li>
-      <li>Document coordination with registrar</li>
+      <li>RTC / Pahani records</li>
+      <li>Certified Mutation Record</li>
+      <li>Property tax &amp; survey documents</li>
+      <li>Government clearance confirmation</li>
     </ul>
     <div class="card-footer">
       <div class="card-price-wrap">
-        <span class="card-price">₹2,999</span>
-        <span class="card-delivery">3–5 working days</span>
+        <span class="card-price">₹1,299</span>
+        <span class="card-delivery">2–3 days</span>
       </div>
       <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
     </div>
@@ -576,44 +627,26 @@
 </div>
 
 <!-- ═══════════════════════════════
-     SECTION 3 – LEGAL SERVICES
+     SECTION 3 – DIGITAL TRANSITION
 ════════════════════════════════ -->
-<div class="section-label"><h2>Legal Services &amp; Consulting</h2></div>
+<div class="section-label"><h2>Digital Record Transition</h2></div>
 <div class="grid">
 
-  <div class="card" data-name="WILL Drafting & Registration" data-price="4999" data-delivery="3–5 working days">
-    <div class="card-eyebrow">Estate Planning · Legal</div>
-    <h3>WILL Drafting &amp; Registration</h3>
-    <p class="card-desc">Comprehensive will drafting and notarization by a senior lawyer, including guardianship clauses, property allocations, and succession planning.</p>
+  <div class="card" data-name="Convert Khata to E-Aasthi" data-price="2000" data-delivery="7–14 working days">
+    <div class="pop-tag">NEW</div>
+    <div class="card-eyebrow">BBMP · Municipal · Town Panchayat</div>
+    <h3>Convert Khata to E-Aasthi</h3>
+    <p class="card-desc">Digital migration of your property record from E-Khata to E-Aasthi — Karnataka's GIS-linked, real-time property registry, reducing fraud risk.</p>
     <ul class="card-bullets">
-      <li>Will drafting customized to your estate</li>
-      <li>Guardianship &amp; executorship clauses</li>
-      <li>Notarization &amp; registration support</li>
-      <li>Consultation on succession planning</li>
+      <li>GIS-linked real-time ownership certificates</li>
+      <li>Updated tax receipts &amp; boundary maps</li>
+      <li>Required for buying, selling &amp; loan applications</li>
+      <li>Covers BBMP, Municipal &amp; Town Panchayat areas</li>
     </ul>
     <div class="card-footer">
       <div class="card-price-wrap">
-        <span class="card-price">₹4,999</span>
-        <span class="card-delivery">3–5 working days</span>
-      </div>
-      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
-    </div>
-  </div>
-
-  <div class="card" data-name="Property Search Report" data-price="4999" data-delivery="2–3 working days">
-    <div class="card-eyebrow">Title Search · Legal Due Diligence</div>
-    <h3>Property Search Report</h3>
-    <p class="card-desc">Comprehensive title search covering ownership history, encumbrances, disputes, and legal status. Recommended before any property transaction.</p>
-    <ul class="card-bullets">
-      <li>Full ownership history verification</li>
-      <li>Encumbrance &amp; dispute search</li>
-      <li>Loan &amp; mortgage status check</li>
-      <li>Legal opinion on title clarity</li>
-    </ul>
-    <div class="card-footer">
-      <div class="card-price-wrap">
-        <span class="card-price">₹4,999</span>
-        <span class="card-delivery">2–3 working days</span>
+        <span class="card-price">₹2,000</span>
+        <span class="card-delivery">7–14 working days</span>
       </div>
       <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
     </div>
@@ -621,220 +654,180 @@
 
 </div>
 
-<!-- ──────────────────────────────
-     TRUST STRIP
-──────────────────────────────── -->
+<!-- ═══════════════════════════════
+     SECTION 4 – UTILITY SERVICES
+════════════════════════════════ -->
+<div class="section-label"><h2>Utility &amp; Connection Services</h2></div>
+<div class="grid">
+
+  <div class="card" data-name="New Water Connection (BWSSB)" data-price="3000" data-delivery="Up to 30 days">
+    <div class="card-eyebrow">BWSSB · Bangalore Water Supply</div>
+    <h3>New Water Connection (BWSSB)</h3>
+    <p class="card-desc">Secure a new Bangalore Water Supply and Sewerage Board connection. We manage the entire application end-to-end.</p>
+    <ul class="card-bullets">
+      <li>₹1,500 upfront (deducted from final fee)</li>
+      <li>Documents collected via WhatsApp</li>
+      <li>Final connection within ~30 days</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹3,000</span>
+        <span class="card-delivery">Up to 30 days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="BESCOM Name Transfer" data-price="7499" data-delivery="3–4 weeks">
+    <div class="card-eyebrow">BESCOM · Electricity Name Transfer</div>
+    <h3>BESCOM Name Transfer</h3>
+    <p class="card-desc">Transfer your Bangalore property's electricity bill to your name without visiting a BESCOM office. We handle all paperwork and submission.</p>
+    <ul class="card-bullets">
+      <li>Register Number &amp; NOC collected by our team</li>
+      <li>Application submitted to correct BESCOM office</li>
+      <li>Name updated on bill in 3–4 weeks</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹7,499</span>
+        <span class="card-delivery">3–4 weeks</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── TRUST STRIP ── -->
 <div class="trust-strip">
-  <span>✓ Legal Experts</span>
-  <span class="sep">•</span>
-  <span>✓ Government Records</span>
-  <span class="sep">•</span>
-  <span>✓ Fast Delivery</span>
-  <span class="sep">•</span>
-  <span>✓ Secure &amp; Encrypted</span>
+  <span>Secured by Razorpay</span><span class="sep">·</span>
+  <span>UPI</span><span class="sep">·</span>
+  <span>Cards</span><span class="sep">·</span>
+  <span>Net Banking</span><span class="sep">·</span>
+  <span>WhatsApp Delivery</span><span class="sep">·</span>
+  <span>Official KA Records</span>
 </div>
 
-<!-- ──────────────────────────────
-     DISCLAIMER
-──────────────────────────────── -->
+<!-- ── DISCLAIMER ── -->
 <div class="disclaimer">
-  <div class="footer-brand">Legaldirectory<em>.ai</em></div>
-  <p>All documents are sourced from official Karnataka government records and verified by qualified legal professionals. Pricing is inclusive of GST. Delivery times are approximate and may vary based on government processing delays. By using our services, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</p>
+  <div class="footer-brand">Legal<em>directory</em></div>
+  Legal Directory is a technology platform and is not a government entity, nor affiliated with any government agency. All government records are fetched from official Karnataka portals on your behalf. Prices are inclusive and may vary based on document type and jurisdiction.<br><br>
+  <a href="https://legaldirectory.in/terms.html">Terms &amp; Conditions</a> ·
+  <a href="https://legaldirectory.in/privacy-policy.html">Privacy Policy</a> ·
+  <a href="https://legaldirectory.in/refund-policy.html">Refund Policy</a><br><br>
+  © 2026 Legal Directory.in · Bengaluru, Karnataka
 </div>
 
-<!-- ──────────────────────────────
+<!-- ══════════════════════════════
      STICKY CART BAR
-──────────────────────────────── -->
+══════════════════════════════ -->
 <div id="cart-bar">
   <div class="cart-bar-inner">
     <div class="cart-summary">
-      <span class="cart-count" id="cart-count">0 items in cart</span>
-      <span class="cart-total">₹<span id="cart-total">0</span></span>
+      <div class="cart-count" id="cart-count-label">0 services selected</div>
+      <div class="cart-total" id="cart-total-display">₹0</div>
     </div>
     <div class="cart-actions">
       <button class="btn-view-cart" onclick="openDrawer()">View Cart</button>
-      <button class="btn-checkout" id="checkout-btn" onclick="handleCheckout()">Checkout</button>
+      <button class="btn-checkout" onclick="openDrawer()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        Checkout
+      </button>
     </div>
   </div>
 </div>
 
-<!-- ──────────────────────────────
+<!-- ══════════════════════════════
      CART DRAWER
-──────────────────────────────── -->
-<div id="cart-drawer-overlay" onclick="if(event.target === this) closeDrawer()">
+══════════════════════════════ -->
+<div id="cart-drawer-overlay" onclick="handleOverlayClick(event)">
   <div id="cart-drawer">
     <div class="drawer-header">
-      <span class="drawer-title">Your Cart</span>
+      <div class="drawer-title">🛒 Your Cart</div>
       <button class="drawer-close" onclick="closeDrawer()">×</button>
     </div>
-    <div class="drawer-items" id="drawer-items"></div>
+    <div class="drawer-items" id="drawer-items-list">
+      <!-- populated by JS -->
+    </div>
     <div class="drawer-footer">
       <div class="drawer-total-row">
-        <span class="drawer-total-label">Total</span>
-        <span class="drawer-total-val">₹<span id="drawer-total">0</span></span>
+        <div class="drawer-total-label">Total</div>
+        <div class="drawer-total-val" id="drawer-total">₹0</div>
       </div>
       <div class="drawer-fields">
-        <input type="text" class="drawer-input" id="customer-name" placeholder="Your Name *" required>
-        <input type="tel" class="drawer-input" id="customer-phone" placeholder="Your WhatsApp Number *" required>
+        <input id="drawer-name"  type="text" class="drawer-input" placeholder="Your Name"
+          onfocus="this.style.borderColor='#2563eb'" onblur="this.style.borderColor='#2a2d3a'"/>
+        <input id="drawer-phone" type="tel"  class="drawer-input" placeholder="WhatsApp Number (for document delivery)"
+          onfocus="this.style.borderColor='#2563eb'" onblur="this.style.borderColor='#2a2d3a'"/>
       </div>
-      <button class="btn-pay-now" id="pay-btn" onclick="handleCheckout()">
-        <span>₹</span><span id="pay-amount">0</span><span>Pay Now</span>
+      <button class="btn-pay-now" id="drawer-pay-btn" onclick="initiateCheckout()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        <span id="drawer-pay-label">Pay Now</span>
       </button>
-      <a href="https://wa.me/919008999968" class="btn-wa-order">
-        <span>💬</span> Order via WhatsApp
+      <a id="drawer-wa-btn" href="#" target="_blank" rel="noopener" class="btn-wa-order">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Order via WhatsApp Instead
       </a>
-      <p class="secure-note">🔒 Payments secured by Cashfree</p>
+      <div class="secure-note">🔒 SECURED BY RAZORPAY · UPI · CARDS · NET BANKING · WALLETS</div>
     </div>
   </div>
 </div>
 
-<!-- ──────────────────────────────
-     SUCCESS TOAST
-──────────────────────────────── -->
-<div id="pay-toast" style="display:none;">
-  ✓ Payment successful! Your documents will be delivered via WhatsApp.
-</div>
+<!-- ── SUCCESS TOAST ── -->
+<div id="pay-toast">✅ Payment Successful! Documents will be sent to your WhatsApp.</div>
 
-<!-- ──────────────────────────────
-     UPSELL MODAL
-──────────────────────────────── -->
-<div id="upsell-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:500;align-items:center;justify-content:center;" onclick="if(event.target===this)document.getElementById('upsell-overlay').style.display='none'">
-  <div id="upsell-box" style="background:#0f1018;border:2px solid #c9952a;border-radius:12px;max-width:420px;width:90%;padding:32px;font-family:Inter,system-ui,sans-serif;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.8);">
-    <button onclick="document.getElementById('upsell-overlay').style.display='none'" style="position:absolute;top:16px;right:16px;background:none;border:none;color:#9a9bb0;font-size:24px;cursor:pointer;line-height:1;padding:0;">✕</button>
-    <div id="upsell-eyebrow" style="font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#c9952a;margin-bottom:12px;"></div>
-    <div id="upsell-title" style="font-size:18px;font-weight:900;color:#f0f0f4;margin-bottom:12px;line-height:1.3;"></div>
-    <div id="upsell-desc" style="font-size:14px;color:#9a9bb0;line-height:1.7;margin-bottom:24px;"></div>
-    <button id="upsell-yes" onclick="acceptUpsell()" style="width:100%;background:#c9952a;color:#000;font-weight:800;font-size:14px;border:none;border-radius:8px;padding:14px;cursor:pointer;margin-bottom:10px;font-family:inherit;transition:opacity 0.15s;"></button>
-    <button onclick="document.getElementById('upsell-overlay').style.display='none'" style="width:100%;background:rgba(201,149,42,0.1);border:1px solid #2a2d3a;color:#9a9bb0;font-size:13px;border-radius:8px;padding:12px;cursor:pointer;font-family:inherit;transition:all 0.15s;">No thanks, continue</button>
-  </div>
-</div>
-
+<!-- ══════════════════════════════════════════
+     CART + RAZORPAY LOGIC
+══════════════════════════════════════════ -->
 <script>
-// ── CART STATE ──────────────────────────────────────────────────────
+// ─── CART STATE ───────────────────────────────────────────────────
+// Each item: { name, price (number), delivery, cardEl, btnEl }
 var cart = [];
 
-// ── FORMAT CURRENCY ──────────────────────────────────────────────────
-function fmt(amount) {
-  return new Intl.NumberFormat('en-IN', { minimumFractionDigits: 0 }).format(amount);
+function fmt(n) {
+  return '₹' + n.toLocaleString('en-IN');
 }
 
-// ── TOGGLE CART ITEM ────────────────────────────────────────────────
+function cartTotal() {
+  return cart.reduce(function(s, i){ return s + i.price; }, 0);
+}
+
+// ─── TOGGLE ADD/REMOVE FROM CART ──────────────────────────────────
 function toggleCart(btn) {
-  if (btn.disabled) return;
-  
-  var card = btn.closest('.card');
-  var name = card.dataset.name;
-  var price = parseInt(card.dataset.price);
-  var delivery = card.dataset.delivery;
-  var idx = cart.findIndex(function(i) { return i.name === name; });
+  var card     = btn.closest('.card');
+  var name     = card.dataset.name;
+  var price    = parseInt(card.dataset.price, 10);
+  var delivery = card.dataset.delivery || '';
+
+  var idx = cart.findIndex(function(i){ return i.name === name; });
 
   if (idx === -1) {
-    // ADD to cart
-    var item = { name: name, price: price, delivery: delivery, cardEl: card, btnEl: btn };
-    cart.push(item);
+    // Add
+    cart.push({ name: name, price: price, delivery: delivery, cardEl: card, btnEl: btn });
     card.classList.add('selected');
-    btn.textContent = '✓ In Cart';
-    updateCartBar();
-    updateDrawer();
-    
-    // TRIGGER UPSELL
-    showUpsellIfAvailable(name);
+    btn.textContent = '✓ Added';
   } else {
-    // REMOVE from cart
-    var item = cart[idx];
+    // Remove
     cart.splice(idx, 1);
     card.classList.remove('selected');
     btn.textContent = '+ Add to Cart';
-    updateCartBar();
-    updateDrawer();
   }
+
+  updateCartBar();
+  updateDrawer();
 }
 
-// ── UPSELL LOGIC ────────────────────────────────────────────────────
-var pendingUpsell = null;
-
-var UPSELLS = {
-  'WILL Drafting & Registration': {
-    eyebrow: '📋 Complete Your Estate Plan',
-    title: 'Add Property Search Report',
-    desc: 'Most clients who draft a WILL also want a complete property search to ensure their property has clear title and no hidden disputes. A detailed title search covers ownership history, encumbrances, and legal status.',
-    upsellName: 'Property Search Report',
-    upsellPrice: 4999,
-    btnLabel: 'Yes, Add Search Report — ₹4,999'
-  },
-  'Karnataka Certified Copy': {
-    eyebrow: '🔍 Protect Your Investment',
-    title: 'Add Full Property Search Report',
-    desc: 'A certified copy tells you who owns the property today. A comprehensive Property Search Report tells you the complete history, any hidden loans, disputes, title gaps, and legal clarity. Get complete peace of mind.',
-    upsellName: 'Property Search Report',
-    upsellPrice: 4999,
-    btnLabel: 'Yes, Add Search Report — ₹4,999'
-  },
-  'GBA Sanction Plan & Documents': {
-    eyebrow: '⚖️ Complete Your Due Diligence',
-    title: 'Add Property Search Report',
-    desc: 'You have the GBA sanction plan. Now get a comprehensive property search covering title history, encumbrances, disputes, and legal status. Essential before any major transaction.',
-    upsellName: 'Property Search Report',
-    upsellPrice: 4999,
-    btnLabel: 'Yes, Add Search Report — ₹4,999'
-  },
-  'Property Registration Support': {
-    eyebrow: '✅ Ensure Clear Title',
-    title: 'Add Property Search Report',
-    desc: 'Before registering, verify the property has clear title with our comprehensive search. Covers ownership history, disputes, mortgages, and legal status — recommended by all property lawyers.',
-    upsellName: 'Property Search Report',
-    upsellPrice: 4999,
-    btnLabel: 'Yes, Add Search Report — ₹4,999'
-  }
-};
-
-function showUpsellIfAvailable(itemName) {
-  if (!UPSELLS[itemName]) return;
-  
-  var u = UPSELLS[itemName];
-  
-  // Don't upsell if already in cart
-  if (cart.find(function(i) { return i.name === u.upsellName; })) return;
-  
-  pendingUpsell = u;
-  document.getElementById('upsell-eyebrow').textContent = u.eyebrow;
-  document.getElementById('upsell-title').textContent = u.title;
-  document.getElementById('upsell-desc').textContent = u.desc;
-  document.getElementById('upsell-yes').textContent = u.btnLabel;
-  document.getElementById('upsell-overlay').style.display = 'flex';
-}
-
-function acceptUpsell() {
-  document.getElementById('upsell-overlay').style.display = 'none';
-  if (!pendingUpsell) return;
-  
-  var u = pendingUpsell;
-  var cards = document.querySelectorAll('.card');
-  
-  for (var i = 0; i < cards.length; i++) {
-    if (cards[i].dataset.name === u.upsellName) {
-      var btn = cards[i].querySelector('.btn-add');
-      if (btn && btn.textContent.indexOf('Add') !== -1) {
-        toggleCart(btn);
-      }
-      break;
-    }
-  }
-  
-  openDrawer();
-  pendingUpsell = null;
-}
-
-// ── UPDATE CART BAR ─────────────────────────────────────────────────
+// ─── CART BAR ─────────────────────────────────────────────────────
 function updateCartBar() {
+  var bar   = document.getElementById('cart-bar');
   var count = cart.length;
-  var total = cart.reduce(function(sum, item) { return sum + item.price; }, 0);
-  
-  document.getElementById('cart-count').textContent = count + ' item' + (count !== 1 ? 's' : '') + ' in cart';
-  document.getElementById('cart-total').textContent = fmt(total);
-  document.getElementById('pay-amount').textContent = fmt(total);
-  
-  var bar = document.getElementById('cart-bar');
+  var total = cartTotal();
+
+  document.getElementById('cart-count-label').textContent =
+    count === 0 ? '0 services selected' :
+    count === 1 ? '1 service selected'  : count + ' services selected';
+  document.getElementById('cart-total-display').textContent = fmt(total);
+
   if (count > 0) {
     bar.classList.add('visible');
   } else {
@@ -842,191 +835,233 @@ function updateCartBar() {
   }
 }
 
-// ── UPDATE CART DRAWER ──────────────────────────────────────────────
-function updateDrawer() {
-  var container = document.getElementById('drawer-items');
-  var total = 0;
-  
-  container.innerHTML = '';
-  
-  cart.forEach(function(item, idx) {
-    total += item.price;
-    
-    var div = document.createElement('div');
-    div.className = 'drawer-item';
-    div.innerHTML = 
-      '<div class="drawer-item-info">' +
-        '<div class="drawer-item-name">' + item.name + '</div>' +
-        '<div class="drawer-item-delivery">Delivery: ' + item.delivery + '</div>' +
-      '</div>' +
-      '<div class="drawer-item-price">₹' + fmt(item.price) + '</div>' +
-      '<button class="drawer-item-remove" onclick="removeFromCart(' + idx + ')">Remove</button>';
-    
-    container.appendChild(div);
-  });
-  
-  document.getElementById('drawer-total').textContent = fmt(total);
-}
-
-function removeFromCart(idx) {
-  if (idx >= 0 && idx < cart.length) {
-    var item = cart[idx];
-    item.cardEl.classList.remove('selected');
-    item.btnEl.textContent = '+ Add to Cart';
-    cart.splice(idx, 1);
-    updateCartBar();
-    updateDrawer();
-  }
-}
-
-// ── DRAWER OPEN/CLOSE ───────────────────────────────────────────────
+// ─── CART DRAWER ──────────────────────────────────────────────────
 function openDrawer() {
+  updateDrawer();
   document.getElementById('cart-drawer-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
 
 function closeDrawer() {
   document.getElementById('cart-drawer-overlay').classList.remove('open');
+  document.body.style.overflow = '';
 }
 
-// ── CHECKOUT ────────────────────────────────────────────────────────
-async function handleCheckout() {
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('cart-drawer-overlay')) closeDrawer();
+}
+
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeDrawer(); });
+
+function updateDrawer() {
+  var list  = document.getElementById('drawer-items-list');
+  var total = cartTotal();
+
   if (cart.length === 0) {
-    alert('Please add items to your cart first.');
-    return;
+    list.innerHTML = '<div style="padding:32px 24px;text-align:center;color:var(--ink-muted);font-size:13px;">No services selected yet.<br>Close this and tap <b style=\'color:var(--ink)\'>"+ Add to Cart"</b> on any service.</div>';
+  } else {
+    list.innerHTML = cart.map(function(item, idx) {
+      return '<div class="drawer-item">' +
+        '<div class="drawer-item-info">' +
+          '<div class="drawer-item-name">' + escHtml(item.name) + '</div>' +
+          (item.delivery ? '<div class="drawer-item-delivery">⏱ ' + escHtml(item.delivery) + '</div>' : '') +
+        '</div>' +
+        '<div style="display:flex;align-items:center;gap:10px;">' +
+          '<div class="drawer-item-price">' + fmt(item.price) + '</div>' +
+          '<button class="drawer-item-remove" onclick="removeFromDrawer(' + idx + ')">Remove</button>' +
+        '</div>' +
+      '</div>';
+    }).join('');
   }
-  
-  var btn = document.getElementById('checkout-btn');
-  var payBtn = document.getElementById('pay-btn');
+
+  document.getElementById('drawer-total').textContent = fmt(total);
+
+  // Update pay button label
+  var payBtn = document.getElementById('drawer-pay-btn');
+  var payLabel = document.getElementById('drawer-pay-label');
+  payBtn.disabled = cart.length === 0;
+  payLabel.textContent = cart.length === 0 ? 'Pay Now' : 'Pay ' + fmt(total) + ' Now';
+
+  // WhatsApp fallback
+  refreshWaBtn();
+}
+
+function removeFromDrawer(idx) {
+  var item = cart[idx];
+  if (item) {
+    item.cardEl.classList.remove('selected');
+    item.btnEl.textContent = '+ Add to Cart';
+    cart.splice(idx, 1);
+  }
+  updateCartBar();
+  updateDrawer();
+}
+
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function refreshWaBtn() {
+  var name  = (document.getElementById('drawer-name')  || {}).value || '';
+  var phone = (document.getElementById('drawer-phone') || {}).value || '';
+  var itemLines = cart.map(function(i){ return '• ' + i.name + ' — ' + fmt(i.price); }).join('\n');
+  var total = cartTotal();
+  var msg = encodeURIComponent(
+    'Hi Legaldirectory.ai, I want to order:\n\n' + itemLines +
+    '\n\nTotal: ' + fmt(total) +
+    (name  ? '\n\n👤 Name: '     + name.trim()  : '') +
+    (phone ? '\n📱 WhatsApp: '   + phone.trim() : '') +
+    '\n\nPlease guide me on next steps.'
+  );
+  document.getElementById('drawer-wa-btn').href = 'https://wa.me/919008999968?text=' + msg;
+}
+
+['drawer-name','drawer-phone'].forEach(function(id){
+  var el = document.getElementById(id);
+  if (el) el.addEventListener('input', refreshWaBtn);
+});
+
+// ─── RAZORPAY CHECKOUT ────────────────────────────────────────────
+async function initiateCheckout() {
+  if (cart.length === 0) return;
+
+  var btn   = document.getElementById('drawer-pay-btn');
+  var label = document.getElementById('drawer-pay-label');
+  var name  = (document.getElementById('drawer-name')  || {}).value || '';
+  var phone = (document.getElementById('drawer-phone') || {}).value || '';
+  var total = cartTotal();
+
+  // Build items array for the order
+  var items = cart.map(function(i){ return { name: i.name, amount: i.price, delivery: i.delivery }; });
+
   btn.disabled = true;
-  payBtn.disabled = true;
-  
+  label.textContent = 'Creating order…';
+
   try {
-    var name = document.getElementById('customer-name').value.trim();
-    var phone = document.getElementById('customer-phone').value.trim();
-    if (!name) { alert('Please enter your full name.'); btn.disabled = false; payBtn.disabled = false; return; }
-    if (!phone) { alert('Please enter your WhatsApp number.'); btn.disabled = false; payBtn.disabled = false; return; }
-    var total = cart.reduce(function(sum, item) { return sum + item.price; }, 0);
-    
-    var items = cart.map(function(item) {
-      return { name: item.name, price: item.price, amount: item.price };
-    });
-    
+    // Step 1: Create a single Razorpay order for the cart total
     var orderRes = await fetch('/api/create-order', {
-      method: 'POST',
+      method:  'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        amount: total,
+      body:    JSON.stringify({
+        amount:   total,
         currency: 'INR',
-        receipt: 'LD-CART-' + Date.now(),
-        items: items,
-        customer: { name: name, phone: phone },
+        receipt:  'LD-CART-' + Date.now(),
+        items:    items,
         notes: {
-          services: items.map(function(i) { return i.name; }).join(', '),
+          services: items.map(function(i){ return i.name; }).join(', '),
           customer: name || 'Guest'
         }
       })
     });
-    
+
     var orderData = await orderRes.json();
-    
+
     if (!orderRes.ok || !orderData.order_id) {
       throw new Error(orderData.error || 'Order creation failed');
     }
-    
-    if (!orderData.payment_session_id) {
-      throw new Error(orderData.error || 'Payment session missing');
-    }
-    
-    closeDrawer();
-    sessionStorage.setItem('ld_pending', JSON.stringify({ order_id: orderData.order_id, service: items.map(function(i){ return i.name; }).join(', '), amount: '₹' + fmt(total), items: items, total: total, customer: { name: name, phone: phone }, source: 'instant-services' }));
-    await saveOrderToFirestore(orderData.order_id, '', items.map(function(i){ return i.name; }).join(', '), '₹' + fmt(total), name, phone, 'awaiting');
-    
-    var cashfree = Cashfree({ mode: orderData.mode || 'production' });
-    await cashfree.checkout({
-      paymentSessionId: orderData.payment_session_id,
-      redirectTarget: '_self'
+
+    label.textContent = 'Opening payment…';
+
+    // Build a readable description for the Razorpay overlay
+    var descText = items.length === 1
+      ? items[0].name
+      : items.length + ' services — ' + items.map(function(i){ return i.name; }).join(', ');
+
+    // Step 2: Open Razorpay Standard Checkout
+    var options = {
+      key:         orderData.key_id,
+      amount:      orderData.amount,
+      currency:    orderData.currency,
+      name:        'Legaldirectory.ai',
+      description: descText,
+      image:       'https://legaldirectory.in/og-image.png',
+      order_id:    orderData.order_id,
+      theme:       { color: '#c9952a' },
+      prefill: {
+        name:    name,
+        contact: phone ? (phone.startsWith('+') ? phone : '+91' + phone) : ''
+      },
+      notes: {
+        services: items.map(function(i){ return i.name; }).join(', ')
+      },
+      modal: {
+        ondismiss: function() {
+          btn.disabled = false;
+          label.textContent = 'Pay ' + fmt(total) + ' Now';
+        }
+      },
+      handler: function(response) {
+        verifyPayment(response, items, total, name, phone);
+      }
+    };
+
+    var rzp = new Razorpay(options);
+    rzp.on('payment.failed', function(response) {
+      alert('Payment failed: ' + (response.error.description || 'Please try again.'));
+      btn.disabled = false;
+      label.textContent = 'Pay ' + fmt(total) + ' Now';
     });
-    
-    await verifyPayment(orderData.order_id, items, total, name, phone);
-    
+
+    closeDrawer();
+    rzp.open();
+
   } catch(err) {
     console.error('Checkout error:', err);
     alert('Could not initiate payment: ' + err.message + '\n\nPlease use the WhatsApp option or try again.');
-  } finally {
     btn.disabled = false;
-    payBtn.disabled = false;
+    label.textContent = 'Pay ' + fmt(total) + ' Now';
   }
 }
 
-// ── VERIFY PAYMENT ──────────────────────────────────────────────────
-async function verifyPayment(orderId, items, total, name, phone) {
+// Step 3: Verify payment signature on server
+async function verifyPayment(rzpResponse, items, total, name, phone) {
   try {
     var verRes = await fetch('/api/verify-payment', {
-      method: 'POST',
+      method:  'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        order_id: orderId,
-        items: items,
-        amount: fmt(total),
+      body:    JSON.stringify({
+        razorpay_order_id:   rzpResponse.razorpay_order_id,
+        razorpay_payment_id: rzpResponse.razorpay_payment_id,
+        razorpay_signature:  rzpResponse.razorpay_signature,
+        items:    items,
+        amount:   fmt(total),
         customer: { name: name, phone: phone }
       })
     });
-    
+
     var verData = await verRes.json();
-    
+
     if (verData.success) {
       showToast();
-      
-      var ts = new Date().toLocaleString('en-IN', {timeZone:'Asia/Kolkata'});
-      var itemLines = items.map(function(i) {
-        return '• ' + i.name + ' (₹' + fmt(i.price) + ')';
-      }).join('\n');
-      
-      var wa = encodeURIComponent(
-        '*Payment Received — Legaldirectory.ai*\n\n' +
+      // WhatsApp notification to team
+      var ts  = new Date().toLocaleString('en-IN', {timeZone:'Asia/Kolkata'});
+      var itemLines = items.map(function(i){ return '• ' + i.name + ' (' + fmt(i.price) + ')'; }).join('\n');
+      var wa  = encodeURIComponent(
+        '✅ *Payment Received — Legaldirectory.ai*\n\n' +
         'Services:\n' + itemLines + '\n\n' +
-        'Total: ₹' + fmt(total) + '\n' +
-        'Order ID: ' + orderId + '\n' +
-        (name ? 'Name: ' + name + '\n' : '') +
+        'Total: ' + fmt(total) + '\n' +
+        'Payment ID: ' + rzpResponse.razorpay_payment_id + '\n' +
+        (name  ? 'Name: '  + name  + '\n' : '') +
         (phone ? 'Phone: ' + phone + '\n' : '') +
         'Time: ' + ts
       );
-      
-      setTimeout(function() {
+      setTimeout(function(){
         window.open('https://wa.me/919008999968?text=' + wa, '_blank');
       }, 800);
-      
-      await saveOrderToFirestore(orderId, verData.payment_id || '', items.map(function(i){ return i.name; }).join(', '), verData.amount || ('₹' + fmt(total)), name, phone, 'confirmed');
+
+      // Clear cart after success
       clearCartAfterSuccess();
-      window.location.href = 'dashboard.html?payment=success&order_id=' + encodeURIComponent(orderId) + '&amount=' + encodeURIComponent(verData.amount || ('₹' + fmt(total)));
     } else {
-      await saveOrderToFirestore(orderId, '', items.map(function(i){ return i.name; }).join(', '), '₹' + fmt(total), name, phone, 'awaiting');
-      window.location.href = 'dashboard.html?payment=pending&order_id=' + encodeURIComponent(orderId) + '&amount=' + encodeURIComponent('₹' + fmt(total));
+      alert('Payment received but verification failed. Please contact us with your payment ID: ' + rzpResponse.razorpay_payment_id);
     }
   } catch(err) {
     console.error('Verify error:', err);
-    await saveOrderToFirestore(orderId, '', items.map(function(i){ return i.name; }).join(', '), '₹' + fmt(total), name, phone, 'awaiting');
-    window.location.href = 'dashboard.html?payment=pending&order_id=' + encodeURIComponent(orderId) + '&amount=' + encodeURIComponent('₹' + fmt(total));
+    showToast(); // payment likely went through
   }
 }
 
-// ── SAVE ORDER TO FIRESTORE ─────────────────────────────────────────
-function saveOrderToFirestore(orderId, paymentId, services, amount, name, phone, status) {
-  try {
-    if (typeof firebase === 'undefined' || !firebase.firestore) return Promise.resolve();
-    var db = firebase.firestore();
-    var auth = firebase.auth ? firebase.auth() : null;
-    var user = auth && auth.currentUser;
-    var data = { orderId: orderId, paymentId: paymentId || '', serviceName: services || 'Instant Service', service: services || 'Instant Service', amount: amount || '', customer: { name: name || '', phone: phone || '' }, status: status || 'awaiting', paymentStatus: status === 'confirmed' ? 'paid' : 'awaiting', updatedAt: firebase.firestore.FieldValue.serverTimestamp(), source: 'instant-services' };
-    if (status === 'awaiting') data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-    if (user) data.uid = user.uid;
-    localStorage.setItem('ld_last_order', JSON.stringify({ id: orderId, orderId: orderId, paymentId: paymentId || '', serviceName: services || 'Instant Service', amount: amount || '', customer: data.customer, status: status || 'awaiting', updatedAt: Date.now(), source: 'instant-services' }));
-    return db.collection('orders').doc(orderId).set(data, { merge: true });
-  } catch(e) { console.error('Firestore error:', e); return Promise.resolve(); }
-}
-
 function clearCartAfterSuccess() {
-  cart.forEach(function(item) {
+  cart.forEach(function(item){
     item.cardEl.classList.remove('selected');
     item.btnEl.textContent = '+ Add to Cart';
   });
@@ -1038,25 +1073,8 @@ function clearCartAfterSuccess() {
 function showToast() {
   var t = document.getElementById('pay-toast');
   t.style.display = 'block';
-  setTimeout(function() { t.style.display = 'none'; }, 5000);
+  setTimeout(function(){ t.style.display = 'none'; }, 7000);
 }
-
-
-async function handleCashfreeReturn() {
-  var params = new URLSearchParams(window.location.search);
-  var orderId = params.get('order_id') || params.get('orderId');
-  if (!orderId) return;
-  var pending = null;
-  try { pending = JSON.parse(sessionStorage.getItem('ld_pending') || 'null'); } catch(e) {}
-  sessionStorage.removeItem('ld_pending');
-  if (!pending) { window.location.href = 'dashboard.html?payment=pending&order_id=' + encodeURIComponent(orderId); return; }
-  await verifyPayment(orderId, pending.items || [], pending.total || 0, pending.customer?.name || '', pending.customer?.phone || '');
-}
-window.addEventListener('DOMContentLoaded', handleCashfreeReturn);
-
-// Initialize
-updateCartBar();
-updateDrawer();
 </script>
 
 </body>
