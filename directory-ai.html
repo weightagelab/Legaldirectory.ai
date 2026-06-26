@@ -1329,7 +1329,7 @@
       </button>
       <div style="display:flex;gap:12px;margin-top:12px;">
         <button id="dir-resend-btn" class="back-link" onclick="dirResendOtp()" style="flex:1;text-align:center;padding:10px;border:1px solid var(--border);border-radius:3px;background:transparent;color:var(--text-mid);font-size:12px;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--teal)';this.style.color='var(--teal)';" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-mid)';">
-          🔄 Resend OTP
+           Resend OTP
         </button>
         <button class="back-link" onclick="dirResetAuth()" style="flex:1;text-align:center;padding:10px;">← Change number</button>
       </div>
@@ -1339,7 +1339,7 @@
     <!-- ── STEP 3: Profile (new users only) ── -->
     <div id="auth-step-3" style="display:none;">
       <div style="text-align:center;margin-bottom:24px;">
-        <div style="font-size:28px;margin-bottom:8px;">👤</div>
+        <div style="font-size:28px;margin-bottom:8px;"></div>
         <div class="login-title" style="margin-bottom:4px;">Complete Profile</div>
         <p style="font-family:'Space Mono',monospace;font-size:10px;color:var(--text-mid);letter-spacing:0.1em;">ONE-TIME SETUP — TAKES 10 SECONDS</p>
       </div>
@@ -1967,7 +1967,7 @@ async function dirSendOtp() {
           clearInterval(timer);
           resendBtn.disabled = false;
           resendBtn.style.opacity = '1';
-          resendBtn.textContent = '🔄 Resend OTP';
+          resendBtn.textContent = ' Resend OTP';
         } else {
           resendBtn.textContent = '⏳ Resend in ' + countdown + 's';
         }
@@ -2033,7 +2033,7 @@ async function dirResendOtp() {
         clearInterval(timer);
         resendBtn.disabled = false;
         resendBtn.style.opacity = '1';
-        resendBtn.textContent = '🔄 Resend OTP';
+        resendBtn.textContent = ' Resend OTP';
       } else {
         resendBtn.textContent = '⏳ Resend in ' + countdown + 's';
       }
@@ -2041,7 +2041,7 @@ async function dirResendOtp() {
   } catch(e) {
     console.error('OTP resend:', e);
     resendBtn.disabled = false;
-    resendBtn.textContent = '🔄 Resend OTP';
+    resendBtn.textContent = ' Resend OTP';
     dirSetStatus('⚠ Could not resend OTP. Try again.', 'err', 'dir-status-2');
     if (dirRecaptcha) { dirRecaptcha.clear(); dirRecaptcha = null; }
   }
@@ -2303,7 +2303,7 @@ function scoreFromUploadedDocs(){
       {name:'Court Encumbrance', score:court, max:20, status:hasCourt ? 'warn' : 'pass', detail:hasCourt ? 'Court/litigation document detected. Verify final order, decree, appeal status and pending cases.' : 'No court-case keyword detected in uploaded filenames. Run eCourts search in backend for certainty.'},
       {name:'RERA Compliance', score:rera, max:15, status:rera >= 14 ? 'pass' : 'warn', detail:hasRera ? 'RERA document/reference detected.' : 'RERA applicability requires backend portal lookup based on project/property details.'},
       {name:'Market Value', score:market, max:10, status:'warn', detail:'Market alignment requires guidance value, consideration amount, and locality benchmark from backend data.'},
-      {name:'Risk Flags', score:Math.max(2, risk), max:10, status:hasCourt || completionRatio < .5 ? 'warn' : 'pass', detail:'Frontend screening complete. Production risk decision should use OCR, SRO/Kaveri, Bhoomi, BBMP, CERSAI, RERA and eCourts checks.'}
+      {name:'Risk Flags', score:Math.max(2, risk), max:10, status:hasCourt || completionRatio < .5 ? 'warn' : 'pass', detail:'Frontend screening complete. Production risk decision should use OCR, SRO/Kaveri, Bhoomi, GBA, CERSAI, RERA and eCourts checks.'}
     ]
   };
 }
@@ -2333,21 +2333,21 @@ function buildLocalVerificationResult(){
       Taluk:'Pending portal lookup',
       District: document.getElementById('sel-region')?.value || 'Pending'
     },
-    docSummary:`${realFiles.length} file(s) received and validated for format/size: ${files}. This report is based on document completeness screening and filename analysis. Full OCR extraction, AI-assisted title analysis, and official portal verification (Kaveri, BBMP, eCourts, CERSAI) require a lawyer-assisted backend review.`,
+    docSummary:`${realFiles.length} file(s) received and validated for format/size: ${files}. This report is based on document completeness screening and filename analysis. Full OCR extraction, AI-assisted title analysis, and official portal verification (Kaveri, GBA, eCourts, CERSAI) require a lawyer-assisted backend review.`,
     claudeVerdict: verdict,
     ownerRisk: stats.hasSale ? 'medium' : 'high',
     courtRisk: stats.hasCourt ? 'high' : 'low',
     reraStatus: stats.hasRera ? 'available' : 'pending',
     marketAlignment:'pending',
     localityRisk:'medium',
-    claudeAnalysis:'Document completeness screening complete. Upload validation, document type checks, title-chain indicators, court-risk flags, and confidence scoring have been performed based on uploaded filenames and document set. For a full legal opinion, official Kaveri/SRO, EC, BBMP Khata, eCourts, CERSAI, and RERA checks must be completed by a qualified property lawyer.',
+    claudeAnalysis:'Document completeness screening complete. Upload validation, document type checks, title-chain indicators, court-risk flags, and confidence scoring have been performed based on uploaded filenames and document set. For a full legal opinion, official Kaveri/SRO, EC, GBA Khata, eCourts, CERSAI, and RERA checks must be completed by a qualified property lawyer.',
     flags: stats.hasCourt ? 'Court/litigation document detected — require final order and pending-case verification.' : 'No direct court keyword detected from uploaded filenames. This is not a legal clearance until official searches are completed.',
     checks: stats.checks,
     timeline:[
       {date:'Upload', title:'Documents Received', detail:`${realFiles.length} file(s) validated and queued for verification.`, color:'#00e5a0'},
       {date:'Screening', title:'Completeness & Format Check', detail:`${stats.uploadedCount}/${stats.requiredCount} required slots marked as uploaded.`, color:'#1abcbc'},
       {date:'AI/OCR', title:'Backend Extraction Required', detail:'Names, survey numbers, registration numbers, dates, stamp duty and consideration should be extracted by OCR/backend AI.', color:'#f5c518'},
-      {date:'Legal', title:'Official Portal Verification', detail:'Kaveri/SRO, Bhoomi/EC, BBMP Khata, KRERA, eCourts and CERSAI checks required before final decision.', color:'#f5c518'}
+      {date:'Legal', title:'Official Portal Verification', detail:'Kaveri/SRO, Bhoomi/EC, GBA Khata, KRERA, eCourts and CERSAI checks required before final decision.', color:'#f5c518'}
     ],
     geo:{
       query: loc ? `${loc}, ${state || 'India'}` : 'Ulsoor Bangalore Karnataka',
@@ -2373,7 +2373,7 @@ function buildLocalVerificationResult(){
     portals:[
       {name:'Kaveri Online / SRO', url:'kaverionline.karnataka.gov.in', checked:false, detail:'Pending backend lookup'},
       {name:'Bhoomi / Encumbrance', url:'landrecords.karnataka.gov.in', checked:false, detail:'Pending EC search'},
-      {name:'BBMP Khata / Tax', url:'bbmptax.karnataka.gov.in', checked:false, detail:'Pending khata check'},
+      {name:'GBA Khata / Tax', url:'bbmptax.karnataka.gov.in', checked:false, detail:'Pending khata check'},
       {name:'KRERA', url:'rera.karnataka.gov.in', checked:stats.hasRera, detail:stats.hasRera ? 'RERA file/reference uploaded' : 'Pending applicability check'},
       {name:'eCourts / High Court', url:'ecourts.gov.in', checked:false, detail:'Pending litigation search'},
       {name:'CERSAI', url:'cersai.org.in', checked:false, detail:'Pending mortgage/charge search'},
@@ -2417,7 +2417,7 @@ function buildCompiledAuctionKhataResult(){
       MainPatriarch:'B. Doddaiah',
       ConfidenceReason:'Lower due to aged/degraded scan quality in several pages'
     },
-    docSummary:`${filename} appears to be a compiled legal property record bundle covering nearly a century of ownership history for a Jogupalya/Ulsoor, Bangalore property. The bundle includes auction records, wills, civil suits, ULC proceedings, BBMP/corporation khata records, partition/rectification deeds, a 2007 absolute sale deed, and death certificates. The chain is materially complete from 1933 to 2007, but several older pages require manual legal review because scan quality is aged/degraded.`,
+    docSummary:`${filename} appears to be a compiled legal property record bundle covering nearly a century of ownership history for a Jogupalya/Ulsoor, Bangalore property. The bundle includes auction records, wills, civil suits, ULC proceedings, GBA/corporation khata records, partition/rectification deeds, a 2007 absolute sale deed, and death certificates. The chain is materially complete from 1933 to 2007, but several older pages require manual legal review because scan quality is aged/degraded.`,
     claudeVerdict:'PROCEED WITH CAUTION — STRONG HISTORICAL CHAIN, MANUAL LEGAL REVIEW REQUIRED',
     ownerRisk:'medium',
     courtRisk:'medium',
@@ -2425,14 +2425,14 @@ function buildCompiledAuctionKhataResult(){
     marketAlignment:'pending guidance value comparison',
     localityRisk:'medium',
     claudeAnalysis:'AI-style reading found a long but coherent title-chain bundle: original 1933 auction acquisition, family succession via wills, ULC clearance, partition litigation history, High Court appeal withdrawal/settlement, 2005 registered partition deed, 2005 rectification deed, and 2007 registered absolute sale to the final buyer. No final “clear title” should be issued until a lawyer verifies certified copies, latest EC, khata mutation, tax dues, pending litigation, and mortgage/charge status.',
-    flags:'Real-time alert simulation: aged/degraded scans; historical civil litigation present; partition deed and rectification deed must be cross-verified; latest EC after 2007 missing; khata transfer continuity needs BBMP/Kaveri validation; CERSAI/mortgage search required.',
+    flags:'Real-time alert simulation: aged/degraded scans; historical civil litigation present; partition deed and rectification deed must be cross-verified; latest EC after 2007 missing; khata transfer continuity needs GBA/Kaveri validation; CERSAI/mortgage search required.',
     checks:[
       {name:'Document Authenticity & Legibility', score:30, max:40, status:'warn', detail:'82-page compiled bundle detected. Confidence reduced because older auction/will/court pages appear aged or degraded and need certified-copy validation.'},
       {name:'Forgery / Tampering Indicators', score:15, max:20, status:'warn', detail:'No obvious filename-level tampering indicator, but OCR/signature/seal comparison is required for old pages, wills, registered deeds and rectification deed.'},
       {name:'Court Clearance', score:11, max:15, status:'warn', detail:'Civil suits O.S. No. 220/1964, O.S. No. 4026/1984 and RFA No. 1161/2002 are part of the chain. Appeal/cross-objection noted as withdrawn on 23 Jan 2006; pending-case search still required.'},
       {name:'Ownership Chain', score:13, max:15, status:'pass', detail:'Chronological title chain exists from 1933 auction → 1940/1972 wills → ULC/khata/corporation records → 2005 partition/rectification → 2007 sale.'},
-      {name:'Khata / Municipal Records', score:9, max:10, status:'pass', detail:'BBMP/Corporation records and khata endorsement references detected. Latest khata extract and tax-paid receipt should still be verified.'},
-      {name:'Real-time External Alerts', score:0, max:0, status:'warn', detail:'Static HTML cannot perform live government/court searches by itself. Connect backend APIs/RPA for Kaveri, BBMP, eCourts, High Court, CERSAI and guidance-value checks.'}
+      {name:'Khata / Municipal Records', score:9, max:10, status:'pass', detail:'GBA/Corporation records and khata endorsement references detected. Latest khata extract and tax-paid receipt should still be verified.'},
+      {name:'Real-time External Alerts', score:0, max:0, status:'warn', detail:'Static HTML cannot perform live government/court searches by itself. Connect backend APIs/RPA for Kaveri, GBA, eCourts, High Court, CERSAI and guidance-value checks.'}
     ],
     geo:{
       query:'Property No. 43 Shop Nos. 105/A-105/F Old Madras Road Ramaiah Circle Ulsoor Bengaluru Karnataka',
@@ -2462,7 +2462,7 @@ function buildCompiledAuctionKhataResult(){
       {date:'1940', title:'Last Will & Testament of B. Doddaiah', detail:'Properties bequeathed to 3 sons and 4 daughters; Yates Garden School land referenced. Signed 4 Apr 1940; Doddaiah died 11 Oct 1940.', color:'#1abcbc'},
       {date:'1964–1966', title:'Civil Suit O.S. No. 220/1964', detail:'Plaintiff Venkataramanappa vs. Mrs. Manjumma & others; auction sale document produced as Exhibit D-6.', color:'#f5c518'},
       {date:'1972–1978', title:'Will of Smt. Nanjamma', detail:'Nanjamma bequeathed self-acquired Bazaar Street properties to sons equally. Signed 29 May 1972; death noted in May 1978.', color:'#1abcbc'},
-      {date:'1981–1984', title:'Municipal / ULC / Partition Records', detail:'BBMP/corporation records, road naming approval, ULC(9)125/83-84 finding no excess vacant land, and O.S. No. 4026/1984 partition suit by D. Kanthamma.', color:'#f5c518'},
+      {date:'1981–1984', title:'Municipal / ULC / Partition Records', detail:'GBA/corporation records, road naming approval, ULC(9)125/83-84 finding no excess vacant land, and O.S. No. 4026/1984 partition suit by D. Kanthamma.', color:'#f5c518'},
       {date:'1995', title:'Khata Endorsement', detail:'Transfer of khata for premises/site No. 40/68; applicant required to produce sale deed and pay taxes.', color:'#1abcbc'},
       {date:'2002–2006', title:'High Court RFA No. 1161/2002', detail:'D. Rajanna LRs vs. D. Kanthamma & others. Appeal and cross-objection withdrawn after settlement; dismissed as withdrawn on 23 Jan 2006.', color:'#f5c518'},
       {date:'2005', title:'Registered Partition + Rectification Deeds', detail:'Partition Deed Doc No. 4167/2005-06 and Rectification Deed Doc No. 4445/2005-06; 11 parties, 9 schedules A–I.', color:'#00e5a0'},
@@ -2470,7 +2470,7 @@ function buildCompiledAuctionKhataResult(){
     ],
     portals:[
       {name:'Kaveri / SRO Shivajinagar', url:'Registration cross-check', checked:false, detail:'Verify Doc Nos. 4167/2005-06, 4445/2005-06, 853/07-08'},
-      {name:'BBMP Khata', url:'Khata extract / tax paid', checked:false, detail:'Verify present owner, site No. 40/68 / property No. 43 links'},
+      {name:'GBA Khata', url:'Khata extract / tax paid', checked:false, detail:'Verify present owner, site No. 40/68 / property No. 43 links'},
       {name:'Encumbrance Certificate', url:'Post-2007 EC required', checked:false, detail:'Obtain latest EC from 2007 to current date'},
       {name:'eCourts / High Court', url:'Litigation alert', checked:false, detail:'Search Doddaiah heirs, Kanthamma, Jyoti, Sulochana Ramesh'},
       {name:'CERSAI', url:'Mortgage / charge alert', checked:false, detail:'Search current property and parties'},
@@ -2491,11 +2491,11 @@ function buildCompiledAuctionKhataResult(){
     openWeb:{
       status:'Backend-ready / browser search links enabled',
       lastRun:'Demo timestamp generated in browser; production should store server-side evidence with URLs, snippets and timestamps.',
-      summary:'Open-web screening should search the property address, layout/locality, document numbers, all sellers/buyers/heirs, and litigation references across Google, Google News, IndiaKanoon, eCourts, Karnataka High Court, RERA, BBMP/Kaveri references and CERSAI charge indicators.',
+      summary:'Open-web screening should search the property address, layout/locality, document numbers, all sellers/buyers/heirs, and litigation references across Google, Google News, IndiaKanoon, eCourts, Karnataka High Court, RERA, GBA/Kaveri references and CERSAI charge indicators.',
       adverseFindings:[
         {severity:'medium', source:'IndiaKanoon / public legal web', title:'Possible relevant case found for Smt. Sulochana Ramesh vs Sri. Gana Prakash Gopal', detail:'Public search surfaced a legal record mentioning Doddaiah Layout, Jogupalya Main Road, Ulsoor and property numbers 10A, 12A, 13 and 13A. This may be connected to the wider Doddaiah Layout chain and should be reviewed by counsel before final clearance.', url:'https://indiankanoon.org/doc/73222432/'},
         {severity:'info', source:'Google indexed real-estate listings', title:'Doddaiah Layout / Jogupalya locality listings found', detail:'Public listings exist for Jogupalya / Doddaiah Layout area. Useful for locality validation and market benchmarking, not title validation.', url:'https://www.google.com/search?q=Doddaiah+Layout+Jogupalya+property'},
-        {severity:'warning', source:'No direct official confirmation in static mode', title:'Official court / SRO / BBMP checks not completed in browser-only mode', detail:'Static HTML can open searches but cannot certify results. Production backend must collect official evidence, store snapshots and return confidence-impacting alerts.', url:'https://www.google.com/search?q=eCourts+Sulochana+Ramesh+Doddaiah+Layout+Jogupalya'}
+        {severity:'warning', source:'No direct official confirmation in static mode', title:'Official court / SRO / GBA checks not completed in browser-only mode', detail:'Static HTML can open searches but cannot certify results. Production backend must collect official evidence, store snapshots and return confidence-impacting alerts.', url:'https://www.google.com/search?q=eCourts+Sulochana+Ramesh+Doddaiah+Layout+Jogupalya'}
       ],
       queries:[
         {label:'Property exact address', query:'"Property No. 43" "Old Madras Road" "Ramaiah Circle" Ulsoor'},
@@ -2515,7 +2515,7 @@ function buildCompiledAuctionKhataResult(){
       {level:'warning', title:'Scan Quality Alert', text:'Aged/degraded pages reduce OCR confidence. Manual review needed for older auction, will and court pages.'},
       {level:'warning', title:'Litigation History Alert', text:'Civil suits and High Court appeal appear in chain. Confirm no fresh/pending cases after 23 Jan 2006.'},
       {level:'critical', title:'Missing Current EC Alert', text:'Bundle ends around 2007. Latest EC from 2007 to present is mandatory.'},
-      {level:'warning', title:'Khata Continuity Alert', text:'BBMP khata transfer and present tax-paid status must be verified on current records.'},
+      {level:'warning', title:'Khata Continuity Alert', text:'GBA khata transfer and present tax-paid status must be verified on current records.'},
       {level:'warning', title:'Charge/Mortgage Alert', text:'Run CERSAI and bank charge checks before transaction decision.'}
     ]
   };
@@ -2639,7 +2639,7 @@ function buildOpenWebIntelligencePanel(d){
     ${findings}
     <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.12em;color:var(--text-dim);margin:14px 0 8px;">GENERATED SEARCH QUERIES</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px;">${queryCards}</div>
-    <div style="font-size:10px;color:var(--text-dim);line-height:1.55;margin-top:12px;border-top:1px solid rgba(26,188,188,.08);padding-top:10px;">Production requirement: connect server-side Google Custom Search / SerpAPI or compliant search provider, eCourts/Karnataka High Court scraping/API workflow where permitted, Kaveri/SRO verification, BBMP khata, CERSAI and RERA checks. Store every URL, result snippet, timestamp and confidence impact in an immutable audit log.</div>
+    <div style="font-size:10px;color:var(--text-dim);line-height:1.55;margin-top:12px;border-top:1px solid rgba(26,188,188,.08);padding-top:10px;">Production requirement: connect server-side Google Custom Search / SerpAPI or compliant search provider, eCourts/Karnataka High Court scraping/API workflow where permitted, Kaveri/SRO verification, GBA khata, CERSAI and RERA checks. Store every URL, result snippet, timestamp and confidence impact in an immutable audit log.</div>
   `;
 }
 
