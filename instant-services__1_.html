@@ -3759,8 +3759,12 @@ async function initiateCheckout() {
   var total = cartTotal();
 
   if (sessionStorage.getItem('ld_instant_payment_in_progress')) {
-    alert('A payment is already in progress. Please complete it or refresh the page before trying again.');
+    if (confirm('A previous payment attempt did not complete.\n\nClick OK to clear it and try again, or Cancel to check your previous payment status.')) {
+    sessionStorage.removeItem('ld_instant_payment_in_progress');
+    sessionStorage.removeItem('ld_payment_in_progress');
+  } else {
     return;
+  }
   }
   sessionStorage.setItem('ld_instant_payment_in_progress', '1');
 
@@ -3919,6 +3923,15 @@ async function handleCashfreeReturn() {
   }
   sessionStorage.removeItem('ld_instant_payment_in_progress');
 }
+
+// ── Clear stale payment lock on page load ──
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  if (!params.get('order_id') && !params.get('orderId')) {
+    sessionStorage.removeItem('ld_instant_payment_in_progress');
+    sessionStorage.removeItem('ld_payment_in_progress');
+  }
+})();
 
 window.addEventListener('load', handleCashfreeReturn);
 window.addEventListener('load', function(){ setTimeout(loadCartFromStorage, 200); });

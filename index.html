@@ -1547,8 +1547,12 @@ function handleCashfreePayment(serviceName, amount) {
    return;
  }
  if (sessionStorage.getItem('ld_payment_in_progress')) {
-   alert('A payment is already in progress. Please complete it or refresh the page before trying again.');
+   if (confirm('A previous payment attempt did not complete.\n\nClick OK to clear it and try again, or Cancel to check your previous payment status.')) {
+   sessionStorage.removeItem('ld_payment_in_progress');
+   sessionStorage.removeItem('ld_instant_payment_in_progress');
+ } else {
    return;
+ }
  }
  sessionStorage.setItem('ld_payment_in_progress', '1');
 
@@ -1739,8 +1743,12 @@ async function bkInitiatePayment() {
   if (!name) { alert('Please enter your full name.'); document.getElementById('bk-name').focus(); return; }
   if (!phone) { alert('Please enter your mobile number.'); document.getElementById('bk-phone').focus(); return; }
   if (sessionStorage.getItem('ld_payment_in_progress')) {
-    alert('A payment is already in progress. Please complete it or refresh the page before trying again.');
+    if (confirm('A previous payment attempt did not complete.\n\nClick OK to clear it and try again, or Cancel to check your previous payment status.')) {
+    sessionStorage.removeItem('ld_payment_in_progress');
+    sessionStorage.removeItem('ld_instant_payment_in_progress');
+  } else {
     return;
+  }
   }
   sessionStorage.setItem('ld_payment_in_progress', '1');
 
@@ -2128,8 +2136,12 @@ async function ldInitiatePayment() {
   var btn = document.getElementById('ld-pay-btn');
   var lbl = document.getElementById('ld-pay-label');
   if (sessionStorage.getItem('ld_payment_in_progress')) {
-    alert('A payment is already in progress. Please complete it or refresh the page before trying again.');
+    if (confirm('A previous payment attempt did not complete.\n\nClick OK to clear it and try again, or Cancel to check your previous payment status.')) {
+    sessionStorage.removeItem('ld_payment_in_progress');
+    sessionStorage.removeItem('ld_instant_payment_in_progress');
+  } else {
     return;
+  }
   }
   sessionStorage.setItem('ld_payment_in_progress', '1');
   btn.disabled = true; lbl.textContent = 'Creating order…';
@@ -2377,6 +2389,17 @@ async function ldHandleCashfreeReturn() {
     alert('Payment verification pending. If money was deducted, WhatsApp us with your Order ID: ' + orderId);
   }
 }
+// ── Clear stale payment lock on page load (handles dismissed Cashfree modal) ──
+(function() {
+  // If user dismissed the payment modal without completing, the flag is stuck.
+  // Clear it so the next attempt works without a page refresh.
+  // We do NOT clear it if the page is loading mid-redirect (Cashfree redirects back with ?order_id=)
+  var params = new URLSearchParams(window.location.search);
+  if (!params.get('order_id') && !params.get('orderId')) {
+    sessionStorage.removeItem('ld_payment_in_progress');
+    sessionStorage.removeItem('ld_instant_payment_in_progress');
+  }
+})();
 window.addEventListener('load', ldHandleCashfreeReturn);
 </script>
 
