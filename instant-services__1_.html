@@ -288,6 +288,67 @@
   .footer-brand { font-size: 13px; font-weight: 800; color: var(--ink); margin-bottom: 8px; }
   .footer-brand em { font-style: italic; color: var(--gold); font-weight: 400; }
 
+  /* ── STATE SWITCHER ── */
+  .state-switcher-wrap {
+    max-width: 1060px; margin: 36px auto 0; padding: 0 24px;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+  }
+  .state-switcher-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-muted); margin-bottom: 2px;
+  }
+  .state-tabs {
+    display: inline-flex; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 4px; gap: 4px;
+  }
+  .state-tab {
+    padding: 9px 22px; border-radius: 5px; font-size: 12px; font-weight: 700;
+    cursor: pointer; border: none; background: none; color: var(--ink-muted);
+    letter-spacing: 0.04em; transition: all 0.18s; font-family: inherit; white-space: nowrap;
+  }
+  .state-tab:hover { color: var(--ink); background: var(--bg3); }
+  .state-tab.active {
+    background: var(--gold); color: #000;
+  }
+  .state-notice {
+    font-size: 11px; color: var(--ink-muted); text-align: center; margin-top: 2px;
+  }
+  @media(max-width:480px){
+    .state-tabs { flex-direction: column; width: 100%; }
+    .state-tab { text-align: center; }
+  }
+  @media(max-width:720px) and (min-width:481px){
+    .state-tabs { flex-wrap: wrap; justify-content: center; }
+    .state-tab { flex: 0 0 auto; }
+  }
+
+  /* ── STATE CONTENT SECTIONS ── */
+  .state-section { display: none; }
+  .state-section.active { display: contents; }
+
+  /* ── FAQ SECTION ── */
+  .faq-wrap {
+    max-width: 1060px; margin: 0 auto; padding: 0 24px 48px;
+  }
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+  }
+  .faq-q {
+    width: 100%; background: none; border: none; text-align: left; cursor: pointer;
+    padding: 18px 4px; display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; font-family: inherit;
+  }
+  .faq-q-text { font-size: 13px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+  .faq-icon {
+    font-size: 18px; color: var(--ink-muted); transition: transform 0.2s; flex-shrink: 0;
+    line-height: 1;
+  }
+  .faq-item.open .faq-icon { transform: rotate(45deg); color: var(--gold); }
+  .faq-a {
+    display: none; padding: 0 4px 18px; font-size: 13px; color: var(--ink-mid); line-height: 1.7;
+  }
+  .faq-item.open .faq-a { display: block; }
+
   /* ── SUCCESS TOAST ── */
   #pay-toast {
     display: none; position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
@@ -373,7 +434,7 @@
 
 <!-- ── TOP BAR ── -->
 <nav class="topbar">
-  <a href="https://legaldirectory.in/" class="brand">Legaldirectory<em>.ai</em><span class="brand-ver">v3.4</span></a>
+  <a href="https://legaldirectory.in/" class="brand">Legaldirectory<em>.ai</em><span class="brand-ver">v3.5</span></a>
   <div class="nav-links">
     <a href="https://legaldirectory.in/#services">Services</a>
     <a href="https://legaldirectory.in/#how-it-works">How It Works</a>
@@ -386,9 +447,9 @@
 <!-- ── BANNER ── -->
 <section class="banner">
   <div class="banner-eyebrow">⚡ Instant Services</div>
-  <h1>Karnataka Property<br><em>Documents. Delivered.</em></h1>
-  <p class="banner-sub">Pick one or more services, add them to your cart, and pay in a single checkout. Documents delivered to your WhatsApp.</p>
-  <div class="banner-badges">
+  <h1 id="banner-title">Karnataka Property<br><em>Documents. Delivered.</em></h1>
+  <p class="banner-sub" id="banner-sub">Pick one or more services, add them to your cart, and pay in a single checkout. Documents delivered to your WhatsApp.</p>
+  <div class="banner-badges" id="banner-badges">
     <span class="badge"><span class="dot"></span> KA Official Records</span>
     <span class="badge"><span class="dot"></span> Multi-Service Cart</span>
     <span class="badge"><span class="dot"></span> Delivered via WhatsApp</span>
@@ -422,6 +483,25 @@
     </div>
   </div>
 </div>
+
+<!-- ── STATE SWITCHER ── -->
+<div class="state-switcher-wrap">
+  <div class="state-switcher-label">Select State</div>
+  <div class="state-tabs">
+    <button class="state-tab active" onclick="switchState('ka')" id="tab-ka">Karnataka</button>
+    <button class="state-tab" onclick="switchState('ts')" id="tab-ts">Telangana</button>
+    <button class="state-tab" onclick="switchState('ap')" id="tab-ap">Andhra Pradesh</button>
+    <button class="state-tab" onclick="switchState('mh')" id="tab-mh">Maharashtra</button>
+    <button class="state-tab" onclick="switchState('kl')" id="tab-kl">Kerala</button>
+    <button class="state-tab" onclick="switchState('tn')" id="tab-tn">Tamil Nadu</button>
+  </div>
+  <div class="state-notice">Services and documents vary by state. Select your state to see available options.</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     STATE: KARNATAKA
+══════════════════════════════════════ -->
+<div class="state-section active" id="state-ka">
 
 <!-- ═══════════════════════════════
      SECTION ★ – GOVERNMENT HOUSING SCHEMES
@@ -881,6 +961,2287 @@
   </div>
 
 </div>
+
+<!-- Common Government Services (KA) -->
+<div class="section-label"><h2>Government &amp; Personal Documents</h2></div>
+<div class="grid">
+
+  <div class="card" data-name="Aadhaar Address Update (KA)" data-price="295" data-delivery="3–5 working days">
+    <div class="card-eyebrow">Aadhaar Services · Karnataka</div>
+    <h3>Aadhaar Address Update</h3>
+    <p class="card-desc">Update your Aadhaar-registered address without visiting a centre. We handle the form, supporting documents, and submission on your behalf.</p>
+    <ul class="card-bullets">
+      <li>Address update with valid proof of address</li>
+      <li>Applicable across all Karnataka districts</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹295</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Duplicate Aadhaar Card (KA)" data-price="195" data-delivery="2–3 working days">
+    <div class="card-eyebrow">Aadhaar Services · Karnataka</div>
+    <h3>Duplicate Aadhaar Card</h3>
+    <p class="card-desc">Lost or damaged your Aadhaar card? Get a duplicate e-Aadhaar or physical reprint issued without visiting a UIDAI centre.</p>
+    <ul class="card-bullets">
+      <li>e-Aadhaar or physical duplicate</li>
+      <li>Applicable for all Karnataka residents</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹195</span>
+        <span class="card-delivery">2–3 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Marriage Certificate (KA)" data-price="2995" data-delivery="7–14 working days">
+    <div class="card-eyebrow">Certificate Services · Karnataka</div>
+    <h3>Marriage Certificate</h3>
+    <p class="card-desc">Get your official Marriage Certificate issued by the Karnataka Registration Department. Required for name change, visa, insurance, and spouse documentation.</p>
+    <ul class="card-bullets">
+      <li>Issued by KA Registration Department</li>
+      <li>Valid for legal, financial &amp; immigration purposes</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹2,995</span>
+        <span class="card-delivery">7–14 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Death Certificate (KA)" data-price="495" data-delivery="3–5 working days">
+    <div class="card-eyebrow">Certificate Services · Karnataka</div>
+    <h3>Death Certificate</h3>
+    <p class="card-desc">Obtain an official Death Certificate in Karnataka — required for succession, insurance claims, property mutation, and pension processes.</p>
+    <ul class="card-bullets">
+      <li>Issued by municipal / panchayat authority</li>
+      <li>Required for legal heir &amp; succession processes</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹495</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Birth Certificate (KA)" data-price="495" data-delivery="3–5 working days">
+    <div class="card-eyebrow">Certificate Services · Karnataka</div>
+    <h3>Birth Certificate</h3>
+    <p class="card-desc">Get an official Birth Certificate in Karnataka for school admissions, passport, Aadhaar, and all government documentation needs.</p>
+    <ul class="card-bullets">
+      <li>Issued by municipal / panchayat authority</li>
+      <li>Valid for all official identification purposes</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹495</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Caste Certificate (KA)" data-price="195" data-delivery="3–5 working days">
+    <div class="card-eyebrow">Certificate Services · Karnataka</div>
+    <h3>Caste Certificate</h3>
+    <p class="card-desc">Obtain a Caste Certificate in Karnataka for reservations in education, employment, and government schemes via Nadakacheri / Revenue Department.</p>
+    <ul class="card-bullets">
+      <li>Issued by Nadakacheri / Revenue Department</li>
+      <li>Valid for all KA government reservations &amp; schemes</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹195</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Income Certificate (KA)" data-price="195" data-delivery="3–5 working days">
+    <div class="card-eyebrow">Certificate Services · Karnataka</div>
+    <h3>Income Certificate</h3>
+    <p class="card-desc">Get an official Income Certificate in Karnataka for scholarships, EWS reservations, government schemes, and financial documentation via Nadakacheri.</p>
+    <ul class="card-bullets">
+      <li>Issued by Tahsildar / Nadakacheri</li>
+      <li>Required for EWS, scholarships &amp; government schemes</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹195</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="New Passport / Renewal (KA)" data-price="3195" data-delivery="15–30 working days">
+    <div class="card-eyebrow">Passport Seva · Karnataka</div>
+    <h3>New Passport / Renewal</h3>
+    <p class="card-desc">Get your new passport or renewal processed via Passport Seva. We handle appointment booking, form filling, document preparation, and follow-up.</p>
+    <ul class="card-bullets">
+      <li>New passport or renewal — all types</li>
+      <li>Appointment booking &amp; document checklist included</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹3,195</span>
+        <span class="card-delivery">15–30 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Visa Services (KA)" data-price="9995" data-delivery="Varies by country">
+    <div class="card-eyebrow">Visa · International Travel</div>
+    <h3>Visa Services</h3>
+    <p class="card-desc">End-to-end visa application assistance for any country — form filling, document checklist, appointment booking, and submission guidance.</p>
+    <ul class="card-bullets">
+      <li>Tourist, business &amp; other visa categories</li>
+      <li>Form filling, documents &amp; appointment booking</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹9,995</span>
+        <span class="card-delivery">Varies by country</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Notary &amp; E-Stamping (KA)" data-price="2995" data-delivery="1–2 working days">
+    <div class="card-eyebrow">Karnataka · Notary &amp; Stamping</div>
+    <h3>Notary &amp; E-Stamping</h3>
+    <p class="card-desc">Get documents notarised or e-stamped in Karnataka without visiting offices. Covers affidavits, agreements, power of attorney, and other documents requiring stamp paper.</p>
+    <ul class="card-bullets">
+      <li>Affidavits, agreements &amp; POA notarisation</li>
+      <li>E-stamp paper procurement &amp; printing</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹2,995</span>
+        <span class="card-delivery">1–2 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
+</div><!-- /state-ka -->
+
+<!-- ══════════════════════════════════════
+     STATE: TELANGANA
+══════════════════════════════════════ -->
+<div class="state-section" id="state-ts">
+
+<!-- ═══════════════════════════════
+     SECTION ★ – GOVERNMENT HOUSING SCHEMES
+════════════════════════════════ -->
+<div class="section-label"><h2>★ Government Housing Scheme Consultancy</h2></div>
+<div class="grid">
+
+  <div class="card rgrhcl-card" data-name="TSHECL Housing Scheme Consultancy" data-price="501" data-delivery="For pre-verification">
+    <div class="pop-tag">★ GOVT</div>
+    <div class="govt-badge">
+      <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      Telangana Government Enterprise
+    </div>
+    <div class="card-eyebrow">TSHECL · Housing Schemes · EWS</div>
+    <h3>Telangana Housing Corporation Limited (TSHECL) — Full Consultancy</h3>
+    <p class="card-desc">End-to-end consultancy for government housing schemes under TSHECL — a Telangana Government Enterprise. Eligibility checked, reports prepared, and pre-application guided for pre-verification.</p>
+    <ul class="card-bullets">
+      <li class="label-bullet"><strong>Credit Report</strong><span class="bullet-sep">—</span>financial eligibility assessment for housing scheme</li>
+      <li class="label-bullet"><strong>Asset Report</strong><span class="bullet-sep">—</span>current asset declaration and valuation summary</li>
+      <li class="label-bullet"><strong>Eligibility Report</strong><span class="bullet-sep">—</span>scheme-specific qualification analysis</li>
+      <li class="label-bullet"><strong>Pre-Application Process</strong><span class="bullet-sep">—</span>guided document checklist and form prep</li>
+    </ul>
+    <div style="background:rgba(201,149,42,0.07);border:1px solid var(--gold-border);border-radius:6px;padding:12px 14px;margin-bottom:16px;">
+      <div style="font-size:10px;font-weight:700;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">Major Schemes Covered</div>
+      <ul class="scheme-list">
+        <li>2BHK Housing Scheme — housing for economically weaker sections &amp; LIG</li>
+        <li>Pradhan Mantri Awas Yojana (PMAY) — central govt urban housing subsidy</li>
+        <li>Rajiv Swagruha Scheme — affordable housing for middle-income groups</li>
+      </ul>
+      <div style="font-size:10px;color:var(--ink-muted);line-height:1.6;">Financial support or subsidised housing units provided to eligible beneficiaries.</div>
+    </div>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹501</span>
+        <span class="card-delivery">For pre-verification</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Property Records -->
+<div class="section-label"><h2>Property Records &amp; Certificates</h2></div>
+<div class="grid">
+
+  <div class="card" data-name="IGRS Telangana EC Online" data-price="299" data-delivery="Same day">
+    <div class="pop-tag">POPULAR</div>
+    <div class="card-eyebrow">IGRS Telangana · Encumbrance Certificate</div>
+    <h3>IGRS Telangana EC Online — Encumbrance Certificate</h3>
+    <p class="card-desc">Search Telangana EC records, check SRO or document details, and separate EC search from Bhu Bharathi land-record intent. Covers both Non-Agricultural and Agricultural (Bhu Bharati) property types.</p>
+    <ul class="card-bullets">
+      <li>Sale, mortgage, gift, release &amp; settlement history</li>
+      <li>Search by Address, Document No., Survey No., Plot No., or Door No.</li>
+      <li>Distinct from Dharani, Bhu Bharathi &amp; ROR — covers registered transaction history</li>
+      <li>Custom EC period with SRO and registration year</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Bhu Bharathi Telangana Land Records" data-price="299" data-delivery="Same day">
+    <div class="card-eyebrow">Bhu Bharathi · TS Land Records</div>
+    <h3>Bhu Bharathi Telangana Land Records</h3>
+    <p class="card-desc">Search Bhu Bharathi records, check survey and EC details, and navigate Telangana land-record documents. Covers landholder details, survey references, and the right record path after Dharani-related changes.</p>
+    <ul class="card-bullets">
+      <li>Search by Village/Division, Survey No. &amp; Khata No.</li>
+      <li>Pattadar, survey, ownership &amp; revenue record details</li>
+      <li>Compare with Telangana EC for complete due diligence</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Telangana Village Map" data-price="299" data-delivery="Same day">
+    <div class="card-eyebrow">TS Survey · Cadastral Maps</div>
+    <h3>Telangana Village Map</h3>
+    <p class="card-desc">Visual plot layout with survey numbers for any Telangana village. View detailed cadastral maps with plot boundaries, survey numbers, internal roads, landmarks, and nearby features.</p>
+    <ul class="card-bullets">
+      <li>Plot boundaries &amp; survey numbers clearly shown</li>
+      <li>Useful for land purchase, dispute resolution &amp; survey verification</li>
+      <li>Search by village name or division</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Telangana Pahani (Adangal)" data-price="299" data-delivery="Same day">
+    <div class="card-eyebrow">TS Revenue Dept · Agricultural Land</div>
+    <h3>Telangana Pahani (Adangal)</h3>
+    <p class="card-desc">Land ownership, cultivation, and usage details for agricultural land in Telangana. Issued by the Revenue Department — essential for farmers, landowners, and buyers during transactions or legal verifications.</p>
+    <ul class="card-bullets">
+      <li>Owner name, survey number &amp; land extent</li>
+      <li>Land type (dry/wet), crops grown &amp; water source</li>
+      <li>Government dues &amp; pending taxes listed</li>
+      <li>Required for agri loans, crop insurance &amp; mutation</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Telangana Pattadhar Passbook (Bhu Bharati)" data-price="399" data-delivery="Same day">
+    <div class="card-eyebrow">Bhu Bharati · ROR Passbook</div>
+    <h3>Telangana Pattadhar Passbook (Bhu Bharati)</h3>
+    <p class="card-desc">Download official Pattadhar Passbook (పట్టాదార్ పాస్‌బుక్) — the same records on Bhu Bharati. Certifies ownership of agricultural land with survey no., extent &amp; owner details. Required for registration, loan &amp; land division.</p>
+    <ul class="card-bullets">
+      <li>Search by Aadhaar First Four Digits &amp; Passbook No.</li>
+      <li>Serves as ROR — Record of Rights for agricultural land</li>
+      <li>Proof of lawful possession for bank loans against property</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹399</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Telangana Market Value Certificate" data-price="299" data-delivery="Same day">
+    <div class="card-eyebrow">IGRS TS · Market Value</div>
+    <h3>Telangana Market Value Certificate</h3>
+    <p class="card-desc">Government-notified market value for a Telangana property issued by the Registration &amp; Stamps Department. Required for registration, loan approvals, and stamp duty calculation.</p>
+    <ul class="card-bullets">
+      <li>Unit rate per sq.yd. / sq.m. by location</li>
+      <li>Search by survey number or village</li>
+      <li>Used for stamp duty calculation &amp; valuation</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Telangana RERA Search (TS-RERA)" data-price="299" data-delivery="Same day">
+    <div class="card-eyebrow">TS-RERA · Project Verification</div>
+    <h3>Telangana RERA Search — TS-RERA Registered Projects</h3>
+    <p class="card-desc">Verify RERA number, project status, escrow details, and complaints before buying any flat or plot in Telangana. Search by Project Name or Promoter Name on TS-RERA.</p>
+    <ul class="card-bullets">
+      <li>RERA registration number &amp; project approval status</li>
+      <li>Escrow account &amp; completion timeline details</li>
+      <li>Complaints and litigation history against promoter</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Telangana CERSAI Mortgage Report" data-price="399" data-delivery="Same day">
+    <div class="card-eyebrow">CERSAI National Registry · Mortgage</div>
+    <h3>Telangana CERSAI Mortgage Report</h3>
+    <p class="card-desc">Comprehensive report on property mortgages and hypothecation in Telangana from the Central Registry of Securitisation. Covers immovable and movable assets nationwide.</p>
+    <ul class="card-bullets">
+      <li>Check if property is mortgaged or pledged</li>
+      <li>Covers residential, commercial &amp; other land types</li>
+      <li>Search by Survey No, Door No, Plot No, Pin Code</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹399</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Telangana CDMA Property Tax Receipt" data-price="299" data-delivery="Same day">
+    <div class="pop-tag">NEW</div>
+    <div class="card-eyebrow">CDMA Telangana · Urban Local Body</div>
+    <h3>Telangana CDMA Property Tax Receipt</h3>
+    <p class="card-desc">Official property tax payment record from CDMA Telangana — confirming tax paid for a specific property in a given financial year across all TS urban local bodies.</p>
+    <ul class="card-bullets">
+      <li>Search by PTIN — instant verification</li>
+      <li>Covers all TS Municipal Corporations, Municipalities &amp; Nagar Panchayats</li>
+      <li>Continuous payment history — key indicator of undisputed ownership</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Telangana PTIN Creation &amp; Mutation" data-price="299" data-delivery="3–7 working days">
+    <div class="card-eyebrow">GHMC / CDMA · PTIN Services</div>
+    <h3>Telangana PTIN Creation &amp; Mutation</h3>
+    <p class="card-desc">Get your Property Tax ID (PTIN) issued — or transferred to your name — without hassle. Covers new assessment for new constructions and mutation after sale, gift, or transfer.</p>
+    <ul class="card-bullets">
+      <li>New PTIN for newly constructed or unassessed properties</li>
+      <li>Mutation: updates PTIN ownership after sale or transfer</li>
+      <li>Handles GHMC/CDMA filing, inspections &amp; follow-up</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">3–7 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="TGBPASS Building Permission" data-price="2399" data-delivery="Same day">
+    <div class="card-eyebrow">TGBPASS · Building Approval</div>
+    <h3>TGBPASS Building Permission — Telangana</h3>
+    <p class="card-desc">Instant verification of building construction approvals via TGBPASS — Telangana's official single-window system for building permissions, plan sanctions, and occupancy certificates.</p>
+    <ul class="card-bullets">
+      <li>Confirms construction is legally permitted &amp; approved</li>
+      <li>Compliance with zoning, FAR limits &amp; safety standards</li>
+      <li>Essential before purchase, loan, or legal proceedings</li>
+      <li>Search by File No.</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹2,399</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Telangana Legal Opinion" data-price="2999" data-delivery="3–5 working days">
+    <div class="card-eyebrow">Legal · Expert Assessment</div>
+    <h3>Telangana Property Legal Opinion</h3>
+    <p class="card-desc">Get a trusted legal opinion from a verified Telangana advocate. Upload your documents and receive a lawyer-signed report — ready for banks, buyers, or courts.</p>
+    <ul class="card-bullets">
+      <li>Property title &amp; ownership verification</li>
+      <li>Encumbrance &amp; litigation check</li>
+      <li>Suitable for purchase, loan &amp; litigation use cases</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹2,999</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- LRS Services -->
+<div class="section-label"><h2>Telangana LRS Services</h2></div>
+<div class="grid">
+
+  <div class="card" data-name="TS LRS Receipt Download" data-price="195" data-delivery="Same day">
+    <div class="card-eyebrow">TS LRS · Online Services</div>
+    <h3>LRS Receipt Download</h3>
+    <p class="card-desc">Made payment but cannot access your LRS receipt? We retrieve your Telangana LRS payment receipt without you needing to navigate the government portal.</p>
+    <ul class="card-bullets">
+      <li>For cases where payment was made but receipt is inaccessible</li>
+      <li>Delivered to your WhatsApp</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹195</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="TS LRS Update Phone Number" data-price="995" data-delivery="2–3 working days">
+    <div class="card-eyebrow">TS LRS · Application Update</div>
+    <h3>LRS Update Phone Number</h3>
+    <p class="card-desc">Don't have the phone number registered for OTP on your LRS application? We handle the update so you can proceed with your LRS process without getting stuck.</p>
+    <ul class="card-bullets">
+      <li>For applicants locked out due to OTP phone mismatch</li>
+      <li>We coordinate the update with the LRS portal</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹995</span>
+        <span class="card-delivery">2–3 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="TS LRS Forgot Application Number" data-price="495" data-delivery="Same day">
+    <div class="card-eyebrow">TS LRS · Application Recovery</div>
+    <h3>LRS Forgot / Don't Know Application Number</h3>
+    <p class="card-desc">Don't know if someone already applied for your property or lost your LRS application number? We trace and retrieve the application reference for your property.</p>
+    <ul class="card-bullets">
+      <li>Trace existing LRS application by property details</li>
+      <li>Confirm if prior application exists on your plot</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹495</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="TS LRS Overcharge Help" data-price="495" data-delivery="2–3 working days">
+    <div class="card-eyebrow">TS LRS · Penalty Review</div>
+    <h3>LRS Overcharge Help</h3>
+    <p class="card-desc">LRS penalty seems too high? We review your case for calculation mistakes and help you get the correct LRS fee assessed before you make the final payment.</p>
+    <ul class="card-bullets">
+      <li>Review of LRS penalty calculation for errors</li>
+      <li>Applicable for Hyderabad and other TS LRS jurisdictions</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹495</span>
+        <span class="card-delivery">2–3 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="TS LRS IGRS Error (Hyderabad, Pending at L1)" data-price="2995" data-delivery="5–7 working days">
+    <div class="card-eyebrow">TS LRS · Hyderabad · Error Resolution</div>
+    <h3>LRS IGRS Error — Pending at L1 (Hyderabad)</h3>
+    <p class="card-desc">Your LRS application has an IGRS/document upload error and is stuck Pending at L1? We coordinate the error resolution with the LRS authority for Hyderabad properties.</p>
+    <ul class="card-bullets">
+      <li>For applications with IGRS / document upload errors</li>
+      <li>Only for Hyderabad LRS jurisdiction</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹2,995</span>
+        <span class="card-delivery">5–7 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="TS LRS FTL/Prohibited Properties Error (Hyderabad, Pending at L1)" data-price="5495" data-delivery="7–14 working days">
+    <div class="card-eyebrow">TS LRS · Hyderabad · FTL Error</div>
+    <h3>LRS FTL / Prohibited Properties Error — Pending at L1 (Hyderabad)</h3>
+    <p class="card-desc">Application has an FTL / Prohibited error and is stuck? We handle the complex resolution for Full Tank Lake or prohibited property classification disputes in the Hyderabad LRS process.</p>
+    <ul class="card-bullets">
+      <li>For applications with FTL / Prohibited property errors</li>
+      <li>Only for Hyderabad LRS jurisdiction</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹5,495</span>
+        <span class="card-delivery">7–14 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="TS LRS Land Area Error (Hyderabad)" data-price="4495" data-delivery="5–7 working days">
+    <div class="card-eyebrow">TS LRS · Hyderabad · Area Error</div>
+    <h3>LRS Land Area Error (Hyderabad)</h3>
+    <p class="card-desc">Your LRS application shows wrong land size? We resolve land area discrepancies in the LRS system for Hyderabad properties to ensure the correct extent is recorded.</p>
+    <ul class="card-bullets">
+      <li>For applications with wrong land size recorded</li>
+      <li>Only for Hyderabad LRS jurisdiction</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹4,495</span>
+        <span class="card-delivery">5–7 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="TS LRS Valuation Error (Hyderabad)" data-price="4495" data-delivery="5–7 working days">
+    <div class="card-eyebrow">TS LRS · Hyderabad · Valuation Error</div>
+    <h3>LRS Valuation Error (Hyderabad)</h3>
+    <p class="card-desc">Application shows wrong market value of land? We handle valuation error corrections in the Hyderabad LRS system to ensure the correct rate is applied to your property.</p>
+    <ul class="card-bullets">
+      <li>For applications with incorrect market value of land</li>
+      <li>Only for Hyderabad LRS jurisdiction</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹4,495</span>
+        <span class="card-delivery">5–7 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- MeeSeva Services -->
+<div class="section-label"><h2>MeeSeva &amp; Government Services</h2></div>
+<div class="grid">
+
+  <div class="card" data-name="Aadhaar Address Update (TS)" data-price="295" data-delivery="3–5 working days">
+    <div class="card-eyebrow">MeeSeva · Aadhaar Services</div>
+    <h3>Aadhaar Address Update</h3>
+    <p class="card-desc">Update your Aadhaar-registered address via MeeSeva without visiting a centre. We handle the form, supporting documents, and submission on your behalf.</p>
+    <ul class="card-bullets">
+      <li>Address update with valid proof of address</li>
+      <li>Applicable across all Telangana districts</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹295</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Duplicate Aadhaar Card (TS)" data-price="195" data-delivery="2–3 working days">
+    <div class="card-eyebrow">MeeSeva · Aadhaar Services</div>
+    <h3>Duplicate Aadhaar Card</h3>
+    <p class="card-desc">Lost or damaged your Aadhaar card? Get a duplicate issued via MeeSeva. We manage the request and deliver the e-Aadhaar or physical reprint to you.</p>
+    <ul class="card-bullets">
+      <li>e-Aadhaar or physical duplicate</li>
+      <li>Applicable for all Telangana residents</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹195</span>
+        <span class="card-delivery">2–3 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Marriage Certificate (TS MeeSeva)" data-price="2995" data-delivery="7–14 working days">
+    <div class="card-eyebrow">MeeSeva · Certificate Services</div>
+    <h3>Marriage Certificate</h3>
+    <p class="card-desc">Get your official Marriage Certificate issued via MeeSeva / Telangana Registration Department. Required for legal name change, visa, insurance, and spouse documentation.</p>
+    <ul class="card-bullets">
+      <li>Issued by Telangana Registration Department</li>
+      <li>Valid for all legal, financial &amp; immigration purposes</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹2,995</span>
+        <span class="card-delivery">7–14 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Death Certificate (TS MeeSeva)" data-price="495" data-delivery="3–5 working days">
+    <div class="card-eyebrow">MeeSeva · Certificate Services</div>
+    <h3>Death Certificate</h3>
+    <p class="card-desc">Obtain an official Death Certificate from Telangana via MeeSeva. Required for succession, insurance claims, property mutation, and pension processes.</p>
+    <ul class="card-bullets">
+      <li>Issued by municipal/panchayat authority</li>
+      <li>Required for legal heir &amp; succession processes</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹495</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Birth Certificate (TS MeeSeva)" data-price="495" data-delivery="3–5 working days">
+    <div class="card-eyebrow">MeeSeva · Certificate Services</div>
+    <h3>Birth Certificate</h3>
+    <p class="card-desc">Get an official Birth Certificate via MeeSeva Telangana for school admissions, passport, Aadhaar, and all government documentation needs.</p>
+    <ul class="card-bullets">
+      <li>Issued by municipal/panchayat authority</li>
+      <li>Valid for all official identification &amp; documentation</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹495</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Caste Certificate (TS MeeSeva)" data-price="195" data-delivery="3–5 working days">
+    <div class="card-eyebrow">MeeSeva · Certificate Services</div>
+    <h3>Caste Certificate</h3>
+    <p class="card-desc">Obtain a Caste Certificate via MeeSeva Telangana for reservations in education, employment, and government schemes.</p>
+    <ul class="card-bullets">
+      <li>Issued by Revenue Department / MeeSeva</li>
+      <li>Valid for all TS government reservations &amp; schemes</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹195</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Income Certificate (TS MeeSeva)" data-price="195" data-delivery="3–5 working days">
+    <div class="card-eyebrow">MeeSeva · Certificate Services</div>
+    <h3>Income Certificate</h3>
+    <p class="card-desc">Get an official Income Certificate via MeeSeva Telangana for scholarships, government schemes, EWS reservations, and financial documentation.</p>
+    <ul class="card-bullets">
+      <li>Issued by Revenue Department / Tahsildar</li>
+      <li>Required for EWS certificates, scholarships &amp; government schemes</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹195</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="2-Wheeler Driving License (TS)" data-price="4095" data-delivery="15–30 working days">
+    <div class="card-eyebrow">TS RTO · Licence Services</div>
+    <h3>2-Wheeler Driving License</h3>
+    <p class="card-desc">Get your Telangana 2-Wheeler Driving License processed end-to-end. We handle the application, slot booking, document submission, and follow-up with the RTO.</p>
+    <ul class="card-bullets">
+      <li>Application, slot booking &amp; RTO submission handled</li>
+      <li>Valid for all Telangana RTOs</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹4,095</span>
+        <span class="card-delivery">15–30 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="4-Wheeler Driving License (TS)" data-price="6095" data-delivery="15–30 working days">
+    <div class="card-eyebrow">TS RTO · Licence Services</div>
+    <h3>4-Wheeler Driving License</h3>
+    <p class="card-desc">Get your Telangana 4-Wheeler Driving License processed end-to-end, including learning license, test slot, and final DL issuance.</p>
+    <ul class="card-bullets">
+      <li>End-to-end handling — learning license to final DL</li>
+      <li>Valid for all Telangana RTOs</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹6,095</span>
+        <span class="card-delivery">15–30 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="2-Wheeler Learning License (TS)" data-price="2995" data-delivery="7–10 working days">
+    <div class="card-eyebrow">TS RTO · Licence Services</div>
+    <h3>2-Wheeler Learning License</h3>
+    <p class="card-desc">Get your Telangana 2-Wheeler Learning License processed — slot booking, form submission, and LL issuance handled without visiting the RTO.</p>
+    <ul class="card-bullets">
+      <li>Slot booking, form &amp; document submission</li>
+      <li>LL delivered once issued</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹2,995</span>
+        <span class="card-delivery">7–10 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="4-Wheeler Learning License (TS)" data-price="4995" data-delivery="7–10 working days">
+    <div class="card-eyebrow">TS RTO · Licence Services</div>
+    <h3>4-Wheeler Learning License</h3>
+    <p class="card-desc">Get your Telangana 4-Wheeler Learning License processed without visiting the RTO. We handle all slot booking and documentation.</p>
+    <ul class="card-bullets">
+      <li>Slot booking, form &amp; document submission</li>
+      <li>LL delivered once issued</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹4,995</span>
+        <span class="card-delivery">7–10 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="2-Wheeler Vehicle Registration / NOC (TS)" data-price="3195" data-delivery="7–14 working days">
+    <div class="card-eyebrow">TS RTO · Vehicle Registration</div>
+    <h3>2-Wheeler Vehicle Registration / NOC</h3>
+    <p class="card-desc">Get your Telangana 2-Wheeler vehicle registration or NOC processed — including all RTO documentation, form submission, and follow-up.</p>
+    <ul class="card-bullets">
+      <li>New registration or NOC for vehicle transfer</li>
+      <li>All RTO document handling included</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹3,195</span>
+        <span class="card-delivery">7–14 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="4-Wheeler Vehicle Registration / NOC (TS)" data-price="6995" data-delivery="7–14 working days">
+    <div class="card-eyebrow">TS RTO · Vehicle Registration</div>
+    <h3>4-Wheeler Vehicle Registration / NOC</h3>
+    <p class="card-desc">Get your Telangana 4-Wheeler vehicle registration or NOC processed — including all RTO documentation, form submission, and follow-up.</p>
+    <ul class="card-bullets">
+      <li>New registration or NOC for vehicle transfer</li>
+      <li>All RTO document handling included</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹6,995</span>
+        <span class="card-delivery">7–14 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="New Passport / Renewal (TS)" data-price="3195" data-delivery="15–30 working days">
+    <div class="card-eyebrow">Passport Seva · TS</div>
+    <h3>New Passport / Renewal</h3>
+    <p class="card-desc">Get your new passport or renewal processed via Passport Seva. We handle appointment booking, form filling, document preparation, and post-submission follow-up.</p>
+    <ul class="card-bullets">
+      <li>New passport or renewal — all types</li>
+      <li>Appointment booking &amp; document checklist included</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹3,195</span>
+        <span class="card-delivery">15–30 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Visa Services (TS)" data-price="9995" data-delivery="Varies by country">
+    <div class="card-eyebrow">Visa · International Travel</div>
+    <h3>Visa Services</h3>
+    <p class="card-desc">Get end-to-end visa application assistance for any country. We handle form filling, document checklist, appointment booking, and submission guidance.</p>
+    <ul class="card-bullets">
+      <li>Tourist, business &amp; other visa categories</li>
+      <li>Form filling, documents &amp; appointment booking</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹9,995</span>
+        <span class="card-delivery">Varies by country</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Notary &amp; E-Stamping (TS)" data-price="2995" data-delivery="1–2 working days">
+    <div class="card-eyebrow">TS · Notary &amp; Stamping</div>
+    <h3>Notary &amp; E-Stamping</h3>
+    <p class="card-desc">Get documents notarised or e-stamped in Telangana without visiting offices. Covers affidavits, agreements, power of attorney, and other documents requiring notarisation or stamp paper.</p>
+    <ul class="card-bullets">
+      <li>Affidavits, agreements &amp; POA notarisation</li>
+      <li>E-stamp paper procurement &amp; printing</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹2,995</span>
+        <span class="card-delivery">1–2 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
+
+
+</div><!-- /state-ts -->
+
+<!-- ══════════════════════════════════════
+     STATE: ANDHRA PRADESH
+══════════════════════════════════════ -->
+<div class="state-section" id="state-ap">
+
+<!-- ═══════════════════════════════
+     SECTION ★ – GOVERNMENT HOUSING SCHEMES
+════════════════════════════════ -->
+<div class="section-label"><h2>★ Government Housing Scheme Consultancy</h2></div>
+<div class="grid">
+
+  <div class="card rgrhcl-card" data-name="APSHECL Housing Scheme Consultancy" data-price="501" data-delivery="For pre-verification">
+    <div class="pop-tag">★ GOVT</div>
+    <div class="govt-badge">
+      <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      Andhra Pradesh Government Enterprise
+    </div>
+    <div class="card-eyebrow">APSHECL / VUDA / TIDCO · Housing Schemes · EWS</div>
+    <h3>AP Housing Corporation / TIDCO — Full Scheme Consultancy</h3>
+    <p class="card-desc">End-to-end consultancy for government housing schemes in Andhra Pradesh — under APSHECL, VUDA, and TIDCO. Eligibility checked, reports prepared, and pre-application guided for pre-verification.</p>
+    <ul class="card-bullets">
+      <li class="label-bullet"><strong>Credit Report</strong><span class="bullet-sep">—</span>financial eligibility assessment for housing scheme</li>
+      <li class="label-bullet"><strong>Asset Report</strong><span class="bullet-sep">—</span>current asset declaration and valuation summary</li>
+      <li class="label-bullet"><strong>Eligibility Report</strong><span class="bullet-sep">—</span>scheme-specific qualification analysis</li>
+      <li class="label-bullet"><strong>Pre-Application Process</strong><span class="bullet-sep">—</span>guided document checklist and form prep</li>
+    </ul>
+    <div style="background:rgba(201,149,42,0.07);border:1px solid var(--gold-border);border-radius:6px;padding:12px 14px;margin-bottom:16px;">
+      <div style="font-size:10px;font-weight:700;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">Major Schemes Covered</div>
+      <ul class="scheme-list">
+        <li>TIDCO Housing Scheme — affordable flats for EWS &amp; LIG groups</li>
+        <li>Navaratnalu – Pedalandariki Illu — housing for poor under AP Govt</li>
+        <li>PMAY (Urban &amp; Rural) — central government housing subsidy in AP</li>
+      </ul>
+      <div style="font-size:10px;color:var(--ink-muted);line-height:1.6;">Financial support or subsidised flats provided to eligible beneficiaries across AP districts.</div>
+    </div>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹501</span>
+        <span class="card-delivery">For pre-verification</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-label"><h2>Property Records &amp; Certificates</h2></div>
+<div class="grid">
+
+  <div class="card" data-name="IGRS AP EC Online" data-price="399" data-delivery="Same day">
+    <div class="pop-tag">POPULAR</div>
+    <div class="card-eyebrow">IGRS AP · Encumbrance Certificate</div>
+    <h3>IGRS AP EC Online — Andhra Pradesh EC</h3>
+    <p class="card-desc">Search AP EC records, check document or property details, view/download EC, and fix common IGRS AP search issues. Search by Document No. or Survey No. with SRO.</p>
+    <ul class="card-bullets">
+      <li>Registered sale, gift, mortgage, release &amp; settlement entries</li>
+      <li>Document number, registration date &amp; SRO details</li>
+      <li>Party names &amp; property-description references</li>
+      <li>Custom encumbrance period — from-date to to-date</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹399</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="AP Find My Survey Number" data-price="299" data-delivery="Same day">
+    <div class="card-eyebrow">Andhra Pradesh · Land Records</div>
+    <h3>Find My Survey Number — Andhra Pradesh</h3>
+    <p class="card-desc">Find your survey number by entering an address or landmark. Instantly get survey number, village, mandal, and district details for any AP property.</p>
+    <ul class="card-bullets">
+      <li>Survey No., village, mandal &amp; district details</li>
+      <li>Works from address or landmark input</li>
+      <li>Useful for EC search, Adangal &amp; ROR 1B retrieval</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="AP Certified Adangal" data-price="299" data-delivery="1–2 working days">
+    <div class="card-eyebrow">Mandal Revenue Office · Agricultural</div>
+    <h3>Andhra Pradesh Certified Adangal</h3>
+    <p class="card-desc">Get stamped land/agrarian records (Adangal / Pahani) directly from the Mandal Revenue Office. Lists owner, plot area, land type, crops, tenancy, water sources &amp; liabilities.</p>
+    <ul class="card-bullets">
+      <li>Officially stamped — valid for legal &amp; financial use</li>
+      <li>Search by Address &amp; Survey No. with year range</li>
+      <li>Required for agricultural loan applications</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">1–2 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="AP Property Tax Receipt" data-price="299" data-delivery="Same day">
+    <div class="card-eyebrow">AP Municipality · Property Tax</div>
+    <h3>Andhra Pradesh Property Tax Receipt</h3>
+    <p class="card-desc">Official proof of property tax payment from AP's municipal records. Includes door number, assessment number, owner name, payment amount, and year — vital for property transactions.</p>
+    <ul class="card-bullets">
+      <li>Search by Assessment No. or House/Door No.</li>
+      <li>Covers all AP municipalities and panchayats</li>
+      <li>Valid for proving tax compliance in transactions</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="AP Certified Market Value" data-price="299" data-delivery="Same day">
+    <div class="card-eyebrow">AP Registration &amp; Stamps · Market Value</div>
+    <h3>Andhra Pradesh Certified Market Value</h3>
+    <p class="card-desc">Official government-notified value for land or property in AP issued by the Registration &amp; Stamps Department. Unit rate per sq.yd./sq.m. by location.</p>
+    <ul class="card-bullets">
+      <li>Search by Survey Number, Document No., or Village</li>
+      <li>Required for registration, loan approvals &amp; taxation</li>
+      <li>Ensures transparency in AP real estate transactions</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Meebhoomi Adangal Online" data-price="299" data-delivery="Same day">
+    <div class="card-eyebrow">Meebhoomi · AP Land Records</div>
+    <h3>Meebhoomi Adangal Online — AP Land Records</h3>
+    <p class="card-desc">Search AP Adangal records on Meebhoomi. Check land-use, crop, pattadar, khata, survey, and cultivation-related details for agricultural land in Andhra Pradesh.</p>
+    <ul class="card-bullets">
+      <li>Search by Village/Division &amp; Survey No.</li>
+      <li>Pattadar, khata, cultivation &amp; land-use details</li>
+      <li>Download document in under 60 seconds</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="AP RoR 1B (Meebhoomi)" data-price="299" data-delivery="Same day">
+    <div class="card-eyebrow">Meebhoomi · Ownership Certificate</div>
+    <h3>Andhra Pradesh RoR 1B (Meebhoomi మీభూమి)</h3>
+    <p class="card-desc">Download your Meebhoomi RoR 1B land ownership records instantly online. Certifies ownership of AP land parcels — proof of lawful possession with survey no., extent &amp; owner name.</p>
+    <ul class="card-bullets">
+      <li>Search by Khata No. or Pattadar Name</li>
+      <li>Covers all AP villages and mandals</li>
+      <li>Valid proof of agricultural land ownership</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="AP CERSAI Mortgage Report" data-price="299" data-delivery="Same day">
+    <div class="card-eyebrow">CERSAI National Registry · Mortgage</div>
+    <h3>Andhra Pradesh CERSAI Mortgage Report</h3>
+    <p class="card-desc">Comprehensive report on property mortgages and hypothecation in Andhra Pradesh from the Central Registry of Securitisation. Covers immovable and movable assets.</p>
+    <ul class="card-bullets">
+      <li>Check if property is mortgaged or pledged</li>
+      <li>Covers residential, commercial &amp; other land types</li>
+      <li>Search by Survey No, Door No, Plot No, Pin Code</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="AP Signed EC" data-price="299" data-delivery="Same day">
+    <div class="card-eyebrow">IGRS AP · Signed Encumbrance</div>
+    <h3>AP Signed EC — Andhra Pradesh</h3>
+    <p class="card-desc">Official document showing full property transaction history and legal status in Andhra Pradesh — digitally signed EC evidencing that the property is free from legal or financial liabilities.</p>
+    <ul class="card-bullets">
+      <li>Complete buying, selling &amp; transfer history</li>
+      <li>Registered with the AP Registration Department</li>
+      <li>Search by Document No. or Survey Number with SRO</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="AP Legal Opinion" data-price="2999" data-delivery="3–5 working days">
+    <div class="card-eyebrow">Legal · Expert Assessment</div>
+    <h3>Andhra Pradesh Legal Opinion</h3>
+    <p class="card-desc">Expert assessment of property title and legal status from a verified AP advocate. Upload documents and receive a lawyer-signed report — ready for banks, buyers, or courts.</p>
+    <ul class="card-bullets">
+      <li>Property title &amp; encumbrance verification</li>
+      <li>Valid for buy, loan/mortgage &amp; litigation</li>
+      <li>Lawyer-signed report delivered digitally</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹2,999</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="AP CDMA Property Tax Receipt" data-price="399" data-delivery="Same day">
+    <div class="pop-tag">NEW</div>
+    <div class="card-eyebrow">CDMA-AP · Urban Local Body</div>
+    <h3>Andhra Pradesh CDMA Property Tax Receipt</h3>
+    <p class="card-desc">Official property tax payment record from CDMA-AP — the authority governing all urban local bodies in Andhra Pradesh. Confirms tax paid, owner name, and assessed property details.</p>
+    <ul class="card-bullets">
+      <li>Covers all AP Municipal Corporations, Municipalities &amp; Nagar Panchayats</li>
+      <li>Search by ULB &amp; Assessment Number (PTIN)</li>
+      <li>Uninterrupted tax history — strongest indicator of undisputed ownership</li>
+      <li>Required for property transactions &amp; loan processing</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹399</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="AP CDMA PTIN" data-price="299" data-delivery="Same day">
+    <div class="card-eyebrow">CDMA-AP · Property Identification</div>
+    <h3>Andhra Pradesh CDMA PTIN</h3>
+    <p class="card-desc">Find and verify the Property Tax Identification Number (PTIN) for any urban AP property — the primary municipal identifier linking a property to its entire tax, ownership &amp; compliance history.</p>
+    <ul class="card-bullets">
+      <li>Search by Door No. or Owner Name under any ULB</li>
+      <li>Reveals assessed owner, ARV, built-up area &amp; arrears</li>
+      <li>Essential before buying — detects undeclared tax arrears that transfer to buyer</li>
+      <li>Covers all AP urban properties under CDMA jurisdiction</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Common Government Services (AP) -->
+<div class="section-label"><h2>Government &amp; Personal Documents</h2></div>
+<div class="grid">
+
+  <div class="card" data-name="Aadhaar Address Update (AP)" data-price="295" data-delivery="3–5 working days">
+    <div class="card-eyebrow">Aadhaar Services · Andhra Pradesh</div>
+    <h3>Aadhaar Address Update</h3>
+    <p class="card-desc">Update your Aadhaar-registered address via MeeSeva / UIDAI without visiting a centre. We handle the form, supporting documents, and submission on your behalf.</p>
+    <ul class="card-bullets">
+      <li>Address update with valid proof of address</li>
+      <li>Applicable across all Andhra Pradesh districts</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹295</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Duplicate Aadhaar Card (AP)" data-price="195" data-delivery="2–3 working days">
+    <div class="card-eyebrow">Aadhaar Services · Andhra Pradesh</div>
+    <h3>Duplicate Aadhaar Card</h3>
+    <p class="card-desc">Lost or damaged your Aadhaar card? Get a duplicate e-Aadhaar or physical reprint issued without visiting a UIDAI centre in Andhra Pradesh.</p>
+    <ul class="card-bullets">
+      <li>e-Aadhaar or physical duplicate</li>
+      <li>Applicable for all AP residents</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹195</span>
+        <span class="card-delivery">2–3 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Marriage Certificate (AP)" data-price="2995" data-delivery="7–14 working days">
+    <div class="card-eyebrow">Certificate Services · Andhra Pradesh</div>
+    <h3>Marriage Certificate</h3>
+    <p class="card-desc">Get your official Marriage Certificate issued by the Andhra Pradesh Registration Department. Required for name change, visa, insurance, and spouse documentation.</p>
+    <ul class="card-bullets">
+      <li>Issued by AP Registration Department</li>
+      <li>Valid for legal, financial &amp; immigration purposes</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹2,995</span>
+        <span class="card-delivery">7–14 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Death Certificate (AP)" data-price="495" data-delivery="3–5 working days">
+    <div class="card-eyebrow">Certificate Services · Andhra Pradesh</div>
+    <h3>Death Certificate</h3>
+    <p class="card-desc">Obtain an official Death Certificate in Andhra Pradesh — required for succession, insurance claims, property mutation, and pension processes.</p>
+    <ul class="card-bullets">
+      <li>Issued by municipal / panchayat authority</li>
+      <li>Required for legal heir &amp; succession processes</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹495</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Birth Certificate (AP)" data-price="495" data-delivery="3–5 working days">
+    <div class="card-eyebrow">Certificate Services · Andhra Pradesh</div>
+    <h3>Birth Certificate</h3>
+    <p class="card-desc">Get an official Birth Certificate in Andhra Pradesh for school admissions, passport, Aadhaar, and all government documentation needs.</p>
+    <ul class="card-bullets">
+      <li>Issued by municipal / panchayat authority</li>
+      <li>Valid for all official identification purposes</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹495</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Caste Certificate (AP)" data-price="195" data-delivery="3–5 working days">
+    <div class="card-eyebrow">Certificate Services · Andhra Pradesh</div>
+    <h3>Caste Certificate</h3>
+    <p class="card-desc">Obtain a Caste Certificate in Andhra Pradesh via MeeSeva / Revenue Department for reservations in education, employment, and government schemes.</p>
+    <ul class="card-bullets">
+      <li>Issued by Revenue Department / MeeSeva AP</li>
+      <li>Valid for all AP government reservations &amp; schemes</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹195</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Income Certificate (AP)" data-price="195" data-delivery="3–5 working days">
+    <div class="card-eyebrow">Certificate Services · Andhra Pradesh</div>
+    <h3>Income Certificate</h3>
+    <p class="card-desc">Get an official Income Certificate in Andhra Pradesh via MeeSeva for scholarships, EWS reservations, government schemes, and financial documentation.</p>
+    <ul class="card-bullets">
+      <li>Issued by Tahsildar / MeeSeva AP</li>
+      <li>Required for EWS, scholarships &amp; government schemes</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹195</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="New Passport / Renewal (AP)" data-price="3195" data-delivery="15–30 working days">
+    <div class="card-eyebrow">Passport Seva · Andhra Pradesh</div>
+    <h3>New Passport / Renewal</h3>
+    <p class="card-desc">Get your new passport or renewal processed via Passport Seva. We handle appointment booking, form filling, document preparation, and follow-up.</p>
+    <ul class="card-bullets">
+      <li>New passport or renewal — all types</li>
+      <li>Appointment booking &amp; document checklist included</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹3,195</span>
+        <span class="card-delivery">15–30 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Visa Services (AP)" data-price="9995" data-delivery="Varies by country">
+    <div class="card-eyebrow">Visa · International Travel</div>
+    <h3>Visa Services</h3>
+    <p class="card-desc">End-to-end visa application assistance for any country — form filling, document checklist, appointment booking, and submission guidance.</p>
+    <ul class="card-bullets">
+      <li>Tourist, business &amp; other visa categories</li>
+      <li>Form filling, documents &amp; appointment booking</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹9,995</span>
+        <span class="card-delivery">Varies by country</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Notary &amp; E-Stamping (AP)" data-price="2995" data-delivery="1–2 working days">
+    <div class="card-eyebrow">Andhra Pradesh · Notary &amp; Stamping</div>
+    <h3>Notary &amp; E-Stamping</h3>
+    <p class="card-desc">Get documents notarised or e-stamped in Andhra Pradesh without visiting offices. Covers affidavits, agreements, power of attorney, and other documents requiring stamp paper.</p>
+    <ul class="card-bullets">
+      <li>Affidavits, agreements &amp; POA notarisation</li>
+      <li>E-stamp paper procurement &amp; printing</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹2,995</span>
+        <span class="card-delivery">1–2 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── AP FAQ SECTION ── -->
+<div class="section-label"><h2>Frequently Asked Questions — AP CDMA PTIN</h2></div>
+<div class="faq-wrap">
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">
+      <span class="faq-q-text">What is a PTIN in Andhra Pradesh?</span>
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-a">PTIN (Property Tax Identification Number) is the unique reference number assigned by Andhra Pradesh CDMA to every property assessed under an Urban Local Body. It is the primary identifier in the municipal system linking a specific property to its ownership assessment, tax payment history, arrear status, and ULB compliance record.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">
+      <span class="faq-q-text">How is PTIN different from a survey number or door number?</span>
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-a">A PTIN is the municipal tax system's unique identifier for an assessed property. It links the building and plot to its tax assessment, payment history, and owner record in the CDMA system. A survey number is a revenue department identifier for land parcels; a door number is an address identifier. Only the PTIN connects a property to its full municipal compliance history.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">
+      <span class="faq-q-text">What happens if a property does not have a PTIN?</span>
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-a">A property without a PTIN has not been assessed for property tax by the Urban Local Body, meaning it does not exist in ULB municipal records as an assessed property. This can happen if the property is newly constructed and assessment is pending, if the area was recently absorbed into ULB jurisdiction, or if the property was built without proper authorisation and was never formally assessed.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">
+      <span class="faq-q-text">Can the PTIN owner name differ from the sale deed owner name?</span>
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-a">Yes — this is one of the most common and consequential discrepancies in Andhra Pradesh urban property records. When a property is sold, the Registration Department records the new owner in the sale deed. But the ULB PTIN record continues to show the previous owner until a formal mutation is completed with the ULB updating the assessment to reflect new ownership.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">
+      <span class="faq-q-text">Why is PTIN verification important before buying property in Andhra Pradesh?</span>
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-a">PTIN verification before purchase reveals four things no other document shows: whether the property is officially assessed and exists in ULB records; whether the assessed owner matches the seller; whether outstanding tax arrears exist that will transfer to you as the new buyer; and what the ULB has recorded as the property's built-up area and classification.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">
+      <span class="faq-q-text">Can outstanding property tax arrears on a PTIN transfer to a new buyer?</span>
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-a">Yes — property tax arrears in Andhra Pradesh are a charge on the property, not just on the individual owner. When a property is sold, outstanding arrears transfer to the new owner irrespective of whether the buyer was aware of them. PTIN verification before purchase is the only reliable way to detect and quantify such arrears before they become your liability.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">
+      <span class="faq-q-text">What is Annual Rental Value (ARV) and how does it affect my PTIN assessment?</span>
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-a">Annual Rental Value (ARV) is the notional annual rent the ULB estimates the property could command in the open market, used as the basis for calculating property tax. The ARV is determined by the ULB based on property location, built-up area, construction type, age, and occupancy. Higher ARV means higher property tax liability.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">
+      <span class="faq-q-text">What should I do if the PTIN details are incorrect for my property?</span>
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-a">Errors in PTIN records — such as wrong owner name, incorrect built-up area, misclassified property type, or outdated ARV — must be corrected through a formal application to the ULB assessment section. Supporting documents like sale deed, building plan, and physical measurement reports are required to substantiate correction requests.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">
+      <span class="faq-q-text">Does PTIN apply to agricultural land or only urban properties?</span>
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-a">PTIN applies exclusively to properties within Urban Local Body jurisdictions in Andhra Pradesh — including municipal corporations, municipalities, and Nagar Panchayats. Agricultural land outside ULB limits is governed by Revenue Department records such as Pahani, Adangal, and ROR 1B, and does not carry a PTIN.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">
+      <span class="faq-q-text">Is PTIN the same across all Urban Local Bodies in Andhra Pradesh?</span>
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-a">PTIN is issued and managed by each Urban Local Body separately. While CDMA-AP standardises the system across all ULBs, the PTIN for a property in Vijayawada Municipal Corporation is distinct from one in Visakhapatnam Municipal Corporation. The format and length may vary slightly by ULB, but the PTIN remains the primary property identifier within each ULB's jurisdiction.</div>
+  </div>
+
+</div>
+
+</div><!-- /state-ap -->
+
+<!-- ══════════════════════════════════════
+     STATE: MAHARASHTRA
+══════════════════════════════════════ -->
+<div class="state-section" id="state-mh">
+
+<!-- ═══════════════════════════════
+     SECTION ★ – GOVERNMENT HOUSING SCHEMES
+════════════════════════════════ -->
+<div class="section-label"><h2>★ Government Housing Scheme Consultancy</h2></div>
+<div class="grid">
+
+  <div class="card rgrhcl-card" data-name="MHADA Housing Scheme Consultancy" data-price="501" data-delivery="For pre-verification">
+    <div class="pop-tag">★ GOVT</div>
+    <div class="govt-badge">
+      <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      Maharashtra Government Enterprise
+    </div>
+    <div class="card-eyebrow">MHADA · Housing Schemes · EWS / LIG / MIG</div>
+    <h3>MHADA Housing Lottery — Full Scheme Consultancy</h3>
+    <p class="card-desc">End-to-end consultancy for government housing lotteries and schemes under MHADA (Maharashtra Housing and Area Development Authority). Eligibility checked, reports prepared, and lottery application guided.</p>
+    <ul class="card-bullets">
+      <li class="label-bullet"><strong>Credit Report</strong><span class="bullet-sep">—</span>financial eligibility assessment for housing scheme</li>
+      <li class="label-bullet"><strong>Asset Report</strong><span class="bullet-sep">—</span>current asset declaration and valuation summary</li>
+      <li class="label-bullet"><strong>Eligibility Report</strong><span class="bullet-sep">—</span>EWS / LIG / MIG / HIG category qualification analysis</li>
+      <li class="label-bullet"><strong>Pre-Application Process</strong><span class="bullet-sep">—</span>guided document checklist and lottery form prep</li>
+    </ul>
+    <div style="background:rgba(201,149,42,0.07);border:1px solid var(--gold-border);border-radius:6px;padding:12px 14px;margin-bottom:16px;">
+      <div style="font-size:10px;font-weight:700;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">Major Schemes Covered</div>
+      <ul class="scheme-list">
+        <li>MHADA Lottery Scheme — Mumbai, Pune, Nashik, Konkan, Nagpur Boards</li>
+        <li>PM Awas Yojana (PMAY) — central government housing subsidy in MH</li>
+        <li>SRA Scheme — Slum Rehabilitation Authority housing for slum dwellers</li>
+      </ul>
+      <div style="font-size:10px;color:var(--ink-muted);line-height:1.6;">Affordable flats allotted by lottery to EWS / LIG / MIG / HIG applicants across Maharashtra.</div>
+    </div>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹501</span>
+        <span class="card-delivery">For pre-verification</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════
+     SECTION 1 – PROPERTY RECORDS
+════════════════════════════════ -->
+<div class="section-label"><h2>Property Records &amp; Certificates</h2></div>
+<div class="grid">
+
+  <div class="card" data-name="Maharashtra 7/12 Satbara (Satbara Utara)" data-price="299" data-delivery="Same day">
+    <div class="pop-tag">POPULAR</div>
+    <div class="card-eyebrow">MahaBhulekh · Revenue Records</div>
+    <h3>Maharashtra 7/12 Satbara (Satbara Utara)</h3>
+    <p class="card-desc">The primary revenue record for rural agricultural land in Maharashtra — shows landholder name, survey number, extent, crop, water source, and liabilities. Essential for all agricultural property transactions and loan applications.</p>
+    <ul class="card-bullets">
+      <li>Owner name, survey/gat number &amp; land extent</li>
+      <li>Crop entries, land type &amp; water source</li>
+      <li>Liabilities, encumbrances &amp; government dues</li>
+      <li>Required for agri loans, mutation &amp; sale</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Maharashtra Index 2 (MH)" data-price="299" data-delivery="Same day">
+    <div class="card-eyebrow">Maharashtra Registration Dept · Index 2</div>
+    <h3>Maharashtra Index 2</h3>
+    <p class="card-desc">Summary of all registered property transactions (sale, mortgage, gift, release) for a property in Maharashtra — the encumbrance record issued by the Registration Department. Essential for title verification and due diligence.</p>
+    <ul class="card-bullets">
+      <li>Sale, mortgage, gift &amp; release history</li>
+      <li>Party names, document numbers &amp; registration dates</li>
+      <li>Search by survey/gat no., CTS, or document no.</li>
+      <li>Required for all property purchase due diligence</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Maharashtra Property Card (MH)" data-price="299" data-delivery="Same day">
+    <div class="card-eyebrow">City Survey · Urban Land Records</div>
+    <h3>Maharashtra Property Card</h3>
+    <p class="card-desc">Urban land ownership record maintained by the City Survey Department for properties within city survey limits. Equivalent to 7/12 for urban plots — confirms ownership, CTS number, and area classification.</p>
+    <ul class="card-bullets">
+      <li>CTS number, owner name &amp; plot area details</li>
+      <li>Land use classification &amp; survey details</li>
+      <li>Required for urban property purchase &amp; loans</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Maharashtra Bhunakasha (Land Map / Cadastral Map)" data-price="299" data-delivery="Same day">
+    <div class="card-eyebrow">MahaBhulekh · Cadastral Map</div>
+    <h3>Maharashtra Bhunakasha — Land Map</h3>
+    <p class="card-desc">Cadastral map showing parcel shape, boundary context, and survey placement for any Maharashtra land parcel. Helps connect survey/gat details with map-level boundary and location information — use with 7/12 for complete due diligence.</p>
+    <ul class="card-bullets">
+      <li>Parcel shape, boundaries &amp; neighbouring plots</li>
+      <li>Survey/gat placement &amp; boundary references</li>
+      <li>Search by district, taluka, village &amp; gat/survey no.</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Maharashtra Ferfar / Mutation Record (MH)" data-price="299" data-delivery="1–2 working days">
+    <div class="card-eyebrow">MahaBhulekh · Mutation Record</div>
+    <h3>Maharashtra Ferfar / Mutation Record</h3>
+    <p class="card-desc">Property ownership change record issued after sale, inheritance, partition, or gift in Maharashtra. Tracks all mutations on a land parcel — confirms the latest legal owner is recorded in government records.</p>
+    <ul class="card-bullets">
+      <li>Post-sale / inheritance ownership update record</li>
+      <li>All mutation entries with dates &amp; reasons</li>
+      <li>Legal &amp; taxation record confirmation</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">1–2 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Maharashtra CERSAI Mortgage Report (MH)" data-price="399" data-delivery="Same day">
+    <div class="card-eyebrow">CERSAI National Registry · Mortgage</div>
+    <h3>Maharashtra CERSAI Mortgage Report</h3>
+    <p class="card-desc">Comprehensive report on property mortgages and hypothecation in Maharashtra from the Central Registry of Securitisation. Checks if a property is pledged, mortgaged, or has a charge registered against it.</p>
+    <ul class="card-bullets">
+      <li>Check if property is mortgaged or pledged</li>
+      <li>Covers residential, commercial &amp; agricultural land</li>
+      <li>Search by Survey/Gat No, CTS No, Plot No, Pin Code</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹399</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Maharashtra Sale Deed / Certified Copy (MH)" data-price="399" data-delivery="2–3 working days">
+    <div class="card-eyebrow">Maharashtra Registration Dept · Certified Copy</div>
+    <h3>Maharashtra Sale Deed / Certified Copy</h3>
+    <p class="card-desc">Certified copy of a registered sale deed or any registered document from the Maharashtra Registration Department. Legally valid for disputes, loans, ownership proof, and court submissions.</p>
+    <ul class="card-bullets">
+      <li>Official certified copy issued by Sub-Registrar</li>
+      <li>Required for property transactions, court &amp; loan purposes</li>
+      <li>Covers all Maharashtra SRO jurisdictions</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹399</span>
+        <span class="card-delivery">2–3 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Maharashtra Legal Opinion (MH)" data-price="2999" data-delivery="3–5 working days">
+    <div class="card-eyebrow">Legal · Expert Assessment</div>
+    <h3>Maharashtra Property Legal Opinion</h3>
+    <p class="card-desc">Expert assessment of property title and legal status from a verified Maharashtra advocate. Upload your documents and receive a lawyer-signed report — ready for banks, buyers, or courts.</p>
+    <ul class="card-bullets">
+      <li>Property title &amp; encumbrance verification</li>
+      <li>Valid for purchase, home loan &amp; litigation</li>
+      <li>Lawyer-signed report delivered digitally</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹2,999</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════
+     SECTION 2 – GOVT & PERSONAL DOCS
+════════════════════════════════ -->
+<div class="section-label"><h2>Government &amp; Personal Documents</h2></div>
+<div class="grid">
+
+  <div class="card" data-name="Aadhaar Address Update (MH)" data-price="295" data-delivery="3–5 working days">
+    <div class="card-eyebrow">Aadhaar Services · Maharashtra</div>
+    <h3>Aadhaar Address Update</h3>
+    <p class="card-desc">Update your Aadhaar-registered address without visiting a centre. We handle the form, supporting documents, and UIDAI submission on your behalf.</p>
+    <ul class="card-bullets">
+      <li>Address update with valid proof of address</li>
+      <li>Applicable across all Maharashtra districts</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹295</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Birth Certificate (MH)" data-price="495" data-delivery="3–5 working days">
+    <div class="card-eyebrow">Maharashtra · Certificate Services</div>
+    <h3>Birth Certificate</h3>
+    <p class="card-desc">Get an official Birth Certificate via Maharashtra government portals for school admissions, passport, Aadhaar, and all government documentation needs.</p>
+    <ul class="card-bullets">
+      <li>Issued by municipal/gram panchayat authority</li>
+      <li>Valid for all official identification &amp; documentation</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹495</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Death Certificate (MH)" data-price="495" data-delivery="3–5 working days">
+    <div class="card-eyebrow">Maharashtra · Certificate Services</div>
+    <h3>Death Certificate</h3>
+    <p class="card-desc">Obtain an official Death Certificate from Maharashtra for succession, insurance claims, property mutation, and pension processes.</p>
+    <ul class="card-bullets">
+      <li>Issued by municipal/gram panchayat authority</li>
+      <li>Required for legal heir &amp; succession processes</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹495</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Income Certificate (MH)" data-price="195" data-delivery="3–5 working days">
+    <div class="card-eyebrow">Maharashtra · Revenue Certificate</div>
+    <h3>Income Certificate</h3>
+    <p class="card-desc">Official Income Certificate from Maharashtra Revenue Department for scholarships, EWS reservations, government schemes, and financial documentation.</p>
+    <ul class="card-bullets">
+      <li>Issued by Tahsildar / Revenue Department</li>
+      <li>Required for EWS, scholarships &amp; government schemes</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹195</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Caste Certificate (MH)" data-price="195" data-delivery="3–5 working days">
+    <div class="card-eyebrow">Maharashtra · Revenue Certificate</div>
+    <h3>Caste Certificate</h3>
+    <p class="card-desc">Obtain a Caste Certificate via Maharashtra Revenue Department for reservations in education, employment, and government schemes.</p>
+    <ul class="card-bullets">
+      <li>Issued by Revenue Department / Tahsildar</li>
+      <li>Valid for all MH government reservations &amp; schemes</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹195</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
+</div><!-- /state-mh -->
+
+<!-- ══════════════════════════════════════
+     STATE: KERALA
+══════════════════════════════════════ -->
+<div class="state-section" id="state-kl">
+
+<!-- ═══════════════════════════════
+     SECTION ★ – GOVERNMENT HOUSING SCHEMES
+════════════════════════════════ -->
+<div class="section-label"><h2>★ Government Housing Scheme Consultancy</h2></div>
+<div class="grid">
+
+  <div class="card rgrhcl-card" data-name="KESICS / LIFE Mission Housing Consultancy" data-price="501" data-delivery="For pre-verification">
+    <div class="pop-tag">★ GOVT</div>
+    <div class="govt-badge">
+      <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      Kerala Government Enterprise
+    </div>
+    <div class="card-eyebrow">LIFE Mission · KSHB · Housing Schemes · EWS</div>
+    <h3>Kerala LIFE Mission / KSHB — Full Scheme Consultancy</h3>
+    <p class="card-desc">End-to-end consultancy for government housing schemes under Kerala's LIFE Mission and KSHB (Kerala State Housing Board). Eligibility checked, reports prepared, and pre-application guided for pre-verification.</p>
+    <ul class="card-bullets">
+      <li class="label-bullet"><strong>Credit Report</strong><span class="bullet-sep">—</span>financial eligibility assessment for housing scheme</li>
+      <li class="label-bullet"><strong>Asset Report</strong><span class="bullet-sep">—</span>current asset declaration and valuation summary</li>
+      <li class="label-bullet"><strong>Eligibility Report</strong><span class="bullet-sep">—</span>scheme-specific qualification analysis</li>
+      <li class="label-bullet"><strong>Pre-Application Process</strong><span class="bullet-sep">—</span>guided document checklist and form prep</li>
+    </ul>
+    <div style="background:rgba(201,149,42,0.07);border:1px solid var(--gold-border);border-radius:6px;padding:12px 14px;margin-bottom:16px;">
+      <div style="font-size:10px;font-weight:700;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">Major Schemes Covered</div>
+      <ul class="scheme-list">
+        <li>LIFE Mission — housing for landless &amp; homeless families across Kerala</li>
+        <li>KSHB Housing Scheme — affordable flats &amp; plots for EWS / LIG / MIG</li>
+        <li>PMAY (Urban &amp; Rural) — central government housing subsidy in Kerala</li>
+      </ul>
+      <div style="font-size:10px;color:var(--ink-muted);line-height:1.6;">Houses or financial assistance provided to eligible beneficiaries across all Kerala districts.</div>
+    </div>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹501</span>
+        <span class="card-delivery">For pre-verification</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════
+     SECTION 1 – PROPERTY RECORDS
+════════════════════════════════ -->
+<div class="section-label"><h2>Property Records &amp; Certificates</h2></div>
+<div class="grid">
+
+  <div class="card" data-name="Kerala EC (Encumbrance Certificate)" data-price="299" data-delivery="Same day">
+    <div class="pop-tag">POPULAR</div>
+    <div class="card-eyebrow">Kerala Registration Dept · Encumbrance</div>
+    <h3>Kerala Encumbrance Certificate (EC)</h3>
+    <p class="card-desc">Search registered transactions and encumbrance history for any Kerala property from the Kerala Registration Department. Essential before buying, selling, or applying for a home loan.</p>
+    <ul class="card-bullets">
+      <li>Sale, mortgage, gift &amp; release history</li>
+      <li>Custom EC period with SRO and registration year</li>
+      <li>Search by Survey No, Document No., or Party Name</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Kerala Certified EC (Signed)" data-price="399" data-delivery="2–3 working days">
+    <div class="card-eyebrow">Kerala Registration Dept · Certified EC</div>
+    <h3>Kerala Certified Encumbrance Certificate</h3>
+    <p class="card-desc">Official digitally signed / certified EC from Kerala Registration Department. Legally valid for courts, banks, and property transactions — the certified version carries official authentication beyond the standard EC.</p>
+    <ul class="card-bullets">
+      <li>Certified &amp; digitally signed by Registration Dept</li>
+      <li>Accepted for home loans, litigation &amp; legal due diligence</li>
+      <li>All Kerala SRO jurisdictions covered</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹399</span>
+        <span class="card-delivery">2–3 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Kerala Certified Sale Deed" data-price="399" data-delivery="2–3 working days">
+    <div class="card-eyebrow">Kerala Registration Dept · Sale Deed</div>
+    <h3>Kerala Certified Sale Deed</h3>
+    <p class="card-desc">Certified copy of a registered sale deed from the Kerala Registration Department. Legally valid for property ownership proof, disputes, court submissions, and loan applications.</p>
+    <ul class="card-bullets">
+      <li>Official certified copy by Sub-Registrar</li>
+      <li>Required for transactions, courts &amp; banks</li>
+      <li>All Kerala SRO jurisdictions covered</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹399</span>
+        <span class="card-delivery">2–3 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Kerala Pokkuvaravu Record (Mutation)" data-price="299" data-delivery="1–2 working days">
+    <div class="card-eyebrow">Kerala Revenue Dept · Mutation</div>
+    <h3>Kerala Pokkuvaravu Record (Mutation)</h3>
+    <p class="card-desc">Property ownership transfer record (Pokkuvaravu) maintained by the Kerala Revenue Department. Tracks ownership changes after sale, inheritance, or partition — confirms latest legal owner in government records.</p>
+    <ul class="card-bullets">
+      <li>Post-sale / inheritance ownership update record</li>
+      <li>Legal &amp; taxation record confirmation</li>
+      <li>All Kerala districts covered</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">1–2 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Kerala Tax Dues / Ownership (Revenue)" data-price="299" data-delivery="Same day">
+    <div class="card-eyebrow">Kerala Revenue Dept · Tax &amp; Ownership</div>
+    <h3>Kerala Tax Dues &amp; Ownership Record</h3>
+    <p class="card-desc">Revenue department record showing current ownership details and outstanding property tax dues for a Kerala land parcel. Essential before purchase to detect any unpaid dues that transfer to the buyer.</p>
+    <ul class="card-bullets">
+      <li>Current owner name &amp; survey details</li>
+      <li>Outstanding tax dues &amp; payment history</li>
+      <li>Confirms possession status in revenue records</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Kerala Prohibited Properties Check (KL)" data-price="299" data-delivery="Same day">
+    <div class="card-eyebrow">Kerala Registration Dept · Prohibited Check</div>
+    <h3>Kerala Prohibited Properties Check</h3>
+    <p class="card-desc">Verify whether a Kerala property is classified as prohibited or restricted for registration. Critical before any property purchase to avoid unknowingly transacting in a legally restricted property.</p>
+    <ul class="card-bullets">
+      <li>Check property against prohibited registration list</li>
+      <li>Covers court attachments, government restrictions &amp; encumbrances</li>
+      <li>Essential pre-purchase due diligence step</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Kerala Transaction History Report (KL)" data-price="299" data-delivery="Same day">
+    <div class="card-eyebrow">Kerala Revenue Dept · Transaction History</div>
+    <h3>Kerala Transaction History Report</h3>
+    <p class="card-desc">Full transaction history of a Kerala property from the revenue department records — covering all ownership transfers, rights changes, and encumbrances across the available record period.</p>
+    <ul class="card-bullets">
+      <li>Complete ownership &amp; transfer history</li>
+      <li>All rights changes, encumbrances listed</li>
+      <li>Useful for title chain verification</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Kerala CERSAI Mortgage Report (KL)" data-price="399" data-delivery="Same day">
+    <div class="card-eyebrow">CERSAI National Registry · Mortgage</div>
+    <h3>Kerala CERSAI Mortgage Report</h3>
+    <p class="card-desc">Check if a Kerala property is mortgaged, pledged, or has a charge registered in the Central Registry of Securitisation. Required for home loan due diligence and title clearance.</p>
+    <ul class="card-bullets">
+      <li>Check if property is mortgaged or pledged</li>
+      <li>Covers residential, commercial &amp; agricultural land</li>
+      <li>Search by Survey No, Plot No, Pin Code</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹399</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Kerala Legal Opinion (KL)" data-price="2999" data-delivery="3–5 working days">
+    <div class="card-eyebrow">Legal · Expert Assessment</div>
+    <h3>Kerala Property Legal Opinion</h3>
+    <p class="card-desc">Expert assessment of property title and legal status from a verified Kerala advocate. Upload your documents and receive a lawyer-signed report — ready for banks, buyers, or courts.</p>
+    <ul class="card-bullets">
+      <li>Property title &amp; encumbrance verification</li>
+      <li>Valid for purchase, home loan &amp; litigation</li>
+      <li>Lawyer-signed report delivered digitally</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹2,999</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════
+     SECTION 2 – GOVT DOCS
+════════════════════════════════ -->
+<div class="section-label"><h2>Government &amp; Personal Documents</h2></div>
+<div class="grid">
+
+  <div class="card" data-name="Aadhaar Address Update (KL)" data-price="295" data-delivery="3–5 working days">
+    <div class="card-eyebrow">Aadhaar Services · Kerala</div>
+    <h3>Aadhaar Address Update</h3>
+    <p class="card-desc">Update your Aadhaar-registered address without visiting a centre. We handle the form, supporting documents, and UIDAI submission on your behalf.</p>
+    <ul class="card-bullets">
+      <li>Address update with valid proof of address</li>
+      <li>Applicable across all Kerala districts</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹295</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Birth Certificate (KL)" data-price="495" data-delivery="3–5 working days">
+    <div class="card-eyebrow">Kerala · Certificate Services</div>
+    <h3>Birth Certificate</h3>
+    <p class="card-desc">Get an official Birth Certificate from Kerala for school admissions, passport, Aadhaar, and all government documentation needs.</p>
+    <ul class="card-bullets">
+      <li>Issued by municipal/gram panchayat authority</li>
+      <li>Valid for all official identification &amp; documentation</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹495</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Income Certificate (KL)" data-price="195" data-delivery="3–5 working days">
+    <div class="card-eyebrow">Kerala Revenue · Certificate Services</div>
+    <h3>Income Certificate</h3>
+    <p class="card-desc">Official Income Certificate from Kerala Revenue Department for scholarships, EWS reservations, government schemes, and financial documentation.</p>
+    <ul class="card-bullets">
+      <li>Issued by Village Officer / Revenue Department</li>
+      <li>Required for EWS, scholarships &amp; government schemes</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹195</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
+</div><!-- /state-kl -->
+
+<!-- ══════════════════════════════════════
+     STATE: TAMIL NADU
+══════════════════════════════════════ -->
+<div class="state-section" id="state-tn">
+
+<!-- ═══════════════════════════════
+     SECTION ★ – GOVERNMENT HOUSING SCHEMES
+════════════════════════════════ -->
+<div class="section-label"><h2>★ Government Housing Scheme Consultancy</h2></div>
+<div class="grid">
+
+  <div class="card rgrhcl-card" data-name="TNHB / TNSCB Housing Scheme Consultancy" data-price="501" data-delivery="For pre-verification">
+    <div class="pop-tag">★ GOVT</div>
+    <div class="govt-badge">
+      <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      Tamil Nadu Government Enterprise
+    </div>
+    <div class="card-eyebrow">TNHB · TNSCB · Housing Schemes · EWS / LIG</div>
+    <h3>Tamil Nadu Housing Board (TNHB) — Full Scheme Consultancy</h3>
+    <p class="card-desc">End-to-end consultancy for government housing schemes under TNHB (Tamil Nadu Housing Board) and TNSCB (Tamil Nadu Slum Clearance Board). Eligibility checked, reports prepared, and pre-application guided.</p>
+    <ul class="card-bullets">
+      <li class="label-bullet"><strong>Credit Report</strong><span class="bullet-sep">—</span>financial eligibility assessment for housing scheme</li>
+      <li class="label-bullet"><strong>Asset Report</strong><span class="bullet-sep">—</span>current asset declaration and valuation summary</li>
+      <li class="label-bullet"><strong>Eligibility Report</strong><span class="bullet-sep">—</span>EWS / LIG / MIG category qualification analysis</li>
+      <li class="label-bullet"><strong>Pre-Application Process</strong><span class="bullet-sep">—</span>guided document checklist and application form prep</li>
+    </ul>
+    <div style="background:rgba(201,149,42,0.07);border:1px solid var(--gold-border);border-radius:6px;padding:12px 14px;margin-bottom:16px;">
+      <div style="font-size:10px;font-weight:700;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">Major Schemes Covered</div>
+      <ul class="scheme-list">
+        <li>TNHB Housing Scheme — affordable plots &amp; flats across Tamil Nadu districts</li>
+        <li>TNSCB Scheme — slum clearance housing for urban EWS beneficiaries</li>
+        <li>PMAY (Urban &amp; Rural) — central government housing subsidy in TN</li>
+      </ul>
+      <div style="font-size:10px;color:var(--ink-muted);line-height:1.6;">Plots, flats, or financial support allotted to eligible EWS / LIG applicants across Tamil Nadu.</div>
+    </div>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹501</span>
+        <span class="card-delivery">For pre-verification</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════
+     SECTION 1 – PROPERTY RECORDS
+════════════════════════════════ -->
+<div class="section-label"><h2>Property Records &amp; Certificates</h2></div>
+<div class="grid">
+
+  <div class="card" data-name="Tamil Nadu EC (Encumbrance Certificate)" data-price="299" data-delivery="Same day">
+    <div class="pop-tag">POPULAR</div>
+    <div class="card-eyebrow">TNREGINET · Encumbrance Certificate</div>
+    <h3>Tamil Nadu Encumbrance Certificate (EC)</h3>
+    <p class="card-desc">Search registered property transactions and encumbrance history for any Tamil Nadu property from the TNREGINET (Registration Department). Essential before buying, selling, or applying for a home loan.</p>
+    <ul class="card-bullets">
+      <li>Sale, mortgage, gift &amp; release history</li>
+      <li>Custom EC period with SRO and registration year</li>
+      <li>Search by Survey No, Document No., or Party Name</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Tamil Nadu Patta / Chitta" data-price="299" data-delivery="Same day">
+    <div class="card-eyebrow">TNREGINET / Revenue Dept · Land Record</div>
+    <h3>Tamil Nadu Patta / Chitta</h3>
+    <p class="card-desc">Primary revenue record for land in Tamil Nadu — Patta (ownership record) and Chitta (crop &amp; possession record). Confirms landholder name, survey number, extent, and land classification. Required for all property transactions.</p>
+    <ul class="card-bullets">
+      <li>Owner name, survey number &amp; land extent</li>
+      <li>Land type, classification &amp; crop details</li>
+      <li>Required for sale, loan &amp; mutation</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Tamil Nadu Certified EC (TN)" data-price="399" data-delivery="2–3 working days">
+    <div class="card-eyebrow">TNREGINET · Certified EC</div>
+    <h3>Tamil Nadu Certified Encumbrance Certificate</h3>
+    <p class="card-desc">Official certified/digitally signed EC from Tamil Nadu Registration Department. Required for home loans, legal proceedings, and high-value property transactions where a plain EC is not accepted.</p>
+    <ul class="card-bullets">
+      <li>Certified &amp; digitally signed by Registration Dept</li>
+      <li>Accepted for home loans, litigation &amp; legal due diligence</li>
+      <li>All Tamil Nadu SRO jurisdictions covered</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹399</span>
+        <span class="card-delivery">2–3 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Tamil Nadu FMB (Field Measurement Book)" data-price="299" data-delivery="Same day">
+    <div class="card-eyebrow">TN Survey Dept · Land Map</div>
+    <h3>Tamil Nadu FMB — Field Measurement Book</h3>
+    <p class="card-desc">Cadastral map / field measurement book for any Tamil Nadu land parcel showing plot boundaries, measurements, and neighbouring survey numbers. Essential for boundary verification and dispute resolution.</p>
+    <ul class="card-bullets">
+      <li>Plot boundaries &amp; exact measurements</li>
+      <li>Neighbouring survey numbers &amp; layout</li>
+      <li>Required for boundary disputes &amp; survey verification</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Tamil Nadu Guideline Value (TN)" data-price="299" data-delivery="Same day">
+    <div class="card-eyebrow">TNREGINET · Guideline Value</div>
+    <h3>Tamil Nadu Guideline Value</h3>
+    <p class="card-desc">Government-notified guideline value (market value) for any Tamil Nadu property — used for stamp duty calculation and registration charges. Required for all property sale and purchase transactions.</p>
+    <ul class="card-bullets">
+      <li>Rate per sq.ft. / sq.m. / cent by location</li>
+      <li>Search by district, taluk, village &amp; survey no.</li>
+      <li>Required for stamp duty &amp; registration fee calculation</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Tamil Nadu Sale Deed Certified Copy (TN)" data-price="399" data-delivery="2–3 working days">
+    <div class="card-eyebrow">TNREGINET · Sale Deed CC</div>
+    <h3>Tamil Nadu Sale Deed Certified Copy</h3>
+    <p class="card-desc">Certified copy of a registered sale deed or any registered document from Tamil Nadu Registration Department. Legally valid for ownership proof, court submissions, and loan applications.</p>
+    <ul class="card-bullets">
+      <li>Official certified copy issued by Sub-Registrar</li>
+      <li>Required for property transactions, courts &amp; banks</li>
+      <li>All Tamil Nadu SRO jurisdictions covered</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹399</span>
+        <span class="card-delivery">2–3 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Tamil Nadu Property Tax Receipt (TN)" data-price="299" data-delivery="Same day">
+    <div class="card-eyebrow">TN Urban Local Body · Property Tax</div>
+    <h3>Tamil Nadu Property Tax Receipt</h3>
+    <p class="card-desc">Official property tax payment receipt from Tamil Nadu Urban Local Bodies (TNUIFSL/municipality). Confirms tax paid status, owner name, and assessed property details — required for sale and loan processing.</p>
+    <ul class="card-bullets">
+      <li>Covers all TN municipal corporations &amp; town panchayats</li>
+      <li>Search by assessment number or door number</li>
+      <li>Required for property transactions &amp; loan processing</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹299</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Tamil Nadu CERSAI Mortgage Report (TN)" data-price="399" data-delivery="Same day">
+    <div class="card-eyebrow">CERSAI National Registry · Mortgage</div>
+    <h3>Tamil Nadu CERSAI Mortgage Report</h3>
+    <p class="card-desc">Check if a Tamil Nadu property is mortgaged, pledged, or has a charge registered in the Central Registry of Securitisation. Required for home loan due diligence and title clearance.</p>
+    <ul class="card-bullets">
+      <li>Check if property is mortgaged or pledged</li>
+      <li>Covers residential, commercial &amp; agricultural land</li>
+      <li>Search by Survey No, Plot No, Pin Code</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹399</span>
+        <span class="card-delivery">Same day</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Tamil Nadu Legal Opinion (TN)" data-price="2999" data-delivery="3–5 working days">
+    <div class="card-eyebrow">Legal · Expert Assessment</div>
+    <h3>Tamil Nadu Property Legal Opinion</h3>
+    <p class="card-desc">Expert assessment of property title and legal status from a verified Tamil Nadu advocate. Upload your documents and receive a lawyer-signed report — ready for banks, buyers, or courts.</p>
+    <ul class="card-bullets">
+      <li>Property title &amp; encumbrance verification</li>
+      <li>Valid for purchase, home loan &amp; litigation</li>
+      <li>Lawyer-signed report delivered digitally</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹2,999</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════
+     SECTION 2 – GOVT DOCS
+════════════════════════════════ -->
+<div class="section-label"><h2>Government &amp; Personal Documents</h2></div>
+<div class="grid">
+
+  <div class="card" data-name="Aadhaar Address Update (TN)" data-price="295" data-delivery="3–5 working days">
+    <div class="card-eyebrow">Aadhaar Services · Tamil Nadu</div>
+    <h3>Aadhaar Address Update</h3>
+    <p class="card-desc">Update your Aadhaar-registered address without visiting a centre. We handle the form, supporting documents, and UIDAI submission on your behalf.</p>
+    <ul class="card-bullets">
+      <li>Address update with valid proof of address</li>
+      <li>Applicable across all Tamil Nadu districts</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹295</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Birth Certificate (TN)" data-price="495" data-delivery="3–5 working days">
+    <div class="card-eyebrow">Tamil Nadu · Certificate Services</div>
+    <h3>Birth Certificate</h3>
+    <p class="card-desc">Get an official Birth Certificate from Tamil Nadu for school admissions, passport, Aadhaar, and all government documentation needs.</p>
+    <ul class="card-bullets">
+      <li>Issued by municipal/gram panchayat authority</li>
+      <li>Valid for all official identification &amp; documentation</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹495</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Income Certificate (TN)" data-price="195" data-delivery="3–5 working days">
+    <div class="card-eyebrow">Tamil Nadu Revenue · Certificate Services</div>
+    <h3>Income Certificate</h3>
+    <p class="card-desc">Official Income Certificate from Tamil Nadu Revenue Department for scholarships, EWS reservations, government schemes, and financial documentation.</p>
+    <ul class="card-bullets">
+      <li>Issued by Tahsildar / Revenue Department</li>
+      <li>Required for EWS, scholarships &amp; government schemes</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹195</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="card" data-name="Patta Transfer (TN)" data-price="399" data-delivery="3–5 working days">
+    <div class="card-eyebrow">Tamil Nadu Revenue · Mutation</div>
+    <h3>Patta Transfer (Mutation)</h3>
+    <p class="card-desc">Transfer of Patta (revenue record) to the new owner's name after a property sale or inheritance in Tamil Nadu. Essential step to ensure the new owner is legally recorded in government land records.</p>
+    <ul class="card-bullets">
+      <li>Patta transferred to new owner after sale or inheritance</li>
+      <li>Application filed with sub-collector / revenue office</li>
+      <li>Required for subsequent resale &amp; loan processing</li>
+    </ul>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price">₹399</span>
+        <span class="card-delivery">3–5 working days</span>
+      </div>
+      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
+</div><!-- /state-tn -->
 
 <!-- ── TRUST STRIP ── -->
 <div class="trust-strip">
@@ -1502,6 +3863,72 @@ function showToast() {
   var t = document.getElementById('pay-toast');
   t.style.display = 'block';
   setTimeout(function(){ t.style.display = 'none'; }, 7000);
+}
+
+// ─── STATE SWITCHER ───────────────────────────────────────────────
+var BANNER_DATA = {
+  ka: {
+    title: 'Karnataka Property<br><em>Documents. Delivered.</em>',
+    sub: 'Pick one or more services, add them to your cart, and pay in a single checkout. Documents delivered to your WhatsApp.',
+    badges: '<span class="badge"><span class="dot"></span> KA Official Records</span><span class="badge"><span class="dot"></span> Multi-Service Cart</span><span class="badge"><span class="dot"></span> Delivered via WhatsApp</span><span class="badge"><span class="dot"></span> All prices inclusive</span>'
+  },
+  ts: {
+    title: 'Telangana Property<br><em>Documents. Delivered.</em>',
+    sub: 'Pick one or more services for Telangana, add them to your cart, and pay in a single checkout. Documents delivered to your WhatsApp.',
+    badges: '<span class="badge"><span class="dot"></span> IGRS TS Records</span><span class="badge"><span class="dot"></span> Multi-Service Cart</span><span class="badge"><span class="dot"></span> Delivered via WhatsApp</span><span class="badge"><span class="dot"></span> All prices inclusive</span>'
+  },
+  ap: {
+    title: 'Andhra Pradesh Property<br><em>Documents. Delivered.</em>',
+    sub: 'Pick one or more AP services, add them to your cart, and pay in a single checkout. Documents delivered to your WhatsApp.',
+    badges: '<span class="badge"><span class="dot"></span> IGRS AP / Meebhoomi Records</span><span class="badge"><span class="dot"></span> Multi-Service Cart</span><span class="badge"><span class="dot"></span> Delivered via WhatsApp</span><span class="badge"><span class="dot"></span> All prices inclusive</span>'
+  },
+  mh: {
+    title: 'Maharashtra Property<br><em>Documents. Delivered.</em>',
+    sub: 'Pick one or more Maharashtra services, add them to your cart, and pay in a single checkout. Documents delivered to your WhatsApp.',
+    badges: '<span class="badge"><span class="dot"></span> MahaBhulekh Records</span><span class="badge"><span class="dot"></span> Multi-Service Cart</span><span class="badge"><span class="dot"></span> Delivered via WhatsApp</span><span class="badge"><span class="dot"></span> All prices inclusive</span>'
+  },
+  kl: {
+    title: 'Kerala Property<br><em>Documents. Delivered.</em>',
+    sub: 'Pick one or more Kerala services, add them to your cart, and pay in a single checkout. Documents delivered to your WhatsApp.',
+    badges: '<span class="badge"><span class="dot"></span> Kerala Registration Records</span><span class="badge"><span class="dot"></span> Multi-Service Cart</span><span class="badge"><span class="dot"></span> Delivered via WhatsApp</span><span class="badge"><span class="dot"></span> All prices inclusive</span>'
+  },
+  tn: {
+    title: 'Tamil Nadu Property<br><em>Documents. Delivered.</em>',
+    sub: 'Pick one or more Tamil Nadu services, add them to your cart, and pay in a single checkout. Documents delivered to your WhatsApp.',
+    badges: '<span class="badge"><span class="dot"></span> TNREGINET Records</span><span class="badge"><span class="dot"></span> Multi-Service Cart</span><span class="badge"><span class="dot"></span> Delivered via WhatsApp</span><span class="badge"><span class="dot"></span> All prices inclusive</span>'
+  }
+};
+
+function switchState(state) {
+  // Update tabs
+  ['ka','ts','ap','mh','kl','tn'].forEach(function(s){
+    var tab = document.getElementById('tab-' + s);
+    if (tab) tab.classList.toggle('active', s === state);
+  });
+  // Update sections
+  ['ka','ts','ap','mh','kl','tn'].forEach(function(s){
+    var sec = document.getElementById('state-' + s);
+    if (sec) sec.classList.toggle('active', s === state);
+  });
+  // Update banner
+  var bd = BANNER_DATA[state];
+  if (bd) {
+    document.getElementById('banner-title').innerHTML = bd.title;
+    document.getElementById('banner-sub').textContent = bd.sub;
+    document.getElementById('banner-badges').innerHTML = bd.badges;
+  }
+  // Clear cart when switching states to avoid cross-state confusion
+  clearCartAfterSuccess();
+}
+
+// ─── FAQ TOGGLE ───────────────────────────────────────────────────
+function toggleFaq(btn) {
+  var item = btn.closest('.faq-item');
+  var isOpen = item.classList.contains('open');
+  // Close all open FAQs in same section
+  var allItems = item.closest('.faq-wrap').querySelectorAll('.faq-item');
+  allItems.forEach(function(el){ el.classList.remove('open'); });
+  if (!isOpen) item.classList.add('open');
 }
 
 </script>
