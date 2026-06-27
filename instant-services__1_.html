@@ -1402,12 +1402,20 @@ async function verifyPayment(orderId, items, total, name, phone) {
       setTimeout(function(){
         window.location.href = 'dashboard.html?payment=success&order_id=' + encodeURIComponent(orderId) + '&amount=' + encodeURIComponent(fmt(total));
       }, 2200);
+      return true;  // ← payment confirmed
     } else {
-      alert('Payment is pending or verification failed. Please contact us with your Order ID: ' + orderId);
+      // Payment cancelled or failed — do NOT save, do NOT redirect
+      console.warn('Payment not successful:', verData);
+      var msg = (verData.payment_status === 'USER_DROPPED' || verData.payment_status === 'CANCELLED')
+        ? 'Payment was cancelled. No money has been deducted. You can try again.'
+        : 'Payment is pending or verification failed. If money was deducted, WhatsApp us with Order ID: ' + orderId;
+      alert(msg);
+      return false;  // ← payment not confirmed
     }
   } catch(err) {
     console.error('Verify error:', err);
-    alert('Payment verification is pending. Please contact us with your Order ID: ' + orderId);
+    alert('Payment verification pending. If money was deducted, WhatsApp us with your Order ID: ' + orderId);
+    return false;
   }
 }
 
@@ -1415,6 +1423,10 @@ async function handleCashfreeReturn() {
   var params  = new URLSearchParams(window.location.search);
   var orderId = params.get('order_id') || params.get('orderId');
   if (!orderId) return;
+
+  // Clean URL immediately — stops re-triggering on refresh
+  window.history.replaceState({}, '', window.location.pathname);
+
   var processedKey = 'ld_instant_order_processed_' + orderId;
   if (localStorage.getItem(processedKey)) {
     sessionStorage.removeItem('ld_instant_payment_in_progress');
@@ -1425,14 +1437,27 @@ async function handleCashfreeReturn() {
   try { pending = JSON.parse(sessionStorage.getItem('ld_instant_pending') || 'null'); } catch(e) {}
   sessionStorage.removeItem('ld_instant_pending');
 
-  await verifyPayment(
+  var didSucceed = await verifyPayment(
     orderId,
     pending && pending.items    ? pending.items             : [],
     pending && pending.total    ? pending.total             : 0,
     pending && pending.customer ? pending.customer.name     : '',
     pending && pending.customer ? pending.customer.phone    : ''
   );
-  localStorage.setItem(processedKey, String(Date.now()));
+
+  if (didSucceed) {
+    // Lock so we never double-process a confirmed payment
+    localStorage.setItem(processedKey, String(Date.now()));
+  } else {
+    // Cancelled / failed — clear any stale localStorage order for this orderId
+    // so dashboard does NOT show it as paid
+    try {
+      var stale = JSON.parse(localStorage.getItem('ld_last_order') || 'null');
+      if (stale && (stale.orderId === orderId || stale.id === orderId)) {
+        localStorage.removeItem('ld_last_order');
+      }
+    } catch(_) {}
+  }
   sessionStorage.removeItem('ld_instant_payment_in_progress');
 }
 

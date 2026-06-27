@@ -1791,8 +1791,16 @@ async function bkVerifyPayment(orderId, name, phone) {
       })
     });
     var vd = await vr.json();
-    if (vd.success) bkShowToast(orderId, name, phone);
-    else alert('Payment not completed yet. Order status: ' + (vd.order_status || 'Pending'));
+    if (vd.success) {
+      // Save to Firestore + localStorage so it shows on dashboard
+      await ldSaveOrderToFirestore(orderId, vd.payment_id || '', _bkSvc, _bkAmtStr, name, phone, 'confirmed');
+      bkShowToast(orderId, name, phone);
+    } else {
+      var msg = (vd.payment_status === 'USER_DROPPED' || vd.payment_status === 'CANCELLED')
+        ? 'Payment was cancelled. No money has been deducted.'
+        : 'Payment not completed yet. Order status: ' + (vd.order_status || 'Pending');
+      alert(msg);
+    }
   } catch(e) {
     alert('Payment verification is pending. Please contact us with Order ID: ' + orderId);
   }
@@ -2111,14 +2119,18 @@ async function ldVerifyPayment(orderId, items, total, name, phone, services) {
       var wa = encodeURIComponent('✅ *Payment Received — Legaldirectory.ai*\n\nServices:\n'+lines+'\n\nTotal: '+ldFmt(total)+'\nOrder ID: '+orderId+'\nPayment ID: '+(vd.payment_id||'')+'\nName: '+name+'\nPhone: '+phone+'\nTime: '+ts);
       setTimeout(function(){ window.open('https://wa.me/919008999968?text='+wa,'_blank'); }, 800);
       ldClearCart();
-      ldSaveOrderToFirestore(orderId, vd.payment_id||'', services, ldFmt(total), name, phone, 'confirmed');
+      await ldSaveOrderToFirestore(orderId, vd.payment_id||'', services, ldFmt(total), name, phone, 'confirmed');
       window.location.href = 'dashboard.html?payment=success&order_id=' + encodeURIComponent(orderId) + '&amount=' + encodeURIComponent(ldFmt(total));
     } else {
-      alert('Payment pending. Order ID: '+orderId+'. Please WhatsApp us if payment was deducted.');
+      // Cancelled / failed — do NOT save, do NOT clear cart (user can retry)
+      var msg = (vd.payment_status === 'USER_DROPPED' || vd.payment_status === 'CANCELLED')
+        ? 'Payment was cancelled. No money has been deducted. You can try again.'
+        : 'Payment is pending or failed. If money was deducted, WhatsApp us with Order ID: ' + orderId;
+      alert(msg);
     }
   } catch(e) {
-    ldShowToast();
-    ldClearCart();
+    console.error('Cart verify error:', e);
+    alert('Payment verification pending. If money was deducted, WhatsApp us with your Order ID: ' + orderId);
   }
 }
 
@@ -2204,34 +2216,62 @@ async function ldHandleCashfreeReturn() {
   var params = new URLSearchParams(window.location.search);
   var orderId = params.get('order_id') || params.get('orderId');
   if (!orderId) return;
+
+  // Clean URL immediately — prevents re-triggering on refresh
+  window.history.replaceState({}, '', window.location.pathname);
+
   var processedKey = 'ld_order_processed_' + orderId;
   if (localStorage.getItem(processedKey)) {
     sessionStorage.removeItem('ld_payment_in_progress');
     return;
   }
+
   var pending = null;
   try { pending = JSON.parse(sessionStorage.getItem('ld_pending') || 'null'); } catch(e) {}
   sessionStorage.removeItem('ld_pending');
+
   try {
-    var vr = await fetch('/api/verify-payment', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ order_id: orderId, items: pending?.items || [], amount: pending?.amount || '', customer: pending?.customer || {} }) });
+    var vr = await fetch('/api/verify-payment', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        order_id: orderId,
+        items: pending?.items || [],
+        amount: pending?.amount || '',
+        customer: pending?.customer || {}
+      })
+    });
     var vd = await vr.json();
+
     if (vd.success) {
+      // ── Payment confirmed ──
       var service = vd.service_list || pending?.service || 'Legal Service';
-      var amount = vd.amount || pending?.amount || '';
-      await ldSaveOrderToFirestore(orderId, vd.payment_id || '', service, amount, pending?.customer?.name || '', pending?.customer?.phone || '', 'confirmed');
+      var amount  = vd.amount || pending?.amount || '';
+      await ldSaveOrderToFirestore(orderId, vd.payment_id || '', service, amount,
+        pending?.customer?.name || '', pending?.customer?.phone || '', 'confirmed');
       localStorage.setItem(processedKey, String(Date.now()));
       sessionStorage.removeItem('ld_payment_in_progress');
-      window.location.href = 'dashboard.html?payment=success&order_id=' + encodeURIComponent(orderId) + '&amount=' + encodeURIComponent(amount);
+      window.location.href = 'dashboard.html?payment=success&order_id='
+        + encodeURIComponent(orderId) + '&amount=' + encodeURIComponent(amount);
     } else {
-      await ldSaveOrderToFirestore(orderId, '', pending?.service || 'Legal Service', pending?.amount || '', pending?.customer?.name || '', pending?.customer?.phone || '', 'awaiting');
-      localStorage.setItem(processedKey, String(Date.now()));
+      // ── Cancelled / failed — do NOT save order, do NOT lock processedKey ──
       sessionStorage.removeItem('ld_payment_in_progress');
-      window.location.href = 'dashboard.html?payment=pending&order_id=' + encodeURIComponent(orderId) + '&amount=' + encodeURIComponent(pending?.amount || '');
+      // Clear stale localStorage order for this orderId so dashboard stays clean
+      try {
+        var stale = JSON.parse(localStorage.getItem('ld_last_order') || 'null');
+        if (stale && (stale.orderId === orderId || stale.id === orderId)) {
+          localStorage.removeItem('ld_last_order');
+        }
+      } catch(_) {}
+      var msg = (vd.payment_status === 'USER_DROPPED' || vd.payment_status === 'CANCELLED')
+        ? 'Payment was cancelled. No money has been deducted. You can try again.'
+        : 'Payment is pending or failed. If money was deducted, WhatsApp us with Order ID: ' + orderId;
+      alert(msg);
     }
   } catch(e) {
     console.error('Return verify error:', e);
     sessionStorage.removeItem('ld_payment_in_progress');
-    window.location.href = 'dashboard.html?payment=pending&order_id=' + encodeURIComponent(orderId);
+    alert('Payment verification pending. If money was deducted, WhatsApp us with your Order ID: ' + orderId);
   }
 }
 window.addEventListener('load', ldHandleCashfreeReturn);

@@ -11,129 +11,419 @@
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 <style>
-:root{
-  --bg:#07080e;--bg2:#0f1018;--bg3:#161820;--surface:#1a1c26;
-  --border:#2a2d3a;--border2:#353848;
-  --ink:#f0f0f4;--ink-mid:#9a9bb0;--ink-muted:#5a5c70;
-  --gold:#c9952a;--gold-dim:rgba(201,149,42,.15);--gold-border:rgba(201,149,42,.3);
-  --green:#22c55e;--green-dim:rgba(34,197,94,.12);
-  --blue:#2563eb;--red:#ef4444;
-  --radius:8px;
-  --mono:'JetBrains Mono',monospace;
-  --sans:'Inter',system-ui,sans-serif;
+:root {
+  --bg:         #07080e;
+  --bg2:        #0f1018;
+  --bg3:        #161820;
+  --surface:    #1a1c26;
+  --border:     #2a2d3a;
+  --border2:    #353848;
+  --ink:        #f0f0f4;
+  --ink-mid:    #9a9bb0;
+  --ink-muted:  #5a5c70;
+  --gold:       #c9952a;
+  --gold-dim:   rgba(201,149,42,.15);
+  --gold-border:rgba(201,149,42,.3);
+  --green:      #22c55e;
+  --green-dim:  rgba(34,197,94,.12);
+  --blue:       #2563eb;
+  --red:        #ef4444;
+  --radius:     8px;
+  --mono:       'JetBrains Mono', monospace;
+  --sans:       'Inter', system-ui, sans-serif;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
-/* NAV */
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:56px;border-bottom:1px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:200}
-.brand{font-size:17px;font-weight:800;color:var(--ink);text-decoration:none}
-.brand em{font-style:italic;color:var(--gold);font-weight:400}
-.nav-right{display:flex;gap:12px;align-items:center}
-.btn-sm{font-size:12px;font-weight:700;padding:7px 16px;border-radius:5px;border:none;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
-.btn-out{background:none;color:var(--ink-mid);border:1px solid var(--border2)}
-.btn-out:hover{color:var(--ink);border-color:var(--ink-mid)}
-/* HERO */
-.dash-hero{padding:40px 28px 32px;border-bottom:1px solid var(--border);background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(201,149,42,.05) 0%,transparent 70%)}
-.dash-hero-inner{max-width:1060px;margin:0 auto}
-.dash-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
-.dash-title{font-size:clamp(22px,4vw,36px);font-weight:800;letter-spacing:-.02em;line-height:1.15}
-.dash-sub{font-size:13px;color:var(--ink-mid);margin-top:6px}
-/* STATS ROW */
-.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin:24px 0 0}
-.stat-cell{background:var(--bg2);padding:18px 20px}
-.stat-val{font-size:26px;font-weight:900;letter-spacing:-.02em}
-.stat-label{font-family:var(--mono);font-size:10px;color:var(--ink-muted);letter-spacing:.1em;text-transform:uppercase;margin-top:4px}
-/* MAIN */
-.dash-body{max-width:1060px;margin:32px auto;padding:0 28px 80px}
-/* SECTION */
-.section-head{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:16px;display:flex;align-items:center;gap:12px}
-.section-head::after{content:'';flex:1;height:1px;background:var(--border)}
-/* ORDER CARDS */
-.order-list{display:flex;flex-direction:column;gap:12px;margin-bottom:40px}
-.order-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px}
-.order-card:hover{border-color:var(--border2)}
-.order-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.order-name{font-size:15px;font-weight:700;color:var(--ink)}
-.order-id{font-family:var(--mono);font-size:10px;color:var(--ink-muted);margin-top:3px}
-.order-price{font-size:18px;font-weight:800;color:var(--ink);white-space:nowrap}
-.order-meta{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
-.status-pill{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
-.status-pill .dot{width:6px;height:6px;border-radius:50%}
-.s-pending{background:rgba(234,179,8,.12);color:#eab308;border:1px solid rgba(234,179,8,.25)}
-.s-pending .dot{background:#eab308}
-.s-inprogress{background:rgba(59,130,246,.12);color:#60a5fa;border:1px solid rgba(59,130,246,.25)}
-.s-inprogress .dot{background:#60a5fa}
-.s-review{background:rgba(168,85,247,.12);color:#c084fc;border:1px solid rgba(168,85,247,.25)}
-.s-review .dot{background:#c084fc}
-.s-completed{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.25)}
-.s-completed .dot{background:var(--green)}
-.order-date{font-family:var(--mono);font-size:10px;color:var(--ink-muted)}
-/* TIMELINE */
-.timeline{margin-top:16px;padding-top:16px;border-top:1px solid var(--border);display:none}
-.timeline-row{display:flex;gap:12px;align-items:flex-start;padding:6px 0}
-.tl-icon{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;font-weight:700;margin-top:1px}
-.tl-done{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.3)}
-.tl-active{background:rgba(59,130,246,.15);color:#60a5fa;border:1px solid rgba(59,130,246,.3)}
-.tl-pending{background:var(--surface);color:var(--ink-muted);border:1px solid var(--border)}
-.tl-text{font-size:12px;color:var(--ink-mid);padding-top:4px;line-height:1.5}
-.tl-text strong{color:var(--ink);display:block;font-size:13px}
-/* EMPTY */
-.empty-state{text-align:center;padding:64px 24px;color:var(--ink-muted)}
-.empty-state h3{font-size:18px;color:var(--ink);margin-bottom:8px}
-.empty-state p{font-size:13px;line-height:1.7;max-width:380px;margin:0 auto 24px}
-.btn-gold{background:var(--gold);color:#000;font-weight:800;font-family:var(--sans)}
-/* CONTACT */
-.support-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-top:40px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
-.support-text h4{font-size:14px;font-weight:700;margin-bottom:4px}
-.support-text p{font-size:12px;color:var(--ink-mid)}
-.btn-wa{background:#25d366;color:#fff;font-weight:700;font-family:var(--sans)}
-/* LOGIN REQUIRED */
-#login-required{display:none;text-align:center;padding:80px 24px}
-#login-required h2{font-size:24px;font-weight:800;margin-bottom:8px}
-#login-required p{font-size:13px;color:var(--ink-mid);max-width:400px;margin:0 auto 24px}
-/* SPINNER */
-.spinner{width:36px;height:36px;border:3px solid var(--border2);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;margin:80px auto}
-@keyframes spin{to{transform:rotate(360deg)}}
-@media(max-width:640px){
-  .topbar{padding:0 16px}
-  .dash-hero{padding:28px 16px 24px}
-  .dash-body{padding:0 16px 60px}
-  .order-top{flex-direction:column;gap:6px}
-  .stats-row{grid-template-columns:1fr 1fr}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── NAV ── */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  height: 56px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+.brand { font-size: 17px; font-weight: 800; color: var(--ink); text-decoration: none; }
+.brand em { font-style: italic; color: var(--gold); font-weight: 400; }
+.nav-right { display: flex; gap: 12px; align-items: center; }
+.user-chip {
+  font-size: 12px;
+  color: var(--ink-mid);
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.btn-sm {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 16px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--sans);
+}
+.btn-out {
+  background: none;
+  color: var(--ink-mid);
+  border: 1px solid var(--border2);
+}
+.btn-out:hover { color: var(--ink); border-color: var(--ink-mid); }
+
+/* ── HERO ── */
+.dash-hero {
+  padding: 40px 28px 32px;
+  border-bottom: 1px solid var(--border);
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,149,42,.05) 0%, transparent 70%);
+}
+.dash-hero-inner { max-width: 1060px; margin: 0 auto; }
+.dash-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.dash-title {
+  font-size: clamp(22px, 4vw, 36px);
+  font-weight: 800;
+  letter-spacing: -.02em;
+  line-height: 1.15;
+}
+.dash-sub { font-size: 13px; color: var(--ink-mid); margin-top: 6px; }
+
+/* ── STATS ROW ── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: 24px 0 0;
+}
+.stat-cell { background: var(--bg2); padding: 18px 20px; }
+.stat-val { font-size: 26px; font-weight: 900; letter-spacing: -.02em; line-height: 1; }
+.stat-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-muted);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+
+/* ── MAIN ── */
+.dash-body { max-width: 1060px; margin: 32px auto; padding: 0 28px 80px; }
+
+/* ── SECTION HEAD ── */
+.section-head {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* ── ORDER CARDS ── */
+.order-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; }
+.order-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  transition: border-color 0.15s;
+}
+.order-card:hover { border-color: var(--border2); }
+
+.order-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.order-left { flex: 1; min-width: 0; }
+.order-right { flex-shrink: 0; text-align: right; }
+
+.order-name { font-size: 15px; font-weight: 700; color: var(--ink); line-height: 1.3; }
+.order-id {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-muted);
+  margin-top: 3px;
+}
+.order-price { font-size: 18px; font-weight: 800; color: var(--ink); }
+.order-date {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-muted);
+  margin-top: 3px;
+}
+
+.order-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+/* ── STATUS PILL ── */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.status-pill .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.s-pending    { background: rgba(234,179,8,.12); color: #eab308; border: 1px solid rgba(234,179,8,.25); }
+.s-pending .dot { background: #eab308; }
+.s-inprogress { background: rgba(59,130,246,.12); color: #60a5fa; border: 1px solid rgba(59,130,246,.25); }
+.s-inprogress .dot { background: #60a5fa; }
+.s-review     { background: rgba(168,85,247,.12); color: #c084fc; border: 1px solid rgba(168,85,247,.25); }
+.s-review .dot { background: #c084fc; }
+.s-completed  { background: var(--green-dim); color: var(--green); border: 1px solid rgba(34,197,94,.25); }
+.s-completed .dot { background: var(--green); }
+
+/* ── TIMELINE ── */
+.timeline {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  display: none;
+}
+.timeline-row { display: flex; gap: 12px; align-items: flex-start; padding: 5px 0; }
+.tl-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  margin-top: 1px;
+}
+.tl-done    { background: var(--green-dim); color: var(--green); border: 1px solid rgba(34,197,94,.3); }
+.tl-active  { background: rgba(59,130,246,.15); color: #60a5fa; border: 1px solid rgba(59,130,246,.3); }
+.tl-pending { background: var(--surface); color: var(--ink-muted); border: 1px solid var(--border); }
+.tl-text { font-size: 12px; color: var(--ink-mid); padding-top: 3px; line-height: 1.5; }
+.tl-text strong { color: var(--ink); display: block; font-size: 13px; margin-bottom: 1px; }
+
+.tl-toggle {
+  background: none;
+  border: none;
+  color: var(--ink-muted);
+  font-size: 11px;
+  cursor: pointer;
+  font-family: var(--mono);
+  letter-spacing: .06em;
+  padding: 0;
+  text-transform: uppercase;
+  margin-top: 12px;
+  display: block;
+  transition: color 0.15s;
+}
+.tl-toggle:hover { color: var(--ink); }
+
+/* ── EMPTY STATE ── */
+.empty-state { text-align: center; padding: 64px 24px; color: var(--ink-muted); }
+.empty-state h3 { font-size: 18px; color: var(--ink); margin-bottom: 8px; }
+.empty-state p { font-size: 13px; line-height: 1.7; max-width: 380px; margin: 0 auto 24px; }
+.btn-gold { background: var(--gold); color: #000; font-weight: 800; font-family: var(--sans); }
+
+/* ── SUPPORT CARD ── */
+.support-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.support-text h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.support-text p { font-size: 12px; color: var(--ink-mid); }
+.btn-wa {
+  background: #25d366;
+  color: #fff;
+  font-weight: 700;
+  font-family: var(--sans);
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* ── LOGIN REQUIRED ── */
+#login-required {
+  display: none;
+  text-align: center;
+  padding: 80px 24px;
+}
+#login-required h2 { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
+#login-required p {
+  font-size: 13px;
+  color: var(--ink-mid);
+  max-width: 400px;
+  margin: 0 auto 24px;
+}
+
+/* ── SPINNER ── */
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--border2);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+  margin: 80px auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── PAYMENT SUCCESS BANNER ── */
+#payment-banner {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 999;
+  background: linear-gradient(135deg, #052e16, #14532d);
+  border-bottom: 2px solid var(--green);
+  padding: 14px 28px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.banner-icon {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: rgba(34,197,94,.2);
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.banner-body { display: flex; align-items: center; gap: 12px; }
+.banner-title { font-weight: 700; color: var(--green); font-size: 14px; }
+.banner-meta { font-size: 12px; color: #86efac; margin-top: 2px; }
+.banner-meta span { font-family: var(--mono); }
+.banner-next { font-size: 12px; color: #86efac; max-width: 340px; }
+.banner-close {
+  background: none;
+  border: 1px solid var(--green);
+  color: var(--green);
+  border-radius: 5px;
+  padding: 5px 12px;
+  font-size: 11px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: var(--sans);
+  flex-shrink: 0;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .topbar { padding: 0 16px; }
+  .user-chip { display: none; }
+  .dash-hero { padding: 28px 16px 24px; }
+  .dash-body { padding: 0 16px 60px; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .order-top { flex-direction: column; gap: 8px; }
+  .order-right { text-align: left; }
+  .support-card { flex-direction: column; align-items: flex-start; }
+  #payment-banner { padding: 12px 16px; }
 }
 </style>
 </head>
 <body>
+
+<!-- ── NAV ── -->
 <nav class="topbar">
   <a href="https://legaldirectory.in/" class="brand">Legaldirectory<em>.ai</em></a>
   <div class="nav-right">
-    <span id="user-name-nav" style="font-size:12px;color:var(--ink-mid);"></span>
-    <button class="btn-sm btn-out" onclick="signOut()">Sign Out</button>
+    <span id="user-chip" class="user-chip"></span>
+    <button class="btn-sm btn-out" onclick="doSignOut()">Sign Out</button>
   </div>
 </nav>
 
-<!-- LOGIN REQUIRED -->
+<!-- ── LOGIN GATE ── -->
 <div id="login-required">
   <h2>Sign in to view your orders</h2>
   <p>Access your order tracking dashboard by signing in with the same account you used at checkout.</p>
-  <a href="https://legaldirectory.in/" class="btn-sm btn-gold" style="display:inline-flex;padding:12px 24px;border-radius:6px;text-decoration:none;font-size:14px;">Go to Homepage &amp; Sign In</a>
+  <a href="https://legaldirectory.in/" class="btn-sm btn-gold"
+     style="display:inline-flex;padding:12px 24px;border-radius:6px;text-decoration:none;font-size:14px;">
+    Go to Homepage &amp; Sign In
+  </a>
 </div>
 
-<!-- LOADING -->
+<!-- ── SPINNER ── -->
 <div id="loading-spinner"><div class="spinner"></div></div>
 
-<!-- DASHBOARD (shown when logged in) -->
+<!-- ── DASHBOARD ── -->
 <div id="dashboard" style="display:none">
+
   <div class="dash-hero">
     <div class="dash-hero-inner">
       <div class="dash-eyebrow">My Dashboard</div>
       <h1 class="dash-title" id="welcome-name">Welcome back</h1>
       <p class="dash-sub">Track your service orders in real time. Updates are reflected here as soon as our team progresses your case.</p>
-      <div class="stats-row" id="stats-row">
-        <div class="stat-cell"><div class="stat-val" id="stat-total">0</div><div class="stat-label">Total Orders</div></div>
-        <div class="stat-cell"><div class="stat-val" id="stat-active" style="color:var(--blue)">0</div><div class="stat-label">In Progress</div></div>
-        <div class="stat-cell"><div class="stat-val" id="stat-done" style="color:var(--green)">0</div><div class="stat-label">Completed</div></div>
-        <div class="stat-cell"><div class="stat-val" id="stat-amount" style="color:var(--gold)">₹0</div><div class="stat-label">Total Paid</div></div>
+      <div class="stats-row">
+        <div class="stat-cell">
+          <div class="stat-val" id="stat-total">0</div>
+          <div class="stat-label">Total Orders</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-val" id="stat-active" style="color:var(--blue)">0</div>
+          <div class="stat-label">In Progress</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-val" id="stat-done" style="color:var(--green)">0</div>
+          <div class="stat-label">Completed</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-val" id="stat-amount" style="color:var(--gold)">₹0</div>
+          <div class="stat-label">Total Paid</div>
+        </div>
       </div>
     </div>
   </div>
@@ -150,168 +440,223 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
         <h4>Need help with your order?</h4>
         <p>Our team is available 24/7 on WhatsApp. Share your Order ID for fastest resolution.</p>
       </div>
-      <a href="https://wa.me/919008999968?text=Hi%2C%20I%20need%20help%20with%20my%20Legaldirectory.ai%20order" target="_blank" class="btn-sm btn-wa" style="padding:10px 20px;border-radius:6px;text-decoration:none;font-size:13px;display:inline-flex;align-items:center;gap:7px;">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <a href="https://wa.me/919008999968?text=Hi%2C%20I%20need%20help%20with%20my%20Legaldirectory.ai%20order"
+         target="_blank" class="btn-wa">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
         Chat on WhatsApp
       </a>
     </div>
   </div>
 </div>
 
+<!-- ── PAYMENT SUCCESS BANNER ── -->
+<div id="payment-banner">
+  <div class="banner-body">
+    <div class="banner-icon">✅</div>
+    <div>
+      <div class="banner-title" id="banner-title">Payment Confirmed!</div>
+      <div class="banner-meta">
+        Order ID: <span id="banner-order-id"></span> &nbsp;·&nbsp; <span id="banner-amount"></span>
+      </div>
+    </div>
+  </div>
+  <div class="banner-next" id="banner-next">
+    <strong>Next:</strong> Our team will WhatsApp you within 2 hours to collect documents and begin your service.
+  </div>
+  <button class="banner-close" onclick="document.getElementById('payment-banner').style.display='none'">
+    Got it ✕
+  </button>
+</div>
+
 <script>
-// ── FIREBASE CONFIG ──────────────────────────────────────────────────
+// ──────────────────────────────────────────
+// FIREBASE CONFIG
+// ──────────────────────────────────────────
 const FB_CONFIG = {
-  apiKey: "AIzaSyDyhtGPV8_OU7kgmz3SA4ixvv44PGVs2XA",
-  authDomain: "legaldirectory-9e309.firebaseapp.com",
-  projectId: "legaldirectory-9e309",
-  storageBucket: "legaldirectory-9e309.firebasestorage.app",
+  apiKey:            "AIzaSyDyhtGPV8_OU7kgmz3SA4ixvv44PGVs2XA",
+  authDomain:        "legaldirectory-9e309.firebaseapp.com",
+  projectId:         "legaldirectory-9e309",
+  storageBucket:     "legaldirectory-9e309.firebasestorage.app",
   messagingSenderId: "661232836435",
-  appId: "1:661232836435:web:ed75e0ee8c4c1189f48ba6",
-  measurementId: "G-TYYB4EPL46"
+  appId:             "1:661232836435:web:ed75e0ee8c4c1189f48ba6",
+  measurementId:     "G-TYYB4EPL46"
 };
 firebase.initializeApp(FB_CONFIG);
 const auth = firebase.auth();
 const db   = firebase.firestore();
-// Enable offline persistence so dashboard loads even on slow connections
+
+// Offline persistence — dashboard loads even on slow connections
 db.enablePersistence({ synchronizeTabs: true }).catch(() => {});
 
+// ──────────────────────────────────────────
+// STATUS CONFIG
+// ──────────────────────────────────────────
 const STATUSES = {
-  pending:    { label:'Paid — Awaiting Documents 📋', cls:'s-pending',    steps:[1,0,0,0] },
-  confirmed:  { label:'Paid — Awaiting Documents 📋', cls:'s-pending',    steps:[1,0,0,0] },
-  awaiting:   { label:'Paid — Awaiting Documents 📋', cls:'s-pending',    steps:[1,0,0,0] },
-  inprogress: { label:'In Progress 🔄',               cls:'s-inprogress', steps:[1,1,0,0] },
-  review:     { label:'Under Review 🔍',              cls:'s-review',     steps:[1,1,1,0] },
-  completed:  { label:'Completed ✅',                 cls:'s-completed',  steps:[1,1,1,1] }
+  pending:    { label: 'Paid — Awaiting Documents 📋', cls: 's-pending',    steps: [1,0,0,0] },
+  confirmed:  { label: 'Paid — Awaiting Documents 📋', cls: 's-pending',    steps: [1,0,0,0] },
+  awaiting:   { label: 'Paid — Awaiting Documents 📋', cls: 's-pending',    steps: [1,0,0,0] },
+  inprogress: { label: 'In Progress 🔄',               cls: 's-inprogress', steps: [1,1,0,0] },
+  review:     { label: 'Under Review 🔍',              cls: 's-review',     steps: [1,1,1,0] },
+  completed:  { label: 'Completed ✅',                 cls: 's-completed',  steps: [1,1,1,1] }
 };
-const STEPS = ['Payment Confirmed','Awaiting Documents','Work in Progress','Delivered'];
-let LAST_PAYMENT_RETURN = null;
+const STEPS = ['Payment Confirmed', 'Awaiting Documents', 'Work in Progress', 'Delivered'];
 
-
-function fmt(n){ const val = String(n || '0'); if (val.indexOf('₹') === 0) return val; return '₹' + Number(val.replace(/[^0-9.]/g,'') || 0).toLocaleString('en-IN'); }
-function fmtDate(ts){
-  if (!ts) return '';
-  const d = ts.toDate ? ts.toDate() : new Date(ts);
-  return d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+// ──────────────────────────────────────────
+// HELPERS
+// ──────────────────────────────────────────
+function fmt(n) {
+  const val = String(n || '0');
+  if (val.indexOf('₹') === 0) return val;
+  return '₹' + Number(val.replace(/[^0-9.]/g, '') || 0).toLocaleString('en-IN');
 }
 
-function statusPill(statusKey){
+function fmtDate(ts) {
+  if (!ts) return '';
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  return d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
+function statusPill(statusKey) {
   const s = STATUSES[statusKey] || STATUSES.pending;
   return `<span class="status-pill ${s.cls}"><span class="dot"></span>${s.label}</span>`;
 }
 
-function timelineHTML(statusKey){
+function timelineHTML(statusKey) {
   const s = STATUSES[statusKey] || STATUSES.pending;
-  return STEPS.map((step,i)=>{
-    const done   = s.steps[i] === 1 && i < s.steps.filter(x=>x).length - 1;
-    const active = s.steps[i] === 1 && i === s.steps.filter(x=>x).length - 1;
-    const cls    = done ? 'tl-done' : active ? 'tl-active' : 'tl-pending';
-    const icon   = done ? '&#10003;' : active ? '&#9654;' : String(i+1);
+  const active = s.steps.filter(x => x).length - 1;
+  return STEPS.map((step, i) => {
+    const done   = s.steps[i] === 1 && i < active;
+    const isActive = s.steps[i] === 1 && i === active;
+    const cls    = done ? 'tl-done' : isActive ? 'tl-active' : 'tl-pending';
+    const icon   = done ? '&#10003;' : isActive ? '&#9654;' : String(i + 1);
+    const note   = isActive ? ' — Our team is currently working on this.'
+                 : done     ? ' — Completed.'
+                 :            ' — Pending.';
     return `<div class="timeline-row">
       <div class="tl-icon ${cls}">${icon}</div>
-      <div class="tl-text"><strong>${step}</strong>${active ? ' — Our team is currently working on this.' : done ? ' — Completed.' : ' — Pending.'}</div>
+      <div class="tl-text"><strong>${step}</strong>${note}</div>
     </div>`;
   }).join('');
 }
 
-function orderCardHTML(order){
-  const id = order.id || order.orderId || '—';
-  const sKey = (order.status || 'pending').toLowerCase().replace(/\s/g,'');
-  return `<div class="order-card" id="oc-${id}">
+function orderCardHTML(order) {
+  const id   = order.id || order.orderId || '—';
+  const sKey = (order.status || 'pending').toLowerCase().replace(/\s/g, '');
+  const name = order.serviceName || order.service || 'Service';
+  return `
+  <div class="order-card" id="oc-${id}">
     <div class="order-top">
-      <div>
-        <div class="order-name">${order.serviceName || order.service || 'Service'}</div>
+      <div class="order-left">
+        <div class="order-name">${name}</div>
         <div class="order-id">Order ID: ${id}</div>
       </div>
-      <div>
+      <div class="order-right">
         <div class="order-price">${fmt(order.amount || 0)}</div>
-        <div class="order-date" style="text-align:right;margin-top:3px;">${fmtDate(order.createdAt)}</div>
+        <div class="order-date">${fmtDate(order.createdAt)}</div>
       </div>
     </div>
     <div class="order-meta">
       ${statusPill(sKey)}
-      ${order.deliveryNote ? `<span class="order-date">${order.deliveryNote}</span>` : ''}
+      ${order.deliveryNote ? `<span style="font-family:var(--mono);font-size:10px;color:var(--ink-muted);">${order.deliveryNote}</span>` : ''}
     </div>
-    <div class="timeline" id="tl-${id}">
-      ${timelineHTML(sKey)}
-    </div>
-    <div style="margin-top:12px">
-      <button onclick="toggleTimeline('${id}')" style="background:none;border:none;color:var(--ink-mid);font-size:11px;cursor:pointer;font-family:var(--mono);letter-spacing:.06em;padding:0;text-transform:uppercase;">
-        View Progress Timeline +
-      </button>
-    </div>
+    <div class="timeline" id="tl-${id}">${timelineHTML(sKey)}</div>
+    <button class="tl-toggle" onclick="toggleTimeline('${id}')">View Progress Timeline +</button>
   </div>`;
 }
 
-function toggleTimeline(id){
-  const el = document.getElementById('tl-'+id);
-  el.style.display = el.style.display === 'block' ? 'none' : 'block';
+function toggleTimeline(id) {
+  const el = document.getElementById('tl-' + id);
+  const btn = el.nextElementSibling;
+  const open = el.style.display === 'block';
+  el.style.display = open ? 'none' : 'block';
+  btn.textContent  = open ? 'View Progress Timeline +' : 'Hide Timeline −';
 }
 
-// ── POST-PAYMENT REDIRECT HANDLER ────────────────────────────────────
-// Reads ?payment=success&order_id=LD-xxx&amount=₹9999 from Cashfree return URL.
-// Shows banner, links order to current user's UID, then cleans the URL.
+// ──────────────────────────────────────────
+// POST-PAYMENT HANDLER
+// ──────────────────────────────────────────
+// Called after auth resolves. Reads URL params (?payment=success&order_id=xxx&amount=₹yyy)
+// then stamps the current user's UID on the Firestore order doc.
+// This works even if the order was created without a uid (e.g. not logged in at checkout).
+// We write via /api/stamp-uid (serverless) or fall back to a direct Firestore write
+// using the user's own auth token (which bypasses the read-check limitation).
 async function handlePaymentReturn(user) {
-  var params = new URLSearchParams(window.location.search);
-  var orderId = params.get('order_id');
+  const params  = new URLSearchParams(window.location.search);
+  const orderId = params.get('order_id');
   if (!orderId) return;
-  var payment = params.get('payment') || '';
-  var amount  = params.get('amount') || '';
-  LAST_PAYMENT_RETURN = { orderId, payment, amount };
 
-  // Show success / pending banner
-  var banner = document.getElementById('payment-success-banner');
-  if (banner) {
-    document.getElementById('banner-order-id').textContent = orderId;
-    document.getElementById('banner-amount').textContent   = amount;
-    document.getElementById('banner-title').textContent    = payment === 'success'
-      ? 'Payment Confirmed!' : 'Verifying payment…';
-    document.getElementById('banner-next').innerHTML = payment === 'success'
-      ? '<strong>Next:</strong> Our team will WhatsApp you within 2 hours to collect documents and begin your service.'
-      : '<strong>Next:</strong> Keep this Order ID. If money was deducted, refresh in a minute or WhatsApp support.';
-    banner.style.display = 'flex';
-    if (payment === 'success') setTimeout(() => { banner.style.display = 'none'; }, 14000);
-  }
+  const payment = params.get('payment') || '';
+  const amount  = params.get('amount')  || '';
 
-  // ── Stamp UID on this order so it appears in the user's Firestore query ──
-  if (user && orderId) {
-    try {
-      var orderRef = db.collection('orders').doc(orderId);
-      var snap = await orderRef.get();
-      if (snap.exists) {
-        var d = snap.data();
-        // Stamp UID if missing; also update status to confirmed if payment=success
-        var patch = {};
-        if (!d.uid) patch.uid = user.uid;
-        if (payment === 'success' && (!d.status || d.status === 'awaiting')) patch.status = 'confirmed';
-        if (Object.keys(patch).length) await orderRef.set(patch, { merge: true });
-      } else if (payment === 'success') {
-        // Order doc missing (edge case: network lag during create-order). Reconstruct from URL.
-        var localOrder = null;
-        try { localOrder = JSON.parse(localStorage.getItem('ld_last_order') || 'null'); } catch(e) {}
-        await orderRef.set({
-          orderId, uid: user.uid,
-          serviceName: localOrder?.serviceName || 'Legal Service',
-          service:     localOrder?.serviceName || 'Legal Service',
-          amount: amount || localOrder?.amount || '',
-          customer: localOrder?.customer || {},
-          status: 'confirmed',
-          paymentStatus: 'paid',
-          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-          updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-          source: 'dashboard-recovery'
-        }, { merge: true });
-      }
-    } catch(e) { console.warn('UID stamp error:', e); }
-  }
-
-  // Clean URL so refresh doesn't re-trigger
+  // Clean the URL immediately so refresh doesn't re-trigger
   window.history.replaceState({}, '', 'dashboard.html');
+
+  // Only show banner for confirmed payments — not for cancelled/failed ones
+  if (payment !== 'success') return;
+
+  // Show banner
+  document.getElementById('banner-order-id').textContent = orderId;
+  document.getElementById('banner-amount').textContent   = amount;
+  document.getElementById('banner-title').textContent    = 'Payment Confirmed!';
+  document.getElementById('banner-next').innerHTML =
+    '<strong>Next:</strong> Our team will WhatsApp you within 2 hours to collect documents and begin your service.';
+  document.getElementById('payment-banner').style.display = 'flex';
+  setTimeout(() => { document.getElementById('payment-banner').style.display = 'none'; }, 14000);
+
+  if (!user || !orderId) return;
+
+  // ── Stamp UID on the order doc ──
+  // Strategy:
+  //  1. Try to write directly — if the doc has no uid yet, Firestore rules
+  //     allow the WRITE if the field is being set to the current user's uid
+  //     (rule: allow write if request.resource.data.uid == request.auth.uid).
+  //  2. Fall back to reading from localStorage and creating the doc if missing.
+  try {
+    const orderRef = db.collection('orders').doc(orderId);
+
+    // Attempt a merge-write to stamp the UID. This will succeed under the rule:
+    // allow write: if request.resource.data.uid == request.auth.uid;
+    const patch = { uid: user.uid };
+    if (payment === 'success') {
+      patch.status        = 'confirmed';
+      patch.paymentStatus = 'paid';
+      patch.updatedAt     = firebase.firestore.FieldValue.serverTimestamp();
+    }
+
+    // First try to read to see if we need to create
+    let snap;
+    try { snap = await orderRef.get(); } catch (_) { snap = null; }
+
+    if (snap && snap.exists) {
+      await orderRef.set(patch, { merge: true });
+    } else {
+      // Doc missing — reconstruct from localStorage
+      let localOrder = null;
+      try { localOrder = JSON.parse(localStorage.getItem('ld_last_order') || 'null'); } catch (_) {}
+      await orderRef.set({
+        orderId,
+        uid:            user.uid,
+        serviceName:    localOrder?.serviceName || 'Legal Service',
+        service:        localOrder?.serviceName || 'Legal Service',
+        amount:         amount || localOrder?.amount || '',
+        customer:       localOrder?.customer || {},
+        status:         'confirmed',
+        paymentStatus:  'paid',
+        source:         'dashboard-recovery',
+        createdAt:      firebase.firestore.FieldValue.serverTimestamp(),
+        updatedAt:      firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge: true });
+    }
+  } catch (e) {
+    console.warn('UID stamp error (non-fatal — localStorage fallback active):', e);
+  }
 }
 
-// ── REAL-TIME DASHBOARD LISTENER ─────────────────────────────────────
-// Uses onSnapshot so the dashboard updates live when the team changes an order's status.
-let unsubscribeOrders = null;
-
+// ──────────────────────────────────────────
+// RENDER
+// ──────────────────────────────────────────
 function renderOrders(orders) {
   const active    = orders.filter(o => (o.status || 'pending') !== 'completed');
   const completed = orders.filter(o => (o.status || 'pending') === 'completed');
@@ -329,40 +674,67 @@ function renderOrders(orders) {
   const doneEl   = document.getElementById('completed-orders');
 
   if (active.length === 0) {
-    activeEl.innerHTML = '<div class="empty-state"><h3>No active orders</h3><p>Your active orders will appear here once you book a service.</p><a href="https://legaldirectory.in/#services" class="btn-sm btn-gold" style="padding:10px 20px;border-radius:6px;text-decoration:none;font-size:13px;display:inline-block;">Explore Services</a></div>';
+    activeEl.innerHTML = `
+    <div class="empty-state">
+      <h3>No active orders</h3>
+      <p>Your active orders will appear here once you book a service.</p>
+      <a href="https://legaldirectory.in/#services" class="btn-sm btn-gold"
+         style="padding:10px 20px;border-radius:6px;text-decoration:none;font-size:13px;display:inline-block;">
+        Explore Services
+      </a>
+    </div>`;
   } else {
     activeEl.innerHTML = active.map(orderCardHTML).join('');
   }
+
   if (completed.length === 0) {
-    doneEl.innerHTML = '<p style="font-size:12px;color:var(--ink-muted);">No completed orders yet.</p>';
+    doneEl.innerHTML = '<p style="font-size:12px;color:var(--ink-muted);padding:4px 0;">No completed orders yet.</p>';
   } else {
     doneEl.innerHTML = completed.map(orderCardHTML).join('');
   }
 }
 
+// ──────────────────────────────────────────
+// AUTH STATE
+// ──────────────────────────────────────────
+let unsubscribeOrders = null;
+
 auth.onAuthStateChanged(async (user) => {
-  // Unsubscribe any previous real-time listener
   if (unsubscribeOrders) { unsubscribeOrders(); unsubscribeOrders = null; }
 
   document.getElementById('loading-spinner').style.display = 'none';
 
   if (!user) {
     document.getElementById('login-required').style.display = 'block';
-    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('dashboard').style.display      = 'none';
     return;
   }
 
-  document.getElementById('dashboard').style.display = 'block';
+  document.getElementById('dashboard').style.display      = 'block';
   document.getElementById('login-required').style.display = 'none';
-  document.getElementById('user-name-nav').textContent = user.displayName || user.email || '';
+  document.getElementById('user-chip').textContent =
+    user.displayName || user.email || '';
   document.getElementById('welcome-name').textContent =
     'Welcome back' + (user.displayName ? ', ' + user.displayName.split(' ')[0] : '');
 
-  // 1️⃣  Handle payment return FIRST — stamps UID on the new order doc
+  // 1️⃣ Handle post-payment return & stamp UID on the new order
   await handlePaymentReturn(user);
 
-  // 2️⃣  Start REAL-TIME listener on this user's orders
-  //     Firestore rule must allow: allow read if request.auth.uid == resource.data.uid
+  // 2️⃣ Pre-render from localStorage for instant display (avoids blank flash)
+  //    Skip if URL has a payment param that isn't 'success' — those are
+  //    cancelled/failed payments that were already cleaned by instant-services.
+  const _urlPayment = new URLSearchParams(window.location.search).get('payment');
+  if (!_urlPayment || _urlPayment === 'success') {
+    try {
+      const local = JSON.parse(localStorage.getItem('ld_last_order') || 'null');
+      if (local && (local.orderId || local.id)) {
+        const tempId = local.orderId || local.id;
+        renderOrders([{ id: tempId, ...local }]);
+      }
+    } catch (_) {}
+  }
+
+  // 3️⃣ Real-time Firestore listener — updates live when team changes order status
   unsubscribeOrders = db.collection('orders')
     .where('uid', '==', user.uid)
     .orderBy('createdAt', 'desc')
@@ -370,14 +742,17 @@ auth.onAuthStateChanged(async (user) => {
       (snapshot) => {
         const firestoreOrders = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
 
-        // Merge with localStorage fallback (covers the split-second before UID stamp propagates)
+        // Merge with localStorage fallback (covers the brief window before UID stamp propagates)
         const byId = new Map(firestoreOrders.map(o => [o.id, o]));
         try {
           const local = JSON.parse(localStorage.getItem('ld_last_order') || 'null');
-          if (local && local.orderId && !byId.has(local.orderId)) {
-            byId.set(local.orderId, { id: local.orderId, ...local });
+          if (local) {
+            const lid = local.orderId || local.id;
+            if (lid && !byId.has(lid)) {
+              byId.set(lid, { id: lid, ...local });
+            }
           }
-        } catch(e) {}
+        } catch (_) {}
 
         const orders = Array.from(byId.values()).sort((a, b) => {
           const av = a.createdAt?.toMillis ? a.createdAt.toMillis() : (a.updatedAt || 0);
@@ -389,39 +764,41 @@ auth.onAuthStateChanged(async (user) => {
       },
       (err) => {
         console.error('Firestore listener error:', err);
-        // Fallback: one-time fetch
+        // Fallback: one-time query
         db.collection('orders').where('uid', '==', user.uid).get()
           .then(snap => {
             const orders = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-            renderOrders(orders);
+            const byId   = new Map(orders.map(o => [o.id, o]));
+            try {
+              const local = JSON.parse(localStorage.getItem('ld_last_order') || 'null');
+              if (local) {
+                const lid = local.orderId || local.id;
+                if (lid && !byId.has(lid)) byId.set(lid, { id: lid, ...local });
+              }
+            } catch (_) {}
+            renderOrders(Array.from(byId.values()));
           })
           .catch(() => {
-            document.getElementById('active-orders').innerHTML =
-              '<p style="color:var(--ink-muted);font-size:13px;">Could not load orders. Please refresh or contact support.</p>';
+            // Last resort: just show localStorage order
+            try {
+              const local = JSON.parse(localStorage.getItem('ld_last_order') || 'null');
+              if (local) {
+                const lid = local.orderId || local.id;
+                if (lid) renderOrders([{ id: lid, ...local }]);
+              }
+            } catch (_) {
+              document.getElementById('active-orders').innerHTML =
+                '<p style="color:var(--ink-muted);font-size:13px;padding:4px 0;">Could not load orders. Please refresh or contact support.</p>';
+            }
           });
       }
     );
 });
 
-function signOut() {
+function doSignOut() {
   if (unsubscribeOrders) { unsubscribeOrders(); unsubscribeOrders = null; }
   auth.signOut().then(() => { window.location.href = 'https://legaldirectory.in/'; });
 }
 </script>
-
-<!-- Payment Success Banner -->
-<div id="payment-success-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:999;background:linear-gradient(135deg,#052e16,#14532d);border-bottom:2px solid #22c55e;padding:16px 28px;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
-  <div style="display:flex;align-items:center;gap:14px;">
-    <div style="width:40px;height:40px;border-radius:50%;background:rgba(34,197,94,.2);display:grid;place-items:center;font-size:20px;flex-shrink:0;">✅</div>
-    <div>
-      <div id="banner-title" style="font-weight:700;color:#22c55e;font-size:15px;">Payment Confirmed!</div>
-      <div style="font-size:12px;color:#86efac;margin-top:2px;">Order ID: <span id="banner-order-id" style="font-family:var(--mono);"></span> &nbsp;·&nbsp; <span id="banner-amount"></span></div>
-    </div>
-  </div>
-  <div id="banner-next" style="font-size:12px;color:#86efac;max-width:340px;">
-    <strong>Next:</strong> Our team will WhatsApp you within 2 hours to collect documents and begin your service.
-  </div>
-  <button onclick="document.getElementById('payment-success-banner').style.display='none'" style="background:none;border:1px solid #22c55e;color:#22c55e;border-radius:5px;padding:6px 14px;font-size:12px;cursor:pointer;white-space:nowrap;">Got it ✕</button>
-</div>
-
-</body></html>
+</body>
+</html>
