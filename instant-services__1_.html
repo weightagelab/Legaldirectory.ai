@@ -122,6 +122,11 @@
   .card-bullets { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-bottom: 20px; flex: 1; }
   .card-bullets li { font-size: 12px; color: var(--ink-mid); display: flex; align-items: flex-start; gap: 8px; line-height: 1.4; }
   .card-bullets li::before { content: '—'; color: var(--ink-muted); flex-shrink: 0; font-size: 11px; }
+  /* Bullets with an inline <strong> label — suppress the ::before dash, align label+text inline */
+  .card-bullets li.label-bullet::before { display: none; }
+  .card-bullets li.label-bullet { gap: 0; flex-wrap: wrap; align-items: baseline; }
+  .card-bullets li.label-bullet strong { color: var(--ink); font-weight: 700; margin-right: 4px; flex-shrink: 0; }
+  .card-bullets li.label-bullet .bullet-sep { color: var(--ink-muted); margin-right: 4px; flex-shrink: 0; font-size: 11px; }
 
   .card-footer {
     display: flex; align-items: center; justify-content: space-between; gap: 10px;
@@ -344,9 +349,6 @@
   .per-hour-tag { font-size: 10px; color: var(--ink-muted); font-weight: 500; }
 
 
-  /* ── RGRHCL bullet fix: wrap long label+text without overflow ── */
-  .card-bullets li strong { flex-shrink: 0; }
-
   @media(max-width:640px){
     .how-strip { grid-template-columns: 1fr 1fr; }
     .banner { padding: 36px 16px 44px; }
@@ -437,10 +439,10 @@
     <h3>Rajiv Gandhi Housing Corporation Limited (RGRHCL) — Full Consultancy</h3>
     <p class="card-desc">End-to-end consultancy for government housing schemes under RGRHCL — a Karnataka Government Enterprise. Eligibility checked, reports prepared, and pre-application guided for pre-verification.</p>
     <ul class="card-bullets">
-      <li><strong style="color:var(--ink)">Credit Report</strong> — financial eligibility assessment for housing scheme</li>
-      <li><strong style="color:var(--ink)">Asset Report</strong> — current asset declaration and valuation summary</li>
-      <li><strong style="color:var(--ink)">Eligibility Report</strong> — scheme-specific qualification analysis</li>
-      <li><strong style="color:var(--ink)">Pre-Application Process</strong> — guided document checklist and form prep</li>
+      <li class="label-bullet"><strong>Credit Report</strong><span class="bullet-sep">—</span>financial eligibility assessment for housing scheme</li>
+      <li class="label-bullet"><strong>Asset Report</strong><span class="bullet-sep">—</span>current asset declaration and valuation summary</li>
+      <li class="label-bullet"><strong>Eligibility Report</strong><span class="bullet-sep">—</span>scheme-specific qualification analysis</li>
+      <li class="label-bullet"><strong>Pre-Application Process</strong><span class="bullet-sep">—</span>guided document checklist and form prep</li>
     </ul>
     <div style="background:rgba(201,149,42,0.07);border:1px solid var(--gold-border);border-radius:6px;padding:12px 14px;margin-bottom:16px;">
       <div style="font-size:10px;font-weight:700;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">Major Schemes Covered</div>
