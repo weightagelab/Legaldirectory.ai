@@ -2209,66 +2209,107 @@ function ldShowToast() {
   setTimeout(function(){ t.style.display='none'; }, 5000);
 }
 
+// ── GOOGLE SHEETS TRACKER (index) ──
+var LD_SHEETS_WEBHOOK_URL = 'https://script.google.com/macros/s/YOUR_APPS_SCRIPT_DEPLOYMENT_ID/exec';
+
+function ldLogToGoogleSheets(orderId, paymentId, services, amount, name, phone, uid, email, amountRaw) {
+  try {
+    var payload = {
+      orderId:         orderId,
+      paymentId:       paymentId || '',
+      customerName:    name  || '',
+      phone:           phone || '',
+      email:           email || '',
+      uid:             uid   || '',
+      services:        services || '',
+      amount:          amountRaw || 0,
+      amountFormatted: amount || '',
+      itemCount:       1,
+      timestamp:       new Date().toISOString(),
+      istTime:         new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+      source:          'index',
+      status:          'confirmed'
+    };
+    fetch(LD_SHEETS_WEBHOOK_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).catch(function(e){ console.warn('Sheets log failed (non-fatal):', e); });
+  } catch(e) {
+    console.warn('Sheets log error (non-fatal):', e);
+  }
+}
+
 // ── SAVE ORDER TO FIRESTORE ──
 async function ldSaveOrderToFirestore(orderId, paymentId, services, amount, name, phone, status) {
+  // Capture auth state at call-time
+  var currentUser = null;
   try {
-    // Get current authenticated user UID (may be null if not signed in)
-    var uid = null;
-    try {
-      if (firebaseAuth && firebaseAuth.currentUser) {
-        uid = firebaseAuth.currentUser.uid;
-      }
-    } catch(e) {}
+    if (firebaseAuth && firebaseAuth.currentUser) currentUser = firebaseAuth.currentUser;
+  } catch(e) {}
+  var uid   = currentUser ? currentUser.uid   : null;
+  var email = currentUser ? (currentUser.email || '') : '';
 
-    var data = {
-      orderId: orderId,
-      paymentId: paymentId || '',
-      serviceName: services || 'Legal Service',
-      service: services || 'Legal Service',
-      amount: amount || '',
-      customer: { name: name || '', phone: phone || '' },
-      status: status || 'awaiting',
-      paymentStatus: status === 'confirmed' ? 'paid' : 'awaiting',
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-      source: 'index'
-    };
-    if (uid) data.uid = uid;
+  var serviceName = services || 'Legal Service';
+  var data = {
+    orderId:      orderId,
+    paymentId:    paymentId || '',
+    serviceName:  serviceName,
+    service:      serviceName,
+    amount:       amount || '',
+    customer:     { name: name || '', phone: phone || '', email: email },
+    // CRITICAL FIX: always write uid — '' for guests so handlePaymentReturn can stamp it
+    uid:          uid   || '',
+    email:        email || '',
+    status:       status || 'awaiting',
+    paymentStatus: status === 'confirmed' ? 'paid' : 'awaiting',
+    createdAt:    firebase.firestore.FieldValue.serverTimestamp(),
+    updatedAt:    firebase.firestore.FieldValue.serverTimestamp(),
+    source:       'index'
+  };
 
-    // ── WRITE TO FIRESTORE ──────────────────────────────────────────────
+  var localCopy = {
+    id: orderId, orderId: orderId,
+    paymentId:   paymentId || '',
+    serviceName: serviceName,
+    amount:      amount || '',
+    customer:    { name: name || '', phone: phone || '', email: email },
+    uid:         uid   || '',
+    email:       email || '',
+    status:      status || 'awaiting',
+    paymentStatus: status === 'confirmed' ? 'paid' : 'awaiting',
+    updatedAt:   Date.now(),
+    source:      'index'
+  };
+
+  // Write to Firestore
+  try {
     var db = firebase.firestore();
     await db.collection('orders').doc(orderId).set(data, { merge: true });
-    console.log('Order saved to Firestore:', orderId, status);
-
-    // Also keep localStorage as fast-read fallback for same-session redirect
-    localStorage.setItem('ld_last_order', JSON.stringify({
-      id: orderId, orderId: orderId,
-      paymentId: paymentId || '',
-      serviceName: services || 'Legal Service',
-      amount: amount || '',
-      customer: { name: name || '', phone: phone || '' },
-      status: status || 'awaiting',
-      updatedAt: Date.now(),
-      source: 'index'
-    }));
-    return data;
+    console.log('Order saved to Firestore:', orderId, '| uid:', uid || '(guest)');
   } catch(e) {
     console.error('Firestore save error:', e);
-    // Fallback: at minimum keep localStorage so dashboard can show something
-    try {
-      localStorage.setItem('ld_last_order', JSON.stringify({
-        id: orderId, orderId: orderId,
-        paymentId: paymentId || '',
-        serviceName: services || 'Legal Service',
-        amount: amount || '',
-        customer: { name: name || '', phone: phone || '' },
-        status: 'awaiting',
-        updatedAt: Date.now(),
-        source: 'index'
-      }));
-    } catch(le) {}
-    return null;
+    // Don't rethrow — localStorage fallback ensures customer isn't left hanging
   }
+
+  // Always write localStorage — multi-order cache + legacy key
+  try {
+    var allOrders = [];
+    try { allOrders = JSON.parse(localStorage.getItem('ld_orders_cache') || '[]'); } catch(_) {}
+    allOrders = allOrders.filter(function(o){ return o.orderId !== orderId; });
+    allOrders.unshift(localCopy);
+    if (allOrders.length > 5) allOrders = allOrders.slice(0, 5);
+    localStorage.setItem('ld_orders_cache', JSON.stringify(allOrders));
+    localStorage.setItem('ld_last_order', JSON.stringify(localCopy));
+  } catch(le) {}
+
+  // Log to Sheets (non-blocking, only for confirmed payments)
+  if (status === 'confirmed') {
+    ldLogToGoogleSheets(orderId, paymentId, services, amount, name, phone, uid, email, 0);
+  }
+
+  return data;
 }
 
 async function ldHandleCashfreeReturn() {
@@ -2315,8 +2356,11 @@ async function ldHandleCashfreeReturn() {
     } else {
       // ── Cancelled / failed — do NOT save order, do NOT lock processedKey ──
       sessionStorage.removeItem('ld_payment_in_progress');
-      // Clear stale localStorage order for this orderId so dashboard stays clean
+      // Clear stale localStorage entries for this orderId so dashboard stays clean
       try {
+        var cache = JSON.parse(localStorage.getItem('ld_orders_cache') || '[]');
+        var filtered = cache.filter(function(o){ return o.orderId !== orderId && o.id !== orderId; });
+        localStorage.setItem('ld_orders_cache', JSON.stringify(filtered));
         var stale = JSON.parse(localStorage.getItem('ld_last_order') || 'null');
         if (stale && (stale.orderId === orderId || stale.id === orderId)) {
           localStorage.removeItem('ld_last_order');

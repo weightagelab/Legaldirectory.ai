@@ -542,15 +542,30 @@ function timelineHTML(statusKey) {
 }
 
 function orderCardHTML(order) {
-  const id   = order.id || order.orderId || '—';
-  const sKey = (order.status || 'pending').toLowerCase().replace(/\s/g, '');
-  const name = order.serviceName || order.service || 'Service';
+  const id      = order.id || order.orderId || '—';
+  const sKey    = (order.status || 'pending').toLowerCase().replace(/\s/g, '');
+  const svcName = order.serviceName || order.service || 'Legal Service';
+  const cust    = order.customer || {};
+  const custName  = cust.name  || '';
+  const custPhone = cust.phone || '';
+  const custEmail = cust.email || order.email || '';
+
+  // Build customer info line if we have any data
+  const custParts = [];
+  if (custName)  custParts.push('👤 ' + custName);
+  if (custPhone) custParts.push('📱 ' + custPhone);
+  if (custEmail) custParts.push('✉️ ' + custEmail);
+  const custLine = custParts.length
+    ? `<div class="order-id" style="margin-top:4px;color:var(--ink-mid);">${custParts.join(' · ')}</div>`
+    : '';
+
   return `
   <div class="order-card" id="oc-${id}">
     <div class="order-top">
       <div class="order-left">
-        <div class="order-name">${name}</div>
+        <div class="order-name">${svcName}</div>
         <div class="order-id">Order ID: ${id}</div>
+        ${custLine}
       </div>
       <div class="order-right">
         <div class="order-price">${fmt(order.amount || 0)}</div>
@@ -579,9 +594,6 @@ function toggleTimeline(id) {
 // ──────────────────────────────────────────
 // Called after auth resolves. Reads URL params (?payment=success&order_id=xxx&amount=₹yyy)
 // then stamps the current user's UID on the Firestore order doc.
-// This works even if the order was created without a uid (e.g. not logged in at checkout).
-// We write via /api/stamp-uid (serverless) or fall back to a direct Firestore write
-// using the user's own auth token (which bypasses the read-check limitation).
 async function handlePaymentReturn(user) {
   const params  = new URLSearchParams(window.location.search);
   const orderId = params.get('order_id');
@@ -608,49 +620,53 @@ async function handlePaymentReturn(user) {
   if (!user || !orderId) return;
 
   // ── Stamp UID on the order doc ──
-  // Strategy:
-  //  1. Try to write directly — if the doc has no uid yet, Firestore rules
-  //     allow the WRITE if the field is being set to the current user's uid
-  //     (rule: allow write if request.resource.data.uid == request.auth.uid).
-  //  2. Fall back to reading from localStorage and creating the doc if missing.
+  // CRITICAL FIX: The order doc always exists (saveOrderToFirestore now writes uid:'')
+  // so we can reliably update it. We use a direct set-merge with the user's uid.
+  // We also pull the customer data from localStorage if needed and fill in email.
   try {
     const orderRef = db.collection('orders').doc(orderId);
 
-    // Attempt a merge-write to stamp the UID. This will succeed under the rule:
-    // allow write: if request.resource.data.uid == request.auth.uid;
-    const patch = { uid: user.uid };
-    if (payment === 'success') {
-      patch.status        = 'confirmed';
-      patch.paymentStatus = 'paid';
-      patch.updatedAt     = firebase.firestore.FieldValue.serverTimestamp();
+    // Build the patch — always include uid + email so dashboard query works
+    const patch = {
+      uid:            user.uid,
+      email:          user.email || '',
+      status:         'confirmed',
+      paymentStatus:  'paid',
+      updatedAt:      firebase.firestore.FieldValue.serverTimestamp()
+    };
+
+    // Try to enrich with any localStorage data (customer name/phone saved at checkout)
+    let localOrder = null;
+    try {
+      // Check multi-order cache first
+      const cache = JSON.parse(localStorage.getItem('ld_orders_cache') || '[]');
+      localOrder = cache.find(o => o.orderId === orderId || o.id === orderId) || null;
+      // Fallback to legacy key
+      if (!localOrder) {
+        const last = JSON.parse(localStorage.getItem('ld_last_order') || 'null');
+        if (last && (last.orderId === orderId || last.id === orderId)) localOrder = last;
+      }
+    } catch (_) {}
+
+    if (localOrder) {
+      // Fill any missing fields
+      if (localOrder.customer)     patch.customer     = localOrder.customer;
+      if (localOrder.serviceName)  patch.serviceName  = localOrder.serviceName;
+      if (localOrder.service)      patch.service      = localOrder.service;
+      if (localOrder.amount)       patch.amount       = localOrder.amount;
+      if (localOrder.amountRaw)    patch.amountRaw    = localOrder.amountRaw;
+      if (localOrder.items)        patch.items        = localOrder.items;
+      if (!patch.source)           patch.source       = localOrder.source || 'instant-services';
     }
 
-    // First try to read to see if we need to create
-    let snap;
-    try { snap = await orderRef.get(); } catch (_) { snap = null; }
+    // Always do a merge-write — this creates the doc if missing and updates if it exists
+    // If doc exists with uid:'' from saveOrderToFirestore, this overwrites with real uid
+    await orderRef.set(patch, { merge: true });
+    console.log('UID stamped on order:', orderId, '→', user.uid);
 
-    if (snap && snap.exists) {
-      await orderRef.set(patch, { merge: true });
-    } else {
-      // Doc missing — reconstruct from localStorage
-      let localOrder = null;
-      try { localOrder = JSON.parse(localStorage.getItem('ld_last_order') || 'null'); } catch (_) {}
-      await orderRef.set({
-        orderId,
-        uid:            user.uid,
-        serviceName:    localOrder?.serviceName || 'Legal Service',
-        service:        localOrder?.serviceName || 'Legal Service',
-        amount:         amount || localOrder?.amount || '',
-        customer:       localOrder?.customer || {},
-        status:         'confirmed',
-        paymentStatus:  'paid',
-        source:         'dashboard-recovery',
-        createdAt:      firebase.firestore.FieldValue.serverTimestamp(),
-        updatedAt:      firebase.firestore.FieldValue.serverTimestamp()
-      }, { merge: true });
-    }
   } catch (e) {
-    console.warn('UID stamp error (non-fatal — localStorage fallback active):', e);
+    console.warn('UID stamp error (non-fatal):', e);
+    // Even if Firestore fails, the localStorage order will show on dashboard
   }
 }
 
@@ -721,17 +737,44 @@ auth.onAuthStateChanged(async (user) => {
   await handlePaymentReturn(user);
 
   // 2️⃣ Pre-render from localStorage for instant display (avoids blank flash)
-  //    Skip if URL has a payment param that isn't 'success' — those are
-  //    cancelled/failed payments that were already cleaned by instant-services.
+  //    Skip if URL has a payment param that isn't 'success'.
   const _urlPayment = new URLSearchParams(window.location.search).get('payment');
   if (!_urlPayment || _urlPayment === 'success') {
     try {
-      const local = JSON.parse(localStorage.getItem('ld_last_order') || 'null');
-      if (local && (local.orderId || local.id)) {
-        const tempId = local.orderId || local.id;
-        renderOrders([{ id: tempId, ...local }]);
+      // Use multi-order cache first, fallback to legacy single key
+      let localOrders = JSON.parse(localStorage.getItem('ld_orders_cache') || '[]');
+      if (!localOrders.length) {
+        const last = JSON.parse(localStorage.getItem('ld_last_order') || 'null');
+        if (last && (last.orderId || last.id)) localOrders = [last];
+      }
+      if (localOrders.length) {
+        renderOrders(localOrders.map(o => ({ id: o.orderId || o.id, ...o })));
       }
     } catch (_) {}
+  }
+
+  // Helper: merge Firestore docs with localStorage (covers UID-stamp propagation delay)
+  function mergeWithLocalStorage(firestoreOrders) {
+    const byId = new Map(firestoreOrders.map(o => [o.id, o]));
+    try {
+      // Multi-order cache
+      const cache = JSON.parse(localStorage.getItem('ld_orders_cache') || '[]');
+      cache.forEach(local => {
+        const lid = local.orderId || local.id;
+        if (lid && !byId.has(lid)) byId.set(lid, { id: lid, ...local });
+      });
+      // Legacy fallback
+      const last = JSON.parse(localStorage.getItem('ld_last_order') || 'null');
+      if (last) {
+        const lid = last.orderId || last.id;
+        if (lid && !byId.has(lid)) byId.set(lid, { id: lid, ...last });
+      }
+    } catch (_) {}
+    return Array.from(byId.values()).sort((a, b) => {
+      const av = a.createdAt?.toMillis ? a.createdAt.toMillis() : (a.updatedAt || 0);
+      const bv = b.createdAt?.toMillis ? b.createdAt.toMillis() : (b.updatedAt || 0);
+      return bv - av;
+    });
   }
 
   // 3️⃣ Real-time Firestore listener — updates live when team changes order status
@@ -741,26 +784,7 @@ auth.onAuthStateChanged(async (user) => {
     .onSnapshot(
       (snapshot) => {
         const firestoreOrders = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-
-        // Merge with localStorage fallback (covers the brief window before UID stamp propagates)
-        const byId = new Map(firestoreOrders.map(o => [o.id, o]));
-        try {
-          const local = JSON.parse(localStorage.getItem('ld_last_order') || 'null');
-          if (local) {
-            const lid = local.orderId || local.id;
-            if (lid && !byId.has(lid)) {
-              byId.set(lid, { id: lid, ...local });
-            }
-          }
-        } catch (_) {}
-
-        const orders = Array.from(byId.values()).sort((a, b) => {
-          const av = a.createdAt?.toMillis ? a.createdAt.toMillis() : (a.updatedAt || 0);
-          const bv = b.createdAt?.toMillis ? b.createdAt.toMillis() : (b.updatedAt || 0);
-          return bv - av;
-        });
-
-        renderOrders(orders);
+        renderOrders(mergeWithLocalStorage(firestoreOrders));
       },
       (err) => {
         console.error('Firestore listener error:', err);
@@ -768,23 +792,21 @@ auth.onAuthStateChanged(async (user) => {
         db.collection('orders').where('uid', '==', user.uid).get()
           .then(snap => {
             const orders = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-            const byId   = new Map(orders.map(o => [o.id, o]));
-            try {
-              const local = JSON.parse(localStorage.getItem('ld_last_order') || 'null');
-              if (local) {
-                const lid = local.orderId || local.id;
-                if (lid && !byId.has(lid)) byId.set(lid, { id: lid, ...local });
-              }
-            } catch (_) {}
-            renderOrders(Array.from(byId.values()));
+            renderOrders(mergeWithLocalStorage(orders));
           })
           .catch(() => {
-            // Last resort: just show localStorage order
+            // Last resort: show localStorage orders
             try {
-              const local = JSON.parse(localStorage.getItem('ld_last_order') || 'null');
-              if (local) {
-                const lid = local.orderId || local.id;
-                if (lid) renderOrders([{ id: lid, ...local }]);
+              let localOrders = JSON.parse(localStorage.getItem('ld_orders_cache') || '[]');
+              if (!localOrders.length) {
+                const last = JSON.parse(localStorage.getItem('ld_last_order') || 'null');
+                if (last) localOrders = [last];
+              }
+              if (localOrders.length) {
+                renderOrders(localOrders.map(o => ({ id: o.orderId || o.id, ...o })));
+              } else {
+                document.getElementById('active-orders').innerHTML =
+                  '<p style="color:var(--ink-muted);font-size:13px;padding:4px 0;">Could not load orders. Please refresh or contact support.</p>';
               }
             } catch (_) {
               document.getElementById('active-orders').innerHTML =
