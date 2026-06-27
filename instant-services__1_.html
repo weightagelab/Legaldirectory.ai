@@ -110,11 +110,11 @@
 
   /* Selected state */
   .card.selected {
-    background: rgba(201,149,42,0.07);
-    outline: 2px solid var(--gold);
+    background: rgba(37,99,235,0.07);
+    outline: 2px solid var(--accent);
     outline-offset: -2px;
   }
-  .card.selected:hover { background: rgba(201,149,42,0.11); }
+  .card.selected:hover { background: rgba(37,99,235,0.11); }
 
   .card-eyebrow { font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 10px; }
   .card h3 { font-size: 16px; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; line-height: 1.25; margin-bottom: 10px; }
@@ -144,14 +144,14 @@
   }
   .btn-add:hover { background: var(--border2); }
   .card.selected .btn-add {
-    background: var(--gold); color: #000; border-color: var(--gold);
+    background: var(--accent); color: #fff; border-color: var(--accent);
   }
   .card.selected .btn-add:hover { opacity: 0.85; }
 
   .pop-tag {
     position: absolute; top: 0; right: 0;
     font-size: 9px; font-weight: 800; letter-spacing: 0.12em;
-    color: #000; background: var(--gold); padding: 4px 12px; border-radius: 0 8px 0 6px;
+    color: #fff; background: var(--accent); padding: 4px 12px; border-radius: 0 8px 0 6px;
   }
 
   /* ── STICKY CART BAR ── */
@@ -178,7 +178,7 @@
   }
   .btn-view-cart:hover { border-color: var(--ink-mid); color: var(--ink); }
   .btn-checkout {
-    background: var(--gold); color: #000; font-size: 13px; font-weight: 800;
+    background: var(--accent); color: #fff; font-size: 13px; font-weight: 800;
     border: none; border-radius: 5px; padding: 11px 22px;
     cursor: pointer; display: inline-flex; align-items: center; gap: 7px;
     white-space: nowrap; transition: opacity 0.15s; letter-spacing: 0.02em; font-family: inherit;
@@ -247,7 +247,7 @@
   .drawer-input:focus { border-color: #2563eb; }
 
   .btn-pay-now {
-    width: 100%; background: var(--gold); color: #000; font-size: 14px; font-weight: 800;
+    width: 100%; background: var(--accent); color: #fff; font-size: 14px; font-weight: 800;
     border: none; border-radius: 6px; padding: 14px;
     cursor: pointer; font-family: inherit; letter-spacing: 0.03em;
     display: flex; align-items: center; justify-content: center; gap: 9px;
@@ -308,7 +308,7 @@
   }
   .state-tab:hover { color: var(--ink); background: var(--bg3); }
   .state-tab.active {
-    background: var(--gold); color: #000;
+    background: var(--accent); color: #fff;
   }
   .state-notice {
     font-size: 11px; color: var(--ink-muted); text-align: center; margin-top: 2px;
@@ -402,7 +402,7 @@
   /* RGRHCL card special styling */
   .card.rgrhcl-card { background: linear-gradient(135deg, #0f1018 0%, #141620 100%); }
   .card.rgrhcl-card:hover { background: linear-gradient(135deg, #161820 0%, #1a1c26 100%); }
-  .card.rgrhcl-card.selected { background: rgba(201,149,42,0.09); }
+  .card.rgrhcl-card.selected { background: rgba(37,99,235,0.09); }
   .govt-badge { display: inline-flex; align-items: center; gap: 5px; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25); border-radius: 3px; padding: 3px 8px; font-size: 9px; font-weight: 700; color: #22c55e; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
   .scheme-list { list-style: none; display: flex; flex-direction: column; gap: 4px; margin: 10px 0 16px; }
   .scheme-list li { font-size: 11px; color: var(--ink-mid); display: flex; align-items: flex-start; gap: 7px; line-height: 1.4; }
@@ -440,6 +440,7 @@
     <a href="https://legaldirectory.in/#how-it-works">How It Works</a>
     <a href="https://legaldirectory.in/directory-ai.html">AI Verify</a>
     <a href="https://legaldirectory.in/#contact">Contact</a>
+    <a href="https://legaldirectory.in/dashboard.html" style="font-weight:600;color:var(--ink);">My Orders</a>
     <a href="https://wa.me/919008999968" class="nav-cta">WhatsApp →</a>
   </div>
 </nav>
@@ -1097,23 +1098,6 @@
       <div class="card-price-wrap">
         <span class="card-price">₹3,195</span>
         <span class="card-delivery">15–30 working days</span>
-      </div>
-      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
-    </div>
-  </div>
-
-  <div class="card" data-name="Visa Services (KA)" data-price="9995" data-delivery="Varies by country">
-    <div class="card-eyebrow">Visa · International Travel</div>
-    <h3>Visa Services</h3>
-    <p class="card-desc">End-to-end visa application assistance for any country — form filling, document checklist, appointment booking, and submission guidance.</p>
-    <ul class="card-bullets">
-      <li>Tourist, business &amp; other visa categories</li>
-      <li>Form filling, documents &amp; appointment booking</li>
-    </ul>
-    <div class="card-footer">
-      <div class="card-price-wrap">
-        <span class="card-price">₹9,995</span>
-        <span class="card-delivery">Varies by country</span>
       </div>
       <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
     </div>
@@ -1797,23 +1781,6 @@
     </div>
   </div>
 
-  <div class="card" data-name="Visa Services (TS)" data-price="9995" data-delivery="Varies by country">
-    <div class="card-eyebrow">Visa · International Travel</div>
-    <h3>Visa Services</h3>
-    <p class="card-desc">Get end-to-end visa application assistance for any country. We handle form filling, document checklist, appointment booking, and submission guidance.</p>
-    <ul class="card-bullets">
-      <li>Tourist, business &amp; other visa categories</li>
-      <li>Form filling, documents &amp; appointment booking</li>
-    </ul>
-    <div class="card-footer">
-      <div class="card-price-wrap">
-        <span class="card-price">₹9,995</span>
-        <span class="card-delivery">Varies by country</span>
-      </div>
-      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
-    </div>
-  </div>
-
   <div class="card" data-name="Notary &amp; E-Stamping (TS)" data-price="2995" data-delivery="1–2 working days">
     <div class="card-eyebrow">TS · Notary &amp; Stamping</div>
     <h3>Notary &amp; E-Stamping</h3>
@@ -2244,23 +2211,6 @@
       <div class="card-price-wrap">
         <span class="card-price">₹3,195</span>
         <span class="card-delivery">15–30 working days</span>
-      </div>
-      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
-    </div>
-  </div>
-
-  <div class="card" data-name="Visa Services (AP)" data-price="9995" data-delivery="Varies by country">
-    <div class="card-eyebrow">Visa · International Travel</div>
-    <h3>Visa Services</h3>
-    <p class="card-desc">End-to-end visa application assistance for any country — form filling, document checklist, appointment booking, and submission guidance.</p>
-    <ul class="card-bullets">
-      <li>Tourist, business &amp; other visa categories</li>
-      <li>Form filling, documents &amp; appointment booking</li>
-    </ul>
-    <div class="card-footer">
-      <div class="card-price-wrap">
-        <span class="card-price">₹9,995</span>
-        <span class="card-delivery">Varies by country</span>
       </div>
       <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
     </div>
@@ -3462,11 +3412,47 @@ function toggleCartHourly(id, btn) {
   }
   updateCartBar();
   updateDrawer();
+  saveCartToStorage();
 }
 
 // ─── CART STATE ───────────────────────────────────────────────────
 // Each item: { name, price (number), delivery, cardEl, btnEl, hourlyId? }
 var cart = [];
+var LD_CART_KEY = 'ld_shared_cart';
+
+// ─── SHARED CART PERSISTENCE ──────────────────────────────────────
+function saveCartToStorage() {
+  try {
+    var data = cart.map(function(i){ return { name: i.name, price: i.price, delivery: i.delivery || '', hourlyId: i.hourlyId || null, source: 'instant' }; });
+    localStorage.setItem(LD_CART_KEY, JSON.stringify(data));
+  } catch(e) {}
+}
+
+function loadCartFromStorage() {
+  try {
+    var raw = localStorage.getItem(LD_CART_KEY);
+    if (!raw) return;
+    var data = JSON.parse(raw);
+    // Restore only instant-services items; re-link to DOM cards
+    data.forEach(function(item) {
+      if (item.source !== 'instant') return;
+      // Find matching card in current visible state
+      var cards = document.querySelectorAll('.card[data-name]');
+      cards.forEach(function(card) {
+        if (card.dataset.name === item.name && !cart.find(function(c){ return c.name === item.name; })) {
+          var btn = card.querySelector('.btn-add');
+          if (btn && card.offsetParent !== null) {  // card is visible (in active state section)
+            cart.push({ name: item.name, price: item.price, delivery: item.delivery, cardEl: card, btnEl: btn, hourlyId: item.hourlyId });
+            card.classList.add('selected');
+            if (btn) btn.textContent = '✓ Added';
+          }
+        }
+      });
+    });
+    updateCartBar();
+    updateDrawer();
+  } catch(e) {}
+}
 
 function fmt(n) {
   return '₹' + n.toLocaleString('en-IN');
@@ -3527,6 +3513,7 @@ function toggleCart(btn) {
 
   updateCartBar();
   updateDrawer();
+  saveCartToStorage();
 }
 
 // ─── CART BAR ─────────────────────────────────────────────────────
@@ -3564,6 +3551,14 @@ function handleOverlayClick(e) {
 }
 
 document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeDrawer(); });
+
+function getCrossPageItems() {
+  try {
+    var raw = localStorage.getItem(LD_CART_KEY);
+    if (!raw) return [];
+    return JSON.parse(raw).filter(function(i){ return i.source === 'index'; });
+  } catch(e) { return []; }
+}
 
 function updateDrawer() {
   var list  = document.getElementById('drawer-items-list');
@@ -3606,6 +3601,25 @@ function updateDrawer() {
 
   document.getElementById('drawer-total').textContent = fmt(total);
 
+  // Cross-page cart indicator
+  var crossItems = getCrossPageItems();
+  var crossEl = document.getElementById('cross-page-cart-banner');
+  if (!crossEl) {
+    crossEl = document.createElement('div');
+    crossEl.id = 'cross-page-cart-banner';
+    crossEl.style.cssText = 'margin:0 20px 12px;padding:10px 14px;background:rgba(37,99,235,0.08);border:1px solid rgba(37,99,235,0.2);border-radius:6px;font-size:12px;color:var(--ink-mid);';
+    var totalEl = document.getElementById('drawer-total');
+    if (totalEl && totalEl.parentNode) totalEl.parentNode.insertBefore(crossEl, totalEl);
+  }
+  if (crossItems.length > 0) {
+    crossEl.style.display = 'block';
+    crossEl.innerHTML = '<div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#60a5fa;margin-bottom:5px;">Also in cart · Expert Services</div>' +
+      crossItems.map(function(i){ return '<div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:2px;"><span>' + i.name + '</span><b style="color:var(--ink);">' + fmt(i.price) + '</b></div>'; }).join('') +
+      '<div style="margin-top:8px;"><a href="index.html" style="font-size:11px;color:#60a5fa;text-decoration:none;font-weight:600;">Go to Expert Services →</a></div>';
+  } else {
+    crossEl.style.display = 'none';
+  }
+
   var payBtn   = document.getElementById('drawer-pay-btn');
   var payLabel = document.getElementById('drawer-pay-label');
   payBtn.disabled = cart.length === 0;
@@ -3617,12 +3631,13 @@ function updateDrawer() {
 function removeFromDrawer(idx) {
   var item = cart[idx];
   if (item) {
-    item.cardEl.classList.remove('selected');
-    item.btnEl.textContent = '+ Add to Cart';
+    if (item.cardEl) item.cardEl.classList.remove('selected');
+    if (item.btnEl) item.btnEl.textContent = '+ Add to Cart';
     cart.splice(idx, 1);
   }
   updateCartBar();
   updateDrawer();
+  saveCartToStorage();
 }
 
 function escHtml(str) {
@@ -3823,15 +3838,17 @@ async function handleCashfreeReturn() {
 }
 
 window.addEventListener('load', handleCashfreeReturn);
+window.addEventListener('load', function(){ setTimeout(loadCartFromStorage, 200); });
 
 function clearCartAfterSuccess() {
   cart.forEach(function(item){
-    item.cardEl.classList.remove('selected');
-    item.btnEl.textContent = '+ Add to Cart';
+    if (item.cardEl) item.cardEl.classList.remove('selected');
+    if (item.btnEl) item.btnEl.textContent = '+ Add to Cart';
   });
   cart = [];
   updateCartBar();
   updateDrawer();
+  try { localStorage.removeItem(LD_CART_KEY); } catch(e) {}
 }
 
 // ─── DRAWER HOURS CONTROLS ────────────────────────────────────────
@@ -3844,7 +3861,7 @@ function adjustHoursInDrawer(idx, delta) {
   item.name     = _hourlyName(item.hourlyId, h);
   item.delivery = _hourlyDelivery(item.hourlyId, h);
   _refreshHoursUI(item.hourlyId);
-  updateCartBar(); updateDrawer();
+  updateCartBar(); updateDrawer(); saveCartToStorage();
 }
 
 function onHoursInputInDrawer(idx, val) {
@@ -3918,6 +3935,15 @@ function switchState(state) {
     document.getElementById('banner-badges').innerHTML = bd.badges;
   }
   // Clear cart when switching states to avoid cross-state confusion
+  // Show warning toast before clearing if cart has items
+  var cartItems = document.querySelectorAll('.cart-item');
+  if (cartItems && cartItems.length > 0) {
+    var warnToast = document.createElement('div');
+    warnToast.textContent = '⚠️ Switching state cleared your cart.';
+    warnToast.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#b45309;color:#fff;font-weight:700;font-size:13px;padding:12px 24px;border-radius:8px;z-index:9999;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.4);';
+    document.body.appendChild(warnToast);
+    setTimeout(function(){ warnToast.remove(); }, 3500);
+  }
   clearCartAfterSuccess();
 }
 
