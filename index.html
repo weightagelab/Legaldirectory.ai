@@ -675,18 +675,38 @@ footer {
  .trust-bar-inner { gap:14px; flex-direction:column; align-items:flex-start; }
  .booking-form-row { grid-template-columns:1fr; }
  .booking-panel { padding:16px; }
- .modal { padding:22px 16px; }
+ .modal { padding:22px 16px; max-height:92vh; }
  .contact-inner { grid-template-columns:1fr !important; gap:16px; }
  .footer-top { flex-direction:column; gap:16px; }
  .footer-bottom { flex-direction:column; gap:8px; text-align:center; }
  .faq-cols { grid-template-columns:1fr; }
- .section, .faq-inner, .notice-inner { padding:40px 18px; }
- hr.sep { margin:0 18px; }
- .trust-bar { padding:18px 18px; }
- .disclaimer { padding:14px 18px; }
- .footer-top, .footer-bottom { padding-left:18px; padding-right:18px; }
+ .section, .faq-inner, .notice-inner { padding:36px 16px; }
+ hr.sep { margin:0 16px; }
+ .trust-bar { padding:16px; }
+ .disclaimer { padding:14px 16px; }
+ .footer-top, .footer-bottom { padding-left:16px; padding-right:16px; }
  nav { padding:0 16px; height:56px; }
  .btn-ai-extension { display:none; }
+ /* Hero stacks properly on mobile */
+ .hero { flex-direction:column; gap:24px; padding:32px 16px 40px; }
+ .hero > div:first-child { max-width:100%; }
+ .hero-actions { display:flex; flex-direction:column; gap:8px; }
+ .hero-actions .btn { width:100%; justify-content:center; text-align:center; }
+ /* Booking panel below hero */
+ .booking-panel { margin-top:0; }
+ .booking-input, .booking-select { font-size:16px; } /* prevent iOS zoom */
+ /* Card footer — price + CTA stay on same line */
+ .card-foot { gap:8px; flex-wrap:nowrap; }
+ .card-price { font-size:18px; }
+ /* Modal booking button full width */
+ .modal-cf-btn { width:100%; text-align:center; justify-content:center; }
+ .modal-wa-alt { justify-content:center; }
+ /* Instant services grid */
+ .services-grid { gap:12px; }
+ /* Stats / trust bar wraps cleanly */
+ .trust-bar-inner { gap:10px; }
+ /* Proc table horizontal scroll */
+ .proc-table { display:block; overflow-x:auto; white-space:nowrap; }
 }
 
 /* LOGIN MODAL */
@@ -2119,8 +2139,16 @@ function ldShowToast() {
 }
 
 // ── SAVE ORDER TO FIRESTORE ──
-function ldSaveOrderToFirestore(orderId, paymentId, services, amount, name, phone, status) {
+async function ldSaveOrderToFirestore(orderId, paymentId, services, amount, name, phone, status) {
   try {
+    // Get current authenticated user UID (may be null if not signed in)
+    var uid = null;
+    try {
+      if (firebaseAuth && firebaseAuth.currentUser) {
+        uid = firebaseAuth.currentUser.uid;
+      }
+    } catch(e) {}
+
     var data = {
       orderId: orderId,
       paymentId: paymentId || '',
@@ -2130,13 +2158,46 @@ function ldSaveOrderToFirestore(orderId, paymentId, services, amount, name, phon
       customer: { name: name || '', phone: phone || '' },
       status: status || 'awaiting',
       paymentStatus: status === 'confirmed' ? 'paid' : 'awaiting',
-      updatedAt: Date.now(),
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
       source: 'index'
     };
-    localStorage.setItem('ld_last_order', JSON.stringify({ id: orderId, orderId: orderId, paymentId: paymentId || '', serviceName: services || 'Legal Service', amount: amount || '', customer: data.customer, status: status || 'awaiting', updatedAt: Date.now(), source: 'index' }));
-    console.log('Order stored locally:', orderId, status);
-    return Promise.resolve(data);
-  } catch(e) { console.error('Firestore error:', e); return Promise.resolve(); }
+    if (uid) data.uid = uid;
+
+    // ── WRITE TO FIRESTORE ──────────────────────────────────────────────
+    var db = firebase.firestore();
+    await db.collection('orders').doc(orderId).set(data, { merge: true });
+    console.log('Order saved to Firestore:', orderId, status);
+
+    // Also keep localStorage as fast-read fallback for same-session redirect
+    localStorage.setItem('ld_last_order', JSON.stringify({
+      id: orderId, orderId: orderId,
+      paymentId: paymentId || '',
+      serviceName: services || 'Legal Service',
+      amount: amount || '',
+      customer: { name: name || '', phone: phone || '' },
+      status: status || 'awaiting',
+      updatedAt: Date.now(),
+      source: 'index'
+    }));
+    return data;
+  } catch(e) {
+    console.error('Firestore save error:', e);
+    // Fallback: at minimum keep localStorage so dashboard can show something
+    try {
+      localStorage.setItem('ld_last_order', JSON.stringify({
+        id: orderId, orderId: orderId,
+        paymentId: paymentId || '',
+        serviceName: services || 'Legal Service',
+        amount: amount || '',
+        customer: { name: name || '', phone: phone || '' },
+        status: 'awaiting',
+        updatedAt: Date.now(),
+        source: 'index'
+      }));
+    } catch(le) {}
+    return null;
+  }
 }
 
 async function ldHandleCashfreeReturn() {

@@ -7,6 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 <style>
   :root {
     --bg:       #07080e;
@@ -295,6 +298,41 @@
   .field-error { font-size: 10px; color: #ef4444; margin-top: 3px; display: none; padding-left: 2px; letter-spacing: 0.04em; }
   .field-error.show { display: block; }
 
+  /* ── HOURS SELECTOR (Liaising Officer / File Arrangement) ── */
+  .hours-row {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+    background: rgba(201,149,42,0.06); border: 1px solid var(--gold-border);
+    border-radius: 6px; padding: 12px 14px;
+  }
+  .hours-label { font-size: 11px; font-weight: 700; color: var(--gold); letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
+  .hours-input {
+    background: var(--bg3); border: 1px solid var(--border2); border-radius: 5px;
+    color: var(--ink); font-size: 14px; font-weight: 700; font-family: inherit;
+    padding: 6px 10px; width: 72px; text-align: center; outline: none;
+    -moz-appearance: textfield;
+  }
+  .hours-input::-webkit-inner-spin-button,
+  .hours-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+  .hours-input:focus { border-color: var(--gold); }
+  .hours-btn {
+    background: var(--surface); border: 1px solid var(--border2); color: var(--ink);
+    border-radius: 4px; width: 28px; height: 28px; font-size: 16px; line-height: 1;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    transition: background 0.12s;
+  }
+  .hours-btn:hover { background: var(--border2); }
+  .hours-calc { font-size: 12px; color: var(--ink-mid); flex: 1; text-align: right; }
+  .hours-calc strong { color: var(--ink); }
+
+  /* ── DRAWER HOURS ROW ── */
+  .drawer-hours-row {
+    background: rgba(201,149,42,0.06); border: 1px solid var(--gold-border);
+    border-radius: 6px; padding: 12px 14px; margin-bottom: 10px;
+  }
+  .drawer-hours-label { font-size: 10px; font-weight: 700; color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .drawer-hours-controls { display: flex; align-items: center; gap: 8px; }
+  .drawer-hours-note { font-size: 11px; color: var(--ink-muted); margin-top: 6px; }
+
   /* RGRHCL card special styling */
   .card.rgrhcl-card { background: linear-gradient(135deg, #0f1018 0%, #141620 100%); }
   .card.rgrhcl-card:hover { background: linear-gradient(135deg, #161820 0%, #1a1c26 100%); }
@@ -306,12 +344,26 @@
   .per-hour-tag { font-size: 10px; color: var(--ink-muted); font-weight: 500; }
 
 
+  /* ── RGRHCL bullet fix: wrap long label+text without overflow ── */
+  .card-bullets li strong { flex-shrink: 0; }
+
   @media(max-width:640px){
     .how-strip { grid-template-columns: 1fr 1fr; }
-    .grid { padding: 0 16px; }
-    .section-label { padding: 32px 16px 14px; }
-    .trust-strip { padding: 24px 12px 80px; font-size: 10px; gap: 6px; }
-    .disclaimer { padding: 28px 16px 48px; font-size: 11px; }
+    .banner { padding: 36px 16px 44px; }
+    .banner h1 { font-size: 26px; }
+    .banner-sub { font-size: 13px; }
+    .grid { grid-template-columns: 1fr; padding: 0 12px; }
+    .section-label { padding: 28px 12px 12px; }
+    .trust-strip { padding: 20px 12px 80px; font-size: 10px; gap: 5px; }
+    .disclaimer { padding: 24px 12px 48px; font-size: 11px; }
+    .how-wrap { padding: 0 12px; }
+    .card { padding: 18px 16px; }
+    .card h3 { font-size: 14px; }
+    .card-desc { font-size: 12px; }
+    .card-bullets li { font-size: 11px; }
+    /* Hours input on mobile */
+    .hours-row { flex-direction: column; gap: 6px; }
+    .hours-input { width: 100%; }
   }
 </style>
 </head>
@@ -756,12 +808,48 @@
 </div>
 
 <!-- ═══════════════════════════════
+     SECTION 5B – LIAISING OFFICER
+════════════════════════════════ -->
+<div class="section-label"><h2>★ Liaising Officer</h2></div>
+<div class="grid">
+
+  <div class="card" id="liaison-card" data-name="Liaising Officer" data-price="299" data-delivery="24-hour delivery" data-per-hour="299">
+    <div class="pop-tag">INSTANT</div>
+    <div class="card-eyebrow">Govt Document Procurement · 24-hr</div>
+    <h3>Liaising Officer — Per Hour</h3>
+    <p class="card-desc">A dedicated officer handles government document procurement on your behalf — EC, E-Khata, Mutation, RTC, GBA documents — without you stepping into any office.</p>
+    <ul class="card-bullets">
+      <li>Karnataka EC, E-Khata, RTC, Village Map, BDA Land Use</li>
+      <li>GBA Tax Receipt, Mutation Record, Occupancy Certificate</li>
+      <li>Any government document on request — 24-hour delivery</li>
+      <li>Share property details via WhatsApp; we handle the rest</li>
+    </ul>
+    <!-- Hours selector -->
+    <div class="hours-row" id="liaison-hours-row">
+      <span class="hours-label">⏱ Hours</span>
+      <button class="hours-btn" onclick="adjustHours('liaison', -1)" type="button">−</button>
+      <input class="hours-input" id="liaison-hours-input" type="number" min="1" max="40" value="1" oninput="onHoursInput('liaison')"/>
+      <button class="hours-btn" onclick="adjustHours('liaison', 1)" type="button">+</button>
+      <span class="hours-calc" id="liaison-hours-calc">= <strong>₹299</strong></span>
+    </div>
+    <div class="card-footer">
+      <div class="card-price-wrap">
+        <span class="card-price" id="liaison-price-display">₹299 <span class="per-hour-tag">/ hour</span></span>
+        <span class="card-delivery">24-hr delivery · Govt records</span>
+      </div>
+      <button class="btn-add" onclick="toggleCartHourly('liaison', this)" id="liaison-cart-btn">+ Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════
      SECTION 6 – FILE ARRANGEMENT
 ════════════════════════════════ -->
 <div class="section-label"><h2>★ Document Management Services</h2></div>
 <div class="grid">
 
-  <div class="card" data-name="File Arrangement &amp; Scanning (Per Hour)" data-price="799" data-delivery="At your office or home">
+  <div class="card" id="file-arr-card" data-name="File Arrangement &amp; Scanning" data-price="799" data-delivery="At your office or home" data-per-hour="799">
     <div class="pop-tag">★ NEW</div>
     <div class="card-eyebrow">At-Home / Office · Scan · Index</div>
     <h3>File Arrangement, Scanning &amp; Indexing Service</h3>
@@ -773,12 +861,20 @@
       <li>Digital folder structure created and delivered via WhatsApp / Google Drive</li>
       <li>At your home or office — we come to you</li>
     </ul>
+    <!-- Hours selector -->
+    <div class="hours-row" id="file-arr-hours-row">
+      <span class="hours-label">⏱ Hours</span>
+      <button class="hours-btn" onclick="adjustHours('file-arr', -1)" type="button">−</button>
+      <input class="hours-input" id="file-arr-hours-input" type="number" min="1" max="20" value="2" oninput="onHoursInput('file-arr')"/>
+      <button class="hours-btn" onclick="adjustHours('file-arr', 1)" type="button">+</button>
+      <span class="hours-calc" id="file-arr-hours-calc">= <strong>₹1,598</strong></span>
+    </div>
     <div class="card-footer">
       <div class="card-price-wrap">
-        <span class="card-price">₹799 <span class="per-hour-tag">/ hour</span></span>
-        <span class="card-delivery">At your location · Book via WhatsApp</span>
+        <span class="card-price" id="file-arr-price-display">₹799 <span class="per-hour-tag">/ hour</span></span>
+        <span class="card-delivery">At your location · Min. 1 hour</span>
       </div>
-      <button class="btn-add" onclick="toggleCart(this)">+ Add to Cart</button>
+      <button class="btn-add" onclick="toggleCartHourly('file-arr', this)" id="file-arr-cart-btn">+ Add to Cart</button>
     </div>
   </div>
 
@@ -874,8 +970,139 @@
      CART + CASHFREE LOGIC
 ══════════════════════════════════════════ -->
 <script>
+// ─── FIREBASE INIT ────────────────────────────────────────────────
+(function(){
+  var FB = {
+    apiKey: "AIzaSyDyhtGPV8_OU7kgmz3SA4ixvv44PGVs2XA",
+    authDomain: "legaldirectory-9e309.firebaseapp.com",
+    projectId: "legaldirectory-9e309",
+    storageBucket: "legaldirectory-9e309.firebasestorage.app",
+    messagingSenderId: "661232836435",
+    appId: "1:661232836435:web:ed75e0ee8c4c1189f48ba6"
+  };
+  if (!firebase.apps.length) firebase.initializeApp(FB);
+})();
+var _db  = firebase.firestore();
+var _auth = firebase.auth();
+
+async function saveOrderToFirestore(orderId, paymentId, items, total, name, phone) {
+  try {
+    var uid = (_auth.currentUser && _auth.currentUser.uid) || null;
+    var data = {
+      orderId: orderId,
+      paymentId: paymentId || '',
+      serviceName: items.map(function(i){ return i.name; }).join(', '),
+      service:     items.map(function(i){ return i.name; }).join(', '),
+      amount: '₹' + total.toLocaleString('en-IN'),
+      items: items,
+      customer: { name: name || '', phone: phone || '' },
+      status: 'confirmed',
+      paymentStatus: 'paid',
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      source: 'instant-services'
+    };
+    if (uid) data.uid = uid;
+    await _db.collection('orders').doc(orderId).set(data, { merge: true });
+    // Save locally too
+    localStorage.setItem('ld_last_order', JSON.stringify({ id: orderId, orderId: orderId, paymentId: paymentId || '', serviceName: data.serviceName, amount: data.amount, customer: { name: name, phone: phone }, status: 'confirmed', updatedAt: Date.now(), source: 'instant-services' }));
+    console.log('Instant order saved to Firestore:', orderId);
+  } catch(e) {
+    console.error('Firestore save error:', e);
+    try { localStorage.setItem('ld_last_order', JSON.stringify({ id: orderId, orderId: orderId, serviceName: items.map(function(i){ return i.name; }).join(', '), amount: '₹' + total.toLocaleString('en-IN'), customer: { name: name, phone: phone }, status: 'confirmed', updatedAt: Date.now() })); } catch(_e) {}
+  }
+}
+
+// ─── HOURS-BASED SERVICES ─────────────────────────────────────────
+// Config: id → { perHour, maxHours, defaultHours }
+var HOURLY_SERVICES = {
+  'liaison':  { perHour: 299,  max: 40, defaultHours: 1 },
+  'file-arr': { perHour: 799,  max: 20, defaultHours: 2 }
+};
+// Tracks current hours per service
+var hourlyState = {};
+Object.keys(HOURLY_SERVICES).forEach(function(k){ hourlyState[k] = HOURLY_SERVICES[k].defaultHours; });
+
+function adjustHours(id, delta) {
+  var cfg   = HOURLY_SERVICES[id]; if (!cfg) return;
+  var input = document.getElementById(id + '-hours-input');
+  var h     = Math.max(1, Math.min(cfg.max, (parseInt(input.value) || 1) + delta));
+  input.value       = h;
+  hourlyState[id]   = h;
+  _refreshHoursUI(id);
+  // If already in cart, update price live
+  var idx = cart.findIndex(function(i){ return i.hourlyId === id; });
+  if (idx !== -1) {
+    cart[idx].price    = h * cfg.perHour;
+    cart[idx].name     = _hourlyName(id, h);
+    cart[idx].delivery = _hourlyDelivery(id, h);
+    updateCartBar(); updateDrawer();
+  }
+}
+
+function onHoursInput(id) {
+  var cfg   = HOURLY_SERVICES[id]; if (!cfg) return;
+  var input = document.getElementById(id + '-hours-input');
+  var h     = Math.max(1, Math.min(cfg.max, parseInt(input.value) || 1));
+  input.value     = h;
+  hourlyState[id] = h;
+  _refreshHoursUI(id);
+  var idx = cart.findIndex(function(i){ return i.hourlyId === id; });
+  if (idx !== -1) {
+    cart[idx].price    = h * cfg.perHour;
+    cart[idx].name     = _hourlyName(id, h);
+    cart[idx].delivery = _hourlyDelivery(id, h);
+    updateCartBar(); updateDrawer();
+  }
+}
+
+function _hourlyName(id, h) {
+  var labels = { 'liaison': 'Liaising Officer', 'file-arr': 'File Arrangement & Scanning' };
+  return (labels[id] || id) + ' (' + h + ' hr' + (h > 1 ? 's' : '') + ')';
+}
+
+function _hourlyDelivery(id, h) {
+  if (id === 'liaison')  return '24-hr delivery · ' + h + ' hr' + (h > 1 ? 's' : '');
+  if (id === 'file-arr') return 'At your location · ' + h + ' hr' + (h > 1 ? 's' : '');
+  return h + ' hr' + (h > 1 ? 's' : '');
+}
+
+function _refreshHoursUI(id) {
+  var cfg   = HOURLY_SERVICES[id]; if (!cfg) return;
+  var h     = hourlyState[id];
+  var total = h * cfg.perHour;
+  var calcEl = document.getElementById(id + '-hours-calc');
+  if (calcEl) calcEl.innerHTML = '= <strong>₹' + total.toLocaleString('en-IN') + '</strong>';
+}
+
+function toggleCartHourly(id, btn) {
+  var cfg  = HOURLY_SERVICES[id]; if (!cfg) return;
+  var card = document.getElementById(id + '-card');
+  var h    = hourlyState[id];
+  var idx  = cart.findIndex(function(i){ return i.hourlyId === id; });
+
+  if (idx === -1) {
+    cart.push({
+      name:     _hourlyName(id, h),
+      price:    h * cfg.perHour,
+      delivery: _hourlyDelivery(id, h),
+      cardEl:   card,
+      btnEl:    btn,
+      hourlyId: id
+    });
+    card.classList.add('selected');
+    btn.textContent = '✓ Added';
+  } else {
+    cart.splice(idx, 1);
+    card.classList.remove('selected');
+    btn.textContent = '+ Add to Cart';
+  }
+  updateCartBar();
+  updateDrawer();
+}
+
 // ─── CART STATE ───────────────────────────────────────────────────
-// Each item: { name, price (number), delivery, cardEl, btnEl }
+// Each item: { name, price (number), delivery, cardEl, btnEl, hourlyId? }
 var cart = [];
 
 function fmt(n) {
@@ -983,15 +1210,33 @@ function updateDrawer() {
     list.innerHTML = '<div style="padding:32px 24px;text-align:center;color:var(--ink-muted);font-size:13px;">No services selected yet.<br>Close this and tap <b style=\'color:var(--ink)\'>"+ Add to Cart"</b> on any service.</div>';
   } else {
     list.innerHTML = cart.map(function(item, idx) {
-      return '<div class="drawer-item">' +
-        '<div class="drawer-item-info">' +
-          '<div class="drawer-item-name">' + escHtml(item.name) + '</div>' +
-          (item.delivery ? '<div class="drawer-item-delivery">⏱ ' + escHtml(item.delivery) + '</div>' : '') +
+      var hoursRow = '';
+      if (item.hourlyId) {
+        var cfg = HOURLY_SERVICES[item.hourlyId];
+        var h   = hourlyState[item.hourlyId];
+        hoursRow = '<div class="drawer-hours-row">' +
+          '<div class="drawer-hours-label">Adjust Hours</div>' +
+          '<div class="drawer-hours-controls">' +
+            '<button class="hours-btn" onclick="adjustHoursInDrawer(' + idx + ',-1)" type="button">−</button>' +
+            '<input class="hours-input" style="width:56px" type="number" min="1" max="' + cfg.max + '" value="' + h + '" oninput="onHoursInputInDrawer(' + idx + ',this.value)"/>' +
+            '<button class="hours-btn" onclick="adjustHoursInDrawer(' + idx + ',1)" type="button">+</button>' +
+            '<span style="font-size:12px;color:var(--ink-mid);flex:1;text-align:right;">₹' + cfg.perHour + '/hr</span>' +
+          '</div>' +
+          '<div class="drawer-hours-note">Total adjusts automatically</div>' +
+        '</div>';
+      }
+      return '<div class="drawer-item" style="flex-direction:column;align-items:stretch;gap:8px;">' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">' +
+          '<div class="drawer-item-info">' +
+            '<div class="drawer-item-name">' + escHtml(item.name) + '</div>' +
+            (item.delivery ? '<div class="drawer-item-delivery">⏱ ' + escHtml(item.delivery) + '</div>' : '') +
+          '</div>' +
+          '<div style="display:flex;align-items:center;gap:10px;">' +
+            '<div class="drawer-item-price">' + fmt(item.price) + '</div>' +
+            '<button class="drawer-item-remove" onclick="removeFromDrawer(' + idx + ')">Remove</button>' +
+          '</div>' +
         '</div>' +
-        '<div style="display:flex;align-items:center;gap:10px;">' +
-          '<div class="drawer-item-price">' + fmt(item.price) + '</div>' +
-          '<button class="drawer-item-remove" onclick="removeFromDrawer(' + idx + ')">Remove</button>' +
-        '</div>' +
+        hoursRow +
       '</div>';
     }).join('');
   }
@@ -1131,9 +1376,12 @@ async function verifyPayment(orderId, items, total, name, phone) {
     var verData = await verRes.json();
 
     if (verData.success) {
+      // ── Save to Firestore so dashboard shows the order ──
+      await saveOrderToFirestore(orderId, verData.payment_id || '', items, total, name, phone);
+
       showToast();
       var ts  = new Date().toLocaleString('en-IN', {timeZone:'Asia/Kolkata'});
-      var itemLines = items.map(function(i){ return '• ' + i.name + ' (' + fmt(i.price) + ')'; }).join('\n');
+      var itemLines = items.map(function(i){ return '• ' + i.name + ' (' + fmt(i.price || i.amount) + ')'; }).join('\n');
       var wa  = encodeURIComponent(
         '✅ *Payment Received — Legaldirectory.ai*\n\n' +
         'Services:\n' + itemLines + '\n\n' +
@@ -1148,6 +1396,10 @@ async function verifyPayment(orderId, items, total, name, phone) {
         window.open('https://wa.me/919008999968?text=' + wa, '_blank');
       }, 800);
       clearCartAfterSuccess();
+      // Redirect to dashboard after 2s so user can see their order
+      setTimeout(function(){
+        window.location.href = 'dashboard.html?payment=success&order_id=' + encodeURIComponent(orderId) + '&amount=' + encodeURIComponent(fmt(total));
+      }, 2200);
     } else {
       alert('Payment is pending or verification failed. Please contact us with your Order ID: ' + orderId);
     }
@@ -1192,6 +1444,31 @@ function clearCartAfterSuccess() {
   cart = [];
   updateCartBar();
   updateDrawer();
+}
+
+// ─── DRAWER HOURS CONTROLS ────────────────────────────────────────
+function adjustHoursInDrawer(idx, delta) {
+  var item = cart[idx]; if (!item || !item.hourlyId) return;
+  var cfg = HOURLY_SERVICES[item.hourlyId];
+  var h   = Math.max(1, Math.min(cfg.max, hourlyState[item.hourlyId] + delta));
+  hourlyState[item.hourlyId] = h;
+  item.price    = h * cfg.perHour;
+  item.name     = _hourlyName(item.hourlyId, h);
+  item.delivery = _hourlyDelivery(item.hourlyId, h);
+  _refreshHoursUI(item.hourlyId);
+  updateCartBar(); updateDrawer();
+}
+
+function onHoursInputInDrawer(idx, val) {
+  var item = cart[idx]; if (!item || !item.hourlyId) return;
+  var cfg = HOURLY_SERVICES[item.hourlyId];
+  var h   = Math.max(1, Math.min(cfg.max, parseInt(val) || 1));
+  hourlyState[item.hourlyId] = h;
+  item.price    = h * cfg.perHour;
+  item.name     = _hourlyName(item.hourlyId, h);
+  item.delivery = _hourlyDelivery(item.hourlyId, h);
+  _refreshHoursUI(item.hourlyId);
+  updateCartBar(); updateDrawer();
 }
 
 function showToast() {
