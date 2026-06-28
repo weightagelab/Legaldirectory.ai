@@ -6,6 +6,12 @@
 <title>Instant Services – Legaldirectory.ai</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<meta name="description" content="Order Karnataka, Telangana, AP, Maharashtra, Kerala &amp; Tamil Nadu property documents instantly — EC, Certified Copy, Bhoomi RTC, E-Khata &amp; more. Pay once, delivered to WhatsApp.">
+<meta property="og:title" content="Instant Property Documents — Legaldirectory.ai">
+<meta property="og:description" content="EC, Certified Copy, Mutation, E-Khata &amp; 30+ government documents across 6 states. Pay online, delivered to WhatsApp.">
+<meta property="og:url" content="https://legaldirectory.in/instant-services.html">
+<meta property="og:image" content="https://legaldirectory.in/og-image.png">
+<meta name="robots" content="index, follow">
 <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
@@ -431,6 +437,7 @@
 </style>
 </head>
 <body>
+<noscript><div style="font-family:sans-serif;text-align:center;padding:60px 24px;"><h2>Please enable JavaScript</h2><p>Our property documents service requires JavaScript to process orders.<br/>To book instantly: <a href="https://wa.me/919008999968">WhatsApp +91 90089 99968</a> · <a href="mailto:weightage.lab@gmail.com">Email us</a></p></div></noscript>
 
 <!-- ── TOP BAR ── -->
 <nav class="topbar">
@@ -3262,6 +3269,10 @@
           <span class="req-star">★</span>
           <div class="field-error" id="phone-err">Valid 10-digit WhatsApp number required</div>
         </div>
+        <div class="drawer-input-wrap">
+          <input id="drawer-email" type="email" class="drawer-input" placeholder="Email Address (optional)" autocomplete="email"
+            onfocus="this.style.borderColor='#2563eb'"/>
+        </div>
       </div>
       <button class="btn-pay-now" id="drawer-pay-btn" onclick="initiateCheckout()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
@@ -3333,11 +3344,12 @@ async function logToGoogleSheets(orderId, paymentId, items, total, name, phone, 
   }
 }
 
-async function saveOrderToFirestore(orderId, paymentId, items, total, name, phone) {
+async function saveOrderToFirestore(orderId, paymentId, items, total, name, phone, emailOverride) {
   // Capture auth state at call-time (user may or may not be logged in)
   var currentUser = _auth.currentUser;
   var uid   = (currentUser && currentUser.uid)   || null;
-  var email = (currentUser && currentUser.email) || null;
+  // Prefer explicitly provided email (from form) over auth email
+  var email = emailOverride || (currentUser && currentUser.email) || null;
 
   var serviceName = items.map(function(i){ return i.name; }).join(', ');
   var amountStr   = '₹' + total.toLocaleString('en-IN');
@@ -3499,14 +3511,18 @@ function toggleCartHourly(id, btn) {
 }
 
 // ─── CART STATE ───────────────────────────────────────────────────
-// Each item: { name, price (number), delivery, cardEl, btnEl, hourlyId? }
+// Each item: { name, price (number), delivery, cardEl, btnEl, hourlyId?, state }
 var cart = [];
 var LD_CART_KEY = 'ld_shared_cart';
+var currentState = 'ka'; // tracks the active state tab
+
+// State display labels for drawer grouping
+var STATE_LABELS = { ka:'Karnataka', ts:'Telangana', ap:'Andhra Pradesh', mh:'Maharashtra', kl:'Kerala', tn:'Tamil Nadu' };
 
 // ─── SHARED CART PERSISTENCE ──────────────────────────────────────
 function saveCartToStorage() {
   try {
-    var data = cart.map(function(i){ return { name: i.name, price: i.price, delivery: i.delivery || '', hourlyId: i.hourlyId || null, source: 'instant' }; });
+    var data = cart.map(function(i){ return { name: i.name, price: i.price, delivery: i.delivery || '', hourlyId: i.hourlyId || null, state: i.state || currentState, source: 'instant' }; });
     localStorage.setItem(LD_CART_KEY, JSON.stringify(data));
   } catch(e) {}
 }
@@ -3516,21 +3532,27 @@ function loadCartFromStorage() {
     var raw = localStorage.getItem(LD_CART_KEY);
     if (!raw) return;
     var data = JSON.parse(raw);
-    // Restore only instant-services items; re-link to DOM cards
+    // Restore instant-services items across ALL states (not just visible ones)
     data.forEach(function(item) {
       if (item.source !== 'instant') return;
-      // Find matching card in current visible state
+      if (cart.find(function(c){ return c.name === item.name; })) return;
+      var itemState = item.state || 'ka';
+      // Find the card by data-name across ALL sections (including hidden ones)
       var cards = document.querySelectorAll('.card[data-name]');
+      var matched = false;
       cards.forEach(function(card) {
-        if (card.dataset.name === item.name && !cart.find(function(c){ return c.name === item.name; })) {
+        if (card.dataset.name === item.name && !matched) {
           var btn = card.querySelector('.btn-add');
-          if (btn && card.offsetParent !== null) {  // card is visible (in active state section)
-            cart.push({ name: item.name, price: item.price, delivery: item.delivery, cardEl: card, btnEl: btn, hourlyId: item.hourlyId });
-            card.classList.add('selected');
-            if (btn) btn.textContent = '✓ Added';
-          }
+          cart.push({ name: item.name, price: item.price, delivery: item.delivery, cardEl: card, btnEl: btn, hourlyId: item.hourlyId, state: itemState });
+          card.classList.add('selected');
+          if (btn) btn.textContent = '✓ Added';
+          matched = true;
         }
       });
+      // Item may be from a state whose cards aren't in DOM yet — still add to cart
+      if (!matched) {
+        cart.push({ name: item.name, price: item.price, delivery: item.delivery, cardEl: null, btnEl: null, hourlyId: item.hourlyId, state: itemState });
+      }
     });
     updateCartBar();
     updateDrawer();
@@ -3585,7 +3607,7 @@ function toggleCart(btn) {
   var idx = cart.findIndex(function(i){ return i.name === name; });
 
   if (idx === -1) {
-    cart.push({ name: name, price: price, delivery: delivery, cardEl: card, btnEl: btn });
+    cart.push({ name: name, price: price, delivery: delivery, cardEl: card, btnEl: btn, state: currentState });
     card.classList.add('selected');
     btn.textContent = '✓ Added';
   } else {
@@ -3605,9 +3627,20 @@ function updateCartBar() {
   var count = cart.length;
   var total = cartTotal();
 
-  document.getElementById('cart-count-label').textContent =
-    count === 0 ? '0 services selected' :
-    count === 1 ? '1 service selected'  : count + ' services selected';
+  // Count how many distinct states have items
+  var stateSet = {};
+  cart.forEach(function(i){ stateSet[i.state || 'ka'] = true; });
+  var stateCount = Object.keys(stateSet).length;
+
+  var countLabel;
+  if (count === 0) {
+    countLabel = '0 services selected';
+  } else if (stateCount > 1) {
+    countLabel = count + ' service' + (count > 1 ? 's' : '') + ' · ' + stateCount + ' states';
+  } else {
+    countLabel = count + ' service' + (count > 1 ? 's' : '') + ' selected';
+  }
+  document.getElementById('cart-count-label').textContent = countLabel;
   document.getElementById('cart-total-display').textContent = fmt(total);
 
   if (count > 0) {
@@ -3650,36 +3683,56 @@ function updateDrawer() {
   if (cart.length === 0) {
     list.innerHTML = '<div style="padding:32px 24px;text-align:center;color:var(--ink-muted);font-size:13px;">No services selected yet.<br>Close this and tap <b style=\'color:var(--ink)\'>"+ Add to Cart"</b> on any service.</div>';
   } else {
-    list.innerHTML = cart.map(function(item, idx) {
-      var hoursRow = '';
-      if (item.hourlyId) {
-        var cfg = HOURLY_SERVICES[item.hourlyId];
-        var h   = hourlyState[item.hourlyId];
-        hoursRow = '<div class="drawer-hours-row">' +
-          '<div class="drawer-hours-label">Adjust Hours</div>' +
-          '<div class="drawer-hours-controls">' +
-            '<button class="hours-btn" onclick="adjustHoursInDrawer(' + idx + ',-1)" type="button">−</button>' +
-            '<input class="hours-input" style="width:56px" type="number" min="1" max="' + cfg.max + '" value="' + h + '" oninput="onHoursInputInDrawer(' + idx + ',this.value)"/>' +
-            '<button class="hours-btn" onclick="adjustHoursInDrawer(' + idx + ',1)" type="button">+</button>' +
-            '<span style="font-size:12px;color:var(--ink-mid);flex:1;text-align:right;">₹' + cfg.perHour + '/hr</span>' +
-          '</div>' +
-          '<div class="drawer-hours-note">Total adjusts automatically</div>' +
-        '</div>';
+    // Group items by state for display
+    var byState = {};
+    cart.forEach(function(item, idx) {
+      var s = item.state || 'ka';
+      if (!byState[s]) byState[s] = [];
+      byState[s].push({ item: item, idx: idx });
+    });
+
+    var html = '';
+    Object.keys(byState).forEach(function(s) {
+      var stateLabel = STATE_LABELS[s] || s.toUpperCase();
+      var stateItems = byState[s];
+      // Show state header only if there are items from more than one state
+      if (Object.keys(byState).length > 1) {
+        html += '<div style="padding:8px 22px 4px;font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-muted);background:var(--bg3);border-bottom:1px solid var(--border);">' + stateLabel + '</div>';
       }
-      return '<div class="drawer-item" style="flex-direction:column;align-items:stretch;gap:8px;">' +
-        '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">' +
-          '<div class="drawer-item-info">' +
-            '<div class="drawer-item-name">' + escHtml(item.name) + '</div>' +
-            (item.delivery ? '<div class="drawer-item-delivery">⏱ ' + escHtml(item.delivery) + '</div>' : '') +
+      stateItems.forEach(function(entry) {
+        var item = entry.item;
+        var idx  = entry.idx;
+        var hoursRow = '';
+        if (item.hourlyId) {
+          var cfg = HOURLY_SERVICES[item.hourlyId];
+          var h   = hourlyState[item.hourlyId];
+          hoursRow = '<div class="drawer-hours-row">' +
+            '<div class="drawer-hours-label">Adjust Hours</div>' +
+            '<div class="drawer-hours-controls">' +
+              '<button class="hours-btn" onclick="adjustHoursInDrawer(' + idx + ',-1)" type="button">−</button>' +
+              '<input class="hours-input" style="width:56px" type="number" min="1" max="' + cfg.max + '" value="' + h + '" oninput="onHoursInputInDrawer(' + idx + ',this.value)"/>' +
+              '<button class="hours-btn" onclick="adjustHoursInDrawer(' + idx + ',1)" type="button">+</button>' +
+              '<span style="font-size:12px;color:var(--ink-mid);flex:1;text-align:right;">₹' + cfg.perHour + '/hr</span>' +
+            '</div>' +
+            '<div class="drawer-hours-note">Total adjusts automatically</div>' +
+          '</div>';
+        }
+        html += '<div class="drawer-item" style="flex-direction:column;align-items:stretch;gap:8px;">' +
+          '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">' +
+            '<div class="drawer-item-info">' +
+              '<div class="drawer-item-name">' + escHtml(item.name) + '</div>' +
+              (item.delivery ? '<div class="drawer-item-delivery">⏱ ' + escHtml(item.delivery) + '</div>' : '') +
+            '</div>' +
+            '<div style="display:flex;align-items:center;gap:10px;">' +
+              '<div class="drawer-item-price">' + fmt(item.price) + '</div>' +
+              '<button class="drawer-item-remove" onclick="removeFromDrawer(' + idx + ')">Remove</button>' +
+            '</div>' +
           '</div>' +
-          '<div style="display:flex;align-items:center;gap:10px;">' +
-            '<div class="drawer-item-price">' + fmt(item.price) + '</div>' +
-            '<button class="drawer-item-remove" onclick="removeFromDrawer(' + idx + ')">Remove</button>' +
-          '</div>' +
-        '</div>' +
-        hoursRow +
-      '</div>';
-    }).join('');
+          hoursRow +
+        '</div>';
+      });
+    });
+    list.innerHTML = html;
   }
 
   document.getElementById('drawer-total').textContent = fmt(total);
@@ -3732,11 +3785,13 @@ function refreshWaBtn() {
   var phone = (document.getElementById('drawer-phone') || {}).value || '';
   var itemLines = cart.map(function(i){ return '• ' + i.name + ' — ' + fmt(i.price); }).join('\n');
   var total = cartTotal();
+  var emailVal = ((document.getElementById('drawer-email') || {}).value || '').trim();
   var msg = encodeURIComponent(
     'Hi Legaldirectory.ai, I want to order:\n\n' + itemLines +
     '\n\nTotal: ' + fmt(total) +
-    (name  ? '\n\n👤 Name: '     + name.trim()  : '') +
-    (phone ? '\n📱 WhatsApp: '   + phone.trim() : '') +
+    (name     ? '\n\n👤 Name: '     + name.trim()     : '') +
+    (phone    ? '\n📱 WhatsApp: '   + phone.trim()    : '') +
+    (emailVal ? '\n✉️ Email: '      + emailVal.trim() : '') +
     '\n\nPlease guide me on next steps.'
   );
   document.getElementById('drawer-wa-btn').href = 'https://wa.me/919008999968?text=' + msg;
@@ -3756,15 +3811,16 @@ async function initiateCheckout() {
   var label = document.getElementById('drawer-pay-label');
   var name  = document.getElementById('drawer-name').value.trim();
   var phone = document.getElementById('drawer-phone').value.trim();
+  var email = ((document.getElementById('drawer-email') || {}).value || '').trim();
   var total = cartTotal();
 
   if (sessionStorage.getItem('ld_instant_payment_in_progress')) {
     if (confirm('A previous payment attempt did not complete.\n\nClick OK to clear it and try again, or Cancel to check your previous payment status.')) {
-    sessionStorage.removeItem('ld_instant_payment_in_progress');
-    sessionStorage.removeItem('ld_payment_in_progress');
-  } else {
-    return;
-  }
+      sessionStorage.removeItem('ld_instant_payment_in_progress');
+      sessionStorage.removeItem('ld_payment_in_progress');
+    } else {
+      return;
+    }
   }
   sessionStorage.setItem('ld_instant_payment_in_progress', '1');
 
@@ -3805,7 +3861,7 @@ async function initiateCheckout() {
       order_id: orderData.order_id,
       items: items,
       total: total,
-      customer: { name: name, phone: phone }
+      customer: { name: name, phone: phone, email: email }
     }));
 
     closeDrawer();
@@ -3825,7 +3881,7 @@ async function initiateCheckout() {
 }
 
 // ─── CASHFREE VERIFY ──────────────────────────────────────────────
-async function verifyPayment(orderId, items, total, name, phone) {
+async function verifyPayment(orderId, items, total, name, phone, email) {
   try {
     var verRes = await fetch('/api/verify-payment', {
       method:  'POST',
@@ -3833,7 +3889,7 @@ async function verifyPayment(orderId, items, total, name, phone) {
       body:    JSON.stringify({
         order_id: orderId,
         items:    items,
-        amount:   fmt(total),
+        amount:   total,
         customer: { name: name, phone: phone }
       })
     });
@@ -3842,7 +3898,7 @@ async function verifyPayment(orderId, items, total, name, phone) {
 
     if (verData.success) {
       // ── Save to Firestore so dashboard shows the order ──
-      await saveOrderToFirestore(orderId, verData.payment_id || '', items, total, name, phone);
+      await saveOrderToFirestore(orderId, verData.payment_id || '', items, total, name, phone, email);
 
       showToast();
       var ts  = new Date().toLocaleString('en-IN', {timeZone:'Asia/Kolkata'});
@@ -3905,7 +3961,8 @@ async function handleCashfreeReturn() {
     pending && pending.items    ? pending.items             : [],
     pending && pending.total    ? pending.total             : 0,
     pending && pending.customer ? pending.customer.name     : '',
-    pending && pending.customer ? pending.customer.phone    : ''
+    pending && pending.customer ? pending.customer.phone    : '',
+    pending && pending.customer ? pending.customer.email    : ''
   );
 
   if (didSucceed) {
@@ -3915,6 +3972,11 @@ async function handleCashfreeReturn() {
     // Cancelled / failed — clear any stale localStorage order for this orderId
     // so dashboard does NOT show it as paid
     try {
+      // Clear from multi-order cache
+      var cache = JSON.parse(localStorage.getItem('ld_orders_cache') || '[]');
+      var filtered = cache.filter(function(o){ return o.orderId !== orderId && o.id !== orderId; });
+      localStorage.setItem('ld_orders_cache', JSON.stringify(filtered));
+      // Clear legacy key
       var stale = JSON.parse(localStorage.getItem('ld_last_order') || 'null');
       if (stale && (stale.orderId === orderId || stale.id === orderId)) {
         localStorage.removeItem('ld_last_order');
@@ -4013,6 +4075,7 @@ var BANNER_DATA = {
 };
 
 function switchState(state) {
+  currentState = state;
   // Update tabs
   ['ka','ts','ap','mh','kl','tn'].forEach(function(s){
     var tab = document.getElementById('tab-' + s);
@@ -4030,17 +4093,27 @@ function switchState(state) {
     document.getElementById('banner-sub').textContent = bd.sub;
     document.getElementById('banner-badges').innerHTML = bd.badges;
   }
-  // Clear cart when switching states to avoid cross-state confusion
-  // Show warning toast before clearing if cart has items
-  var cartItems = document.querySelectorAll('.cart-item');
-  if (cartItems && cartItems.length > 0) {
-    var warnToast = document.createElement('div');
-    warnToast.textContent = '⚠️ Switching state cleared your cart.';
-    warnToast.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#b45309;color:#fff;font-weight:700;font-size:13px;padding:12px 24px;border-radius:8px;z-index:9999;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.4);';
-    document.body.appendChild(warnToast);
-    setTimeout(function(){ warnToast.remove(); }, 3500);
-  }
-  clearCartAfterSuccess();
+  // Persist selected state in URL hash so refresh/share lands on the right tab
+  try { history.replaceState(null, '', '#state-' + state); } catch(e) {}
+
+  // Re-link card/button refs for newly visible state, and restore visual selection
+  cart.forEach(function(item) {
+    var sec = document.getElementById('state-' + item.state);
+    if (!sec) return;
+    var cards = sec.querySelectorAll('.card[data-name]');
+    cards.forEach(function(card) {
+      if (card.dataset.name === item.name) {
+        item.cardEl = card;
+        var btn = card.querySelector('.btn-add');
+        item.btnEl = btn;
+        card.classList.add('selected');
+        if (btn) btn.textContent = '✓ Added';
+      }
+    });
+  });
+
+  updateCartBar();
+  updateDrawer();
 }
 
 // ─── FAQ TOGGLE ───────────────────────────────────────────────────
@@ -4052,6 +4125,16 @@ function toggleFaq(btn) {
   allItems.forEach(function(el){ el.classList.remove('open'); });
   if (!isOpen) item.classList.add('open');
 }
+
+// ─── RESTORE STATE FROM URL HASH ON LOAD ─────────────────────────
+(function() {
+  var validStates = ['ka','ts','ap','mh','kl','tn'];
+  var hash = window.location.hash.replace('#state-', '');
+  if (validStates.indexOf(hash) !== -1) {
+    currentState = hash;
+    switchState(hash);
+  }
+})();
 
 </script>
 
