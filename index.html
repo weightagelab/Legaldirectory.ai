@@ -1936,11 +1936,22 @@ function ldLoadCart() {
     var raw = localStorage.getItem(LD_CART_KEY);
     if (!raw) return;
     var data = JSON.parse(raw);
-    // Load only index-source items back
     var indexItems = data.filter(function(i){ return i.source === 'index'; });
     indexItems.forEach(function(item) {
-      if (!ldCart.find(function(c){ return c.name === item.name; })) {
-        ldCart.push({ name: item.name, price: item.price, cardEl: null, btnEl: null });
+      // Normalise name (collapse whitespace) to match what ldToggleCartFromCard produces
+      var normName = (item.name || '').replace(/\s+/g,' ').trim();
+      if (!ldCart.find(function(c){ return c.name === normName; })) {
+        // Try to find the card in the DOM to wire up cardEl/btnEl
+        var foundCard = null, foundBtn = null;
+        document.querySelectorAll('.card').forEach(function(card) {
+          var titleEl = card.querySelector('.card-title');
+          if (!titleEl) return;
+          var cardName = titleEl.innerText.replace(/\s+/g,' ').trim();
+          if (cardName === normName) { foundCard = card; foundBtn = card.querySelector('.card-cta'); }
+        });
+        ldCart.push({ name: normName, price: item.price, cardEl: foundCard, btnEl: foundBtn });
+        if (foundCard) { foundCard.classList.add('ld-cart-selected'); }
+        if (foundBtn)  { foundBtn.textContent = 'Added'; }
       }
     });
     ldRenderCart();
@@ -1984,7 +1995,7 @@ function ldToggleCart(btn, name, price, upsellKey) {
   if (idx === -1) {
     ldCart.push({ name: name, price: price, cardEl: card, btnEl: btn }); ldSaveCart();
     if (card) card.classList.add('ld-cart-selected');
-    btn.textContent = ' Added';
+    btn.textContent = 'Added';
     // Trigger upsell
     if (upsellKey && LD_UPSELLS[upsellKey]) {
       _pendingUpsell = LD_UPSELLS[upsellKey];
@@ -1992,6 +2003,7 @@ function ldToggleCart(btn, name, price, upsellKey) {
     }
   } else {
     ldCart.splice(idx, 1);
+    ldSaveCart();
     if (card) card.classList.remove('ld-cart-selected');
     btn.textContent = '+ Add to Cart';
   }
@@ -2003,11 +2015,15 @@ function ldToggleCartFromCard(btn) {
   var card     = btn.closest('.card');
   var titleEl  = card ? card.querySelector('.card-title') : null;
   var priceEl  = card ? card.querySelector('.card-price') : null;
-  var name     = titleEl ? titleEl.innerText.replace(/\n/g,' ').trim() : 'Legal Service';
-  var priceStr = priceEl ? priceEl.innerText : '₹4,999';
-  var price    = parseInt(priceStr.replace(/[₹,]/g,''), 10) || 4999;
+  // Collapse all whitespace/newlines from <br> tags into a single space
+  var name     = titleEl ? titleEl.innerText.replace(/\s+/g,' ').trim() : 'Legal Service';
+  var priceStr = priceEl ? priceEl.innerText : '4999';
+  var price    = parseInt(priceStr.replace(/[^\d]/g,''), 10) || 4999;
   ldToggleCart(btn, name, price, null);
 }
+
+// Alias so ldLoadCart doesn't crash calling ldRenderCart
+function ldRenderCart() { ldUpdateBar(); ldUpdateDrawer(); }
 
 function ldUpdateBar() {
   var bar   = document.getElementById('ld-cart-bar');
