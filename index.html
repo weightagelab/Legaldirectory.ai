@@ -2501,7 +2501,7 @@ async function ldSaveOrderToFirestore(orderId, paymentId, services, amount, name
 
   // Log to Sheets (non-blocking, only for confirmed payments)
   if (status === 'confirmed') {
-    ldLogToGoogleSheets(orderId, paymentId, services, amount, name, phone, uid, email, 0);
+    ldLogToGoogleSheets(orderId, paymentId, services, amount, name, phone, uid, email, typeof amount === 'string' ? parseFloat(amount.replace(/[^0-9.]/g,'')) || 0 : (amount || 0));
   }
 
   return data;
@@ -2591,57 +2591,85 @@ window.addEventListener('load', ldHandleCashfreeReturn);
 (function(){
   var SERVICES = [
     // Expert Legal Services (index.html)
-    { name:'Registration', sub:'Complete sale deed + EC · End-to-end', price:'₹9,999', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal' },
-    { name:'Property Registration (Sale Deed Registration)', sub:'Sale deed registration by expert lawyer', price:'₹7,999', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal' },
-    { name:'Property Search Report', sub:'200–300 page review · Title clarity', price:'₹6,999', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal' },
-    { name:'Property Paper Review (Oral Discussion)', sub:'One-on-one legal consultation', price:'₹2,999', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal' },
-    { name:'Sale Agreement / Agreement to Sale Review', sub:'45-min consultation · Risk flag', price:'₹4,999', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal' },
-    { name:'Agreement to Sale Drafting', sub:'Lawyer-drafted ATS · Home visit', price:'₹4,999', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal' },
-    { name:'WILL Drafting & Registration', sub:'Indian succession law · 2 free iterations', price:'₹4,999', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal' },
-    { name:'Trademark Registration', sub:'MSME 50% rebate · Full filing', price:'Custom', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal' },
-    { name:'Document Writer', sub:'KA-licensed advocate · Stamp paper included', price:'₹4,999', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal' },
-    { name:'Liaising Officer', sub:'24-hr govt doc procurement', price:'₹299/hr', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal' },
-    // Instant Services (instant-services.html)
-    { name:'RGRHCL Housing Scheme Consultancy', sub:'EWS housing scheme · Karnataka', price:'₹501', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
-    { name:'Karnataka Certified Copy', sub:'2–3 working days', price:'₹299', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
-    { name:'Encumbrance Certificate (EC)', sub:'Same day · Karnataka', price:'₹299', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
-    { name:'Bhoomi RTC / Pahani', sub:'Same day · Karnataka', price:'₹299', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
-    { name:'Karnataka Mutation Record', sub:'1–2 working days', price:'₹299', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
-    { name:'E-Khata / E-Swathu', sub:'Same day · Karnataka', price:'₹299', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
-    { name:'Karnataka Survey Documents', sub:'1–2 working days', price:'₹299', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
-    { name:'Karnataka CERSAI Mortgage Report', sub:'Same day', price:'₹399', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
-    { name:'BBMP Sanction Plan & Documents', sub:'2–3 working days', price:'₹1,499', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
-    { name:'Bangalore Property Document Pack', sub:'5–7 working days', price:'₹1,499', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
-    { name:'Non-Agricultural Property Documents', sub:'5–7 days digital', price:'₹999', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
-    { name:'Agricultural Property Documents', sub:'5–7 days digital', price:'₹1,499', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
-    { name:'Loan Document Package (Non-Agricultural)', sub:'2–3 days', price:'₹1,299', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
-    { name:'Loan Document Package (Agricultural)', sub:'2–3 days', price:'₹1,299', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
-    { name:'Convert Khata to E-Aasthi', sub:'7–14 working days', price:'₹2,000', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
-    { name:'New Water Connection (BWSSB)', sub:'Up to 30 days', price:'₹3,000', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
-    { name:'BESCOM Name Transfer', sub:'3–4 weeks', price:'₹7,499', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
-    { name:'File Arrangement & Scanning', sub:'At your office or home', price:'₹799', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
-    { name:'Aadhaar Address Update', sub:'3–5 working days', price:'₹295', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
+    { name:'Registration (Sale Deed + EC)', sub:'Complete sale deed + EC · End-to-end', price:'₹9,999', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal', state:null },
+    { name:'Property Registration (Sale Deed Registration)', sub:'Sale deed registration by expert lawyer', price:'₹7,999', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal', state:null },
+    { name:'Property Search Report', sub:'200–300 page review · Title clarity', price:'₹6,999', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal', state:null },
+    { name:'Property Paper Review (Oral Discussion)', sub:'One-on-one legal consultation', price:'₹2,999', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal', state:null },
+    { name:'Sale Agreement / Agreement to Sale Review', sub:'45-min consultation · Risk flag', price:'₹4,999', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal', state:null },
+    { name:'Agreement to Sale Drafting', sub:'Lawyer-drafted ATS · Home visit', price:'₹4,999', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal', state:null },
+    { name:'WILL Drafting & Registration', sub:'Indian succession law · 2 free iterations', price:'₹4,999', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal', state:null },
+    { name:'Trademark Registration', sub:'MSME 50% rebate · Full filing', price:'Custom', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal', state:null },
+    { name:'Document Writer', sub:'KA-licensed advocate · Stamp paper included', price:'₹4,999', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal', state:null },
+    { name:'Liaising Officer', sub:'24-hr govt doc procurement', price:'₹299/hr', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal', state:null },
+    // Karnataka
+    { name:'RGRHCL Housing Scheme Consultancy', sub:'EWS housing scheme · Karnataka', price:'₹501', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant', state:'ka' },
+    { name:'Karnataka Certified Copy', sub:'2–3 working days', price:'₹299', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant', state:'ka' },
+    { name:'Encumbrance Certificate (EC)', sub:'Same day · Karnataka', price:'₹299', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant', state:'ka' },
+    { name:'Bhoomi RTC / Pahani', sub:'Same day · Karnataka', price:'₹299', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant', state:'ka' },
+    { name:'Karnataka Mutation Record', sub:'1–2 working days', price:'₹299', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant', state:'ka' },
+    { name:'E-Khata / E-Swathu', sub:'Same day · Karnataka', price:'₹299', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant', state:'ka' },
+    { name:'Karnataka Survey Documents', sub:'1–2 working days', price:'₹299', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant', state:'ka' },
+    { name:'Karnataka CERSAI Mortgage Report', sub:'Same day', price:'₹399', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant', state:'ka' },
+    { name:'BBMP Sanction Plan & Documents', sub:'2–3 working days · BBMP Building Approval', price:'₹1,499', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant', state:'ka' },
+    { name:'Bangalore Property Document Pack', sub:'5–7 working days', price:'₹1,499', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant', state:'ka' },
+    { name:'Non-Agricultural Property Documents', sub:'5–7 days digital', price:'₹999', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant', state:'ka' },
+    { name:'Agricultural Property Documents', sub:'5–7 days digital', price:'₹1,499', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant', state:'ka' },
+    { name:'Loan Document Package (Non-Agricultural)', sub:'2–3 days', price:'₹1,299', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant', state:'ka' },
+    { name:'Loan Document Package (Agricultural)', sub:'2–3 days', price:'₹1,299', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant', state:'ka' },
+    { name:'Convert Khata to E-Aasthi', sub:'7–14 working days', price:'₹2,000', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant', state:'ka' },
+    { name:'New Water Connection (BWSSB)', sub:'Up to 30 days', price:'₹3,000', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant', state:'ka' },
+    { name:'BESCOM Name Transfer', sub:'3–4 weeks', price:'₹7,499', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant', state:'ka' },
+    { name:'File Arrangement & Scanning', sub:'At your office or home', price:'₹799', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant', state:'ka' },
+    { name:'Aadhaar Address Update (KA)', sub:'3–5 working days · Karnataka', price:'₹295', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant', state:'ka' },
     // Telangana
-    { name:'Telangana Encumbrance Certificate', sub:'Same day · TS', price:'₹299', tag:'Instant · TS', page:'instant-services.html', anchor:'', type:'instant' },
-    { name:'TS Pahani / Adangal', sub:'Same day · TS', price:'₹299', tag:'Instant · TS', page:'instant-services.html', anchor:'', type:'instant' },
-    { name:'Dharani Property Record (TS)', sub:'Same day · TS', price:'₹399', tag:'Instant · TS', page:'instant-services.html', anchor:'', type:'instant' },
-    { name:'TS Mutation (Pahani Name Change)', sub:'7–10 days · TS', price:'₹999', tag:'Instant · TS', page:'instant-services.html', anchor:'', type:'instant' },
-    // AP
-    { name:'AP Encumbrance Certificate', sub:'Same day · AP', price:'₹299', tag:'Instant · AP', page:'instant-services.html', anchor:'', type:'instant' },
-    { name:'AP Meebhoomi Pahani', sub:'Same day · AP', price:'₹299', tag:'Instant · AP', page:'instant-services.html', anchor:'', type:'instant' },
-    // MH
-    { name:'Maharashtra 7/12 Extract (Satbara)', sub:'Same day · MH', price:'₹299', tag:'Instant · MH', page:'instant-services.html', anchor:'', type:'instant' },
-    { name:'Maharashtra Property Card', sub:'Same day · MH', price:'₹299', tag:'Instant · MH', page:'instant-services.html', anchor:'', type:'instant' },
-    { name:'Maharashtra EC', sub:'Same day · MH', price:'₹299', tag:'Instant · MH', page:'instant-services.html', anchor:'', type:'instant' },
-    // KL
-    { name:'Kerala Encumbrance Certificate', sub:'Same day · KL', price:'₹299', tag:'Instant · KL', page:'instant-services.html', anchor:'', type:'instant' },
-    { name:'Kerala Thandaper / Land Tax Record', sub:'Same day · KL', price:'₹299', tag:'Instant · KL', page:'instant-services.html', anchor:'', type:'instant' },
-    // TN
-    { name:'Tamil Nadu Encumbrance Certificate', sub:'Same day · TN', price:'₹299', tag:'Instant · TN', page:'instant-services.html', anchor:'', type:'instant' },
-    { name:'Tamil Nadu Patta / Chitta', sub:'Same day · TN', price:'₹299', tag:'Instant · TN', page:'instant-services.html', anchor:'', type:'instant' },
-    // Dashboard
-    { name:'My Orders', sub:'Track your service status', price:'', tag:'Dashboard', page:'dashboard.html', anchor:'', type:'page' },
-    { name:'AI Property Scan', sub:'Free property document scoring', price:'Free', tag:'Tool', page:'directory-ai.html', anchor:'', type:'page' },
+    { name:'IGRS Telangana EC Online', sub:'Same day · TS Encumbrance Certificate', price:'₹299', tag:'Instant · TS', page:'instant-services.html', anchor:'', type:'instant', state:'ts' },
+    { name:'Telangana Pahani (Adangal)', sub:'Same day · TS Land Records', price:'₹299', tag:'Instant · TS', page:'instant-services.html', anchor:'', type:'instant', state:'ts' },
+    { name:'Bhu Bharathi Telangana Land Records', sub:'Same day · Dharani', price:'₹399', tag:'Instant · TS', page:'instant-services.html', anchor:'', type:'instant', state:'ts' },
+    { name:'Telangana PTIN Creation & Mutation', sub:'7–10 days · TS Mutation', price:'₹999', tag:'Instant · TS', page:'instant-services.html', anchor:'', type:'instant', state:'ts' },
+    { name:'Telangana Market Value Certificate', sub:'Same day · TS', price:'₹299', tag:'Instant · TS', page:'instant-services.html', anchor:'', type:'instant', state:'ts' },
+    { name:'Telangana RERA Search (TS-RERA)', sub:'TS-RERA Registered Projects', price:'₹299', tag:'Instant · TS', page:'instant-services.html', anchor:'', type:'instant', state:'ts' },
+    { name:'Telangana CERSAI Mortgage Report', sub:'Same day · TS', price:'₹399', tag:'Instant · TS', page:'instant-services.html', anchor:'', type:'instant', state:'ts' },
+    { name:'Telangana CDMA Property Tax Receipt', sub:'Same day · TS', price:'₹299', tag:'Instant · TS', page:'instant-services.html', anchor:'', type:'instant', state:'ts' },
+    { name:'TGBPASS Building Permission', sub:'Telangana Building Approval', price:'₹1,499', tag:'Instant · TS', page:'instant-services.html', anchor:'', type:'instant', state:'ts' },
+    { name:'Telangana Legal Opinion', sub:'Property legal opinion · TS', price:'₹2,999', tag:'Instant · TS', page:'instant-services.html', anchor:'', type:'instant', state:'ts' },
+    { name:'TS LRS Receipt Download', sub:'Telangana LRS · Hyderabad', price:'₹499', tag:'Instant · TS', page:'instant-services.html', anchor:'', type:'instant', state:'ts' },
+    { name:'TSHECL Housing Scheme Consultancy', sub:'Telangana Housing Corporation', price:'₹501', tag:'Instant · TS', page:'instant-services.html', anchor:'', type:'instant', state:'ts' },
+    // Andhra Pradesh
+    { name:'IGRS AP EC Online', sub:'Same day · AP Encumbrance Certificate', price:'₹299', tag:'Instant · AP', page:'instant-services.html', anchor:'', type:'instant', state:'ap' },
+    { name:'Meebhoomi Adangal Online', sub:'Same day · AP Land Records', price:'₹299', tag:'Instant · AP', page:'instant-services.html', anchor:'', type:'instant', state:'ap' },
+    { name:'AP RoR 1B (Meebhoomi)', sub:'Same day · AP Pahani', price:'₹299', tag:'Instant · AP', page:'instant-services.html', anchor:'', type:'instant', state:'ap' },
+    { name:'AP Certified Adangal', sub:'2–3 days · AP', price:'₹399', tag:'Instant · AP', page:'instant-services.html', anchor:'', type:'instant', state:'ap' },
+    { name:'AP CERSAI Mortgage Report', sub:'Same day · AP', price:'₹399', tag:'Instant · AP', page:'instant-services.html', anchor:'', type:'instant', state:'ap' },
+    { name:'AP Legal Opinion', sub:'Property legal opinion · AP', price:'₹2,999', tag:'Instant · AP', page:'instant-services.html', anchor:'', type:'instant', state:'ap' },
+    { name:'APSHECL Housing Scheme Consultancy', sub:'AP Housing Corporation / TIDCO', price:'₹501', tag:'Instant · AP', page:'instant-services.html', anchor:'', type:'instant', state:'ap' },
+    // Maharashtra
+    { name:'Maharashtra 7/12 Satbara (Satbara Utara)', sub:'Same day · MH', price:'₹299', tag:'Instant · MH', page:'instant-services.html', anchor:'', type:'instant', state:'mh' },
+    { name:'Maharashtra Property Card (MH)', sub:'Same day · MH', price:'₹299', tag:'Instant · MH', page:'instant-services.html', anchor:'', type:'instant', state:'mh' },
+    { name:'Maharashtra Index 2 (MH)', sub:'Same day · MH', price:'₹299', tag:'Instant · MH', page:'instant-services.html', anchor:'', type:'instant', state:'mh' },
+    { name:'Maharashtra CERSAI Mortgage Report (MH)', sub:'Same day · MH', price:'₹399', tag:'Instant · MH', page:'instant-services.html', anchor:'', type:'instant', state:'mh' },
+    { name:'Maharashtra Sale Deed / Certified Copy (MH)', sub:'2–3 days · MH', price:'₹499', tag:'Instant · MH', page:'instant-services.html', anchor:'', type:'instant', state:'mh' },
+    { name:'Maharashtra Legal Opinion (MH)', sub:'Property legal opinion · MH', price:'₹2,999', tag:'Instant · MH', page:'instant-services.html', anchor:'', type:'instant', state:'mh' },
+    { name:'MHADA Housing Scheme Consultancy', sub:'Maharashtra Housing Lottery', price:'₹501', tag:'Instant · MH', page:'instant-services.html', anchor:'', type:'instant', state:'mh' },
+    // Kerala
+    { name:'Kerala EC (Encumbrance Certificate)', sub:'Same day · KL', price:'₹299', tag:'Instant · KL', page:'instant-services.html', anchor:'', type:'instant', state:'kl' },
+    { name:'Kerala Tax Dues / Ownership (Revenue)', sub:'Same day · KL Land Tax', price:'₹299', tag:'Instant · KL', page:'instant-services.html', anchor:'', type:'instant', state:'kl' },
+    { name:'Kerala Certified EC (Signed)', sub:'2–3 days · KL', price:'₹399', tag:'Instant · KL', page:'instant-services.html', anchor:'', type:'instant', state:'kl' },
+    { name:'Kerala Pokkuvaravu Record (Mutation)', sub:'Mutation record · KL', price:'₹999', tag:'Instant · KL', page:'instant-services.html', anchor:'', type:'instant', state:'kl' },
+    { name:'Kerala CERSAI Mortgage Report (KL)', sub:'Same day · KL', price:'₹399', tag:'Instant · KL', page:'instant-services.html', anchor:'', type:'instant', state:'kl' },
+    { name:'Kerala Legal Opinion (KL)', sub:'Property legal opinion · KL', price:'₹2,999', tag:'Instant · KL', page:'instant-services.html', anchor:'', type:'instant', state:'kl' },
+    { name:'KESICS / LIFE Mission Housing Consultancy', sub:'Kerala housing scheme', price:'₹501', tag:'Instant · KL', page:'instant-services.html', anchor:'', type:'instant', state:'kl' },
+    // Tamil Nadu
+    { name:'Tamil Nadu EC (Encumbrance Certificate)', sub:'Same day · TN', price:'₹299', tag:'Instant · TN', page:'instant-services.html', anchor:'', type:'instant', state:'tn' },
+    { name:'Tamil Nadu Patta / Chitta', sub:'Same day · TN', price:'₹299', tag:'Instant · TN', page:'instant-services.html', anchor:'', type:'instant', state:'tn' },
+    { name:'Tamil Nadu Certified EC (TN)', sub:'2–3 days · TN', price:'₹399', tag:'Instant · TN', page:'instant-services.html', anchor:'', type:'instant', state:'tn' },
+    { name:'Tamil Nadu FMB (Field Measurement Book)', sub:'3–5 days · TN', price:'₹499', tag:'Instant · TN', page:'instant-services.html', anchor:'', type:'instant', state:'tn' },
+    { name:'Tamil Nadu CERSAI Mortgage Report (TN)', sub:'Same day · TN', price:'₹399', tag:'Instant · TN', page:'instant-services.html', anchor:'', type:'instant', state:'tn' },
+    { name:'Tamil Nadu Legal Opinion (TN)', sub:'Property legal opinion · TN', price:'₹2,999', tag:'Instant · TN', page:'instant-services.html', anchor:'', type:'instant', state:'tn' },
+    { name:'TNHB / TNSCB Housing Scheme Consultancy', sub:'Tamil Nadu Housing Board', price:'₹501', tag:'Instant · TN', page:'instant-services.html', anchor:'', type:'instant', state:'tn' },
+    { name:'Patta Transfer (TN)', sub:'Mutation · Tamil Nadu', price:'₹999', tag:'Instant · TN', page:'instant-services.html', anchor:'', type:'instant', state:'tn' },
+    // Dashboard / Tools
+    { name:'My Orders', sub:'Track your service status', price:'', tag:'Dashboard', page:'dashboard.html', anchor:'', type:'page', state:null },
+    { name:'AI Property Scan', sub:'Free property document scoring', price:'Free', tag:'Tool', page:'directory-ai.html', anchor:'', type:'page', state:null },
   ];
 
   var wrap    = null;
@@ -2678,7 +2706,12 @@ window.addEventListener('load', ldHandleCashfreeReturn);
       html += '<div class="sr-empty">No services found for &ldquo;'+esc(q)+'&rdquo;<br><span style="font-size:11px;margin-top:6px;display:block;">Try: EC, mutation, registration, WILL, khata&hellip;</span></div>';
     } else {
       res.forEach(function(s){
-        var url = s.page + (s.anchor||'');
+        var url;
+    if (s.type === 'instant' && s.state) {
+      url = s.page + '?service=' + encodeURIComponent(s.name) + '&state=' + s.state;
+    } else {
+      url = s.page + (s.anchor||'');
+    }
         html += '<a class="sr-item" href="'+esc(url)+'">'+
           '<div class="sr-item-left">'+
             '<div class="sr-item-tag">'+esc(s.tag)+'</div>'+
