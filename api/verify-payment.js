@@ -11,8 +11,8 @@ export default async function handler(req, res) {
   const { order_id, items, amount, customer, service } = req.body || {};
   if (!order_id) return res.status(400).json({ error: 'Missing order_id' });
 
-  const CF_APP_ID = process.env.CASHFREE_APP_ID;
-  const CF_SECRET = process.env.CASHFREE_SECRET_KEY;
+  const CF_APP_ID = process.env.CASHFREE_CLIENT_ID;
+  const CF_SECRET = process.env.CASHFREE_CLIENT_SECRET;
   const CF_ENV = process.env.CASHFREE_ENV || 'production';
   if (!CF_APP_ID || !CF_SECRET) return res.status(500).json({ error: 'Gateway not configured' });
 
@@ -23,7 +23,7 @@ export default async function handler(req, res) {
   for (let attempt = 1; attempt <= 6; attempt++) {
     try {
       const cfRes = await fetch(`${apiBase}/orders/${encodeURIComponent(order_id)}/payments`, {
-        headers: { 'x-api-version': '2023-08-01', 'x-client-id': CF_APP_ID, 'x-client-secret': CF_SECRET }
+        headers: { 'x-api-version': '2025-01-01', 'x-client-id': CF_APP_ID, 'x-client-secret': CF_SECRET }
       });
       const payments = await cfRes.json();
       paid = Array.isArray(payments) ? payments.find(p => p.payment_status === 'SUCCESS') : (payments?.payment_status === 'SUCCESS' ? payments : null);

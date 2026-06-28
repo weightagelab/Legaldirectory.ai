@@ -66,7 +66,7 @@ export default async function handler(req, res) {
           customer_phone: phone,
         },
         order_meta: {
-          return_url: `${origin}/index.html?payment=success&order_id=${encodeURIComponent(orderId)}&amount=${encodeURIComponent(`₹${orderAmount.toLocaleString('en-IN')}`)}`,
+          return_url: `${origin}/dashboard.html?payment=success&order_id=${encodeURIComponent(orderId)}&amount=${encodeURIComponent(`₹${orderAmount.toLocaleString('en-IN')}`)}`,
         },
         order_note: notes.services || notes.service || 'Legaldirectory.ai booking',
         order_tags: notes,
