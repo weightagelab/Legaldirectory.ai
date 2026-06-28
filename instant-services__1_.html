@@ -47,7 +47,7 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ── NAV ── */
+  /*  NAV  */
   .topbar {
     display: flex; align-items: center; justify-content: space-between;
     padding: 0 28px; height: 56px;
@@ -64,7 +64,7 @@
   .nav-cta:hover { opacity: 0.85; }
   @media(max-width:640px){ .nav-links { display: none; } .topbar { padding: 0 16px; } }
 
-  /* ── BANNER ── */
+  /*  BANNER  */
   .banner {
     padding: 56px 24px 64px; text-align: center;
     border-bottom: 1px solid var(--border);
@@ -82,7 +82,7 @@
   .badge { display: inline-flex; align-items: center; gap: 6px; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 6px 14px; font-size: 11px; font-weight: 500; color: var(--ink-mid); }
   .badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
 
-  /* ── HOW IT WORKS ── */
+  /*  HOW IT WORKS  */
   .how-wrap { max-width: 1060px; margin: 44px auto 0; padding: 0 24px; }
   .how-label { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 20px; }
   .how-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
@@ -91,7 +91,7 @@
   .how-step h4 { font-size: 13px; font-weight: 700; margin-bottom: 5px; }
   .how-step p { font-size: 12px; color: var(--ink-mid); line-height: 1.5; }
 
-  /* ── SECTION LABEL ── */
+  /*  SECTION LABEL  */
   .section-label {
     display: flex; align-items: center; gap: 12px;
     padding: 44px 24px 18px; max-width: 1060px; margin: 0 auto;
@@ -99,14 +99,14 @@
   .section-label h2 { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); white-space: nowrap; }
   .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-  /* ── GRID ── */
+  /*  GRID  */
   .grid {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(308px, 1fr));
     gap: 1px; padding: 0 24px; max-width: 1060px; margin: 0 auto;
     background: var(--border); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
   }
 
-  /* ── CARD ── */
+  /*  CARD  */
   .card {
     background: var(--bg2); padding: 24px;
     display: flex; flex-direction: column; position: relative;
@@ -160,7 +160,7 @@
     color: #fff; background: var(--accent); padding: 4px 12px; border-radius: 0 8px 0 6px;
   }
 
-  /* ── STICKY CART BAR ── */
+  /*  STICKY CART BAR  */
   #cart-bar {
     position: fixed; bottom: 0; left: 0; right: 0;
     background: #0d0e17; border-top: 1px solid var(--border);
@@ -197,7 +197,7 @@
     .btn-view-cart { flex: 1; text-align: center; }
   }
 
-  /* ── CART DRAWER (slide-over) ── */
+  /*  CART DRAWER (slide-over)  */
   #cart-drawer-overlay {
     display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 400;
   }
@@ -275,7 +275,7 @@
     margin-top: 12px; letter-spacing: 0.06em;
   }
 
-  /* ── TRUST STRIP ── */
+  /*  TRUST STRIP  */
   .trust-strip {
     max-width: 1060px; margin: 40px auto 0; padding: 0 24px 80px;
     display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap;
@@ -283,7 +283,7 @@
   .trust-strip span { font-size: 10px; color: var(--ink-muted); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
   .trust-strip .sep { color: var(--border2); }
 
-  /* ── DISCLAIMER ── */
+  /*  DISCLAIMER  */
   .disclaimer {
     text-align: center; padding: 40px 24px 56px;
     font-size: 11px; color: var(--ink-muted);
@@ -294,7 +294,7 @@
   .footer-brand { font-size: 13px; font-weight: 800; color: var(--ink); margin-bottom: 8px; }
   .footer-brand em { font-style: italic; color: var(--gold); font-weight: 400; }
 
-  /* ── STATE SWITCHER ── */
+  /*  STATE SWITCHER  */
   .state-switcher-wrap {
     max-width: 1060px; margin: 36px auto 0; padding: 0 24px;
     display: flex; flex-direction: column; align-items: center; gap: 10px;
@@ -328,11 +328,11 @@
     .state-tab { flex: 0 0 auto; }
   }
 
-  /* ── STATE CONTENT SECTIONS ── */
+  /*  STATE CONTENT SECTIONS  */
   .state-section { display: none; }
   .state-section.active { display: contents; }
 
-  /* ── FAQ SECTION ── */
+  /*  FAQ SECTION  */
   .faq-wrap {
     max-width: 1060px; margin: 0 auto; padding: 0 24px 48px;
   }
@@ -355,7 +355,7 @@
   }
   .faq-item.open .faq-a { display: block; }
 
-  /* ── SUCCESS TOAST ── */
+  /*  SUCCESS TOAST  */
   #pay-toast {
     display: none; position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
     background: var(--green); color: #fff; font-weight: 700; font-size: 13px;
@@ -370,7 +370,7 @@
   .field-error { font-size: 10px; color: #ef4444; margin-top: 3px; display: none; padding-left: 2px; letter-spacing: 0.04em; }
   .field-error.show { display: block; }
 
-  /* ── HOURS SELECTOR (Liaising Officer / File Arrangement) ── */
+  /*  HOURS SELECTOR (Liaising Officer / File Arrangement)  */
   .hours-row {
     display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
     background: rgba(201,149,42,0.06); border: 1px solid var(--gold-border);
@@ -396,7 +396,7 @@
   .hours-calc { font-size: 12px; color: var(--ink-mid); flex: 1; text-align: right; }
   .hours-calc strong { color: var(--ink); }
 
-  /* ── DRAWER HOURS ROW ── */
+  /*  DRAWER HOURS ROW  */
   .drawer-hours-row {
     background: rgba(201,149,42,0.06); border: 1px solid var(--gold-border);
     border-radius: 6px; padding: 12px 14px; margin-bottom: 10px;
@@ -412,7 +412,7 @@
   .govt-badge { display: inline-flex; align-items: center; gap: 5px; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25); border-radius: 3px; padding: 3px 8px; font-size: 9px; font-weight: 700; color: #22c55e; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
   .scheme-list { list-style: none; display: flex; flex-direction: column; gap: 4px; margin: 10px 0 16px; }
   .scheme-list li { font-size: 11px; color: var(--ink-mid); display: flex; align-items: flex-start; gap: 7px; line-height: 1.4; }
-  .scheme-list li::before { content: '◆'; color: var(--gold); flex-shrink: 0; font-size: 8px; margin-top: 3px; }
+  .scheme-list li::before { content: ''; color: var(--gold); flex-shrink: 0; font-size: 8px; margin-top: 3px; }
   .per-hour-tag { font-size: 10px; color: var(--ink-muted); font-weight: 500; }
 
 
@@ -439,7 +439,7 @@
 <body>
 <noscript><div style="font-family:sans-serif;text-align:center;padding:60px 24px;"><h2>Please enable JavaScript</h2><p>Our property documents service requires JavaScript to process orders.<br/>To book instantly: <a href="https://wa.me/919008999968">WhatsApp +91 90089 99968</a> · <a href="mailto:weightage.lab@gmail.com">Email us</a></p></div></noscript>
 
-<!-- ── TOP BAR ── -->
+<!--  TOP BAR  -->
 <nav class="topbar">
   <a href="https://legaldirectory.in/" class="brand">Legaldirectory<em>.ai</em><span class="brand-ver">v3.5</span></a>
   <div class="nav-links">
@@ -452,9 +452,9 @@
   </div>
 </nav>
 
-<!-- ── BANNER ── -->
+<!--  BANNER  -->
 <section class="banner">
-  <div class="banner-eyebrow">⚡ Instant Services</div>
+  <div class="banner-eyebrow"> Instant Services</div>
   <h1 id="banner-title">Karnataka Property<br><em>Documents. Delivered.</em></h1>
   <p class="banner-sub" id="banner-sub">Pick one or more services, add them to your cart, and pay in a single checkout. Documents delivered to your WhatsApp.</p>
   <div class="banner-badges" id="banner-badges">
@@ -465,7 +465,7 @@
   </div>
 </section>
 
-<!-- ── HOW IT WORKS ── -->
+<!--  HOW IT WORKS  -->
 <div class="how-wrap">
   <div class="how-label">How It Works</div>
   <div class="how-strip">
@@ -492,7 +492,7 @@
   </div>
 </div>
 
-<!-- ── STATE SWITCHER ── -->
+<!--  STATE SWITCHER  -->
 <div class="state-switcher-wrap">
   <div class="state-switcher-label">Select State</div>
   <div class="state-tabs">
@@ -506,19 +506,19 @@
   <div class="state-notice">Services and documents vary by state. Select your state to see available options.</div>
 </div>
 
-<!-- ══════════════════════════════════════
+<!-- 
      STATE: KARNATAKA
-══════════════════════════════════════ -->
+ -->
 <div class="state-section active" id="state-ka">
 
-<!-- ═══════════════════════════════
-     SECTION ★ – GOVERNMENT HOUSING SCHEMES
-════════════════════════════════ -->
-<div class="section-label"><h2>★ Government Housing Scheme Consultancy</h2></div>
+<!-- 
+     SECTION  – GOVERNMENT HOUSING SCHEMES
+ -->
+<div class="section-label"><h2> Government Housing Scheme Consultancy</h2></div>
 <div class="grid">
 
   <div class="card rgrhcl-card" data-name="RGRHCL Housing Scheme Consultancy" data-price="501" data-delivery="For pre-verification">
-    <div class="pop-tag">★ GOVT</div>
+    <div class="pop-tag"> GOVT</div>
     <div class="govt-badge">
       <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
       Karnataka Government Enterprise
@@ -552,9 +552,9 @@
 
 </div>
 
-<!-- ═══════════════════════════════
+<!-- 
      SECTION 1 – PROPERTY RECORDS
-════════════════════════════════ -->
+ -->
 <div class="section-label"><h2>Property Records &amp; Certificates</h2></div>
 <div class="grid">
 
@@ -669,9 +669,9 @@
 
 </div>
 
-<!-- ═══════════════════════════════
+<!-- 
      SECTION 2 – FINANCIAL
-════════════════════════════════ -->
+ -->
 <div class="section-label"><h2>Financial &amp; Legal Reports</h2></div>
 <div class="grid">
 
@@ -695,9 +695,9 @@
 
 </div>
 
-<!-- ═══════════════════════════════
+<!-- 
      SECTION 2A – PROPERTY LEGAL DOCUMENTS
-════════════════════════════════ -->
+ -->
 <div class="section-label"><h2>Property Legal Documents</h2></div>
 <div class="grid">
 
@@ -779,9 +779,9 @@
 
 </div>
 
-<!-- ═══════════════════════════════
+<!-- 
      SECTION 2B – LOAN DOCUMENTS
-════════════════════════════════ -->
+ -->
 <div class="section-label"><h2>Loan &amp; Mortgage Documents</h2></div>
 <div class="grid">
 
@@ -825,9 +825,9 @@
 
 </div>
 
-<!-- ═══════════════════════════════
+<!-- 
      SECTION 3 – DIGITAL TRANSITION
-════════════════════════════════ -->
+ -->
 <div class="section-label"><h2>Digital Record Transition</h2></div>
 <div class="grid">
 
@@ -853,9 +853,9 @@
 
 </div>
 
-<!-- ═══════════════════════════════
+<!-- 
      SECTION 4 – UTILITY SERVICES
-════════════════════════════════ -->
+ -->
 <div class="section-label"><h2>Utility &amp; Connection Services</h2></div>
 <div class="grid">
 
@@ -897,10 +897,10 @@
 
 </div>
 
-<!-- ═══════════════════════════════
+<!-- 
      SECTION 5B – LIAISING OFFICER
-════════════════════════════════ -->
-<div class="section-label"><h2>★ Liaising Officer</h2></div>
+ -->
+<div class="section-label"><h2> Liaising Officer</h2></div>
 <div class="grid">
 
   <div class="card" id="liaison-card" data-name="Liaising Officer" data-price="299" data-delivery="24-hour delivery" data-per-hour="299">
@@ -933,14 +933,14 @@
 
 </div>
 
-<!-- ═══════════════════════════════
+<!-- 
      SECTION 6 – FILE ARRANGEMENT
-════════════════════════════════ -->
-<div class="section-label"><h2>★ Document Management Services</h2></div>
+ -->
+<div class="section-label"><h2> Document Management Services</h2></div>
 <div class="grid">
 
   <div class="card" id="file-arr-card" data-name="File Arrangement &amp; Scanning" data-price="799" data-delivery="At your office or home" data-per-hour="799">
-    <div class="pop-tag">★ NEW</div>
+    <div class="pop-tag"> NEW</div>
     <div class="card-eyebrow">At-Home / Office · Scan · Index</div>
     <h3>File Arrangement, Scanning &amp; Indexing Service</h3>
     <p class="card-desc">Our team visits your home or office to sort, scan, and properly index your physical property and legal documents — creating a clean, searchable digital archive with a structured index.</p>
@@ -1131,19 +1131,19 @@
 
 </div><!-- /state-ka -->
 
-<!-- ══════════════════════════════════════
+<!-- 
      STATE: TELANGANA
-══════════════════════════════════════ -->
+ -->
 <div class="state-section" id="state-ts">
 
-<!-- ═══════════════════════════════
-     SECTION ★ – GOVERNMENT HOUSING SCHEMES
-════════════════════════════════ -->
-<div class="section-label"><h2>★ Government Housing Scheme Consultancy</h2></div>
+<!-- 
+     SECTION  – GOVERNMENT HOUSING SCHEMES
+ -->
+<div class="section-label"><h2> Government Housing Scheme Consultancy</h2></div>
 <div class="grid">
 
   <div class="card rgrhcl-card" data-name="TSHECL Housing Scheme Consultancy" data-price="501" data-delivery="For pre-verification">
-    <div class="pop-tag">★ GOVT</div>
+    <div class="pop-tag"> GOVT</div>
     <div class="govt-badge">
       <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
       Telangana Government Enterprise
@@ -1811,19 +1811,19 @@
 
 </div><!-- /state-ts -->
 
-<!-- ══════════════════════════════════════
+<!-- 
      STATE: ANDHRA PRADESH
-══════════════════════════════════════ -->
+ -->
 <div class="state-section" id="state-ap">
 
-<!-- ═══════════════════════════════
-     SECTION ★ – GOVERNMENT HOUSING SCHEMES
-════════════════════════════════ -->
-<div class="section-label"><h2>★ Government Housing Scheme Consultancy</h2></div>
+<!-- 
+     SECTION  – GOVERNMENT HOUSING SCHEMES
+ -->
+<div class="section-label"><h2> Government Housing Scheme Consultancy</h2></div>
 <div class="grid">
 
   <div class="card rgrhcl-card" data-name="APSHECL Housing Scheme Consultancy" data-price="501" data-delivery="For pre-verification">
-    <div class="pop-tag">★ GOVT</div>
+    <div class="pop-tag"> GOVT</div>
     <div class="govt-badge">
       <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
       Andhra Pradesh Government Enterprise
@@ -2242,7 +2242,7 @@
 
 </div>
 
-<!-- ── AP FAQ SECTION ── -->
+<!--  AP FAQ SECTION  -->
 <div class="section-label"><h2>Frequently Asked Questions — AP CDMA PTIN</h2></div>
 <div class="faq-wrap">
 
@@ -2330,19 +2330,19 @@
 
 </div><!-- /state-ap -->
 
-<!-- ══════════════════════════════════════
+<!-- 
      STATE: MAHARASHTRA
-══════════════════════════════════════ -->
+ -->
 <div class="state-section" id="state-mh">
 
-<!-- ═══════════════════════════════
-     SECTION ★ – GOVERNMENT HOUSING SCHEMES
-════════════════════════════════ -->
-<div class="section-label"><h2>★ Government Housing Scheme Consultancy</h2></div>
+<!-- 
+     SECTION  – GOVERNMENT HOUSING SCHEMES
+ -->
+<div class="section-label"><h2> Government Housing Scheme Consultancy</h2></div>
 <div class="grid">
 
   <div class="card rgrhcl-card" data-name="MHADA Housing Scheme Consultancy" data-price="501" data-delivery="For pre-verification">
-    <div class="pop-tag">★ GOVT</div>
+    <div class="pop-tag"> GOVT</div>
     <div class="govt-badge">
       <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
       Maharashtra Government Enterprise
@@ -2376,9 +2376,9 @@
 
 </div>
 
-<!-- ═══════════════════════════════
+<!-- 
      SECTION 1 – PROPERTY RECORDS
-════════════════════════════════ -->
+ -->
 <div class="section-label"><h2>Property Records &amp; Certificates</h2></div>
 <div class="grid">
 
@@ -2531,9 +2531,9 @@
 
 </div>
 
-<!-- ═══════════════════════════════
+<!-- 
      SECTION 2 – GOVT & PERSONAL DOCS
-════════════════════════════════ -->
+ -->
 <div class="section-label"><h2>Government &amp; Personal Documents</h2></div>
 <div class="grid">
 
@@ -2626,19 +2626,19 @@
 
 </div><!-- /state-mh -->
 
-<!-- ══════════════════════════════════════
+<!-- 
      STATE: KERALA
-══════════════════════════════════════ -->
+ -->
 <div class="state-section" id="state-kl">
 
-<!-- ═══════════════════════════════
-     SECTION ★ – GOVERNMENT HOUSING SCHEMES
-════════════════════════════════ -->
-<div class="section-label"><h2>★ Government Housing Scheme Consultancy</h2></div>
+<!-- 
+     SECTION  – GOVERNMENT HOUSING SCHEMES
+ -->
+<div class="section-label"><h2> Government Housing Scheme Consultancy</h2></div>
 <div class="grid">
 
   <div class="card rgrhcl-card" data-name="KESICS / LIFE Mission Housing Consultancy" data-price="501" data-delivery="For pre-verification">
-    <div class="pop-tag">★ GOVT</div>
+    <div class="pop-tag"> GOVT</div>
     <div class="govt-badge">
       <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
       Kerala Government Enterprise
@@ -2672,9 +2672,9 @@
 
 </div>
 
-<!-- ═══════════════════════════════
+<!-- 
      SECTION 1 – PROPERTY RECORDS
-════════════════════════════════ -->
+ -->
 <div class="section-label"><h2>Property Records &amp; Certificates</h2></div>
 <div class="grid">
 
@@ -2843,9 +2843,9 @@
 
 </div>
 
-<!-- ═══════════════════════════════
+<!-- 
      SECTION 2 – GOVT DOCS
-════════════════════════════════ -->
+ -->
 <div class="section-label"><h2>Government &amp; Personal Documents</h2></div>
 <div class="grid">
 
@@ -2904,19 +2904,19 @@
 
 </div><!-- /state-kl -->
 
-<!-- ══════════════════════════════════════
+<!-- 
      STATE: TAMIL NADU
-══════════════════════════════════════ -->
+ -->
 <div class="state-section" id="state-tn">
 
-<!-- ═══════════════════════════════
-     SECTION ★ – GOVERNMENT HOUSING SCHEMES
-════════════════════════════════ -->
-<div class="section-label"><h2>★ Government Housing Scheme Consultancy</h2></div>
+<!-- 
+     SECTION  – GOVERNMENT HOUSING SCHEMES
+ -->
+<div class="section-label"><h2> Government Housing Scheme Consultancy</h2></div>
 <div class="grid">
 
   <div class="card rgrhcl-card" data-name="TNHB / TNSCB Housing Scheme Consultancy" data-price="501" data-delivery="For pre-verification">
-    <div class="pop-tag">★ GOVT</div>
+    <div class="pop-tag"> GOVT</div>
     <div class="govt-badge">
       <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
       Tamil Nadu Government Enterprise
@@ -2950,9 +2950,9 @@
 
 </div>
 
-<!-- ═══════════════════════════════
+<!-- 
      SECTION 1 – PROPERTY RECORDS
-════════════════════════════════ -->
+ -->
 <div class="section-label"><h2>Property Records &amp; Certificates</h2></div>
 <div class="grid">
 
@@ -3121,9 +3121,9 @@
 
 </div>
 
-<!-- ═══════════════════════════════
+<!-- 
      SECTION 2 – GOVT DOCS
-════════════════════════════════ -->
+ -->
 <div class="section-label"><h2>Government &amp; Personal Documents</h2></div>
 <div class="grid">
 
@@ -3200,7 +3200,7 @@
 
 </div><!-- /state-tn -->
 
-<!-- ── TRUST STRIP ── -->
+<!--  TRUST STRIP  -->
 <div class="trust-strip">
   <span>Secured by Cashfree</span><span class="sep">·</span>
   <span>UPI</span><span class="sep">·</span>
@@ -3210,7 +3210,7 @@
   <span>Official KA Records</span>
 </div>
 
-<!-- ── DISCLAIMER ── -->
+<!--  DISCLAIMER  -->
 <div class="disclaimer">
   <div class="footer-brand">Legal<em>directory</em></div>
   Legal Directory is a technology platform and is not a government entity, nor affiliated with any government agency. All government records are fetched from official Karnataka portals on your behalf. Prices are inclusive and may vary based on document type and jurisdiction.<br><br>
@@ -3220,9 +3220,9 @@
   © 2026 Legal Directory.in · Bengaluru, Karnataka
 </div>
 
-<!-- ══════════════════════════════
+<!-- 
      STICKY CART BAR
-══════════════════════════════ -->
+ -->
 <div id="cart-bar">
   <div class="cart-bar-inner">
     <div class="cart-summary">
@@ -3239,13 +3239,13 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════
+<!-- 
      CART DRAWER
-══════════════════════════════ -->
+ -->
 <div id="cart-drawer-overlay" onclick="handleOverlayClick(event)">
   <div id="cart-drawer">
     <div class="drawer-header">
-      <div class="drawer-title">🛒 Your Cart</div>
+      <div class="drawer-title"> Your Cart</div>
       <button class="drawer-close" onclick="closeDrawer()">×</button>
     </div>
     <div class="drawer-items" id="drawer-items-list">
@@ -3260,13 +3260,13 @@
         <div class="drawer-input-wrap">
           <input id="drawer-name" type="text" class="drawer-input" placeholder="Your Full Name *" required autocomplete="name"
             onfocus="this.style.borderColor='#2563eb'" onblur="validateField(this,'name-err')"/>
-          <span class="req-star">★</span>
+          <span class="req-star"></span>
           <div class="field-error" id="name-err">Full name is required</div>
         </div>
         <div class="drawer-input-wrap">
           <input id="drawer-phone" type="tel" class="drawer-input" placeholder="WhatsApp Number (10 digits) *" required autocomplete="tel" maxlength="10"
             onfocus="this.style.borderColor='#2563eb'" onblur="validateField(this,'phone-err')"/>
-          <span class="req-star">★</span>
+          <span class="req-star"></span>
           <div class="field-error" id="phone-err">Valid 10-digit WhatsApp number required</div>
         </div>
         <div class="drawer-input-wrap">
@@ -3282,19 +3282,19 @@
         <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         Order via WhatsApp Instead
       </a>
-      <div class="secure-note">🔒 SECURED BY CASHFREE · UPI · CARDS · NET BANKING · WALLETS</div>
+      <div class="secure-note"> SECURED BY CASHFREE · UPI · CARDS · NET BANKING · WALLETS</div>
     </div>
   </div>
 </div>
 
-<!-- ── SUCCESS TOAST ── -->
-<div id="pay-toast">✅ Payment Successful! Documents will be sent to your WhatsApp.</div>
+<!--  SUCCESS TOAST  -->
+<div id="pay-toast"> Payment Successful! Documents will be sent to your WhatsApp.</div>
 
-<!-- ══════════════════════════════════════════
+<!-- 
      CART + CASHFREE LOGIC
-══════════════════════════════════════════ -->
+ -->
 <script>
-// ─── FIREBASE INIT ────────────────────────────────────────────────
+//  FIREBASE INIT 
 (function(){
   var FB = {
     apiKey: "AIzaSyDyhtGPV8_OU7kgmz3SA4ixvv44PGVs2XA",
@@ -3309,7 +3309,7 @@
 var _db  = firebase.firestore();
 var _auth = firebase.auth();
 
-// ── GOOGLE SHEETS TRACKER ─────────────────────────────────────────
+//  GOOGLE SHEETS TRACKER 
 // Logs every confirmed payment to an internal Google Sheet via Apps Script Web App.
 // Set your deployed Apps Script URL here:
 var SHEETS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwJOoMDB2ipKHVN0giGQU_I77PX3ad-iCArGsxi5wZNWaU4RuqUqx9zfjxmt-WgYk0/exec';
@@ -3421,7 +3421,7 @@ async function saveOrderToFirestore(orderId, paymentId, items, total, name, phon
   logToGoogleSheets(orderId, paymentId, items, total, name, phone, uid, email);
 }
 
-// ─── HOURS-BASED SERVICES ─────────────────────────────────────────
+//  HOURS-BASED SERVICES 
 // Config: id → { perHour, maxHours, defaultHours }
 var HOURLY_SERVICES = {
   'liaison':  { perHour: 299,  max: 40, defaultHours: 1 },
@@ -3499,7 +3499,7 @@ function toggleCartHourly(id, btn) {
       hourlyId: id
     });
     card.classList.add('selected');
-    btn.textContent = '✓ Added';
+    btn.textContent = ' Added';
   } else {
     cart.splice(idx, 1);
     card.classList.remove('selected');
@@ -3510,7 +3510,7 @@ function toggleCartHourly(id, btn) {
   saveCartToStorage();
 }
 
-// ─── CART STATE ───────────────────────────────────────────────────
+//  CART STATE 
 // Each item: { name, price (number), delivery, cardEl, btnEl, hourlyId?, state }
 var cart = [];
 var LD_CART_KEY = 'ld_shared_cart';
@@ -3519,11 +3519,15 @@ var currentState = 'ka'; // tracks the active state tab
 // State display labels for drawer grouping
 var STATE_LABELS = { ka:'Karnataka', ts:'Telangana', ap:'Andhra Pradesh', mh:'Maharashtra', kl:'Kerala', tn:'Tamil Nadu' };
 
-// ─── SHARED CART PERSISTENCE ──────────────────────────────────────
+//  SHARED CART PERSISTENCE 
 function saveCartToStorage() {
   try {
-    var data = cart.map(function(i){ return { name: i.name, price: i.price, delivery: i.delivery || '', hourlyId: i.hourlyId || null, state: i.state || currentState, source: 'instant' }; });
-    localStorage.setItem(LD_CART_KEY, JSON.stringify(data));
+    var instantData = cart.map(function(i){ return { name: i.name, price: i.price, delivery: i.delivery || '', hourlyId: i.hourlyId || null, state: i.state || currentState, source: 'instant' }; });
+    // Preserve any index.html items already in storage
+    var existing = [];
+    try { existing = JSON.parse(localStorage.getItem(LD_CART_KEY) || '[]'); } catch(_e) {}
+    var indexItems = existing.filter(function(i){ return i.source === 'index'; });
+    localStorage.setItem(LD_CART_KEY, JSON.stringify(indexItems.concat(instantData)));
   } catch(e) {}
 }
 
@@ -3545,7 +3549,7 @@ function loadCartFromStorage() {
           var btn = card.querySelector('.btn-add');
           cart.push({ name: item.name, price: item.price, delivery: item.delivery, cardEl: card, btnEl: btn, hourlyId: item.hourlyId, state: itemState });
           card.classList.add('selected');
-          if (btn) btn.textContent = '✓ Added';
+          if (btn) btn.textContent = ' Added';
           matched = true;
         }
       });
@@ -3567,7 +3571,7 @@ function cartTotal() {
   return cart.reduce(function(s, i){ return s + i.price; }, 0);
 }
 
-// ─── FIELD VALIDATION ─────────────────────────────────────────────
+//  FIELD VALIDATION 
 function validateField(input, errId) {
   var err = document.getElementById(errId);
   var val = input.value.trim();
@@ -3597,7 +3601,7 @@ function validateAll() {
   return true;
 }
 
-// ─── TOGGLE ADD/REMOVE FROM CART ──────────────────────────────────
+//  TOGGLE ADD/REMOVE FROM CART 
 function toggleCart(btn) {
   var card     = btn.closest('.card');
   var name     = card.dataset.name;
@@ -3609,7 +3613,7 @@ function toggleCart(btn) {
   if (idx === -1) {
     cart.push({ name: name, price: price, delivery: delivery, cardEl: card, btnEl: btn, state: currentState });
     card.classList.add('selected');
-    btn.textContent = '✓ Added';
+    btn.textContent = ' Added';
   } else {
     cart.splice(idx, 1);
     card.classList.remove('selected');
@@ -3621,7 +3625,7 @@ function toggleCart(btn) {
   saveCartToStorage();
 }
 
-// ─── CART BAR ─────────────────────────────────────────────────────
+//  CART BAR 
 function updateCartBar() {
   var bar   = document.getElementById('cart-bar');
   var count = cart.length;
@@ -3650,7 +3654,7 @@ function updateCartBar() {
   }
 }
 
-// ─── CART DRAWER ──────────────────────────────────────────────────
+//  CART DRAWER 
 function openDrawer() {
   updateDrawer();
   document.getElementById('cart-drawer-overlay').classList.add('open');
@@ -3789,9 +3793,9 @@ function refreshWaBtn() {
   var msg = encodeURIComponent(
     'Hi Legaldirectory.ai, I want to order:\n\n' + itemLines +
     '\n\nTotal: ' + fmt(total) +
-    (name     ? '\n\n👤 Name: '     + name.trim()     : '') +
-    (phone    ? '\n📱 WhatsApp: '   + phone.trim()    : '') +
-    (emailVal ? '\n✉️ Email: '      + emailVal.trim() : '') +
+    (name     ? '\n\n Name: '     + name.trim()     : '') +
+    (phone    ? '\n WhatsApp: '   + phone.trim()    : '') +
+    (emailVal ? '\n Email: '      + emailVal.trim() : '') +
     '\n\nPlease guide me on next steps.'
   );
   document.getElementById('drawer-wa-btn').href = 'https://wa.me/919008999968?text=' + msg;
@@ -3802,7 +3806,7 @@ function refreshWaBtn() {
   if (el) el.addEventListener('input', refreshWaBtn);
 });
 
-// ─── CASHFREE CHECKOUT ────────────────────────────────────────────
+//  CASHFREE CHECKOUT 
 async function initiateCheckout() {
   if (cart.length === 0) return;
   if (!validateAll()) return;
@@ -3880,7 +3884,7 @@ async function initiateCheckout() {
   }
 }
 
-// ─── CASHFREE VERIFY ──────────────────────────────────────────────
+//  CASHFREE VERIFY 
 async function verifyPayment(orderId, items, total, name, phone, email) {
   try {
     var verRes = await fetch('/api/verify-payment', {
@@ -3897,14 +3901,14 @@ async function verifyPayment(orderId, items, total, name, phone, email) {
     var verData = await verRes.json();
 
     if (verData.success) {
-      // ── Save to Firestore so dashboard shows the order ──
+      //  Save to Firestore so dashboard shows the order 
       await saveOrderToFirestore(orderId, verData.payment_id || '', items, total, name, phone, email);
 
       showToast();
       var ts  = new Date().toLocaleString('en-IN', {timeZone:'Asia/Kolkata'});
       var itemLines = items.map(function(i){ return '• ' + i.name + ' (' + fmt(i.price || i.amount) + ')'; }).join('\n');
       var wa  = encodeURIComponent(
-        '✅ *Payment Received — Legaldirectory.ai*\n\n' +
+        ' *Payment Received — Legaldirectory.ai*\n\n' +
         'Services:\n' + itemLines + '\n\n' +
         'Total: '      + fmt(total) + '\n' +
         'Order ID: '   + orderId   + '\n' +
@@ -3986,7 +3990,7 @@ async function handleCashfreeReturn() {
   sessionStorage.removeItem('ld_instant_payment_in_progress');
 }
 
-// ── Clear stale payment lock on page load ──
+//  Clear stale payment lock on page load 
 (function() {
   var params = new URLSearchParams(window.location.search);
   if (!params.get('order_id') && !params.get('orderId')) {
@@ -4009,7 +4013,7 @@ function clearCartAfterSuccess() {
   try { localStorage.removeItem(LD_CART_KEY); } catch(e) {}
 }
 
-// ─── DRAWER HOURS CONTROLS ────────────────────────────────────────
+//  DRAWER HOURS CONTROLS 
 function adjustHoursInDrawer(idx, delta) {
   var item = cart[idx]; if (!item || !item.hourlyId) return;
   var cfg = HOURLY_SERVICES[item.hourlyId];
@@ -4040,7 +4044,7 @@ function showToast() {
   setTimeout(function(){ t.style.display = 'none'; }, 7000);
 }
 
-// ─── STATE SWITCHER ───────────────────────────────────────────────
+//  STATE SWITCHER 
 var BANNER_DATA = {
   ka: {
     title: 'Karnataka Property<br><em>Documents. Delivered.</em>',
@@ -4107,7 +4111,7 @@ function switchState(state) {
         var btn = card.querySelector('.btn-add');
         item.btnEl = btn;
         card.classList.add('selected');
-        if (btn) btn.textContent = '✓ Added';
+        if (btn) btn.textContent = ' Added';
       }
     });
   });
@@ -4116,7 +4120,7 @@ function switchState(state) {
   updateDrawer();
 }
 
-// ─── FAQ TOGGLE ───────────────────────────────────────────────────
+//  FAQ TOGGLE 
 function toggleFaq(btn) {
   var item = btn.closest('.faq-item');
   var isOpen = item.classList.contains('open');
@@ -4126,7 +4130,7 @@ function toggleFaq(btn) {
   if (!isOpen) item.classList.add('open');
 }
 
-// ─── RESTORE STATE FROM URL HASH ON LOAD ─────────────────────────
+//  RESTORE STATE FROM URL HASH ON LOAD 
 (function() {
   var validStates = ['ka','ts','ap','mh','kl','tn'];
   var hash = window.location.hash.replace('#state-', '');

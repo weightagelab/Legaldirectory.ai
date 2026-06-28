@@ -10,6 +10,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+<script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
 <style>
 :root {
   --bg:         #07080e;
@@ -43,7 +44,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── NAV ── */
+/*  NAV  */
 .topbar {
   display: flex;
   align-items: center;
@@ -87,7 +88,7 @@ body {
 }
 .btn-out:hover { color: var(--ink); border-color: var(--ink-mid); }
 
-/* ── HERO ── */
+/*  HERO  */
 .dash-hero {
   padding: 40px 28px 32px;
   border-bottom: 1px solid var(--border);
@@ -110,7 +111,7 @@ body {
 }
 .dash-sub { font-size: 13px; color: var(--ink-mid); margin-top: 6px; }
 
-/* ── STATS ROW ── */
+/*  STATS ROW  */
 .stats-row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -132,10 +133,10 @@ body {
   margin-top: 6px;
 }
 
-/* ── MAIN ── */
+/*  MAIN  */
 .dash-body { max-width: 1060px; margin: 32px auto; padding: 0 28px 80px; }
 
-/* ── SECTION HEAD ── */
+/*  SECTION HEAD  */
 .section-head {
   font-family: var(--mono);
   font-size: 10px;
@@ -149,7 +150,7 @@ body {
 }
 .section-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-/* ── ORDER CARDS ── */
+/*  ORDER CARDS  */
 .order-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; }
 .order-card {
   background: var(--bg2);
@@ -192,7 +193,7 @@ body {
   flex-wrap: wrap;
 }
 
-/* ── STATUS PILL ── */
+/*  STATUS PILL  */
 .status-pill {
   display: inline-flex;
   align-items: center;
@@ -215,7 +216,7 @@ body {
 .s-completed  { background: var(--green-dim); color: var(--green); border: 1px solid rgba(34,197,94,.25); }
 .s-completed .dot { background: var(--green); }
 
-/* ── TIMELINE ── */
+/*  TIMELINE  */
 .timeline {
   margin-top: 16px;
   padding-top: 16px;
@@ -257,13 +258,13 @@ body {
 }
 .tl-toggle:hover { color: var(--ink); }
 
-/* ── EMPTY STATE ── */
+/*  EMPTY STATE  */
 .empty-state { text-align: center; padding: 64px 24px; color: var(--ink-muted); }
 .empty-state h3 { font-size: 18px; color: var(--ink); margin-bottom: 8px; }
 .empty-state p { font-size: 13px; line-height: 1.7; max-width: 380px; margin: 0 auto 24px; }
 .btn-gold { background: var(--gold); color: #000; font-weight: 800; font-family: var(--sans); }
 
-/* ── SUPPORT CARD ── */
+/*  SUPPORT CARD  */
 .support-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -294,7 +295,7 @@ body {
   cursor: pointer;
 }
 
-/* ── LOGIN REQUIRED ── */
+/*  LOGIN REQUIRED  */
 #login-required {
   display: none;
   text-align: center;
@@ -308,7 +309,7 @@ body {
   margin: 0 auto 24px;
 }
 
-/* ── SPINNER ── */
+/*  SPINNER  */
 .spinner {
   width: 36px;
   height: 36px;
@@ -320,7 +321,7 @@ body {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ── PAYMENT SUCCESS BANNER ── */
+/*  PAYMENT SUCCESS BANNER  */
 #payment-banner {
   display: none;
   position: fixed;
@@ -363,10 +364,195 @@ body.banner-visible #dashboard { padding-top: 60px; }
   flex-shrink: 0;
 }
 
-/* ── RESPONSIVE ── */
+/* ── CART BUTTON & BADGE ── */
+.btn-cart {
+  background: var(--gold);
+  color: #000;
+  font-weight: 800;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-cart:hover { opacity: .88; }
+.cart-badge {
+  background: #000;
+  color: var(--gold);
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 900;
+  padding: 1px 6px;
+  min-width: 18px;
+  text-align: center;
+  line-height: 16px;
+}
+
+/* ── CART DRAWER OVERLAY ── */
+#cart-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: rgba(0,0,0,.72);
+  align-items: flex-end;
+  justify-content: center;
+}
+#cart-overlay.open { display: flex; }
+@media(min-width:600px){
+  #cart-overlay.open { align-items: center; padding: 16px; }
+  #cart-drawer { border-radius: 12px; max-height: 85vh; }
+}
+
+/* ── CART DRAWER ── */
+#cart-drawer {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 14px 14px 0 0;
+  width: 100%;
+  max-width: 480px;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.cart-drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.cart-drawer-title { font-size: 15px; font-weight: 800; color: var(--ink); }
+.cart-drawer-close {
+  background: none; border: none; color: var(--ink-mid);
+  font-size: 22px; cursor: pointer; line-height: 1; padding: 0;
+}
+.cart-drawer-close:hover { color: var(--ink); }
+.cart-drawer-body { flex: 1; overflow-y: auto; padding: 6px 0; }
+.cart-empty-msg {
+  text-align: center;
+  padding: 40px 24px;
+  color: var(--ink-muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+.cart-empty-msg strong { display: block; color: var(--ink); font-size: 15px; margin-bottom: 6px; }
+.cart-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 22px;
+  border-bottom: 1px solid rgba(42,45,58,.6);
+}
+.cart-item-info { flex: 1; min-width: 0; }
+.cart-item-name { font-size: 13px; font-weight: 700; color: var(--ink); line-height: 1.35; }
+.cart-item-source {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-muted);
+  margin-top: 2px;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+.cart-item-price { font-size: 15px; font-weight: 800; color: var(--ink); flex-shrink: 0; }
+.cart-drawer-foot {
+  border-top: 1px solid var(--border);
+  padding: 18px 22px;
+  flex-shrink: 0;
+}
+.cart-total-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.cart-total-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.cart-total-val { font-size: 26px; font-weight: 900; color: var(--ink); }
+.cart-fields { display: grid; gap: 10px; margin-bottom: 14px; }
+.cart-input {
+  width: 100%;
+  background: #0d0f18;
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  color: var(--ink);
+  padding: 12px 13px;
+  font-family: var(--sans);
+  font-size: 13px;
+  outline: none;
+}
+.cart-input:focus { border-color: var(--gold); }
+.cart-input::placeholder { color: var(--ink-muted); }
+.cart-pay-btn {
+  width: 100%;
+  background: var(--gold);
+  color: #000;
+  font-size: 14px;
+  font-weight: 900;
+  font-family: var(--sans);
+  border: none;
+  border-radius: 6px;
+  padding: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  transition: opacity .15s;
+}
+.cart-pay-btn:hover { opacity: .88; }
+.cart-pay-btn:disabled { opacity: .45; cursor: not-allowed; }
+.cart-wa-btn {
+  width: 100%;
+  background: #25d366;
+  color: #05120a;
+  font-size: 13px;
+  font-weight: 800;
+  font-family: var(--sans);
+  border: none;
+  border-radius: 6px;
+  padding: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  text-decoration: none;
+  margin-bottom: 10px;
+}
+.cart-secure {
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .6px;
+  color: var(--ink-muted);
+  margin-top: 4px;
+}
+.cart-section-head {
+  padding: 10px 22px 4px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+}
+.field-err { font-size: 11px; color: #ef4444; margin-top: -6px; display: none; }
+.field-err.show { display: block; }
+
+/*  RESPONSIVE  */
 @media (max-width: 640px) {
 
-/* ── DELIVERY SECTION ── */
+/*  DELIVERY SECTION  */
 .delivery-section {
   margin-top: 16px;
   padding-top: 14px;
@@ -450,16 +636,19 @@ body.banner-visible #dashboard { padding-top: 60px; }
 <body>
 <noscript><div style="font-family:sans-serif;text-align:center;padding:60px 24px;"><h2>JavaScript is required</h2><p>Please enable JavaScript to view your orders.<br/>For immediate help: <a href="https://wa.me/919008999968">WhatsApp +91 90089 99968</a></p></div></noscript>
 
-<!-- ── NAV ── -->
+<!--  NAV  -->
 <nav class="topbar">
   <a href="https://legaldirectory.in/" class="brand">Legaldirectory<em>.ai</em></a>
   <div class="nav-right">
     <span id="user-chip" class="user-chip"></span>
+    <button class="btn-sm btn-cart" id="nav-cart-btn" onclick="openCartDrawer()" style="display:none;">
+      Cart <span id="nav-cart-count" class="cart-badge">0</span>
+    </button>
     <button class="btn-sm btn-out" onclick="doSignOut()">Sign Out</button>
   </div>
 </nav>
 
-<!-- ── LOGIN GATE ── -->
+<!--  LOGIN GATE  -->
 <div id="login-required">
   <h2>Sign in to view your orders</h2>
   <p>Access your order tracking dashboard by signing in with the same account you used at checkout.</p>
@@ -469,10 +658,10 @@ body.banner-visible #dashboard { padding-top: 60px; }
   </a>
 </div>
 
-<!-- ── SPINNER ── -->
+<!--  SPINNER  -->
 <div id="loading-spinner"><div class="spinner"></div></div>
 
-<!-- ── DASHBOARD ── -->
+<!--  DASHBOARD  -->
 <div id="dashboard" style="display:none">
 
   <div class="dash-hero">
@@ -524,10 +713,40 @@ body.banner-visible #dashboard { padding-top: 60px; }
   </div>
 </div>
 
-<!-- ── PAYMENT SUCCESS BANNER ── -->
+<!-- ── CART DRAWER ── -->
+<div id="cart-overlay" onclick="handleCartOverlay(event)">
+  <div id="cart-drawer">
+    <div class="cart-drawer-head">
+      <span class="cart-drawer-title">My Cart</span>
+      <button class="cart-drawer-close" onclick="closeCartDrawer()">&#x2715;</button>
+    </div>
+    <div class="cart-drawer-body" id="cart-drawer-body"></div>
+    <div class="cart-drawer-foot" id="cart-drawer-foot" style="display:none;">
+      <div class="cart-total-row">
+        <span class="cart-total-label">Total</span>
+        <span class="cart-total-val" id="cart-drawer-total">&#8377;0</span>
+      </div>
+      <div class="cart-fields">
+        <input class="cart-input" id="cd-name"  type="text"  placeholder="Your Name *" autocomplete="name"/>
+        <p class="field-err" id="cd-name-err">Please enter your name</p>
+        <input class="cart-input" id="cd-phone" type="tel"   placeholder="Mobile Number * (10 digits)" autocomplete="tel"/>
+        <p class="field-err" id="cd-phone-err">Enter a valid 10-digit mobile number</p>
+        <input class="cart-input" id="cd-email" type="email" placeholder="Email (optional)" autocomplete="email"/>
+      </div>
+      <button class="cart-pay-btn" id="cart-pay-btn" onclick="dashCartPay()">Pay Now</button>
+      <a id="cart-wa-btn" class="cart-wa-btn" href="#" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Book via WhatsApp
+      </a>
+      <div class="cart-secure">SECURED BY CASHFREE · UPI · CARDS · NET BANKING</div>
+    </div>
+  </div>
+</div>
+
+<!--  PAYMENT SUCCESS BANNER  -->
 <div id="payment-banner">
   <div class="banner-body">
-    <div class="banner-icon">✅</div>
+    <div class="banner-icon"></div>
     <div>
       <div class="banner-title" id="banner-title">Payment Confirmed!</div>
       <div class="banner-meta">
@@ -539,14 +758,14 @@ body.banner-visible #dashboard { padding-top: 60px; }
     <strong>Next:</strong> Our team will WhatsApp you within 2 hours to collect documents and begin your service.
   </div>
   <button class="banner-close" onclick="document.getElementById('payment-banner').style.display='none';document.body.classList.remove('banner-visible')">
-    Got it ✕
+    Got it 
   </button>
 </div>
 
 <script>
-// ──────────────────────────────────────────
+// 
 // FIREBASE CONFIG
-// ──────────────────────────────────────────
+// 
 const FB_CONFIG = {
   apiKey:            "AIzaSyDyhtGPV8_OU7kgmz3SA4ixvv44PGVs2XA",
   authDomain:        "legaldirectory-9e309.firebaseapp.com",
@@ -563,22 +782,22 @@ const db   = firebase.firestore();
 // Offline persistence — dashboard loads even on slow connections
 db.enablePersistence({ synchronizeTabs: true }).catch(() => {});
 
-// ──────────────────────────────────────────
+// 
 // STATUS CONFIG
-// ──────────────────────────────────────────
+// 
 const STATUSES = {
-  pending:    { label: 'Paid — Awaiting Documents 📋', cls: 's-pending',    steps: [1,0,0,0] },
-  confirmed:  { label: 'Paid — Awaiting Documents 📋', cls: 's-pending',    steps: [1,0,0,0] },
-  awaiting:   { label: 'Paid — Awaiting Documents 📋', cls: 's-pending',    steps: [1,0,0,0] },
-  inprogress: { label: 'In Progress 🔄',               cls: 's-inprogress', steps: [1,1,0,0] },
-  review:     { label: 'Under Review 🔍',              cls: 's-review',     steps: [1,1,1,0] },
-  completed:  { label: 'Completed ✅',                 cls: 's-completed',  steps: [1,1,1,1] }
+  pending:    { label: 'Paid — Awaiting Documents ', cls: 's-pending',    steps: [1,0,0,0] },
+  confirmed:  { label: 'Paid — Awaiting Documents ', cls: 's-pending',    steps: [1,0,0,0] },
+  awaiting:   { label: 'Paid — Awaiting Documents ', cls: 's-pending',    steps: [1,0,0,0] },
+  inprogress: { label: 'In Progress ',               cls: 's-inprogress', steps: [1,1,0,0] },
+  review:     { label: 'Under Review ',              cls: 's-review',     steps: [1,1,1,0] },
+  completed:  { label: 'Completed ',                 cls: 's-completed',  steps: [1,1,1,1] }
 };
 const STEPS = ['Payment Confirmed', 'Awaiting Documents', 'Work in Progress', 'Delivered'];
 
-// ──────────────────────────────────────────
+// 
 // HELPERS
-// ──────────────────────────────────────────
+// 
 function fmt(n) {
   const val = String(n || '0');
   if (val.indexOf('₹') === 0) return val;
@@ -623,21 +842,21 @@ function orderCardHTML(order) {
   const custPhone = cust.phone || '';
   const custEmail = cust.email || order.email || '';
   const custParts = [];
-  if (custName)  custParts.push('👤 ' + custName);
-  if (custPhone) custParts.push('📱 ' + custPhone);
-  if (custEmail) custParts.push('✉️ ' + custEmail);
+  if (custName)  custParts.push(' ' + custName);
+  if (custPhone) custParts.push(' ' + custPhone);
+  if (custEmail) custParts.push(' ' + custEmail);
   const custLine = custParts.length
     ? `<div class="order-id" style="margin-top:4px;color:var(--ink-mid);">${custParts.join(' · ')}</div>`
     : '';
 
-  // ── Delivery / document download section ──
+  //  Delivery / document download section 
   const deliveryUrl = order.deliveryFileUrl || order.documentUrl || '';
   const waOrderMsg  = encodeURIComponent('Hi, I need help with my Legaldirectory.ai order — Order ID: ' + id);
   const deliveryHTML = `
   <div class="delivery-section">
     <div>
       ${deliveryUrl
-        ? `<span class="delivery-badge ready">📄 Document Ready</span>`
+        ? `<span class="delivery-badge ready"> Document Ready</span>`
         : `<span class="delivery-badge pending">⏳ Awaiting Delivery</span>`
       }
     </div>
@@ -675,7 +894,6 @@ function orderCardHTML(order) {
     <button class="tl-toggle" onclick="toggleTimeline('${id}')">View Progress Timeline +</button>
   </div>`;
 }
-}
 
 function toggleTimeline(id) {
   const el = document.getElementById('tl-' + id);
@@ -685,9 +903,9 @@ function toggleTimeline(id) {
   btn.textContent  = open ? 'View Progress Timeline +' : 'Hide Timeline −';
 }
 
-// ──────────────────────────────────────────
+// 
 // POST-PAYMENT HANDLER
-// ──────────────────────────────────────────
+// 
 // Called after auth resolves. Reads URL params (?payment=success&order_id=xxx&amount=₹yyy)
 // then stamps the current user's UID on the Firestore order doc.
 // This works even if the order was created without a uid (e.g. not logged in at checkout).
@@ -758,9 +976,9 @@ async function handlePaymentReturn(user) {
   }
 }
 
-// ──────────────────────────────────────────
+// 
 // RENDER
-// ──────────────────────────────────────────
+// 
 function renderOrders(orders) {
   const active    = orders.filter(o => (o.status || 'pending') !== 'completed');
   const completed = orders.filter(o => (o.status || 'pending') === 'completed');
@@ -798,9 +1016,9 @@ function renderOrders(orders) {
   }
 }
 
-// ──────────────────────────────────────────
+// 
 // AUTH STATE
-// ──────────────────────────────────────────
+// 
 let unsubscribeOrders = null;
 
 auth.onAuthStateChanged(async (user) => {
@@ -821,10 +1039,10 @@ auth.onAuthStateChanged(async (user) => {
   document.getElementById('welcome-name').textContent =
     'Welcome back' + (user.displayName ? ', ' + user.displayName.split(' ')[0] : '');
 
-  // 1️⃣ Handle post-payment return & stamp UID on the new order
+  // 1⃣ Handle post-payment return & stamp UID on the new order
   await handlePaymentReturn(user);
 
-  // 2️⃣ Pre-render from localStorage for instant display (avoids blank flash)
+  // 2⃣ Pre-render from localStorage for instant display (avoids blank flash)
   //    Skip if URL has a payment param that isn't 'success' — those are
   //    cancelled/failed payments that were already cleaned by instant-services.
   const _urlPayment = new URLSearchParams(window.location.search).get('payment');
@@ -860,7 +1078,7 @@ auth.onAuthStateChanged(async (user) => {
     });
   }
 
-  // 3️⃣ Real-time Firestore listener
+  // 3⃣ Real-time Firestore listener
   unsubscribeOrders = db.collection('orders')
     .where('uid', '==', user.uid)
     .orderBy('createdAt', 'desc')
@@ -896,6 +1114,307 @@ function doSignOut() {
   if (unsubscribeOrders) { unsubscribeOrders(); unsubscribeOrders = null; }
   auth.signOut().then(() => { window.location.href = 'https://legaldirectory.in/'; });
 }
+
+// ──────────────────────────────────────────
+// SHARED CART (reads ld_shared_cart set by index.html / instant-services)
+// ──────────────────────────────────────────
+const DASH_CART_KEY = 'ld_shared_cart';
+
+function dashReadCart() {
+  try {
+    return JSON.parse(localStorage.getItem(DASH_CART_KEY) || '[]');
+  } catch(_) { return []; }
+}
+
+function dashCartTotal(items) {
+  return items.reduce(function(s, i) { return s + (Number(i.price) || 0); }, 0);
+}
+
+function dashFmt(n) {
+  return '\u20B9' + Number(n || 0).toLocaleString('en-IN');
+}
+
+function dashUpdateNavBtn() {
+  const items = dashReadCart();
+  const btn   = document.getElementById('nav-cart-btn');
+  const badge = document.getElementById('nav-cart-count');
+  if (!btn) return;
+  if (items.length > 0) {
+    btn.style.display = 'inline-flex';
+    badge.textContent = items.length;
+  } else {
+    btn.style.display = 'none';
+  }
+}
+
+function openCartDrawer() {
+  renderCartDrawer();
+  document.getElementById('cart-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  // Pre-fill name/email from Firebase auth if available
+  try {
+    const u = auth.currentUser;
+    if (u) {
+      const nameEl  = document.getElementById('cd-name');
+      const emailEl = document.getElementById('cd-email');
+      if (nameEl  && !nameEl.value  && u.displayName) nameEl.value  = u.displayName;
+      if (emailEl && !emailEl.value && u.email)        emailEl.value = u.email;
+    }
+  } catch(_) {}
+}
+
+function closeCartDrawer() {
+  document.getElementById('cart-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleCartOverlay(e) {
+  if (e.target === document.getElementById('cart-overlay')) closeCartDrawer();
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeCartDrawer();
+});
+
+function renderCartDrawer() {
+  const items  = dashReadCart();
+  const body   = document.getElementById('cart-drawer-body');
+  const foot   = document.getElementById('cart-drawer-foot');
+  const payBtn = document.getElementById('cart-pay-btn');
+  const waBtn  = document.getElementById('cart-wa-btn');
+  const totalEl = document.getElementById('cart-drawer-total');
+
+  if (items.length === 0) {
+    body.innerHTML = '<div class="cart-empty-msg"><strong>Your cart is empty</strong>Add services from the <a href="https://legaldirectory.in/" style="color:var(--gold);text-decoration:none;">homepage</a> or <a href="instant-services.html" style="color:var(--gold);text-decoration:none;">Instant Services</a> and they will appear here.</div>';
+    foot.style.display = 'none';
+    return;
+  }
+
+  // Group by source
+  const indexItems   = items.filter(i => i.source === 'index');
+  const instantItems = items.filter(i => i.source === 'instant');
+  const otherItems   = items.filter(i => i.source !== 'index' && i.source !== 'instant');
+
+  let html = '';
+
+  if (indexItems.length) {
+    html += '<div class="cart-section-head">Expert Legal Services</div>';
+    indexItems.forEach(item => {
+      html += `<div class="cart-item-row">
+        <div class="cart-item-info">
+          <div class="cart-item-name">${escHtml(item.name)}</div>
+          <div class="cart-item-source">Lawyer Service</div>
+        </div>
+        <div class="cart-item-price">${dashFmt(item.price)}</div>
+      </div>`;
+    });
+  }
+
+  if (instantItems.length) {
+    html += '<div class="cart-section-head">Instant Government Documents</div>';
+    instantItems.forEach(item => {
+      html += `<div class="cart-item-row">
+        <div class="cart-item-info">
+          <div class="cart-item-name">${escHtml(item.name)}</div>
+          <div class="cart-item-source">${item.state ? item.state.toUpperCase() + ' · ' : ''}Instant Doc</div>
+        </div>
+        <div class="cart-item-price">${dashFmt(item.price)}</div>
+      </div>`;
+    });
+  }
+
+  if (otherItems.length) {
+    otherItems.forEach(item => {
+      html += `<div class="cart-item-row">
+        <div class="cart-item-info">
+          <div class="cart-item-name">${escHtml(item.name)}</div>
+        </div>
+        <div class="cart-item-price">${dashFmt(item.price)}</div>
+      </div>`;
+    });
+  }
+
+  body.innerHTML = html;
+  foot.style.display = 'block';
+
+  const total = dashCartTotal(items);
+  totalEl.textContent = dashFmt(total);
+  payBtn.textContent  = items.length ? 'Pay ' + dashFmt(total) + ' Now' : 'Pay Now';
+  payBtn.disabled     = items.length === 0;
+
+  // WhatsApp fallback
+  const waMsg = encodeURIComponent(
+    'Hi, I would like to book the following services:\n\n' +
+    items.map(i => '- ' + i.name + ' (' + dashFmt(i.price) + ')').join('\n') +
+    '\n\nTotal: ' + dashFmt(total)
+  );
+  waBtn.href = 'https://wa.me/919008999968?text=' + waMsg;
+}
+
+function escHtml(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Field validation ──
+function dashValidate() {
+  const nameEl  = document.getElementById('cd-name');
+  const phoneEl = document.getElementById('cd-phone');
+  const nameErr  = document.getElementById('cd-name-err');
+  const phoneErr = document.getElementById('cd-phone-err');
+  let ok = true;
+
+  if (!nameEl.value.trim() || nameEl.value.trim().length < 2) {
+    nameEl.style.borderColor = '#ef4444';
+    nameErr.classList.add('show');
+    ok = false;
+  } else {
+    nameEl.style.borderColor = '#22c55e';
+    nameErr.classList.remove('show');
+  }
+
+  const phone = phoneEl.value.trim();
+  if (!phone || !/^[6-9]\d{9}$/.test(phone)) {
+    phoneEl.style.borderColor = '#ef4444';
+    phoneErr.classList.add('show');
+    if (ok) phoneEl.focus();
+    ok = false;
+  } else {
+    phoneEl.style.borderColor = '#22c55e';
+    phoneErr.classList.remove('show');
+  }
+
+  return ok;
+}
+
+// ── Checkout ──
+async function dashCartPay() {
+  const items = dashReadCart();
+  if (!items.length) return;
+  if (!dashValidate()) return;
+
+  const payBtn = document.getElementById('cart-pay-btn');
+  const name   = document.getElementById('cd-name').value.trim();
+  const phone  = document.getElementById('cd-phone').value.trim();
+  const email  = (document.getElementById('cd-email').value || '').trim();
+  const total  = dashCartTotal(items);
+
+  if (sessionStorage.getItem('ld_dash_payment_in_progress')) {
+    if (!confirm('A previous payment attempt did not complete.\n\nClick OK to clear it and try again.')) return;
+    sessionStorage.removeItem('ld_dash_payment_in_progress');
+  }
+  sessionStorage.setItem('ld_dash_payment_in_progress', '1');
+
+  payBtn.disabled    = true;
+  payBtn.textContent = 'Creating order…';
+
+  try {
+    const orderRes = await fetch('/api/create-order', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        amount:   total,
+        currency: 'INR',
+        receipt:  'LD-DASH-' + Date.now(),
+        items:    items.map(i => ({ name: i.name, amount: i.price })),
+        customer: { name, phone },
+        notes:    { services: items.map(i => i.name).join(', '), customer: name }
+      })
+    });
+
+    const orderData = await orderRes.json();
+    if (!orderRes.ok || !orderData.order_id) throw new Error(orderData.error || 'Order creation failed');
+    if (!orderData.payment_session_id)        throw new Error('Payment session missing');
+
+    payBtn.textContent = 'Opening payment…';
+    sessionStorage.setItem('ld_dash_pending', JSON.stringify({
+      order_id: orderData.order_id,
+      items:    items.map(i => ({ name: i.name, amount: i.price })),
+      total, customer: { name, phone, email }
+    }));
+
+    closeCartDrawer();
+    const cashfree = Cashfree({ mode: orderData.mode || 'production' });
+    await cashfree.checkout({
+      paymentSessionId: orderData.payment_session_id,
+      redirectTarget:   '_self'
+    });
+
+  } catch(err) {
+    sessionStorage.removeItem('ld_dash_payment_in_progress');
+    console.error('Dash cart checkout error:', err);
+    alert('Could not initiate payment: ' + err.message + '\n\nPlease try the WhatsApp option or go back to the service pages.');
+    payBtn.disabled    = false;
+    payBtn.textContent = 'Pay ' + dashFmt(total) + ' Now';
+  }
+}
+
+// ── Verify payment on return (same ?order_id= pattern used by instant-services) ──
+async function dashCartVerifyOnReturn() {
+  const params  = new URLSearchParams(window.location.search);
+  const pending = (() => { try { return JSON.parse(sessionStorage.getItem('ld_dash_pending') || 'null'); } catch(_){ return null; } })();
+  if (!pending) return;
+
+  const orderId = pending.order_id;
+  const { items, total, customer } = pending;
+  sessionStorage.removeItem('ld_dash_pending');
+  sessionStorage.removeItem('ld_dash_payment_in_progress');
+
+  try {
+    const verRes = await fetch('/api/verify-payment', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ order_id: orderId, items, amount: total, customer })
+    });
+    const verData = await verRes.json();
+
+    if (verData.success) {
+      // Save order to Firestore (reuse same pattern as instant-services)
+      const currentUser = auth.currentUser;
+      const uid   = (currentUser && currentUser.uid)   || '';
+      const email = customer.email || (currentUser && currentUser.email) || '';
+      const serviceName = items.map(i => i.name).join(', ');
+      const amountStr   = dashFmt(total);
+      const orderData   = {
+        orderId, paymentId: verData.payment_id || '',
+        serviceName, service: serviceName,
+        amount: amountStr, amountRaw: total, items,
+        customer: { name: customer.name, phone: customer.phone, email },
+        uid, email,
+        status: 'confirmed', paymentStatus: 'paid',
+        source: 'dashboard-cart',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      };
+      await db.collection('orders').doc(orderId).set(orderData, { merge: true });
+
+      // Clear the shared cart
+      try { localStorage.removeItem(DASH_CART_KEY); } catch(_) {}
+      dashUpdateNavBtn();
+
+      // Show success banner
+      document.getElementById('banner-order-id').textContent = orderId;
+      document.getElementById('banner-amount').textContent   = amountStr;
+      document.getElementById('banner-title').textContent    = 'Payment Confirmed!';
+      document.getElementById('payment-banner').style.display = 'flex';
+      document.body.classList.add('banner-visible');
+      setTimeout(() => {
+        document.getElementById('payment-banner').style.display = 'none';
+        document.body.classList.remove('banner-visible');
+      }, 14000);
+    }
+  } catch(err) {
+    console.warn('Dash cart verify error:', err);
+  }
+}
+
+// ── Poll localStorage for cart changes (cross-tab / after navigation) ──
+setInterval(dashUpdateNavBtn, 1500);
+
+// ── Init ──
+window.addEventListener('load', function() {
+  dashUpdateNavBtn();
+  dashCartVerifyOnReturn();
+});
 </script>
 </body>
 </html>
