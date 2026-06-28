@@ -58,6 +58,149 @@
   .brand em { font-style: italic; color: var(--gold); font-weight: 400; }
   .brand-ver { font-size: 10px; color: var(--ink-muted); margin-left: 5px; vertical-align: super; }
   .nav-links { display: flex; gap: 28px; align-items: center; }
+
+/* ── GLOBAL SEARCH ── */
+.ld-search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.ld-search-input {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.13);
+  border-radius: 6px;
+  color: #f0f4ff;
+  font-family: inherit;
+  font-size: 12px;
+  padding: 7px 32px 7px 13px;
+  width: 0;
+  max-width: 0;
+  opacity: 0;
+  cursor: pointer;
+  transition: width .28s ease, max-width .28s ease, opacity .2s ease, border-color .2s;
+  outline: none;
+  white-space: nowrap;
+}
+.ld-search-wrap.open .ld-search-input {
+  width: 200px;
+  max-width: 200px;
+  opacity: 1;
+  cursor: text;
+  border-color: var(--gold);
+}
+@media(max-width:640px){
+  .ld-search-wrap.open .ld-search-input { width: 140px; max-width: 140px; }
+}
+.ld-search-input::placeholder { color: rgba(200,210,255,.4); }
+.ld-search-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #a0aec0;
+  padding: 6px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color .15s;
+  flex-shrink: 0;
+}
+.ld-search-btn:hover { color: var(--gold); }
+.ld-search-btn svg { display: block; }
+
+/* ── SEARCH RESULTS PANEL ── */
+#ld-search-results {
+  display: none;
+  position: fixed;
+  top: 56px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(560px, 94vw);
+  background: #12151f;
+  border: 1px solid rgba(212,168,67,.3);
+  border-radius: 10px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.7);
+  z-index: 8999;
+  overflow: hidden;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+#ld-search-results.open { display: block; }
+.sr-header {
+  padding: 10px 16px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #6b7694;
+  background: rgba(255,255,255,.03);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sr-close {
+  background: none; border: none; color: #6b7694;
+  font-size: 16px; cursor: pointer; padding: 0; line-height: 1;
+}
+.sr-close:hover { color: #f0f4ff; }
+.sr-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 16px;
+  border-bottom: 1px solid rgba(255,255,255,.05);
+  cursor: pointer;
+  transition: background .12s;
+  text-decoration: none;
+}
+.sr-item:last-child { border-bottom: none; }
+.sr-item:hover { background: rgba(212,168,67,.07); }
+.sr-item-left { flex: 1; min-width: 0; }
+.sr-item-tag {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #6b7694;
+  margin-bottom: 3px;
+}
+.sr-item-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #f0f4ff;
+  line-height: 1.35;
+}
+.sr-item-sub {
+  font-size: 11px;
+  color: #6b7694;
+  margin-top: 2px;
+}
+.sr-item-right { text-align: right; flex-shrink: 0; }
+.sr-item-price {
+  font-size: 14px;
+  font-weight: 800;
+  color: #f0f4ff;
+}
+.sr-item-action {
+  font-size: 10px;
+  color: var(--gold);
+  font-weight: 600;
+  margin-top: 2px;
+}
+.sr-empty {
+  padding: 32px 20px;
+  text-align: center;
+  color: #6b7694;
+  font-size: 13px;
+}
+mark.sr-hl {
+  background: rgba(212,168,67,.28);
+  color: #f0f4ff;
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
   .nav-links a { font-size: 12px; font-weight: 500; color: var(--ink-mid); text-decoration: none; letter-spacing: 0.02em; transition: color 0.15s; }
   .nav-links a:hover { color: var(--ink); }
   .nav-cta { font-size: 12px; font-weight: 700; color: var(--bg); background: var(--ink); padding: 7px 16px; border-radius: 5px; text-decoration: none; transition: opacity 0.15s; }
@@ -450,6 +593,13 @@
     <a href="https://legaldirectory.in/dashboard.html" style="font-weight:600;color:var(--ink);">My Orders</a>
     <a href="https://wa.me/919008999968" class="nav-cta">WhatsApp →</a>
   </div>
+  <div class="ld-search-wrap" id="ld-search-wrap">
+    <input class="ld-search-input" id="ld-search-input" type="text" placeholder="Search services..." autocomplete="off" aria-label="Search services"/>
+    <button class="ld-search-btn" id="ld-search-btn" onclick="ldSearchToggle()" aria-label="Search" title="Search (/ or Ctrl+K)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+  </div>
+  <div id="ld-search-results"></div>
 </nav>
 
 <!--  BANNER  -->
@@ -4138,6 +4288,159 @@ function toggleFaq(btn) {
     currentState = hash;
     switchState(hash);
   }
+})();
+
+
+// ── UNIVERSAL SITE SEARCH ──────────────────────────────────────────────────
+(function(){
+  var SERVICES = [
+    // Expert Legal Services (index.html)
+    { name:'Registration', sub:'Complete sale deed + EC · End-to-end', price:'₹9,999', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal' },
+    { name:'Property Registration (Sale Deed Registration)', sub:'Sale deed registration by expert lawyer', price:'₹7,999', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal' },
+    { name:'Property Search Report', sub:'200–300 page review · Title clarity', price:'₹6,999', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal' },
+    { name:'Property Paper Review (Oral Discussion)', sub:'One-on-one legal consultation', price:'₹2,999', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal' },
+    { name:'Sale Agreement / Agreement to Sale Review', sub:'45-min consultation · Risk flag', price:'₹4,999', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal' },
+    { name:'Agreement to Sale Drafting', sub:'Lawyer-drafted ATS · Home visit', price:'₹4,999', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal' },
+    { name:'WILL Drafting & Registration', sub:'Indian succession law · 2 free iterations', price:'₹4,999', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal' },
+    { name:'Trademark Registration', sub:'MSME 50% rebate · Full filing', price:'Custom', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal' },
+    { name:'Document Writer', sub:'KA-licensed advocate · Stamp paper included', price:'₹4,999', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal' },
+    { name:'Liaising Officer', sub:'24-hr govt doc procurement', price:'₹299/hr', tag:'Expert Legal', page:'index.html', anchor:'#services', type:'legal' },
+    // Instant Services (instant-services.html)
+    { name:'RGRHCL Housing Scheme Consultancy', sub:'EWS housing scheme · Karnataka', price:'₹501', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
+    { name:'Karnataka Certified Copy', sub:'2–3 working days', price:'₹299', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
+    { name:'Encumbrance Certificate (EC)', sub:'Same day · Karnataka', price:'₹299', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
+    { name:'Bhoomi RTC / Pahani', sub:'Same day · Karnataka', price:'₹299', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
+    { name:'Karnataka Mutation Record', sub:'1–2 working days', price:'₹299', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
+    { name:'E-Khata / E-Swathu', sub:'Same day · Karnataka', price:'₹299', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
+    { name:'Karnataka Survey Documents', sub:'1–2 working days', price:'₹299', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
+    { name:'Karnataka CERSAI Mortgage Report', sub:'Same day', price:'₹399', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
+    { name:'BBMP Sanction Plan & Documents', sub:'2–3 working days', price:'₹1,499', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
+    { name:'Bangalore Property Document Pack', sub:'5–7 working days', price:'₹1,499', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
+    { name:'Non-Agricultural Property Documents', sub:'5–7 days digital', price:'₹999', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
+    { name:'Agricultural Property Documents', sub:'5–7 days digital', price:'₹1,499', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
+    { name:'Loan Document Package (Non-Agricultural)', sub:'2–3 days', price:'₹1,299', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
+    { name:'Loan Document Package (Agricultural)', sub:'2–3 days', price:'₹1,299', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
+    { name:'Convert Khata to E-Aasthi', sub:'7–14 working days', price:'₹2,000', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
+    { name:'New Water Connection (BWSSB)', sub:'Up to 30 days', price:'₹3,000', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
+    { name:'BESCOM Name Transfer', sub:'3–4 weeks', price:'₹7,499', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
+    { name:'File Arrangement & Scanning', sub:'At your office or home', price:'₹799', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
+    { name:'Aadhaar Address Update', sub:'3–5 working days', price:'₹295', tag:'Instant · KA', page:'instant-services.html', anchor:'', type:'instant' },
+    // Telangana
+    { name:'Telangana Encumbrance Certificate', sub:'Same day · TS', price:'₹299', tag:'Instant · TS', page:'instant-services.html', anchor:'', type:'instant' },
+    { name:'TS Pahani / Adangal', sub:'Same day · TS', price:'₹299', tag:'Instant · TS', page:'instant-services.html', anchor:'', type:'instant' },
+    { name:'Dharani Property Record (TS)', sub:'Same day · TS', price:'₹399', tag:'Instant · TS', page:'instant-services.html', anchor:'', type:'instant' },
+    { name:'TS Mutation (Pahani Name Change)', sub:'7–10 days · TS', price:'₹999', tag:'Instant · TS', page:'instant-services.html', anchor:'', type:'instant' },
+    // AP
+    { name:'AP Encumbrance Certificate', sub:'Same day · AP', price:'₹299', tag:'Instant · AP', page:'instant-services.html', anchor:'', type:'instant' },
+    { name:'AP Meebhoomi Pahani', sub:'Same day · AP', price:'₹299', tag:'Instant · AP', page:'instant-services.html', anchor:'', type:'instant' },
+    // MH
+    { name:'Maharashtra 7/12 Extract (Satbara)', sub:'Same day · MH', price:'₹299', tag:'Instant · MH', page:'instant-services.html', anchor:'', type:'instant' },
+    { name:'Maharashtra Property Card', sub:'Same day · MH', price:'₹299', tag:'Instant · MH', page:'instant-services.html', anchor:'', type:'instant' },
+    { name:'Maharashtra EC', sub:'Same day · MH', price:'₹299', tag:'Instant · MH', page:'instant-services.html', anchor:'', type:'instant' },
+    // KL
+    { name:'Kerala Encumbrance Certificate', sub:'Same day · KL', price:'₹299', tag:'Instant · KL', page:'instant-services.html', anchor:'', type:'instant' },
+    { name:'Kerala Thandaper / Land Tax Record', sub:'Same day · KL', price:'₹299', tag:'Instant · KL', page:'instant-services.html', anchor:'', type:'instant' },
+    // TN
+    { name:'Tamil Nadu Encumbrance Certificate', sub:'Same day · TN', price:'₹299', tag:'Instant · TN', page:'instant-services.html', anchor:'', type:'instant' },
+    { name:'Tamil Nadu Patta / Chitta', sub:'Same day · TN', price:'₹299', tag:'Instant · TN', page:'instant-services.html', anchor:'', type:'instant' },
+    // Dashboard
+    { name:'My Orders', sub:'Track your service status', price:'', tag:'Dashboard', page:'dashboard.html', anchor:'', type:'page' },
+    { name:'AI Property Scan', sub:'Free property document scoring', price:'Free', tag:'Tool', page:'directory-ai.html', anchor:'', type:'page' },
+  ];
+
+  var wrap    = null;
+  var input   = null;
+  var panel   = null;
+  var isOpen  = false;
+
+  function esc(s){ return String(s||'').replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+
+  function highlight(text, q){
+    if(!q) return esc(text);
+    var re = new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');
+    return esc(text).replace(re,'<mark class="sr-hl">$1</mark>');
+  }
+
+  function search(q){
+    if(!q || q.length < 1) return [];
+    var ql = q.toLowerCase();
+    return SERVICES.filter(function(s){
+      return s.name.toLowerCase().indexOf(ql)>-1 ||
+             (s.sub && s.sub.toLowerCase().indexOf(ql)>-1) ||
+             (s.tag && s.tag.toLowerCase().indexOf(ql)>-1);
+    }).slice(0,12);
+  }
+
+  function renderResults(q){
+    if(!panel) return;
+    if(!q || !q.trim()){ panel.classList.remove('open'); return; }
+    var res = search(q.trim());
+    var html = '<div class="sr-header">'+
+      (res.length ? res.length+' result'+(res.length>1?'s':'') : 'No results')+
+      '<button class="sr-close" onclick="ldSearchClose()">&#x2715;</button></div>';
+    if(res.length===0){
+      html += '<div class="sr-empty">No services found for &ldquo;'+esc(q)+'&rdquo;<br><span style="font-size:11px;margin-top:6px;display:block;">Try: EC, mutation, registration, WILL, khata&hellip;</span></div>';
+    } else {
+      res.forEach(function(s){
+        var url = s.page + (s.anchor||'');
+        html += '<a class="sr-item" href="'+esc(url)+'">'+
+          '<div class="sr-item-left">'+
+            '<div class="sr-item-tag">'+esc(s.tag)+'</div>'+
+            '<div class="sr-item-name">'+highlight(s.name, q.trim())+'</div>'+
+            (s.sub ? '<div class="sr-item-sub">'+esc(s.sub)+'</div>' : '')+
+          '</div>'+
+          (s.price ? '<div class="sr-item-right"><div class="sr-item-price">'+esc(s.price)+'</div><div class="sr-item-action">View →</div></div>' : '')+
+        '</a>';
+      });
+    }
+    panel.innerHTML = html;
+    panel.classList.add('open');
+  }
+
+  function openSearch(){
+    if(!wrap) return;
+    wrap.classList.add('open');
+    isOpen = true;
+    setTimeout(function(){ if(input) input.focus(); }, 30);
+  }
+
+  window.ldSearchClose = function(){
+    if(!wrap || !input || !panel) return;
+    wrap.classList.remove('open');
+    input.value = '';
+    panel.classList.remove('open');
+    isOpen = false;
+  };
+
+  window.ldSearchToggle = function(){
+    if(isOpen){ ldSearchClose(); } else { openSearch(); }
+  };
+
+  document.addEventListener('click', function(e){
+    if(!panel || !wrap) return;
+    if(!panel.contains(e.target) && !wrap.contains(e.target)){ ldSearchClose(); }
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key==='Escape') ldSearchClose();
+    if((e.key==='/' || (e.key==='k' && (e.ctrlKey||e.metaKey))) && !isOpen){
+      e.preventDefault(); openSearch();
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', function(){
+    wrap  = document.getElementById('ld-search-wrap');
+    input = document.getElementById('ld-search-input');
+    panel = document.getElementById('ld-search-results');
+    if(!wrap || !input || !panel) return;
+    input.addEventListener('input', function(){ renderResults(input.value); });
+    input.addEventListener('keydown', function(e){
+      if(e.key==='Enter'){
+        var first = panel.querySelector('.sr-item');
+        if(first) first.click();
+      }
+    });
+  });
 })();
 
 </script>
